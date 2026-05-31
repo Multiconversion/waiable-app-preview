@@ -911,6 +911,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
                 <button class="cm-cal-link" type="button" id="cmClear">Borrar</button>
                 <button class="cm-cal-link" type="button" id="cmToday">Hoy</button>
               </div>
+              <div class="cm-cal-hint" id="cmCalHint" style="display:none;font-size:12px;color:var(--primary-dark);margin-top:8px">Modo personalizado: elige la fecha inicial y luego la final.</div>
               <div class="cm-cal-periods" id="cmPeriods">
                 <button type="button" data-period="este-mes">Este mes</button>
                 <button type="button" data-period="prox-mes">Próximo mes</button>
@@ -918,6 +919,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
                 <button type="button" data-period="prox-semana">Próxima semana</button>
                 <button type="button" data-period="hoy">Hoy</button>
                 <button type="button" data-period="manana">Mañana</button>
+                <button type="button" data-period="custom">Personalizado</button>
               </div>
             </div>
             <div class="cm-cal-summary" id="cmCalSummary">
@@ -1414,6 +1416,7 @@ render();
   var range = null;       // {start:Date, end:Date}
   var franja = 'manana';  // mañana | mediodia | tarde
   var autoT = null;
+  var customMode=false; var customStart=null;
 
   // franjas configurables (leídas de localStorage, escritas por Ajustes>Agenda)
   function franjas(){
@@ -1449,6 +1452,13 @@ render();
     grid.querySelectorAll('.cm-cal-day').forEach(function(el){
       el.addEventListener('click',function(){
         var p=el.dataset.d.split('-'); var d=new Date(+p[0],+p[1],+p[2]);
+        if(customMode){
+          if(!customStart){ customStart=d; setRange(d,d,'Personalizado'); }
+          else { var s=customStart<d?customStart:d, e=customStart<d?d:customStart; customStart=null; customMode=false;
+                 setRange(s,e,'Personalizado'); var hh=document.getElementById('cmCalHint'); if(hh)hh.style.display='none';
+                 if(autoT) clearTimeout(autoT); autoT=setTimeout(function(){ document.getElementById('cmCal').style.display='none'; document.getElementById('cmCalSummary').classList.add('show'); cmSearch(); },1200); }
+          return;
+        }
         setRange(d,d,fmt(d));
       });
     });
@@ -1480,7 +1490,13 @@ render();
       b.addEventListener('click',function(){
         document.querySelectorAll('#cmPeriods button').forEach(function(x){x.classList.remove('active')});
         b.classList.add('active');
-        var p=b.dataset.period; var r=periodRange(p);
+        var p=b.dataset.period;
+        if(p==='custom'){ customMode=true; customStart=null; range=null; renderCal();
+          var hint=document.getElementById('cmCalHint'); if(hint){hint.style.display='block';}
+          document.getElementById('cmCalSummaryText').textContent='Elige fecha inicial y final en el calendario';
+          if(autoT) clearTimeout(autoT); return; }
+        customMode=false;
+        var r=periodRange(p);
         setRange(r.start,r.end,rangeLabel(p));     // resalta el periodo
         if(autoT) clearTimeout(autoT);
         autoT=setTimeout(function(){                // a los 2s: aplica y cierra
@@ -1502,10 +1518,11 @@ render();
 
   function renderFranjas(){
     var f=franjas(); var wrap=document.getElementById('cmFranjas'); if(!wrap) return;
-    var defs=[['manana','Mañana'],['mediodia','Mediodía'],['tarde','Tarde']];
+    var defs=[['todos','Todos'],['manana','Mañana'],['mediodia','Mediodía'],['tarde','Tarde']];
     wrap.innerHTML = defs.map(function(d){
-      var r=f[d[0]]; var on=(d[0]==franja)?' active':'';
-      return '<button type="button" class="cm-franja'+on+'" data-fr="'+d[0]+'"><b>'+d[1]+'</b><span>'+r[0]+'–'+r[1]+'</span></button>';
+      var on=(d[0]==franja)?' active':'';
+      var sub = d[0]=='todos' ? (f.manana[0]+'–'+f.tarde[1]) : (f[d[0]][0]+'–'+f[d[0]][1]);
+      return '<button type="button" class="cm-franja'+on+'" data-fr="'+d[0]+'"><b>'+d[1]+'</b><span>'+sub+'</span></button>';
     }).join('');
     wrap.querySelectorAll('.cm-franja').forEach(function(b){
       b.addEventListener('click',function(){ franja=b.dataset.fr; renderFranjas(); cmSearch(); });
@@ -1516,7 +1533,8 @@ render();
   window.cmSearch = function(){
     var avail=document.getElementById('cmAvail'); avail.classList.add('show');
     renderFranjas();
-    var f=franjas()[franja]; var ini=f[0], fin=f[1];
+    var FR=franjas();
+    var tramos = (franja==='todos') ? [FR.manana,FR.mediodia,FR.tarde] : [FR[franja]];
     var sede=(document.getElementById('cmSede')||{}).value||'Sede principal';
     var slots=document.getElementById('cmSlots');
     if(!range){ slots.innerHTML='<div class="cm-empty">Elige un periodo en el calendario y pulsa “Buscar disponibilidad”.</div>'; return; }
@@ -1524,7 +1542,7 @@ render();
     var days=[]; for(var d=new Date(range.start); d<=range.end && days.length<4; d=addD(d,1)){ if(d.getDay()!=0) days.push(new Date(d)); }
     var html='';
     days.forEach(function(day){
-      var t=ini;
+      tramos.forEach(function(tr){ var t=tr[0], fin=tr[1];
       while(t < fin){
         var end=timeAdd(t,45);
         PROS.forEach(function(pro){
@@ -1532,6 +1550,7 @@ render();
         });
         t=timeAdd(t,45);
       }
+      }); // tramos
     });
     slots.innerHTML = html || '<div class="cm-empty">No hay huecos en esa franja para el periodo elegido.</div>';
     slots.querySelectorAll('.cm-slot').forEach(function(s){
