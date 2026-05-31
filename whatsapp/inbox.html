@@ -498,6 +498,27 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .conv-action.on.in-list{color:var(--info)}
 .conv-action:hover{background:var(--surface-soft)}
 
+
+/* Filtros de conversaciones */
+.conv-filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.cf-pill{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;color:var(--text-2);background:var(--surface-soft);border:1px solid var(--line);cursor:pointer;font-family:inherit;transition:all .12s}
+.cf-pill span{font-weight:700;color:var(--muted)}
+.cf-pill:hover{border-color:var(--line-strong)}
+.cf-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.cf-pill.active span{color:#fff}
+.cf-newlist{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;color:var(--primary);background:var(--primary-soft);border:1px dashed var(--primary-bright);cursor:pointer;font-family:inherit}
+.cf-newlist:hover{background:var(--primary-tint)}
+.cf-newlist svg{width:13px;height:13px}
+.cf-pill.cf-list{background:var(--info-soft);color:var(--info);border-color:var(--info-soft)}
+.cf-pill.cf-list.active{background:var(--info);color:#fff;border-color:var(--info)}
+#cfLists{display:contents}
+.conv{padding-right:34px}
+.conv-action{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:26px;height:26px;border-radius:7px;border:none;background:transparent;color:var(--line-strong);display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .12s,color .12s;z-index:2}
+.conv:hover .conv-action{opacity:1}
+.conv-action.on{opacity:1;color:var(--warning)}
+.conv-action.on.in-list{color:var(--info)}
+.conv-action:hover{background:var(--surface-soft)}
+
 </style>
 </head>
 <body>
@@ -574,6 +595,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
       <!-- COL 1: lista de conversaciones -->
       <section class="col-list">
+        <div class="list-head">
+          <div class="lh-top"><h2>Conversaciones</h2><span class="lh-count">28</span></div>
+          <div class="search-mini">
+            <svg class="sm-ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" placeholder="Buscar conversación o teléfono…">
+          </div>
+          <div class="conv-filters" id="convFilters">
+            <button class="cf-pill active" data-filter="todas">Todas <span>28</span></button>
+            <button class="cf-pill" data-filter="sin-leer">Sin leer <span>12</span></button>
+            <button class="cf-pill" data-filter="favoritos">Favoritos <span id="favCount">0</span></button>
+            <span id="cfLists"></span>
+            <button class="cf-newlist" id="cfNewList" type="button"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Crear lista</button>
+          </div>
+        </div>
         <div class="conv-scroll">
 
           <!-- SECCIÓN PRIORITARIA: lo que convierte (intención de reserva) -->
