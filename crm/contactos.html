@@ -468,6 +468,9 @@ tbody tr.sel{background:var(--primary-soft)}
 .r-edit svg{width:14px;height:14px}
 .r-edit:hover{color:var(--primary)}
 
+
+.r-btn.wa{color:var(--ok)}
+.r-btn.wa:hover{background:#e6f3ec;border-color:var(--ok);color:var(--ok)}
 </style>
 </head>
 <body>
@@ -651,7 +654,6 @@ tbody tr.sel{background:var(--primary-soft)}
       <!-- SUMMARY -->
       <section class="cfilters" aria-label="Filtros de pacientes">
         <div class="period-pick"><button class="period-btn" type="button" onclick="togglePeriod(this)" aria-label="Filtrar por fecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="period-label">Este mes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="period-menu"><button type="button" data-p="Hoy">Hoy</button><button type="button" data-p="Esta semana">Esta semana</button><button type="button" data-p="Este mes" class="active">Este mes</button><button type="button" data-p="Mes pasado">Mes pasado</button><button type="button" data-p="Este trimestre">Este trimestre</button><button type="button" data-p="Este año">Este año</button><button type="button" data-p="Personalizado…">Personalizado…</button></div></div>
-        <select class="tb-filter f-estado" onchange="syncEstado(this)" aria-label="Filtrar por estado"><option value="">Todos los estados</option><option value="activo">Con cita activa</option><option value="nuevo">Nuevos</option><option value="inactivo">Inactivos</option></select>
       </section>
 
             <section class="summary" aria-label="Resumen de pacientes">
@@ -702,6 +704,16 @@ tbody tr.sel{background:var(--primary-soft)}
             <div class="period-pick"><button class="period-btn" type="button" onclick="togglePeriod(this)" aria-label="Filtrar por fecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="period-label">Este mes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="period-menu"><button type="button" data-p="Hoy">Hoy</button><button type="button" data-p="Esta semana">Esta semana</button><button type="button" data-p="Este mes" class="active">Este mes</button><button type="button" data-p="Mes pasado">Mes pasado</button><button type="button" data-p="Este trimestre">Este trimestre</button><button type="button" data-p="Este año">Este año</button><button type="button" data-p="Personalizado…">Personalizado…</button></div></div>
         <div class="tb-spacer"></div>
 
+            <div class="select-wrap">
+              <label for="estadoSel" class="sr-only">Filtrar por estado</label>
+              <select id="estadoSel" class="f-estado" onchange="syncEstado(this)">
+                <option value="" selected>Todos</option>
+                <option value="activo">Con cita activa</option>
+                <option value="nuevo">Nuevos</option>
+                <option value="inactivo">Inactivos</option>
+              </select>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
             <div class="select-wrap">
               <label for="sortSel" class="sr-only">Ordenar por</label>
               <select id="sortSel" onchange="onSortSelect(this.value)">
@@ -790,7 +802,7 @@ tbody tr.sel{background:var(--primary-soft)}
                 <td><span class="cell-phone tnum">+34 612 345 678</span></td>
                 <td><span class="cell-mut">Hace 3 días</span></td>
                 <td class="col-act">
-                  <div class="row-act"><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  <div class="row-act"><button class="r-btn wa" type="button" aria-label="Escribir por WhatsApp" onclick="event.stopPropagation();toast('Abriendo WhatsApp…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button><a class="r-edit" href="ficha-contacto.html" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Editar contacto</a><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </td>
               </tr>
@@ -811,7 +823,7 @@ tbody tr.sel{background:var(--primary-soft)}
                 <td><span class="cell-phone tnum">+34 655 217 640</span></td>
                 <td><span class="cell-mut">Hace 1 semana</span></td>
                 <td class="col-act">
-                  <div class="row-act"><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  <div class="row-act"><button class="r-btn wa" type="button" aria-label="Escribir por WhatsApp" onclick="event.stopPropagation();toast('Abriendo WhatsApp…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button><a class="r-edit" href="ficha-contacto.html" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Editar contacto</a><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </td>
               </tr>
@@ -832,7 +844,7 @@ tbody tr.sel{background:var(--primary-soft)}
                 <td><span class="cell-phone tnum">+34 622 113 058</span></td>
                 <td><span class="cell-mut">Hoy</span></td>
                 <td class="col-act">
-                  <div class="row-act"><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  <div class="row-act"><button class="r-btn wa" type="button" aria-label="Escribir por WhatsApp" onclick="event.stopPropagation();toast('Abriendo WhatsApp…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button><a class="r-edit" href="ficha-contacto.html" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Editar contacto</a><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </td>
               </tr>
@@ -853,7 +865,7 @@ tbody tr.sel{background:var(--primary-soft)}
                 <td><span class="cell-phone tnum">+34 600 331 892</span></td>
                 <td><span class="cell-mut">Hace 3 semanas</span></td>
                 <td class="col-act">
-                  <div class="row-act"><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  <div class="row-act"><button class="r-btn wa" type="button" aria-label="Escribir por WhatsApp" onclick="event.stopPropagation();toast('Abriendo WhatsApp…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button><a class="r-edit" href="ficha-contacto.html" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Editar contacto</a><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </td>
               </tr>
@@ -874,7 +886,7 @@ tbody tr.sel{background:var(--primary-soft)}
                 <td><span class="cell-phone tnum">+34 677 901 245</span></td>
                 <td><span class="cell-mut">Hace 2 meses</span></td>
                 <td class="col-act">
-                  <div class="row-act"><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  <div class="row-act"><button class="r-btn wa" type="button" aria-label="Escribir por WhatsApp" onclick="event.stopPropagation();toast('Abriendo WhatsApp…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button><a class="r-edit" href="ficha-contacto.html" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Editar contacto</a><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </td>
               </tr>
@@ -895,7 +907,7 @@ tbody tr.sel{background:var(--primary-soft)}
                 <td><span class="cell-phone tnum">+34 688 456 712</span></td>
                 <td><span class="cell-mut">Hace 11 meses</span></td>
                 <td class="col-act">
-                  <div class="row-act"><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  <div class="row-act"><button class="r-btn wa" type="button" aria-label="Escribir por WhatsApp" onclick="event.stopPropagation();toast('Abriendo WhatsApp…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button><a class="r-edit" href="ficha-contacto.html" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Editar contacto</a><a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </td>
               </tr>
