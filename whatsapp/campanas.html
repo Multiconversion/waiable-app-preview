@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campañas · WhatsApp · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef1f4; --surface:#fff; --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771;
+    --line:#e3e8e6; --line-strong:#cfd8d4;
+    --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1;
+    --accent:#11a391; --ok:#157348; --warning:#b7791f; --danger:#b42318; --info:#2662a6;
+    --sidebar:#0f1a17; --sidebar-2:#16241f; --sidebar-line:#26352f; --sidebar-text:#c7d2cd; --sidebar-muted:#7f8f89;
+    --radius:14px; --radius-sm:10px; --radius-lg:18px;
+    --shadow-sm:0 1px 2px rgba(15,26,23,.05);
+    --shadow:0 1px 3px rgba(15,26,23,.06),0 8px 24px rgba(15,26,23,.05);
+    --shadow-lg:0 12px 40px rgba(15,26,23,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--bg); color:var(--text);
+    font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
+  svg{display:block;flex:none}
+  ::selection{background:var(--primary-soft)}
+
+  /* ---------- LAYOUT ---------- */
+  .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    background:var(--sidebar); color:var(--sidebar-text);
+    display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh;border-right:1px solid var(--sidebar-line);
+  }
+  .brand{display:flex;align-items:center;gap:11px;padding:18px 18px 16px}
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;flex:none;
+    background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));
+    display:grid;place-items:center;color:#fff;box-shadow:0 2px 8px rgba(15,148,134,.35)
+  }
+  .brand-name{font-weight:700;font-size:15px;color:#fff;letter-spacing:-.01em}
+  .brand-sub{font-size:12px;color:var(--sidebar-muted);margin-top:1px}
+  .nav{flex:1;overflow-y:auto;padding:6px 12px 16px}
+  .nav::-webkit-scrollbar{width:8px}
+  .nav::-webkit-scrollbar-thumb{background:#2a3a33;border-radius:8px}
+  .nav-group{margin-top:14px}
+  .nav-label{
+    font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--sidebar-muted);padding:0 10px 6px
+  }
+  .nav-item{
+    display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:9px;
+    color:var(--sidebar-text);font-size:13.5px;font-weight:500;margin-bottom:2px;
+    transition:background .14s,color .14s;position:relative
+  }
+  .nav-item svg{color:var(--sidebar-muted);transition:color .14s}
+  .nav-item:hover{background:var(--sidebar-2);color:#fff}
+  .nav-item:hover svg{color:var(--sidebar-text)}
+  .nav-item.active{background:var(--primary);color:#fff;font-weight:600}
+  .nav-item.active svg{color:#fff}
+  .nav-badge{
+    margin-left:auto;font-size:12px;font-weight:600;background:#243430;color:var(--sidebar-text);
+    padding:1px 7px;border-radius:20px;line-height:1.5
+  }
+  .nav-item.active .nav-badge{background:rgba(255,255,255,.22);color:#fff}
+  .sidebar-foot{padding:12px;border-top:1px solid var(--sidebar-line)}
+  .user{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;transition:background .14s}
+  .user:hover{background:var(--sidebar-2)}
+  .avatar{
+    width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;
+    background:linear-gradient(135deg,#2bb6a3,#0a5d57);color:#fff;font-weight:600;font-size:12px
+  }
+  .user-name{font-size:13px;font-weight:600;color:#fff}
+  .user-role{font-size:12px;color:var(--sidebar-muted)}
+
+  /* ---------- MAIN ---------- */
+  .main{display:flex;flex-direction:column;min-width:0}
+  .topbar{
+    position:sticky;top:0;z-index:30;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:11px 26px;display:flex;align-items:center;gap:16px
+  }
+  .search{
+    flex:1;max-width:440px;display:flex;align-items:center;gap:9px;
+    background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--muted)
+  }
+  .search:focus-within{border-color:var(--line-strong);background:#fff}
+  .search input{flex:1;border:none;background:none;outline:none;font-size:13.5px;color:var(--text)}
+  .search input::placeholder{color:var(--muted)}
+  .topbar-status{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+    padding:5px 10px;border-radius:20px;border:1px solid var(--line);background:#fff;color:var(--text-2)
+  }
+  .pill .dot{width:7px;height:7px;border-radius:50%;flex:none}
+  .pill.ok{background:#edf7f1;border-color:#cde9d9;color:var(--ok)}
+  .pill.ok .dot{background:var(--ok)}
+  .pill.sync{background:#eaf2fb;border-color:#cfe0f4;color:var(--info)}
+  .pill.sync .dot{background:var(--info)}
+  .pill.soft{background:#fff;border-color:var(--line);color:var(--muted);font-weight:500}
+  .pill.soft .dot{background:var(--muted)}
+  .icon-btn{
+    width:36px;height:36px;border-radius:9px;display:grid;place-items:center;
+    color:var(--text-2);border:1px solid var(--line);background:#fff;position:relative
+  }
+  .icon-btn:hover{background:var(--bg);color:var(--text)}
+  .icon-btn .ndot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+
+  /* ---------- CONTENT ---------- */
+  .content{padding:24px 26px 48px;max-width:1320px;width:100%;margin:0 auto}
+  .crumbs{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);margin-bottom:12px}
+  .crumbs svg{color:var(--line-strong)}
+  .crumbs .cur{color:var(--text-2);font-weight:500}
+
+  .page-head{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+  .page-head .ph-text{min-width:0;flex:1}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+  .subtitle{color:var(--text-2);font-size:14px;margin-top:5px;max-width:640px}
+  .head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-size:13.5px;font-weight:600;padding:9px 15px;border-radius:10px;
+    border:1px solid var(--line-strong);background:#fff;color:var(--text);transition:all .14s;white-space:nowrap
+  }
+  .btn:hover{background:var(--bg);border-color:var(--muted)}
+  .btn svg{color:var(--text-2)}
+  .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 1px 2px rgba(10,93,87,.3)}
+  .btn.primary:hover{background:var(--primary-dark);border-color:var(--primary-dark)}
+  .btn.primary svg{color:#fff}
+  .btn.ghost{border-color:transparent;background:transparent;color:var(--text-2)}
+  .btn.ghost:hover{background:var(--bg)}
+  .btn.sm{padding:6px 11px;font-size:13px;border-radius:9px}
+  .btn.danger{color:var(--danger);border-color:#eccac6}
+  .btn.danger:hover{background:#fdf2f0;border-color:var(--danger)}
+  .btn.danger svg{color:var(--danger)}
+
+  /* ---------- KPI ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 17px;box-shadow:var(--shadow-sm)}
+  .kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+  .kpi-label{font-size:13px;color:var(--muted);font-weight:500}
+  .kpi-ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary)}
+  .kpi-ico.amber{background:#fbf3e3;color:var(--warning)}
+  .kpi-ico.blue{background:#eaf2fb;color:var(--info)}
+  .kpi-ico.green{background:#edf7f1;color:var(--ok)}
+  .kpi-val{font-size:27px;font-weight:700;letter-spacing:-.02em;line-height:1}
+  .kpi-foot{display:flex;align-items:center;gap:6px;font-size:12.5px;margin-top:9px;color:var(--muted)}
+  .trend{display:inline-flex;align-items:center;gap:3px;font-weight:600}
+  .trend.up{color:var(--ok)}
+  .trend.down{color:var(--danger)}
+
+  /* ---------- GRID ---------- */
+  .grid{display:grid;grid-template-columns:1fr 332px;gap:18px;align-items:start}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:15px 18px;border-bottom:1px solid var(--line)}
+  .card-head h2{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .card-head .sub{font-size:12.5px;color:var(--muted);margin-top:1px}
+  .card-head .right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+  /* segmented filter */
+  .seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:3px}
+  .seg button{font-size:12.5px;font-weight:600;color:var(--muted);padding:5px 11px;border-radius:7px;transition:all .14s}
+  .seg button.on{background:#fff;color:var(--text);box-shadow:var(--shadow-sm)}
+  .seg button:hover:not(.on){color:var(--text-2)}
+
+  /* ---------- TABLE ---------- */
+  .tbl{width:100%;border-collapse:collapse}
+  .tbl thead th{
+    text-align:left;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;
+    padding:11px 18px;border-bottom:1px solid var(--line);background:#fafbfb
+  }
+  .tbl tbody td{padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13.5px}
+  .tbl tbody tr:last-child td{border-bottom:none}
+  .tbl tbody tr{transition:background .12s;cursor:pointer}
+  .tbl tbody tr:hover{background:#fafbfb}
+  .camp-name{display:flex;align-items:center;gap:12px}
+  .camp-ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none}
+  .camp-ico.recall{background:var(--primary-soft);color:var(--primary)}
+  .camp-ico.promo{background:#fbf3e3;color:var(--warning)}
+  .camp-ico.reactiv{background:#eaf2fb;color:var(--info)}
+  .camp-ico.recordatorio{background:#edf7f1;color:var(--ok)}
+  .camp-title{font-weight:600;font-size:14px;line-height:1.3}
+  .camp-meta{font-size:12px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:6px}
+  .camp-meta .sep{width:3px;height:3px;border-radius:50%;background:var(--line-strong)}
+
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px;line-height:1.5;white-space:nowrap}
+  .tag .dot{width:6px;height:6px;border-radius:50%;flex:none}
+  .tag.live{background:#edf7f1;color:var(--ok)} .tag.live .dot{background:var(--ok)}
+  .tag.sched{background:#eaf2fb;color:var(--info)} .tag.sched .dot{background:var(--info)}
+  .tag.draft{background:#f1f4f3;color:var(--muted)} .tag.draft .dot{background:var(--muted)}
+  .tag.done{background:#f3f1fb;color:#6b5fb0} .tag.done .dot{background:#6b5fb0}
+  .tag.paused{background:#fbf3e3;color:var(--warning)} .tag.paused .dot{background:var(--warning)}
+
+  /* mini progress for results */
+  .res{min-width:128px}
+  .res-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px}
+  .res-num{font-weight:700;font-size:14px}
+  .res-num small{font-weight:500;color:var(--muted);font-size:12px}
+  .res-pct{font-size:12px;font-weight:600;color:var(--ok)}
+  .bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+  .bar > i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--primary),var(--accent))}
+
+  .row-actions{display:flex;align-items:center;gap:4px;justify-content:flex-end}
+  .mini{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:var(--muted);border:1px solid transparent}
+  .mini:hover{background:var(--bg);color:var(--text);border-color:var(--line)}
+
+  /* ---------- SIDE PANEL CARDS ---------- */
+  .side{display:flex;flex-direction:column;gap:18px;position:sticky;top:74px}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:17px 18px}
+  .panel h3{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .panel h3 svg{color:var(--primary)}
+
+  /* templates list (quick launch) */
+  .tpl{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid var(--line);border-radius:var(--radius-sm);margin-top:10px;transition:all .14s;cursor:pointer}
+  .tpl:hover{border-color:var(--primary);background:var(--primary-soft)}
+  .tpl-ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;background:var(--bg);color:var(--text-2)}
+  .tpl:hover .tpl-ico{background:#fff;color:var(--primary)}
+  .tpl-body{min-width:0;flex:1}
+  .tpl-title{font-size:13.5px;font-weight:600;line-height:1.3}
+  .tpl-desc{font-size:12px;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tpl-go{color:var(--line-strong);flex:none}
+  .tpl:hover .tpl-go{color:var(--primary)}
+
+  /* opportunity / huecos block (IA atenuada) */
+  .opp{border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 14px;margin-top:11px;background:#fafbfb}
+  .opp-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .opp-top .lbl{font-size:13.5px;font-weight:600}
+  .opp-top .auto{
+    margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;
+    color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:20px;padding:2px 8px
+  }
+  .opp-top .auto svg{width:13px;height:13px;color:var(--muted)}
+  .opp-desc{font-size:13px;color:var(--text-2);line-height:1.45}
+  .opp-desc b{color:var(--text);font-weight:600}
+
+  .chan-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .chan-row:last-child{border-bottom:none;padding-bottom:0}
+  .chan-l{display:flex;align-items:center;gap:9px;color:var(--text-2)}
+  .chan-ico{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--bg)}
+  .chan-val{font-weight:700;font-size:14px}
+
+  /* ---------- MODAL ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(15,26,23,.42);backdrop-filter:blur(2px);z-index:60;display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+  .overlay.open{display:flex}
+  .modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:100%;max-width:600px;overflow:hidden;animation:pop .18s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
+  .modal-head{display:flex;align-items:flex-start;gap:13px;padding:20px 22px 16px;border-bottom:1px solid var(--line)}
+  .modal-ico{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none;background:var(--primary-soft);color:var(--primary)}
+  .modal-head h2{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .modal-head p{font-size:13px;color:var(--muted);margin-top:2px}
+  .modal-close{margin-left:auto;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--muted)}
+  .modal-close:hover{background:var(--bg);color:var(--text)}
+  .modal-body{padding:20px 22px;display:flex;flex-direction:column;gap:16px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  .field .hint{font-size:12px;color:var(--muted);font-weight:400;margin-left:4px}
+  .field input,.field select,.field textarea{
+    width:100%;font-family:inherit;font-size:13.5px;color:var(--text);
+    border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;background:#fff;outline:none;transition:border .14s
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary)}
+  .field textarea{resize:vertical;min-height:84px;line-height:1.5}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .choice{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line-strong);border-radius:11px;padding:12px;cursor:pointer;transition:all .14s}
+  .choice:hover{border-color:var(--primary)}
+  .choice.on{border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 1px var(--primary) inset}
+  .choice-ico{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;flex:none;background:#fff;color:var(--primary);border:1px solid var(--line)}
+  .choice.on .choice-ico{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .choice-t{font-size:13.5px;font-weight:600}
+  .choice-d{font-size:12px;color:var(--muted);margin-top:1px;line-height:1.4}
+  .audience-note{display:flex;align-items:center;gap:9px;font-size:13px;background:var(--primary-soft);border:1px solid #cde9e3;border-radius:10px;padding:11px 13px;color:var(--primary-dark)}
+  .audience-note b{font-weight:700}
+  .modal-foot{display:flex;align-items:center;gap:10px;padding:16px 22px;border-top:1px solid var(--line);background:#fafbfb}
+  .modal-foot .spacer{flex:1}
+
+  /* confirm modal */
+  .confirm{max-width:430px}
+  .confirm .modal-ico{background:#fdecea;color:var(--danger)}
+
+  /* ---------- TOAST ---------- */
+  .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:80;display:flex;flex-direction:column;gap:10px}
+  .toast{
+    display:flex;align-items:center;gap:11px;background:var(--text);color:#fff;
+    padding:12px 15px;border-radius:11px;box-shadow:var(--shadow-lg);font-size:13.5px;font-weight:500;
+    min-width:260px;animation:slidein .22s ease
+  }
+  @keyframes slidein{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+  .toast .t-ico{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:none;background:var(--ok)}
+  .toast.warn .t-ico{background:var(--warning)}
+  .toast .t-close{margin-left:auto;color:rgba(255,255,255,.6)}
+  .toast .t-close:hover{color:#fff}
+
+  /* empty state */
+  .empty{padding:46px 24px;text-align:center}
+  .empty-ico{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;margin:0 auto 14px;background:var(--primary-soft);color:var(--primary)}
+  .empty h3{font-size:15px;font-weight:600}
+  .empty p{font-size:13px;color:var(--muted);margin:5px auto 16px;max-width:340px}
+
+  @media (max-width:1080px){
+    .grid{grid-template-columns:1fr}
+    .side{position:static}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:820px){
+    .app{grid-template-columns:1fr}
+    .sidebar{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===================== SIDEBAR (CHROME) ===================== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-sub">Clínica Dental Sonríe</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-label">Clínica</div>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Panel</a>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg>Agenda</a>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Pacientes</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Captación</div>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Bandeja WhatsApp<span class="nav-badge">7</span></a>
+        <a class="nav-item active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>Campañas</a>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamadas</a>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>Web y formularios</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Automatización</div>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>Huecos de agenda<span class="nav-badge">4</span></a>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg>Plantillas</a>
+        <a class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Automatización</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-foot">
+      <a class="user">
+        <div class="avatar">MR</div>
+        <div>
+          <div class="user-name">María Ruiz</div>
+          <div class="user-role">Recepción</div>
+        </div>
+        <svg style="margin-left:auto;color:var(--sidebar-muted)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <div class="main">
+
+    <!-- TOPBAR (CHROME) -->
+    <header class="topbar">
+      <div class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Buscar campañas, pacientes o plantillas…">
+      </div>
+      <div class="topbar-status">
+        <span class="pill ok"><span class="dot"></span>WhatsApp conectado</span>
+        <span class="pill sync"><span class="dot"></span>Agenda sincronizada</span>
+        <span class="pill soft" title="La automatización está activa en segundo plano"><span class="dot"></span>Automatización activa</span>
+        <button class="icon-btn" title="Notificaciones"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="ndot"></span></button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <div class="crumbs">
+        <span>WhatsApp</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        <span class="cur">Campañas</span>
+      </div>
+
+      <!-- PAGE HEAD -->
+      <div class="page-head">
+        <div class="ph-text">
+          <h1>Campañas</h1>
+          <p class="subtitle">Envía mensajes a tus pacientes para llenar la agenda: recuerda revisiones, reactiva pacientes inactivos y aprovecha los huecos libres. Mide cuántas citas genera cada envío.</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Ver informe</button>
+          <button class="btn primary" onclick="openModal('newCampaign')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg>Nueva campaña</button>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <section class="kpis">
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-label">Citas generadas</span>
+            <span class="kpi-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="m9 16 2 2 4-4"/></svg></span>
+          </div>
+          <div class="kpi-val">128</div>
+          <div class="kpi-foot"><span class="trend up"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>+22%</span>este mes</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-label">Huecos cubiertos</span>
+            <span class="kpi-ico amber"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          </div>
+          <div class="kpi-val">34</div>
+          <div class="kpi-foot"><span class="trend up"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>+8</span>vs. semana pasada</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-label">Tasa de respuesta</span>
+            <span class="kpi-ico blue"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg></span>
+          </div>
+          <div class="kpi-val">41%</div>
+          <div class="kpi-foot">2.940 mensajes enviados</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-label">Ingreso estimado</span>
+            <span class="kpi-ico green"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+          </div>
+          <div class="kpi-val">9.860 €</div>
+          <div class="kpi-foot">de citas confirmadas</div>
+        </div>
+      </section>
+
+      <!-- GRID -->
+      <div class="grid">
+
+        <!-- LEFT: campaigns table -->
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Tus campañas</h2>
+              <div class="sub">12 campañas · 2 activas ahora mismo</div>
+            </div>
+            <div class="right">
+              <div class="seg" id="segFilter">
+                <button class="on" data-f="all">Todas</button>
+                <button data-f="live">Activas</button>
+                <button data-f="sched">Programadas</button>
+                <button data-f="draft">Borradores</button>
+              </div>
+            </div>
+          </div>
+
+          <table class="tbl" id="campTbl">
+            <thead>
+              <tr>
+                <th>Campaña</th>
+                <th>Estado</th>
+                <th>Citas generadas</th>
+                <th style="text-align:right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-state="live" onclick="toast('Abriendo «Recordatorio de revisión»')">
+                <td>
+                  <div class="camp-name">
+                    <span class="camp-ico recall"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg></span>
+                    <div>
+                      <div class="camp-title">Recordatorio de revisión</div>
+                      <div class="camp-meta">WhatsApp<span class="sep"></span>Pacientes sin cita +6 meses</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag live"><span class="dot"></span>Activa</span></td>
+                <td>
+                  <div class="res">
+                    <div class="res-top"><span class="res-num">47 <small>/ 320 env.</small></span><span class="res-pct">15%</span></div>
+                    <div class="bar"><i style="width:15%"></i></div>
+                  </div>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="row-actions">
+                    <button class="mini" title="Pausar" onclick="toast('Campaña pausada','warn')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
+                    <button class="mini" title="Duplicar" onclick="toast('Campaña duplicada como borrador')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                    <button class="mini" title="Eliminar" onclick="openConfirm('Recordatorio de revisión')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-state="live" onclick="toast('Abriendo «Promo blanqueamiento»')">
+                <td>
+                  <div class="camp-name">
+                    <span class="camp-ico promo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg></span>
+                    <div>
+                      <div class="camp-title">Promo blanqueamiento</div>
+                      <div class="camp-meta">WhatsApp<span class="sep"></span>Pacientes activos último año</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag live"><span class="dot"></span>Activa</span></td>
+                <td>
+                  <div class="res">
+                    <div class="res-top"><span class="res-num">29 <small>/ 210 env.</small></span><span class="res-pct">14%</span></div>
+                    <div class="bar"><i style="width:14%"></i></div>
+                  </div>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="row-actions">
+                    <button class="mini" title="Pausar" onclick="toast('Campaña pausada','warn')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
+                    <button class="mini" title="Duplicar" onclick="toast('Campaña duplicada como borrador')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                    <button class="mini" title="Eliminar" onclick="openConfirm('Promo blanqueamiento')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-state="sched" onclick="toast('Abriendo «Reactivar inactivos»')">
+                <td>
+                  <div class="camp-name">
+                    <span class="camp-ico reactiv"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></span>
+                    <div>
+                      <div class="camp-title">Reactivar inactivos</div>
+                      <div class="camp-meta">WhatsApp<span class="sep"></span>Programada para el 3 jun</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag sched"><span class="dot"></span>Programada</span></td>
+                <td>
+                  <div class="res">
+                    <div class="res-top"><span class="res-num">—</span><span class="res-pct" style="color:var(--muted)">480 destinatarios</span></div>
+                    <div class="bar"><i style="width:0%"></i></div>
+                  </div>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="row-actions">
+                    <button class="mini" title="Editar" onclick="openModal('newCampaign')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+                    <button class="mini" title="Duplicar" onclick="toast('Campaña duplicada como borrador')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                    <button class="mini" title="Eliminar" onclick="openConfirm('Reactivar inactivos')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-state="done" onclick="toast('Abriendo «Recordatorio limpieza»')">
+                <td>
+                  <div class="camp-name">
+                    <span class="camp-ico recordatorio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></span>
+                    <div>
+                      <div class="camp-title">Recordatorio limpieza</div>
+                      <div class="camp-meta">WhatsApp<span class="sep"></span>Finalizada el 18 may</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag done"><span class="dot"></span>Finalizada</span></td>
+                <td>
+                  <div class="res">
+                    <div class="res-top"><span class="res-num">52 <small>/ 290 env.</small></span><span class="res-pct">18%</span></div>
+                    <div class="bar"><i style="width:18%"></i></div>
+                  </div>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="row-actions">
+                    <button class="mini" title="Ver informe" onclick="toast('Abriendo informe de la campaña')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></button>
+                    <button class="mini" title="Duplicar" onclick="toast('Campaña duplicada como borrador')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                    <button class="mini" title="Eliminar" onclick="openConfirm('Recordatorio limpieza')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-state="draft" onclick="openModal('newCampaign')">
+                <td>
+                  <div class="camp-name">
+                    <span class="camp-ico promo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+                    <div>
+                      <div class="camp-title">Promo ortodoncia invisible</div>
+                      <div class="camp-meta">Borrador<span class="sep"></span>Sin enviar</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag draft"><span class="dot"></span>Borrador</span></td>
+                <td>
+                  <div class="res">
+                    <div class="res-top"><span class="res-num">—</span><span class="res-pct" style="color:var(--muted)">Sin público</span></div>
+                    <div class="bar"><i style="width:0%"></i></div>
+                  </div>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="row-actions">
+                    <button class="mini" title="Editar" onclick="openModal('newCampaign')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+                    <button class="mini" title="Eliminar" onclick="openConfirm('Promo ortodoncia invisible')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- empty state (hidden until a filter has no results) -->
+          <div class="empty" id="emptyState" style="display:none">
+            <div class="empty-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
+            <h3>No hay campañas en este estado</h3>
+            <p>Cuando crees o programes una campaña aparecerá aquí. Empieza con una plantilla lista para usar.</p>
+            <button class="btn primary" onclick="openModal('newCampaign')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg>Nueva campaña</button>
+          </div>
+        </section>
+
+        <!-- RIGHT: side -->
+        <aside class="side">
+
+          <!-- quick launch templates -->
+          <div class="panel">
+            <h3><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>Lanzar en un clic</h3>
+            <div class="tpl" onclick="openModal('newCampaign')">
+              <span class="tpl-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg></span>
+              <div class="tpl-body">
+                <div class="tpl-title">Recordar revisión</div>
+                <div class="tpl-desc">Pacientes sin cita +6 meses</div>
+              </div>
+              <svg class="tpl-go" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="tpl" onclick="openModal('newCampaign')">
+              <span class="tpl-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></span>
+              <div class="tpl-body">
+                <div class="tpl-title">Reactivar inactivos</div>
+                <div class="tpl-desc">Sin venir más de 1 año</div>
+              </div>
+              <svg class="tpl-go" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="tpl" onclick="openModal('newCampaign')">
+              <span class="tpl-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg></span>
+              <div class="tpl-body">
+                <div class="tpl-title">Promoción de temporada</div>
+                <div class="tpl-desc">Oferta a pacientes activos</div>
+              </div>
+              <svg class="tpl-go" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+
+          <!-- huecos de agenda (IA atenuada) -->
+          <div class="panel">
+            <h3><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Huecos de agenda</h3>
+            <div class="opp">
+              <div class="opp-top">
+                <span class="lbl">Esta semana</span>
+                <span class="auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/></svg>detectado</span>
+              </div>
+              <p class="opp-desc">Tienes <b>11 huecos libres</b> de jueves a sábado. Una campaña a pacientes cercanos podría llenarlos.</p>
+            </div>
+            <button class="btn primary sm" style="width:100%;margin-top:11px" onclick="openModal('newCampaign')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>Crear campaña para estos huecos</button>
+          </div>
+
+          <!-- channels summary -->
+          <div class="panel">
+            <h3><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>Citas por canal</h3>
+            <div style="margin-top:6px">
+              <div class="chan-row">
+                <span class="chan-l"><span class="chan-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>WhatsApp</span>
+                <span class="chan-val">128</span>
+              </div>
+              <div class="chan-row">
+                <span class="chan-l"><span class="chan-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span>Web y formularios</span>
+                <span class="chan-val">63</span>
+              </div>
+              <div class="chan-row">
+                <span class="chan-l"><span class="chan-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>Teléfono</span>
+                <span class="chan-val">41</span>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===================== MODAL: NEW CAMPAIGN ===================== -->
+<div class="overlay" id="m-newCampaign">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div class="modal-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
+      <div>
+        <h2>Nueva campaña</h2>
+        <p>Envía un mensaje a un grupo de pacientes para llenar tu agenda.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal('newCampaign')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Objetivo de la campaña</label>
+        <div class="choices">
+          <div class="choice on" onclick="pickChoice(this)">
+            <span class="choice-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg></span>
+            <div><div class="choice-t">Recordar revisión</div><div class="choice-d">Pacientes sin cita reciente</div></div>
+          </div>
+          <div class="choice" onclick="pickChoice(this)">
+            <span class="choice-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></span>
+            <div><div class="choice-t">Reactivar pacientes</div><div class="choice-d">Inactivos hace tiempo</div></div>
+          </div>
+          <div class="choice" onclick="pickChoice(this)">
+            <span class="choice-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg></span>
+            <div><div class="choice-t">Promoción</div><div class="choice-d">Oferta a pacientes activos</div></div>
+          </div>
+          <div class="choice" onclick="pickChoice(this)">
+            <span class="choice-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <div><div class="choice-t">Llenar huecos</div><div class="choice-d">Cubrir agenda de la semana</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Nombre de la campaña</label>
+        <input type="text" value="Recordatorio de revisión - junio" placeholder="Ej. Recordatorio de revisión">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Público <span class="hint">a quién se envía</span></label>
+          <select>
+            <option>Pacientes sin cita +6 meses (320)</option>
+            <option>Pacientes inactivos +1 año (480)</option>
+            <option>Pacientes activos último año (640)</option>
+            <option>Pacientes cerca de la clínica (210)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Envío</label>
+          <select>
+            <option>Ahora</option>
+            <option>Programar para una fecha</option>
+            <option>Repartir en 3 días</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Mensaje de WhatsApp</label>
+        <textarea>Hola {nombre}, te escribimos desde Clínica Sonríe. Hace tiempo que no revisamos tu salud dental. ¿Te reservamos una cita esta semana? Responde a este mensaje y te buscamos hueco.</textarea>
+      </div>
+
+      <div class="audience-note">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        Se enviará a <b>320 pacientes</b>. Las respuestas llegan a tu bandeja de WhatsApp.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" onclick="closeModal('newCampaign');toast('Guardado como borrador')">Guardar borrador</button>
+      <div class="spacer"></div>
+      <button class="btn" onclick="closeModal('newCampaign')">Cancelar</button>
+      <button class="btn primary" onclick="closeModal('newCampaign');toast('Campaña lanzada · enviando a 320 pacientes')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>Lanzar campaña</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: CONFIRM DELETE ===================== -->
+<div class="overlay" id="m-confirm">
+  <div class="modal confirm" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div class="modal-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <div>
+        <h2>Eliminar campaña</h2>
+        <p>Vas a eliminar <b id="confirmName">esta campaña</b>. Esta acción no se puede deshacer.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal('confirm')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-foot" style="border-top:none;background:#fff;padding-top:4px">
+      <div class="spacer"></div>
+      <button class="btn" onclick="closeModal('confirm')">Cancelar</button>
+      <button class="btn danger" onclick="closeModal('confirm');toast('Campaña eliminada','warn')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TOASTS ===================== -->
+<div class="toast-wrap" id="toasts"></div>
+
+<script>
+  function openModal(id){document.getElementById('m-'+id).classList.add('open')}
+  function closeModal(id){document.getElementById('m-'+id).classList.remove('open')}
+  function openConfirm(name){
+    document.getElementById('confirmName').textContent = '«'+name+'»';
+    openModal('confirm');
+  }
+  // close on overlay click / Esc
+  document.querySelectorAll('.overlay').forEach(o=>{
+    o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')});
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));
+  });
+
+  // choice picker
+  function pickChoice(el){
+    el.parentElement.querySelectorAll('.choice').forEach(c=>c.classList.remove('on'));
+    el.classList.add('on');
+  }
+
+  // segmented filter
+  const seg = document.getElementById('segFilter');
+  seg.addEventListener('click',e=>{
+    const b = e.target.closest('button'); if(!b) return;
+    seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    const f = b.dataset.f;
+    let visible = 0;
+    document.querySelectorAll('#campTbl tbody tr').forEach(tr=>{
+      const show = f==='all' || tr.dataset.state===f;
+      tr.style.display = show ? '' : 'none';
+      if(show) visible++;
+    });
+    document.querySelector('#campTbl').style.display = visible ? '' : 'none';
+    document.getElementById('emptyState').style.display = visible ? 'none' : 'block';
+  });
+
+  // toasts
+  function toast(msg,type){
+    const wrap = document.getElementById('toasts');
+    const t = document.createElement('div');
+    t.className = 'toast'+(type==='warn'?' warn':'');
+    const ok = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    const warn = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>';
+    t.innerHTML = '<span class="t-ico">'+(type==='warn'?warn:ok)+'</span><span>'+msg+'</span><button class="t-close" onclick="this.parentElement.remove()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>';
+    wrap.appendChild(t);
+    setTimeout(()=>{t.style.transition='opacity .3s,transform .3s';t.style.opacity='0';t.style.transform='translateX(20px)';setTimeout(()=>t.remove(),300)},3600);
+  }
+</script>
+</body>
+</html>

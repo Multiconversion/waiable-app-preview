@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Usuarios y equipo · Ajustes · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771; --muted-strong:#5a655f;
+  --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06),0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08),0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12),0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);
+  line-height:1.55;-webkit-font-smoothing:antialiased;
+  font-size:14px;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+svg{display:block}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+
+/* ============ LAYOUT SHELL ============ */
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+
+/* ---- SIDEBAR (CHROME, conservar) ---- */
+.sidebar{
+  background:linear-gradient(180deg,#0c2521 0%,#0a1d1a 100%);
+  color:#e8f1ef;display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 20px 16px}
+.brand-logo{
+  width:38px;height:38px;border-radius:11px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--primary-dark));
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px;
+  box-shadow:0 6px 16px rgba(17,163,145,.35);
+}
+.brand-name{font-weight:700;font-size:16px;letter-spacing:-.2px;line-height:1.2}
+.brand-sub{font-size:12px;color:#7fe7d4;font-weight:600;letter-spacing:.2px}
+.nav{padding:8px 12px 20px;flex:1}
+.nav-group{
+  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;
+  color:rgba(255,255,255,.62);
+  padding:16px 12px 7px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 12px;border-radius:10px;margin-bottom:2px;
+  color:rgba(232,241,239,.92);font-weight:500;font-size:14px;
+  min-height:40px;transition:background .14s,color .14s;
+}
+.nav-item svg{width:18px;height:18px;opacity:.92;flex-shrink:0}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-item.active{
+  background:linear-gradient(135deg,rgba(17,163,145,.26),rgba(15,118,110,.18));
+  color:#fff;font-weight:600;
+  box-shadow:inset 0 0 0 1px rgba(94,224,201,.22);
+}
+.nav-item.active svg{opacity:1;color:var(--cyan)}
+.nav-badge{margin-left:auto;background:rgba(94,224,201,.18);color:#7fe7d4;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px}
+.side-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.07)}
+.side-clinic{display:flex;align-items:center;gap:10px;padding:8px;border-radius:11px;background:rgba(255,255,255,.05)}
+.side-clinic-av{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#1f6f63,#0d4a44);display:grid;place-items:center;color:#cdeee7;font-weight:700;font-size:13px;flex-shrink:0}
+.side-clinic-info{min-width:0}
+.side-clinic-name{font-size:13px;font-weight:600;color:#eafffb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-clinic-plan{font-size:12px;color:rgba(255,255,255,.6);font-weight:500}
+
+/* ---- TOPBAR (CHROME, conservar) ---- */
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(255,255,255,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;
+  padding:12px 28px;min-height:64px;
+}
+.search-global{position:relative;flex:1;max-width:480px}
+.search-global svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.search-global input{
+  width:100%;border:1px solid var(--line-strong);background:var(--surface-soft);
+  border-radius:var(--radius-pill);padding:10px 14px 10px 40px;font-size:14px;color:var(--text);
+  min-height:42px;
+}
+.search-global input::placeholder{color:var(--muted)}
+.search-global kbd{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  font-size:12px;font-family:inherit;font-weight:600;color:var(--muted-strong);
+  background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:2px 7px;
+}
+.top-chips{display:flex;align-items:center;gap:8px;margin-left:auto}
+.top-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:600;color:var(--text-2);
+  background:var(--surface-soft);border:1px solid var(--line);
+  padding:7px 12px;border-radius:var(--radius-pill);min-height:38px;
+}
+.top-chip .dot{width:8px;height:8px;border-radius:50%}
+.top-chip-soft{font-size:12px;font-weight:500;color:var(--muted-strong);background:transparent;border-color:var(--line);padding:6px 11px;min-height:34px}
+.dot-ok{background:var(--ok)}
+.dot-warn{background:var(--warning)}
+.top-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#0f9486,#0a5d57);display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px}
+
+/* ============ PAGE CONTENT ============ */
+.page{padding:26px 28px 56px;max-width:1320px;width:100%}
+.breadcrumb{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted-strong);font-weight:500;margin-bottom:14px}
+.breadcrumb svg{width:14px;height:14px;opacity:.7}
+.breadcrumb .tb-crumb-cur{color:var(--text-2);font-weight:600}
+
+.page-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  margin-bottom:22px;
+}
+.page-head-text{min-width:240px}
+.page-head h1{font-size:26px;font-weight:800;letter-spacing:-.5px;line-height:1.15}
+.page-head .subtitle{font-size:15px;color:var(--text-2);margin-top:6px;max-width:560px}
+.page-head-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:600;font-size:14px;border-radius:var(--radius-sm);
+  padding:0 16px;min-height:42px;border:1px solid transparent;transition:.15s;white-space:nowrap;
+}
+.btn svg{width:17px;height:17px}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));
+  color:#fff;box-shadow:0 6px 18px rgba(15,118,110,.28);
+}
+.btn-primary:hover{box-shadow:0 8px 24px rgba(15,118,110,.36);transform:translateY(-1px)}
+.btn-lg{min-height:46px;padding:0 22px;font-size:15px}
+.btn-outline{background:var(--surface);color:var(--text-2);border-color:var(--line-strong)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-tint)}
+.btn-ghost{background:transparent;color:var(--text-2)}
+.btn-ghost:hover{background:var(--surface-soft)}
+.btn-danger-soft{background:var(--danger-soft);color:var(--danger);border-color:#f4cfca}
+.btn-danger-soft:hover{background:#ffe4df}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#9a1d14}
+
+/* ============ TWO-COLUMN GRID ============ */
+.cols{display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start}
+
+/* Card base */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.card-pad{padding:20px}
+
+/* ---- MEMBERS PANEL ---- */
+.members-panel{overflow:hidden}
+.toolbar{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:16px 18px;border-bottom:1px solid var(--line);background:var(--surface-soft);
+}
+.toolbar-title{font-size:16px;font-weight:700;letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
+.toolbar-title .seg-count{
+  font-size:12px;font-weight:700;color:var(--primary-dark);
+  background:var(--primary-soft);border-radius:999px;padding:2px 9px;
+}
+.toolbar-spacer{flex:1}
+.field-search{position:relative;min-width:230px}
+.field-search label.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.field-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}
+.field-search input{
+  width:100%;border:1px solid var(--line-strong);background:var(--surface);
+  border-radius:var(--radius-sm);padding:9px 12px 9px 36px;font-size:14px;min-height:40px;
+}
+.field-search input::placeholder{color:var(--muted)}
+.filter-chips{display:flex;gap:7px;flex-wrap:wrap}
+.fchip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:600;color:var(--text-2);
+  background:var(--surface);border:1px solid var(--line-strong);
+  padding:7px 12px;border-radius:var(--radius-pill);min-height:36px;
+}
+.fchip:hover{border-color:var(--primary);color:var(--primary)}
+.fchip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.fchip .seg-count{font-size:12px;opacity:.85;font-weight:700}
+.fchip.active .seg-count{opacity:.95}
+
+/* ---- MEMBERS TABLE ---- */
+.tbl-wrap{overflow-x:auto}
+.members{width:100%;border-collapse:collapse;min-width:660px}
+.members thead th{
+  text-align:left;font-size:13px;font-weight:700;color:var(--muted-strong);
+  text-transform:uppercase;letter-spacing:.4px;
+  padding:11px 18px;border-bottom:1px solid var(--line);background:var(--surface-soft);
+  white-space:nowrap;
+}
+.members thead th.col-right{text-align:right}
+.members tbody tr{border-bottom:1px solid var(--line);transition:background .12s}
+.members tbody tr:last-child{border-bottom:none}
+.members tbody tr:hover{background:var(--surface-soft)}
+.members td{padding:14px 18px;vertical-align:middle}
+
+.member-cell{display:flex;align-items:center;gap:12px;min-width:0}
+.m-avatar{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff;
+}
+.av-1{background:linear-gradient(135deg,#0f9486,#0a5d57)}
+.av-2{background:linear-gradient(135deg,#2662a6,#1b4a80)}
+.av-3{background:linear-gradient(135deg,#b7791f,#8a5a13)}
+.av-4{background:linear-gradient(135deg,#7a5af0,#5538c4)}
+.av-5{background:linear-gradient(135deg,#b42318,#871810)}
+.m-id{min-width:0}
+.m-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.m-name{font-size:15px;font-weight:600;color:var(--text);line-height:1.3}
+.you-tag{
+  font-size:12px;font-weight:700;color:var(--primary-dark);
+  background:var(--primary-soft);border-radius:999px;padding:1px 8px;
+}
+.m-mail{
+  font-size:13px;color:var(--muted-strong);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;
+  margin-top:2px;
+}
+.m-sub{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.m-dept{
+  font-size:12px;font-weight:600;color:var(--text-2);
+  background:var(--surface-soft);border:1px solid var(--line);
+  padding:2px 8px;border-radius:999px;
+}
+
+/* Role pill (estado del rol en la fila) */
+.role-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:600;color:var(--text-2);
+  background:var(--surface-soft);border:1px solid var(--line-strong);
+  padding:6px 10px;border-radius:var(--radius-sm);min-height:34px;
+}
+.role-pill svg{width:14px;height:14px;color:var(--muted-strong)}
+.role-pill.is-owner{background:var(--primary-tint);border-color:#bfe3dc;color:var(--primary-dark)}
+.role-pill.is-owner svg{color:var(--primary)}
+.role-select{
+  font-family:inherit;font-size:13px;font-weight:600;color:var(--text-2);
+  border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  background:var(--surface) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7771' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 10px center;
+  padding:7px 30px 7px 11px;min-height:36px;appearance:none;cursor:pointer;
+}
+.role-select:hover{border-color:var(--primary)}
+
+/* Status badge (color + icono + texto) */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:700;
+  padding:4px 10px;border-radius:var(--radius-pill);white-space:nowrap;
+}
+.badge svg{width:14px;height:14px}
+.badge-ok{background:var(--ok-soft);color:var(--ok)}
+.badge-pending{background:var(--warning-soft);color:var(--warning)}
+.badge-off{background:#eceeed;color:#5b6661}
+.badge-meta{font-size:12px;color:var(--muted-strong);font-weight:500;margin-left:8px}
+
+/* Actions (kebab) */
+.actions-cell{text-align:right;white-space:nowrap}
+.kebab-wrap{position:relative;display:inline-block}
+.kebab{
+  width:40px;height:40px;border-radius:var(--radius-sm);
+  display:inline-grid;place-items:center;
+  background:transparent;border:1px solid transparent;color:var(--text-2);
+}
+.kebab:hover{background:var(--surface-soft);border-color:var(--line)}
+.kebab svg{width:18px;height:18px}
+.kebab[aria-disabled="true"]{color:var(--line-strong);cursor:not-allowed}
+.kebab[aria-disabled="true"]:hover{background:transparent;border-color:transparent}
+.menu{
+  position:absolute;right:0;top:46px;z-index:30;min-width:210px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);padding:6px;display:none;
+}
+.menu.open{display:block}
+.menu.flip-up{top:auto;bottom:46px}
+.menu-item{
+  display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  font-size:14px;font-weight:500;color:var(--text-2);
+  padding:9px 11px;border-radius:var(--radius-sm);background:transparent;border:none;min-height:40px;
+}
+.menu-item svg{width:16px;height:16px;color:var(--muted-strong)}
+.menu-item:hover{background:var(--surface-soft);color:var(--text)}
+.menu-item.danger{color:var(--danger)}
+.menu-item.danger svg{color:var(--danger)}
+.menu-item.danger:hover{background:var(--danger-soft)}
+.menu-sep{height:1px;background:var(--line);margin:5px 4px}
+
+/* States (empty / loading / error) */
+.state{padding:46px 28px;text-align:center}
+.state-ico{
+  width:62px;height:62px;border-radius:18px;margin:0 auto 16px;
+  display:grid;place-items:center;background:var(--primary-soft);color:var(--primary-dark);
+}
+.state-ico svg{width:24px;height:24px}
+.state-ico.warn{background:var(--warning-soft);color:var(--warning)}
+.state-ico.err{background:var(--danger-soft);color:var(--danger)}
+.state h3{font-size:18px;font-weight:700;letter-spacing:-.2px}
+.state p{font-size:14px;color:var(--text-2);max-width:420px;margin:7px auto 18px}
+.state-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+[hidden]{display:none !important}
+
+/* Skeleton */
+.sk-row td{padding:16px 18px}
+.sk{background:linear-gradient(90deg,#eef2f1 25%,#e2e8e6 37%,#eef2f1 63%);background-size:400% 100%;animation:sk 1.2s ease infinite;border-radius:8px;height:14px}
+.sk.circle{width:42px;height:42px;border-radius:50%}
+.sk.w160{width:160px}.sk.w110{width:110px}.sk.w90{width:90px}.sk.w70{width:70px}
+@keyframes sk{0%{background-position:100% 50%}100%{background-position:0 50%}}
+
+/* ============ ASIDE ============ */
+.aside{display:flex;flex-direction:column;gap:18px}
+
+/* Me-card (perfil propio) */
+.me-card{
+  border-radius:var(--radius);overflow:hidden;color:#fff;
+  background:linear-gradient(135deg,#0f9486 0%,#0a5d57 100%);
+  box-shadow:var(--shadow-md);position:relative;
+}
+.me-card::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 120% at 100% 0%,rgba(94,224,201,.22),transparent 55%);pointer-events:none}
+.me-card-pad{padding:18px;position:relative;z-index:1}
+.me-top{display:flex;align-items:center;gap:13px}
+.me-av{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.4);display:grid;place-items:center;font-weight:700;font-size:18px;flex-shrink:0}
+.me-name{font-size:17px;font-weight:700;letter-spacing:-.2px}
+.me-mail{font-size:13px;color:rgba(255,255,255,.92);font-weight:500;margin-top:2px}
+.me-role-pill{
+  display:inline-flex;align-items:center;gap:6px;margin-top:12px;
+  font-size:13px;font-weight:700;color:#fff;
+  background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.34);
+  padding:5px 12px;border-radius:var(--radius-pill);
+}
+.me-role-pill svg{width:14px;height:14px}
+.me-foot{display:flex;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.2)}
+.me-stat-num{font-size:20px;font-weight:800;line-height:1}
+.me-stat-lbl{font-size:12px;color:rgba(255,255,255,.86);font-weight:600;margin-top:3px}
+
+/* Invite card */
+.invite-card{border:1px solid var(--line);box-shadow:var(--shadow-md)}
+.invite-head{padding:16px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--primary-tint),#fff)}
+.invite-head h2{font-size:16px;font-weight:700;letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
+.invite-head h2 svg{width:18px;height:18px;color:var(--primary)}
+.invite-head p{font-size:13px;color:var(--text-2);margin-top:4px}
+.invite-body{padding:18px}
+.field{margin-bottom:15px}
+.field-label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text);margin-bottom:7px}
+.tip{
+  display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;
+  background:var(--surface-soft);border:1px solid var(--line-strong);color:var(--muted-strong);
+  font-size:12px;font-weight:700;cursor:help;position:relative;
+}
+.tip:hover .tip-bubble,.tip:focus-visible .tip-bubble{opacity:1;visibility:visible;transform:translateY(0)}
+.tip-bubble{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);
+  width:230px;background:#0c2521;color:#eafffb;font-size:13px;font-weight:500;line-height:1.5;
+  text-align:left;padding:10px 12px;border-radius:10px;box-shadow:var(--shadow-lg);
+  opacity:0;visibility:hidden;transition:.15s;z-index:50;letter-spacing:0;text-transform:none;
+}
+.field input,.field select{
+  width:100%;border:1px solid var(--line-strong);background:var(--surface);
+  border-radius:var(--radius-sm);padding:11px 13px;font-size:14px;font-family:inherit;color:var(--text);min-height:44px;
+}
+.field input::placeholder{color:var(--muted)}
+.field select{
+  appearance:none;cursor:pointer;padding-right:36px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7771' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat:no-repeat;background-position:right 12px center;
+}
+.field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);outline:none}
+.field-hint{
+  display:flex;align-items:flex-start;gap:7px;
+  font-size:13px;line-height:1.5;color:var(--text-2);margin-top:8px;
+  background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:9px 11px;
+}
+.field-hint svg{width:15px;height:15px;color:var(--primary);flex-shrink:0;margin-top:1px}
+.invite-card .btn-primary{width:100%}
+
+/* Roles explained card */
+.roles-card{border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.roles-head{padding:15px 18px 0}
+.roles-head h2{font-size:15px;font-weight:700;letter-spacing:-.2px}
+.roles-list{padding:8px 12px 14px}
+.ri{display:flex;gap:12px;padding:12px;border-radius:var(--radius-sm)}
+.ri:hover{background:var(--surface-soft)}
+.ri-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:grid;place-items:center}
+.ri-ico svg{width:18px;height:18px}
+.ico-owner{background:var(--primary-tint);color:var(--primary-dark)}
+.ico-admin{background:var(--info-soft);color:var(--info)}
+.ico-user{background:#f3eefe;color:#5538c4}
+.ri-name{font-size:14px;font-weight:700;color:var(--text)}
+.ri-desc{font-size:13px;line-height:1.5;color:var(--text-2);margin-top:2px}
+
+/* ============ TOASTS ============ */
+.toast-wrap{position:fixed;right:24px;bottom:24px;z-index:200;display:flex;flex-direction:column;gap:10px;max-width:360px}
+.toast{
+  display:flex;align-items:flex-start;gap:11px;
+  background:#0c2521;color:#eafffb;border-radius:var(--radius);padding:13px 15px;
+  box-shadow:var(--shadow-lg);font-size:14px;font-weight:500;
+  animation:toastin .25s ease;
+}
+.toast svg{width:18px;height:18px;flex-shrink:0;margin-top:1px}
+.toast.ok svg{color:var(--cyan)}
+.toast.warn svg{color:#f5c66b}
+.toast strong{font-weight:700;display:block}
+.toast-close{margin-left:auto;background:transparent;border:none;color:rgba(255,255,255,.6);width:24px;height:24px;display:grid;place-items:center;border-radius:6px}
+.toast-close:hover{color:#fff;background:rgba(255,255,255,.12)}
+@keyframes toastin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============ MODAL ============ */
+.modal-back{position:fixed;inset:0;z-index:150;background:rgba(12,37,33,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-back.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:100%;max-width:460px;overflow:hidden;animation:toastin .2s ease}
+.modal-head{padding:20px 22px 0;display:flex;gap:14px}
+.modal-ico{width:46px;height:46px;border-radius:13px;flex-shrink:0;display:grid;place-items:center}
+.modal-ico svg{width:23px;height:23px}
+.mi-danger{background:var(--danger-soft);color:var(--danger)}
+.mi-warn{background:var(--warning-soft);color:var(--warning)}
+.mi-primary{background:var(--primary-soft);color:var(--primary-dark)}
+.modal-head h3{font-size:18px;font-weight:700;letter-spacing:-.2px}
+.modal-head p{font-size:14px;color:var(--text-2);margin-top:6px;line-height:1.5}
+.modal-body{padding:16px 22px 0}
+.modal-note{
+  display:flex;gap:9px;font-size:13px;line-height:1.5;color:var(--text-2);
+  background:var(--warning-soft);border:1px solid #f0dcae;border-radius:var(--radius-sm);padding:11px 13px;
+}
+.modal-note svg{width:16px;height:16px;color:var(--warning);flex-shrink:0;margin-top:1px}
+.modal-foot{padding:18px 22px 22px;display:flex;gap:10px;justify-content:flex-end}
+
+/* Invite modal field reuse */
+.modal-body .field:last-child{margin-bottom:4px}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1100px){
+  .cols{grid-template-columns:1fr}
+  .aside{order:-1;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .roles-card{grid-column:1/-1}
+}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .aside{grid-template-columns:1fr}
+}
+@media (max-width:680px){
+  .page{padding:18px 16px 48px}
+  .topbar{padding:10px 16px}
+  .top-chips{display:none}
+  .page-head-actions{width:100%}
+  .page-head-actions .btn{flex:1}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR (CHROME) ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo" aria-hidden="true">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-sub">Clínicas</div>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav-group">Operación</div>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Panel
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Agenda
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamadas
+        <span class="nav-badge">5</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        WhatsApp
+        <span class="nav-badge">12</span>
+      </a>
+      <div class="nav-group">Crecimiento</div>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Pacientes (CRM)
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Informes
+      </a>
+      <div class="nav-group">Sistema</div>
+      <a href="#" class="nav-item active" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Ajustes
+      </a>
+    </nav>
+    <div class="side-foot">
+      <div class="side-clinic">
+        <div class="side-clinic-av" aria-hidden="true">CD</div>
+        <div class="side-clinic-info">
+          <div class="side-clinic-name">Clínica Dental Sonrisa</div>
+          <div class="side-clinic-plan">Plan Pro · Madrid</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <!-- TOPBAR (CHROME) -->
+    <header class="topbar">
+      <div class="search-global">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <label for="globalSearch" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Buscar en toda la aplicación</label>
+        <input id="globalSearch" type="search" placeholder="Buscar pacientes, citas…" />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="top-chips">
+        <span class="top-chip"><span class="dot dot-ok"></span> WhatsApp conectado</span>
+        <span class="top-chip"><span class="dot dot-ok"></span> Agenda sincronizada</span>
+        <span class="top-chip top-chip-soft" title="La automatización está sugiriendo respuestas y huecos de agenda">Automatización activa</span>
+      </div>
+      <div class="top-avatar" title="Borja Méndez" aria-hidden="true">BM</div>
+    </header>
+
+    <!-- PAGE -->
+    <main class="page">
+
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <span>Ajustes</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <span class="tb-crumb-cur">Usuarios y equipo</span>
+      </nav>
+
+      <!-- PAGE HEAD con CTA primario destacado -->
+      <div class="page-head">
+        <div class="page-head-text">
+          <h1>Usuarios y equipo</h1>
+          <p class="subtitle">Suma a tu equipo de recepción para gestionar agenda, llamadas y WhatsApp, y asigna a cada persona el rol con los permisos justos para su trabajo.</p>
+        </div>
+        <div class="page-head-actions">
+          <a href="#invite" class="btn btn-outline" onclick="event.preventDefault();focusInvite()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Ir al formulario
+          </a>
+          <button class="btn btn-primary btn-lg" onclick="openInviteModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            Invitar miembro
+          </button>
+        </div>
+      </div>
+
+      <div class="cols">
+
+        <!-- ======= MEMBERS PANEL ======= -->
+        <section class="card members-panel" aria-label="Miembros del equipo">
+          <div class="toolbar">
+            <div class="toolbar-title">
+              Miembros del equipo
+              <span class="seg-count">5</span>
+            </div>
+            <div class="toolbar-spacer"></div>
+            <div class="field-search">
+              <label for="filterMembers" class="sr-only">Filtrar miembros por nombre o email</label>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="filterMembers" type="search" placeholder="Filtrar miembros…" oninput="filterRows(this.value)" />
+            </div>
+          </div>
+
+          <div class="toolbar" style="border-top:none;padding-top:12px;padding-bottom:12px;background:var(--surface)">
+            <div class="filter-chips" role="group" aria-label="Filtrar por estado">
+              <button class="fchip active" onclick="setFilter(this,'all')">Todos <span class="seg-count">5</span></button>
+              <button class="fchip" onclick="setFilter(this,'active')">Activos <span class="seg-count">3</span></button>
+              <button class="fchip" onclick="setFilter(this,'pending')">Pendientes <span class="seg-count">1</span></button>
+              <button class="fchip" onclick="setFilter(this,'off')">Sin acceso <span class="seg-count">1</span></button>
+            </div>
+          </div>
+
+          <!-- Skeleton (oculto por defecto) -->
+          <div class="tbl-wrap" id="skeletonWrap" hidden>
+            <table class="members"><tbody>
+              <tr class="sk-row"><td><div style="display:flex;gap:12px;align-items:center"><div class="sk circle"></div><div><div class="sk w160"></div><div class="sk w110" style="margin-top:8px"></div></div></div></td><td><div class="sk w90"></div></td><td><div class="sk w70"></div></td><td></td></tr>
+              <tr class="sk-row"><td><div style="display:flex;gap:12px;align-items:center"><div class="sk circle"></div><div><div class="sk w160"></div><div class="sk w110" style="margin-top:8px"></div></div></div></td><td><div class="sk w90"></div></td><td><div class="sk w70"></div></td><td></td></tr>
+              <tr class="sk-row"><td><div style="display:flex;gap:12px;align-items:center"><div class="sk circle"></div><div><div class="sk w160"></div><div class="sk w110" style="margin-top:8px"></div></div></div></td><td><div class="sk w90"></div></td><td><div class="sk w70"></div></td><td></td></tr>
+            </tbody></table>
+          </div>
+
+          <!-- Tabla -->
+          <div class="tbl-wrap" id="tableWrap">
+            <table class="members">
+              <thead>
+                <tr>
+                  <th scope="col">Miembro</th>
+                  <th scope="col">Rol</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col" class="col-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="membersBody">
+
+                <!-- Propietaria (tú) -->
+                <tr data-status="active" data-name="laura garcía propietaria laura@sonrisa.es">
+                  <td>
+                    <div class="member-cell">
+                      <div class="m-avatar av-1" aria-hidden="true">LG</div>
+                      <div class="m-id">
+                        <div class="m-name-row">
+                          <span class="m-name">Laura García</span>
+                          <span class="you-tag">Tú</span>
+                        </div>
+                        <div class="m-mail" title="laura@sonrisa.es">laura@sonrisa.es</div>
+                        <div class="m-sub"><span class="m-dept">Dirección</span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="role-pill is-owner">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>
+                      Propietario
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge badge-ok">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      Activo
+                    </span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="kebab-wrap">
+                      <button class="kebab" aria-disabled="true" aria-label="La cuenta del propietario no se puede editar aquí" title="El propietario no se puede editar aquí. Usa «Transferir propiedad».">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Administrador -->
+                <tr data-status="active" data-name="carlos ortega administrador carlos@sonrisa.es recepción">
+                  <td>
+                    <div class="member-cell">
+                      <div class="m-avatar av-2" aria-hidden="true">CO</div>
+                      <div class="m-id">
+                        <div class="m-name-row"><span class="m-name">Carlos Ortega</span></div>
+                        <div class="m-mail" title="carlos@sonrisa.es">carlos@sonrisa.es</div>
+                        <div class="m-sub"><span class="m-dept">Recepción</span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <label class="sr-only" for="role-co" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Rol de Carlos Ortega</label>
+                    <select class="role-select" id="role-co" onchange="roleChanged(this,'Carlos Ortega')" data-prev="admin">
+                      <option value="admin" selected>Administrador</option>
+                      <option value="user">Usuario</option>
+                    </select>
+                  </td>
+                  <td>
+                    <span class="badge badge-ok">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      Activo
+                    </span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="kebab-wrap">
+                      <button class="kebab" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones para Carlos Ortega" onclick="toggleMenu(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+                      </button>
+                      <div class="menu" role="menu" aria-label="Acciones para Carlos Ortega">
+                        <button class="menu-item" role="menuitem" onclick="closeMenus();toast('ok','Enlace copiado','Comparte el acceso de Carlos.')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                          Reenviar invitación
+                        </button>
+                        <button class="menu-item" role="menuitem" onclick="closeMenus();openTransfer('Carlos Ortega')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>
+                          Transferir propiedad
+                        </button>
+                        <div class="menu-sep"></div>
+                        <button class="menu-item danger" role="menuitem" onclick="closeMenus();openRevoke('Carlos Ortega')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                          Quitar acceso
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Usuaria activa -->
+                <tr data-status="active" data-name="carmen ruiz usuario carmen@sonrisa.es recepción">
+                  <td>
+                    <div class="member-cell">
+                      <div class="m-avatar av-3" aria-hidden="true">CR</div>
+                      <div class="m-id">
+                        <div class="m-name-row"><span class="m-name">Carmen Ruiz</span></div>
+                        <div class="m-mail" title="carmen@sonrisa.es">carmen@sonrisa.es</div>
+                        <div class="m-sub"><span class="m-dept">Recepción</span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <label class="sr-only" for="role-cr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Rol de Carmen Ruiz</label>
+                    <select class="role-select" id="role-cr" onchange="roleChanged(this,'Carmen Ruiz')" data-prev="user">
+                      <option value="admin">Administrador</option>
+                      <option value="user" selected>Usuario</option>
+                    </select>
+                  </td>
+                  <td>
+                    <span class="badge badge-ok">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      Activo
+                    </span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="kebab-wrap">
+                      <button class="kebab" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones para Carmen Ruiz" onclick="toggleMenu(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+                      </button>
+                      <div class="menu" role="menu" aria-label="Acciones para Carmen Ruiz">
+                        <button class="menu-item" role="menuitem" onclick="closeMenus();toast('ok','Enlace copiado','Comparte el acceso de Carmen.')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                          Reenviar invitación
+                        </button>
+                        <button class="menu-item" role="menuitem" onclick="closeMenus();openTransfer('Carmen Ruiz')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>
+                          Transferir propiedad
+                        </button>
+                        <div class="menu-sep"></div>
+                        <button class="menu-item danger" role="menuitem" onclick="closeMenus();openRevoke('Carmen Ruiz')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                          Quitar acceso
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Pendiente -->
+                <tr data-status="pending" data-name="pablo navarro usuario pablo@sonrisa.es">
+                  <td>
+                    <div class="member-cell">
+                      <div class="m-avatar av-4" aria-hidden="true">PN</div>
+                      <div class="m-id">
+                        <div class="m-name-row"><span class="m-name">Pablo Navarro</span></div>
+                        <div class="m-mail" title="pablo@sonrisa.es">pablo@sonrisa.es</div>
+                        <div class="m-sub"><span class="m-dept">Auxiliar</span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <label class="sr-only" for="role-pn" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Rol de Pablo Navarro</label>
+                    <select class="role-select" id="role-pn" onchange="roleChanged(this,'Pablo Navarro')" data-prev="user">
+                      <option value="admin">Administrador</option>
+                      <option value="user" selected>Usuario</option>
+                    </select>
+                  </td>
+                  <td>
+                    <span class="badge badge-pending">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+                      Pendiente
+                    </span>
+                    <span class="badge-meta">invitado hace 2 días</span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="kebab-wrap">
+                      <button class="kebab" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones para Pablo Navarro" onclick="toggleMenu(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+                      </button>
+                      <div class="menu" role="menu" aria-label="Acciones para Pablo Navarro">
+                        <button class="menu-item" role="menuitem" onclick="closeMenus();toast('ok','Invitación reenviada','Le hemos enviado un nuevo email a Pablo.')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                          Reenviar invitación
+                        </button>
+                        <div class="menu-sep"></div>
+                        <button class="menu-item danger" role="menuitem" onclick="closeMenus();openCancelInvite('Pablo Navarro')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                          Cancelar invitación
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Sin acceso -->
+                <tr data-status="off" data-name="marta lópez usuario marta@sonrisa.es">
+                  <td>
+                    <div class="member-cell">
+                      <div class="m-avatar av-5" aria-hidden="true" style="opacity:.7">ML</div>
+                      <div class="m-id">
+                        <div class="m-name-row"><span class="m-name">Marta López</span></div>
+                        <div class="m-mail" title="marta@sonrisa.es">marta@sonrisa.es</div>
+                        <div class="m-sub"><span class="m-dept">Auxiliar</span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="role-pill">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      Usuario
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge badge-off">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                      Sin acceso
+                    </span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="kebab-wrap">
+                      <button class="kebab" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones para Marta López" onclick="toggleMenu(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+                      </button>
+                      <div class="menu" role="menu" aria-label="Acciones para Marta López">
+                        <button class="menu-item" role="menuitem" onclick="closeMenus();toast('ok','Acceso reactivado','Marta López vuelve a tener acceso.')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                          Reactivar acceso
+                        </button>
+                        <div class="menu-sep"></div>
+                        <button class="menu-item danger" role="menuitem" onclick="closeMenus();openDelete('Marta López')">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                          Eliminar definitivamente
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty: equipo vacío (cuenta nueva) -->
+          <div class="state" id="emptyTeam" hidden>
+            <div class="state-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            </div>
+            <h3>Aún no has invitado a nadie</h3>
+            <p>Suma a tu equipo de recepción y auxiliares para que gestionen agenda, llamadas y WhatsApp contigo. Tú decides qué puede hacer cada persona.</p>
+            <div class="state-actions">
+              <button class="btn btn-primary btn-lg" onclick="openInviteModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                Invita a tu primer miembro
+              </button>
+            </div>
+          </div>
+
+          <!-- Empty: sin resultados de filtro -->
+          <div class="state" id="emptyState" hidden>
+            <div class="state-ico warn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3>Sin resultados</h3>
+            <p>Ningún miembro coincide con tu búsqueda o filtro. Prueba con otro término o limpia los filtros.</p>
+            <div class="state-actions">
+              <button class="btn btn-outline" onclick="clearFilters()">Limpiar filtros</button>
+            </div>
+          </div>
+
+          <!-- Error state -->
+          <div class="state" id="errorState" hidden>
+            <div class="state-ico err">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3>No hemos podido cargar el equipo</h3>
+            <p>Ha habido un problema de conexión. Comprueba tu red y vuelve a intentarlo.</p>
+            <div class="state-actions">
+              <button class="btn btn-outline" onclick="retryLoad()">Reintentar</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======= ASIDE ======= -->
+        <aside class="aside">
+
+          <!-- Me-card -->
+          <div class="me-card">
+            <div class="me-card-pad">
+              <div class="me-top">
+                <div class="me-av" aria-hidden="true">LG</div>
+                <div>
+                  <div class="me-name">Laura García</div>
+                  <div class="me-mail">laura@sonrisa.es</div>
+                </div>
+              </div>
+              <span class="me-role-pill">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>
+                Propietario · acceso total
+              </span>
+              <div class="me-foot">
+                <div>
+                  <div class="me-stat-num">5</div>
+                  <div class="me-stat-lbl">Miembros</div>
+                </div>
+                <div>
+                  <div class="me-stat-num">1</div>
+                  <div class="me-stat-lbl">Pendiente</div>
+                </div>
+                <div>
+                  <div class="me-stat-num">10</div>
+                  <div class="me-stat-lbl">Plazas plan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invite card -->
+          <div class="card invite-card" id="invite">
+            <div class="invite-head">
+              <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                Invitar miembro
+              </h2>
+              <p>Le enviaremos un email con el enlace para que cree su contraseña.</p>
+            </div>
+            <form class="invite-body" onsubmit="event.preventDefault();sendInvite(this)">
+              <div class="field">
+                <label class="field-label" for="inviteEmail">Email del nuevo miembro</label>
+                <input id="inviteEmail" type="email" placeholder="nombre@tuclinica.es" required autocomplete="off" />
+              </div>
+              <div class="field">
+                <label class="field-label" for="inviteRole">
+                  Rol
+                  <span class="tip" tabindex="0" aria-label="Más información sobre los roles">?
+                    <span class="tip-bubble">El rol define qué puede ver y hacer cada persona. Puedes cambiarlo en cualquier momento desde la tabla.</span>
+                  </span>
+                </label>
+                <select id="inviteRole" onchange="updateRoleHint(this.value)">
+                  <option value="admin">Administrador — gestiona equipo y ajustes</option>
+                  <option value="user" selected>Usuario — recepción y agenda</option>
+                </select>
+                <div class="field-hint" id="roleHint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  <span id="roleHintText">Gestiona agenda, llamadas, WhatsApp y pacientes. No accede a facturación ni a la gestión del equipo.</span>
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Enviar invitación
+              </button>
+            </form>
+          </div>
+
+          <!-- Roles explained -->
+          <div class="card roles-card">
+            <div class="roles-head"><h2>¿Qué puede hacer cada rol?</h2></div>
+            <div class="roles-list">
+              <div class="ri">
+                <div class="ri-ico ico-owner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>
+                </div>
+                <div>
+                  <div class="ri-name">Propietario</div>
+                  <div class="ri-desc">Acceso total, incluida la facturación, el plan y la transferencia de propiedad. Solo puede haber uno.</div>
+                </div>
+              </div>
+              <div class="ri">
+                <div class="ri-ico ico-admin">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <div class="ri-name">Administrador</div>
+                  <div class="ri-desc">Todo lo del usuario, más invitar y gestionar al equipo, los ajustes de la clínica y la automatización.</div>
+                </div>
+              </div>
+              <div class="ri">
+                <div class="ri-ico ico-user">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                  <div class="ri-name">Usuario</div>
+                  <div class="ri-desc">El día a día de recepción: agenda, llamadas, WhatsApp y pacientes. Sin acceso a facturación ni al equipo.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ TOASTS (aria-live) ============ -->
+<div class="toast-wrap" id="toastWrap" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<!-- ============ MODAL GENÉRICO ============ -->
+<div class="modal-back" id="modalBack" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-ico" id="modalIco"></div>
+      <div>
+        <h3 id="modalTitle">Título</h3>
+        <p id="modalDesc">Descripción</p>
+      </div>
+    </div>
+    <div class="modal-body" id="modalExtra"></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn" id="modalConfirm" onclick="confirmModal()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- Datos de rol para el formulario de invitación ---------- */
+var ROLE_HINTS = {
+  admin: "Todo lo del usuario, más invitar y gestionar al equipo, los ajustes de la clínica y la automatización. No accede a facturación.",
+  user: "Gestiona agenda, llamadas, WhatsApp y pacientes. No accede a facturación ni a la gestión del equipo."
+};
+function updateRoleHint(role){
+  document.getElementById('roleHintText').textContent = ROLE_HINTS[role] || ROLE_HINTS.user;
+}
+
+/* ---------- CTA: enfocar / abrir formulario ---------- */
+function focusInvite(){
+  var card = document.getElementById('invite');
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(function(){ document.getElementById('inviteEmail').focus(); }, 350);
+}
+
+/* ---------- Enviar invitación ---------- */
+function sendInvite(form){
+  var email = document.getElementById('inviteEmail').value.trim();
+  var role = document.getElementById('inviteRole');
+  var roleTxt = role.options[role.selectedIndex].text.split('—')[0].trim();
+  if(!email){ document.getElementById('inviteEmail').focus(); return; }
+  toast('ok','Invitación enviada', 'Hemos enviado el acceso a '+email+' como '+roleTxt+'.');
+  form.reset();
+  updateRoleHint(document.getElementById('inviteRole').value);
+}
+
+/* ---------- Modal de invitación (reusa el form) ---------- */
+function openInviteModal(){
+  showModal({
+    icon:'primary',
+    iconSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>',
+    title:'Invitar miembro',
+    desc:'Indica el email y el rol. Le enviaremos un enlace para crear su contraseña.',
+    extra:'<div class="field"><label class="field-label" for="mEmail">Email del nuevo miembro</label><input id="mEmail" type="email" placeholder="nombre@tuclinica.es" /></div>'+
+          '<div class="field"><label class="field-label" for="mRole">Rol</label>'+
+          '<select id="mRole" class="" onchange="document.getElementById(\'mRoleHint\').textContent=ROLE_HINTS[this.value]" style="width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:11px 13px;font-size:14px;font-family:inherit;min-height:44px;appearance:none">'+
+          '<option value="admin">Administrador — gestiona equipo y ajustes</option>'+
+          '<option value="user" selected>Usuario — recepción y agenda</option></select>'+
+          '<div class="field-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span id="mRoleHint">'+ROLE_HINTS.user+'</span></div></div>',
+    confirmText:'Enviar invitación',
+    confirmClass:'btn-primary',
+    onConfirm:function(){
+      var em = document.getElementById('mEmail').value.trim();
+      if(!em){ document.getElementById('mEmail').focus(); return false; }
+      var r = document.getElementById('mRole');
+      var rt = r.options[r.selectedIndex].text.split('—')[0].trim();
+      toast('ok','Invitación enviada','Hemos enviado el acceso a '+em+' como '+rt+'.');
+      return true;
+    }
+  });
+  setTimeout(function(){ var e=document.getElementById('mEmail'); if(e) e.focus(); }, 120);
+}
+
+/* ---------- Cambio de rol con confirmación si es crítico ---------- */
+function roleChanged(sel, name){
+  var prev = sel.getAttribute('data-prev');
+  var val = sel.value;
+  var label = sel.options[sel.selectedIndex].text;
+  // Elevar a Administrador requiere confirmación de consecuencias
+  if(prev === 'user' && val === 'admin'){
+    showModal({
+      icon:'warn',
+      iconSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+      title:'Elevar a Administrador',
+      desc:'Vas a dar a '+name+' permisos para invitar y gestionar al equipo, cambiar los ajustes de la clínica y la automatización.',
+      extra:'<div class="modal-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Es un rol con más acceso. Podrás volver a bajarlo cuando quieras.</div>',
+      confirmText:'Sí, elevar a Administrador',
+      confirmClass:'btn-primary',
+      onConfirm:function(){
+        sel.setAttribute('data-prev', val);
+        toast('ok','Rol actualizado', name+' ahora es '+label+'.');
+        return true;
+      },
+      onCancel:function(){ sel.value = prev; }
+    });
+    return;
+  }
+  sel.setAttribute('data-prev', val);
+  toast('ok','Rol actualizado', name+' ahora es '+label+'.');
+}
+
+/* ---------- Transferir propiedad (acción separada, confirmada) ---------- */
+function openTransfer(name){
+  showModal({
+    icon:'warn',
+    iconSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>',
+    title:'Transferir propiedad a '+name,
+    desc:name+' pasará a ser el Propietario, con acceso total incluida la facturación y el plan. Tú dejarás de ser Propietario.',
+    extra:'<div class="modal-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Esta acción es importante: solo puede haber un Propietario.</div>',
+    confirmText:'Transferir propiedad',
+    confirmClass:'btn-danger',
+    onConfirm:function(){ toast('ok','Propiedad transferida', name+' es ahora el Propietario.'); return true; }
+  });
+}
+
+/* ---------- Quitar acceso ---------- */
+function openRevoke(name){
+  showModal({
+    icon:'danger',
+    iconSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>',
+    title:'Quitar acceso a '+name,
+    desc:name+' dejará de poder entrar en la clínica. Podrás reactivar su acceso más adelante sin volver a invitarle.',
+    confirmText:'Quitar acceso',
+    confirmClass:'btn-danger',
+    onConfirm:function(){ toast('warn','Acceso retirado', name+' ya no puede entrar.'); return true; }
+  });
+}
+function openCancelInvite(name){
+  showModal({
+    icon:'danger',
+    iconSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+    title:'Cancelar invitación de '+name,
+    desc:'El enlace de invitación dejará de funcionar. Tendrás que volver a invitar a esta persona si cambias de idea.',
+    confirmText:'Cancelar invitación',
+    confirmClass:'btn-danger',
+    onConfirm:function(){ toast('warn','Invitación cancelada','La invitación de '+name+' se ha anulado.'); return true; }
+  });
+}
+function openDelete(name){
+  showModal({
+    icon:'danger',
+    iconSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>',
+    title:'Eliminar a '+name,
+    desc:'Se borrará definitivamente de tu equipo. Esta acción no se puede deshacer.',
+    confirmText:'Eliminar definitivamente',
+    confirmClass:'btn-danger',
+    onConfirm:function(){ toast('warn','Miembro eliminado', name+' se ha eliminado del equipo.'); return true; }
+  });
+}
+
+/* ---------- Modal engine ---------- */
+var _modalConfirm = null, _modalCancel = null, _lastFocus = null;
+function showModal(opt){
+  _lastFocus = document.activeElement;
+  var back = document.getElementById('modalBack');
+  var ico = document.getElementById('modalIco');
+  ico.className = 'modal-ico mi-'+(opt.icon||'primary');
+  ico.innerHTML = opt.iconSvg || '';
+  document.getElementById('modalTitle').textContent = opt.title || '';
+  document.getElementById('modalDesc').textContent = opt.desc || '';
+  document.getElementById('modalExtra').innerHTML = opt.extra || '';
+  var cbtn = document.getElementById('modalConfirm');
+  cbtn.textContent = opt.confirmText || 'Confirmar';
+  cbtn.className = 'btn '+(opt.confirmClass||'btn-primary');
+  _modalConfirm = opt.onConfirm || function(){return true;};
+  _modalCancel = opt.onCancel || null;
+  back.classList.add('open');
+  cbtn.focus();
+}
+function confirmModal(){
+  var ok = true;
+  if(_modalConfirm){ ok = _modalConfirm(); }
+  if(ok !== false){ closeModal(true); }
+}
+function closeModal(skipCancel){
+  var back = document.getElementById('modalBack');
+  if(back.classList.contains('open') && !skipCancel && _modalCancel){ _modalCancel(); }
+  back.classList.remove('open');
+  _modalConfirm = null; _modalCancel = null;
+  if(_lastFocus){ _lastFocus.focus(); }
+}
+document.getElementById('modalBack').addEventListener('click', function(e){ if(e.target === this) closeModal(); });
+
+/* ---------- Toasts ---------- */
+function toast(type, title, msg){
+  var wrap = document.getElementById('toastWrap');
+  var el = document.createElement('div');
+  el.className = 'toast '+(type==='warn'?'warn':'ok');
+  var svg = type==='warn'
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  el.innerHTML = svg + '<div><strong>'+title+'</strong>'+(msg?'<span>'+msg+'</span>':'')+'</div>'+
+    '<button class="toast-close" aria-label="Cerrar aviso" onclick="this.parentNode.remove()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  wrap.appendChild(el);
+  setTimeout(function(){ if(el.parentNode) el.remove(); }, 5000);
+}
+
+/* ---------- Kebab menu (accesible) ---------- */
+function toggleMenu(btn){
+  var menu = btn.parentNode.querySelector('.menu');
+  var isOpen = menu.classList.contains('open');
+  closeMenus();
+  if(!isOpen){
+    menu.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    // Reposicionar si se desborda por abajo
+    var rect = menu.getBoundingClientRect();
+    if(rect.bottom > window.innerHeight - 12){ menu.classList.add('flip-up'); }
+    else { menu.classList.remove('flip-up'); }
+    var first = menu.querySelector('.menu-item');
+    if(first) first.focus();
+  }
+}
+function closeMenus(){
+  document.querySelectorAll('.menu.open').forEach(function(m){ m.classList.remove('open','flip-up'); });
+  document.querySelectorAll('.kebab[aria-expanded="true"]').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+}
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.kebab-wrap')) closeMenus();
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){ closeMenus(); if(document.getElementById('modalBack').classList.contains('open')) closeModal(); }
+  var openMenu = document.querySelector('.menu.open');
+  if(openMenu && (e.key === 'ArrowDown' || e.key === 'ArrowUp')){
+    e.preventDefault();
+    var items = Array.prototype.slice.call(openMenu.querySelectorAll('.menu-item'));
+    var idx = items.indexOf(document.activeElement);
+    if(e.key === 'ArrowDown') idx = (idx+1) % items.length;
+    else idx = (idx-1+items.length) % items.length;
+    items[idx].focus();
+  }
+});
+
+/* ---------- Filtro / búsqueda de la tabla ---------- */
+var currentFilter = 'all', currentQuery = '';
+function setFilter(btn, f){
+  document.querySelectorAll('.fchip').forEach(function(c){ c.classList.remove('active'); });
+  btn.classList.add('active');
+  currentFilter = f;
+  applyFilters();
+}
+function filterRows(q){ currentQuery = q.toLowerCase().trim(); applyFilters(); }
+function applyFilters(){
+  var rows = document.querySelectorAll('#membersBody tr');
+  var visible = 0, total = rows.length;
+  rows.forEach(function(r){
+    var matchF = (currentFilter === 'all') || (r.getAttribute('data-status') === currentFilter);
+    var matchQ = !currentQuery || (r.getAttribute('data-name')||'').indexOf(currentQuery) > -1;
+    var show = matchF && matchQ;
+    r.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('tableWrap').hidden = (visible === 0);
+  document.getElementById('emptyState').hidden = (visible !== 0);
+}
+function clearFilters(){
+  currentFilter = 'all'; currentQuery = '';
+  document.getElementById('filterMembers').value = '';
+  document.querySelectorAll('.fchip').forEach(function(c,i){ c.classList.toggle('active', i===0); });
+  applyFilters();
+}
+
+/* ---------- Carga simulada (skeleton -> tabla) y reintento ---------- */
+function retryLoad(){
+  document.getElementById('errorState').hidden = true;
+  document.getElementById('skeletonWrap').hidden = false;
+  setTimeout(function(){
+    document.getElementById('skeletonWrap').hidden = true;
+    document.getElementById('tableWrap').hidden = false;
+  }, 900);
+}
+
+/* init */
+updateRoleHint('user');
+</script>
+</body>
+</html>

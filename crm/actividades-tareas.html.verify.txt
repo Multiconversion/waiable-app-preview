@@ -1,0 +1,19 @@
+first:
+<!DOCTYPE html>
+last:
+</html>
+=== chip-soft applied? ===
+1
+=== still says IA activa? ===
+0
+=== Automatización chip present? ===
+1
+=== sub-12px fonts ===
+(none above = OK)
+=== interface svg sizes >24 (width=/height= attrs) ===
+height="30"
+width="30"
+(none above = OK)
+=== bytes/lines ===
+   90495 /Users/borja/waiable-selfhosted/app-redesign/crm/actividades-tareas.html
+    1193 /Users/borja/waiable-selfhosted/app-redesign/crm/actividades-tareas.html

@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividades y tareas · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ WAIABLE PREMIUM TOKENS ============ */
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#8a5a09; --warning-soft:#fff4dc;
+  --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06),0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08),0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12),0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.55;
+  -webkit-font-smoothing:antialiased;font-size:14px;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+svg{display:block;flex:none}
+:focus-visible{outline:3px solid var(--primary-bright);outline-offset:2px;border-radius:6px}
+
+/* ============ APP LAYOUT ============ */
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+/* ============ SIDEBAR (CHROME — preserved) ============ */
+.sidebar{
+  background:linear-gradient(180deg,#0c1714 0%,#0d1a17 60%,#0a1512 100%);
+  color:#cfe0db;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
+  border-right:1px solid rgba(255,255,255,.05);
+}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 18px 18px}
+.brand .logo{
+  width:36px;height:36px;border-radius:11px;flex:none;
+  background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));
+  display:grid;place-items:center;color:#fff;box-shadow:0 6px 16px rgba(15,148,134,.35);
+}
+.brand .nm{font-weight:800;font-size:16px;color:#fff;letter-spacing:-.2px;line-height:1.2}
+.brand .sub{font-size:12px;color:#7d918b;font-weight:500}
+.nav{flex:1;overflow-y:auto;padding:6px 12px 16px}
+.nav-group{margin-top:16px}
+.nav-group .lbl{
+  font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6f837d;
+  font-weight:700;padding:0 10px 7px
+}
+.nav a{
+  display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:10px;
+  color:#bccdc8;font-weight:500;font-size:14px;margin-bottom:2px;position:relative;
+  min-height:40px;transition:background .15s,color .15s
+}
+.nav a svg{color:#7f938d;transition:color .15s}
+.nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav a:hover svg{color:#bfe9e0}
+.nav a.active{background:linear-gradient(90deg,rgba(15,148,134,.22),rgba(15,148,134,.06));color:#fff}
+.nav a.active svg{color:var(--cyan)}
+.nav a.active::before{
+  content:"";position:absolute;left:-12px;top:9px;bottom:9px;width:3px;
+  background:var(--cyan);border-radius:0 3px 3px 0
+}
+.nav .cnt{
+  margin-left:auto;font-size:12px;font-weight:700;background:rgba(255,255,255,.1);
+  color:#dcefe9;padding:2px 8px;border-radius:999px;min-width:22px;text-align:center
+}
+.nav a.active .cnt{background:var(--cyan);color:#06302b}
+.nav .cnt.warn{background:var(--danger);color:#fff}
+.side-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:11px}
+.side-foot .av{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  background:linear-gradient(135deg,#1f9e8c,#0a5d57);display:grid;place-items:center;
+  color:#fff;font-weight:700;font-size:13px
+}
+.side-foot .who{line-height:1.3;min-width:0}
+.side-foot .who b{font-size:13px;color:#eaf4f1;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-foot .who span{font-size:12px;color:#7d918b}
+
+/* ============ MAIN ============ */
+.main{display:flex;flex-direction:column;min-width:0}
+
+/* ---- TOPBAR (CHROME — preserved) ---- */
+.topbar{
+  position:sticky;top:0;z-index:30;background:rgba(255,255,255,.86);
+  backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);
+  padding:13px 26px;display:flex;align-items:center;gap:18px
+}
+.tb-titles{min-width:0}
+.tb-bc{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:1px}
+.tb-bc svg{color:var(--line-strong)}
+.tb-bc a:hover{color:var(--primary)}
+.topbar h1{font-size:18px;font-weight:800;letter-spacing:-.3px;line-height:1.2;white-space:nowrap}
+.search{
+  flex:1;max-width:440px;margin-left:6px;position:relative;display:flex;align-items:center
+}
+.search svg{position:absolute;left:13px;color:var(--muted)}
+.search input{
+  width:100%;height:42px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);
+  background:var(--surface-soft);padding:0 56px 0 40px;font-size:14px;color:var(--text)
+}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-soft);outline:none}
+.search .kbd{
+  position:absolute;right:10px;font-size:12px;font-weight:700;color:var(--muted);
+  background:#fff;border:1px solid var(--line-strong);border-radius:7px;padding:2px 7px
+}
+.tb-chips{display:flex;align-items:center;gap:8px;margin-left:auto}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:var(--radius-pill);
+  font-size:13px;font-weight:600;background:var(--surface-soft);border:1px solid var(--line);color:var(--text-2)
+}
+.chip .dot{width:8px;height:8px;border-radius:50%}
+.chip .dot.green{background:var(--ok)}
+.chip .dot.teal{background:var(--accent)}
+/* automation status: discreet, secondary — never competes with connection chips */
+.chip.chip-soft{background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:500}
+.chip.chip-soft .dot{background:var(--line-strong)}
+.tb-icon{
+  width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  background:var(--surface-soft);border:1px solid var(--line);color:var(--text-2);position:relative
+}
+.tb-icon:hover{background:#fff;border-color:var(--line-strong);color:var(--text)}
+.tb-icon .nb{position:absolute;top:7px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+
+/* ============ PAGE BODY ============ */
+.page{padding:24px 26px 64px;max-width:1280px;width:100%;margin:0 auto}
+
+/* ---- PAGE HEAD: H1 + context + primary action ---- */
+.phead{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+.phead .pt{min-width:260px;flex:1}
+.phead h2{font-size:24px;font-weight:800;letter-spacing:-.4px;line-height:1.2}
+.phead .lead{font-size:14px;color:var(--text-2);margin-top:4px;max-width:560px}
+.phead-actions{display:flex;align-items:center;gap:10px}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:44px;padding:0 18px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;
+  border:1px solid transparent;transition:filter .15s,background .15s,box-shadow .15s;white-space:nowrap
+}
+.btn-primary{
+  background:linear-gradient(180deg,var(--primary-bright),var(--primary));color:#fff;
+  box-shadow:0 8px 18px rgba(15,118,110,.28),inset 0 1px 0 rgba(255,255,255,.16)
+}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn-ghost{background:var(--surface);border-color:var(--line-strong);color:var(--text-2);height:40px;font-weight:600}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-tint)}
+.btn-sm{height:36px;padding:0 13px;font-size:13px}
+
+/* secondary action menu (Registrar actividad subordinated) */
+.menu-wrap{position:relative}
+.menu-pop{
+  position:absolute;right:0;top:46px;z-index:40;width:280px;background:#fff;
+  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  padding:6px;display:none
+}
+.menu-pop.open{display:block}
+.menu-pop button{
+  display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;
+  padding:10px 11px;border-radius:var(--radius-sm);min-height:44px
+}
+.menu-pop button:hover{background:var(--surface-soft)}
+.menu-pop .mi-ic{
+  width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center;
+  background:var(--primary-soft);color:var(--primary-dark)
+}
+.menu-pop .mi-tx b{display:block;font-size:14px;font-weight:600;color:var(--text)}
+.menu-pop .mi-tx span{display:block;font-size:13px;color:var(--muted);line-height:1.4}
+
+/* ---- SUMMARY SCARDS ---- */
+.scards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.scard{
+  display:flex;align-items:center;gap:14px;text-align:left;padding:16px 16px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);position:relative;transition:border-color .15s,box-shadow .15s,transform .12s
+}
+.scard:hover{border-color:var(--line-strong);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.scard[aria-pressed="true"]{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft),var(--shadow-sm)}
+.scard[aria-pressed="true"]::after{
+  content:"Mostrando";position:absolute;top:10px;right:12px;font-size:12px;font-weight:700;
+  color:var(--primary-dark);background:var(--primary-soft);padding:2px 9px;border-radius:999px
+}
+.scard .sic{width:46px;height:46px;border-radius:12px;flex:none;display:grid;place-items:center}
+.scard.s-due .sic{background:var(--danger-soft);color:var(--danger)}
+.scard.s-today .sic{background:var(--warning-soft);color:var(--warning)}
+.scard.s-open .sic{background:var(--info-soft);color:var(--info)}
+.scard .sn{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}
+.scard .sl{font-size:13px;font-weight:600;color:var(--text-2);margin-top:3px}
+.scard .sh{font-size:12px;color:var(--muted);font-weight:500}
+.scard.s-due .sn{color:var(--danger)}
+
+/* ---- TOOLBAR: tabs + filters ---- */
+.toolbar{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius) var(--radius) 0 0;
+  border-bottom:none;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap
+}
+.tabs{display:flex;gap:4px;background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:4px}
+.tab{
+  display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 15px;border-radius:var(--radius-pill);
+  font-size:13px;font-weight:600;color:var(--text-2)
+}
+.tab[aria-selected="true"]{background:#fff;color:var(--primary-dark);box-shadow:var(--shadow-sm)}
+.tab .cnt{font-size:12px;font-weight:700;background:var(--line);color:var(--text-2);padding:1px 8px;border-radius:999px}
+.tab[aria-selected="true"] .cnt{background:var(--primary-soft);color:var(--primary-dark)}
+.filters{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap}
+.filter-label{font-size:13px;font-weight:600;color:var(--muted)}
+.fchip{
+  display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:var(--radius-pill);
+  font-size:13px;font-weight:600;color:var(--text-2);background:var(--surface);border:1px solid var(--line-strong)
+}
+.fchip:hover{border-color:var(--primary);color:var(--primary)}
+.fchip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+.fchip[aria-pressed="true"] svg{color:#fff}
+
+/* active filter banner */
+.fbanner{
+  display:none;align-items:center;gap:10px;background:var(--primary-tint);
+  border:1px solid var(--line);border-top:none;padding:10px 16px;font-size:13px;color:var(--text-2)
+}
+.fbanner.show{display:flex}
+.fbanner b{color:var(--primary-dark);font-weight:700}
+.fbanner button{
+  margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
+  border-radius:var(--radius-pill);font-size:13px;font-weight:600;color:var(--primary-dark);
+  background:#fff;border:1px solid var(--line-strong)
+}
+.fbanner button:hover{border-color:var(--primary)}
+
+/* ============ TASK LIST ============ */
+.tasklist{
+  background:var(--surface);border:1px solid var(--line);border-radius:0 0 var(--radius) var(--radius);
+  box-shadow:var(--shadow-md);overflow:hidden
+}
+.tgroup{border-top:1px solid var(--line)}
+.tgroup:first-child{border-top:none}
+.ghead{
+  display:flex;align-items:center;gap:10px;padding:11px 18px;background:var(--surface-soft);
+  border-bottom:1px solid var(--line)
+}
+.ghead .gtag{
+  display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;
+  padding:3px 11px;border-radius:var(--radius-pill)
+}
+.ghead.g-due .gtag{background:var(--danger-soft);color:var(--danger)}
+.ghead.g-today .gtag{background:var(--warning-soft);color:var(--warning)}
+.ghead.g-upcoming .gtag{background:var(--info-soft);color:var(--info)}
+.ghead .gcount{font-size:13px;font-weight:600;color:var(--muted)}
+
+/* ---- TASK ROW ---- */
+.trow{
+  display:flex;align-items:flex-start;gap:14px;padding:14px 18px 14px 14px;
+  border-bottom:1px solid var(--line);position:relative;transition:background .15s
+}
+.trow:last-child{border-bottom:none}
+.trow:hover{background:var(--surface-soft)}
+.trow:focus-within{background:var(--primary-tint)}
+/* left status bar reinforced by textual label inside row */
+.trow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.trow.is-due::before{background:var(--danger)}
+.trow.is-today::before{background:var(--warning)}
+.trow.is-upcoming::before{background:var(--info)}
+.trow.done{opacity:.62}
+.trow.done::before{background:var(--ok)}
+
+/* ---- CHECK CONTROL (CORE ACTION) ---- */
+.t-check{
+  flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+  background:transparent;border:none;transition:background .15s
+}
+.t-check:hover{background:var(--primary-soft)}
+.t-check:focus-visible{outline:3px solid var(--primary-bright);outline-offset:1px}
+.t-check .box{
+  width:26px;height:26px;border-radius:8px;border:2.5px solid var(--line-strong);
+  background:#fff;display:grid;place-items:center;transition:background .15s,border-color .15s;color:#fff
+}
+.t-check:hover .box{border-color:var(--primary)}
+.t-check .box svg{opacity:0;transform:scale(.6);transition:opacity .15s,transform .15s}
+.t-check[aria-checked="true"] .box{background:var(--ok);border-color:var(--ok)}
+.t-check[aria-checked="true"] .box svg{opacity:1;transform:scale(1)}
+
+/* ---- TASK BODY ---- */
+.t-body{flex:1;min-width:0}
+.t-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.t-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.4}
+.trow.done .t-title{text-decoration:line-through;color:var(--muted)}
+.t-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px}
+.t-meta .m{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2);font-weight:500}
+.t-meta .m svg{color:var(--muted)}
+.t-meta .m.due-red{color:var(--danger);font-weight:600}
+.t-meta .m.due-red svg{color:var(--danger)}
+.t-meta .m.due-amber{color:var(--warning);font-weight:600}
+.t-meta .m.due-amber svg{color:var(--warning)}
+.t-pat{font-weight:600;color:var(--text)}
+
+/* badges: priority distinguished by icon+text+color */
+.badge{
+  display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;
+  padding:3px 9px;border-radius:var(--radius-pill);border:1px solid transparent;line-height:1.3
+}
+.b-high{background:var(--danger-soft);color:var(--danger);border-color:#f3c9c3}
+.b-med{background:var(--warning-soft);color:var(--warning);border-color:#eccf96}
+.b-low{background:#eef1f0;color:var(--text-2);border-color:var(--line-strong)}
+.b-chan{background:var(--surface);color:var(--text-2);border:1px solid var(--line-strong);font-weight:600}
+.b-chan.wa{color:#0a7a52}
+.b-chan.call{color:var(--info)}
+.b-chan.mail{color:var(--primary-dark)}
+
+/* ---- ROW ACTIONS (visible primary + reveal rest) ---- */
+.t-actions{display:flex;align-items:center;gap:6px;flex:none;align-self:center}
+.t-act{
+  width:40px;height:40px;border-radius:10px;display:grid;place-items:center;
+  background:var(--surface);border:1px solid var(--line);color:var(--text-2);transition:all .15s
+}
+.t-act:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-tint)}
+.t-act.primary{background:var(--primary-soft);border-color:#bfe3dc;color:var(--primary-dark)}
+.t-act.primary:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* secondary actions hidden until hover/focus, but never block tab order when hidden */
+.t-act.more{opacity:0;transform:translateX(4px);transition:opacity .15s,transform .15s}
+.trow:hover .t-act.more,.trow:focus-within .t-act.more{opacity:1;transform:none}
+.t-act.more:focus-visible{opacity:1;transform:none}
+
+/* ============ SKELETON / ERROR / EMPTY ============ */
+.sk-row{display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.sk{background:linear-gradient(90deg,#eef1f0 25%,#f6f8f7 50%,#eef1f0 75%);background-size:200% 100%;animation:shimmer 1.3s infinite;border-radius:8px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.sk-box{width:26px;height:26px;border-radius:8px;flex:none}
+.sk-line{height:13px}
+
+.state{display:none;flex-direction:column;align-items:center;text-align:center;padding:56px 24px}
+.state .ic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;margin-bottom:16px}
+.state h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.state p{font-size:14px;color:var(--text-2);max-width:380px;margin-bottom:18px}
+.state.empty .ic{background:var(--ok-soft);color:var(--ok)}
+.state.error .ic{background:var(--danger-soft);color:var(--danger)}
+
+/* ---- "ver mas" load row ---- */
+.loadmore{display:flex;justify-content:center;padding:14px;border-top:1px solid var(--line);background:var(--surface-soft)}
+
+/* ============ ACTIVITY TIMELINE ============ */
+.section-head{display:flex;align-items:center;gap:10px;margin:30px 0 14px}
+.section-head h3{font-size:18px;font-weight:700;letter-spacing:-.2px}
+.section-head .hint{font-size:13px;color:var(--muted);margin-left:auto}
+.timeline{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);padding:8px 20px
+}
+.tl-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);position:relative}
+.tl-item:last-child{border-bottom:none}
+.tl-ic{
+  width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;
+  background:var(--primary-soft);color:var(--primary-dark)
+}
+.tl-ic.call{background:var(--info-soft);color:var(--info)}
+.tl-ic.wa{background:var(--ok-soft);color:var(--ok)}
+.tl-ic.note{background:var(--surface-soft);color:var(--text-2)}
+.tl-body{flex:1;min-width:0}
+.tl-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tl-head b{font-size:14px;font-weight:600}
+.tl-time{font-size:13px;color:var(--muted);margin-left:auto;font-weight:500;white-space:nowrap}
+.tl-desc{font-size:14px;color:var(--text-2);margin-top:2px}
+.tl-who{font-size:13px;color:var(--muted);margin-top:3px}
+
+/* ============ TOOLTIP ============ */
+.tt{position:relative;display:inline-flex;align-items:center}
+.tt .qm{
+  width:18px;height:18px;border-radius:50%;display:grid;place-items:center;
+  background:var(--line);color:var(--text-2);font-size:12px;font-weight:700;cursor:help;margin-left:4px
+}
+.tt .ttx{
+  position:absolute;bottom:140%;left:50%;transform:translateX(-50%);
+  background:var(--text);color:#fff;font-size:12px;font-weight:500;line-height:1.45;
+  padding:8px 11px;border-radius:8px;width:230px;text-align:left;
+  opacity:0;visibility:hidden;transition:opacity .15s;z-index:50;box-shadow:var(--shadow-md)
+}
+.tt:hover .ttx,.tt:focus-within .ttx{opacity:1;visibility:visible}
+
+/* ============ TOAST (with undo + aria-live) ============ */
+.toast-wrap{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:10px;align-items:center}
+.toast{
+  display:flex;align-items:center;gap:12px;background:var(--text);color:#fff;
+  padding:12px 14px 12px 16px;border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  font-size:14px;font-weight:500;min-width:300px;max-width:440px;
+  opacity:0;transform:translateY(12px);transition:opacity .2s,transform .2s
+}
+.toast.show{opacity:1;transform:none}
+.toast .tic{flex:none;color:var(--cyan)}
+.toast .undo{
+  margin-left:auto;display:inline-flex;align-items:center;gap:6px;
+  height:36px;padding:0 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;
+  background:rgba(94,224,201,.16);color:var(--cyan);border:1px solid rgba(94,224,201,.32)
+}
+.toast .undo:hover{background:rgba(94,224,201,.28)}
+.toast .tx-close{flex:none;color:#9fb3ad;width:30px;height:30px;border-radius:8px;display:grid;place-items:center}
+.toast .tx-close:hover{background:rgba(255,255,255,.1);color:#fff}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1080px){.scards{grid-template-columns:1fr 1fr}}
+@media (max-width:880px){
+  .app{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .scards{grid-template-columns:1fr}
+  .search{display:none}
+}
+@media (max-width:680px){
+  .page{padding:18px 14px 56px}
+  .t-act.more{opacity:1;transform:none} /* row actions always visible on mobile */
+  .filters{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= SIDEBAR (CHROME — preserved) ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 7 4-14 2 7h6"/></svg>
+      </div>
+      <div>
+        <div class="nm">Waiable</div>
+        <div class="sub">Clínica Dental Sonría</div>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav-group">
+        <div class="lbl">Principal</div>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Panel</a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18"/><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4"/></svg>Agenda<span class="cnt">12</span></a>
+      </div>
+
+      <div class="nav-group">
+        <div class="lbl">CRM</div>
+        <a href="#" class="active" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>Contactos<span class="cnt warn">8</span></a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Oportunidades</a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>Presupuestos</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="lbl">Comunicación</div>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>WhatsApp<span class="cnt">5</span></a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamadas</a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>Email</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="lbl">Sistema</div>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Informes</a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Ajustes</a>
+      </div>
+    </nav>
+
+    <div class="side-foot">
+      <div class="av" aria-hidden="true">LM</div>
+      <div class="who">
+        <b>Laura Méndez</b>
+        <span>Recepción</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <!-- ---- TOPBAR (CHROME — preserved; title fixed) ---- -->
+    <header class="topbar">
+      <div class="tb-titles">
+        <nav class="tb-bc" aria-label="Ruta">
+          <a href="#">Contactos</a>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          <span>Actividades y tareas</span>
+        </nav>
+        <h1>Actividades y tareas</h1>
+      </div>
+
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" aria-label="Buscar tareas, pacientes o actividades" placeholder="Buscar tareas, pacientes…">
+        <span class="kbd" aria-hidden="true">⌘K</span>
+      </div>
+
+      <div class="tb-chips">
+        <span class="chip"><span class="dot green" aria-hidden="true"></span>WhatsApp conectado</span>
+        <span class="chip"><span class="dot teal" aria-hidden="true"></span>Agenda sincronizada</span>
+        <span class="chip chip-soft" title="La automatización prepara recordatorios y respuestas; tú decides qué hacer con ellos">
+          <span class="dot teal" aria-hidden="true"></span>Automatización
+        </span>
+        <button class="tb-icon" aria-label="Notificaciones (nuevas)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="nb" aria-hidden="true"></span></button>
+      </div>
+    </header>
+
+    <!-- ================= PAGE ================= -->
+    <main class="page">
+
+      <!-- ---- HEAD: H1 ya en topbar; aquí contexto + acción primaria ---- -->
+      <div class="phead">
+        <div class="pt">
+          <h2>Tu bandeja de gestiones de hoy</h2>
+          <p class="lead">Lo urgente arriba. Marca cada gestión como hecha con un clic para que ninguna llamada, presupuesto ni cita se quede sin atender.</p>
+        </div>
+        <div class="phead-actions">
+          <div class="menu-wrap">
+            <button class="btn btn-ghost" id="secBtn" aria-haspopup="menu" aria-expanded="false">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Registrar actividad
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="menu-pop" id="secMenu" role="menu" aria-label="Registrar actividad">
+              <button role="menuitem" onclick="logActivity('Llamada')">
+                <span class="mi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                <span class="mi-tx"><b>Anotar llamada</b><span>Deja constancia de una llamada ya realizada</span></span>
+              </button>
+              <button role="menuitem" onclick="logActivity('Nota')">
+                <span class="mi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+                <span class="mi-tx"><b>Añadir nota</b><span>Registra algo que ya ha ocurrido</span></span>
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="openNewTask()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Nueva tarea
+          </button>
+        </div>
+      </div>
+
+      <!-- ---- SUMMARY SCARDS (filtran de verdad) ---- -->
+      <div class="scards" role="group" aria-label="Resumen de tareas (pulsa para filtrar)">
+        <button class="scard s-due" data-filter="due" aria-pressed="false">
+          <span class="sic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+          <span>
+            <span class="sn" id="cnt-due">3</span>
+            <span class="sl">Vencidas · Atención</span>
+            <span class="sh">Resuélvelas primero</span>
+          </span>
+        </button>
+        <button class="scard s-today" data-filter="today" aria-pressed="false">
+          <span class="sic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <span>
+            <span class="sn" id="cnt-today">4</span>
+            <span class="sl">Para hoy</span>
+            <span class="sh">Vencen durante el día</span>
+          </span>
+        </button>
+        <button class="scard s-open" data-filter="open" aria-pressed="false">
+          <span class="sic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>
+          <span>
+            <span class="sn" id="cnt-open">9</span>
+            <span class="sl">En curso (total)</span>
+            <span class="sh">Todas las tareas abiertas</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- ---- TOOLBAR: tabs + filtros ---- -->
+      <div class="toolbar">
+        <div class="tabs" role="tablist" aria-label="Vista">
+          <button class="tab" role="tab" aria-selected="true" data-filter="all">Pendientes <span class="cnt" id="tab-pend">9</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-filter="done">Completadas <span class="cnt">14</span></button>
+        </div>
+        <div class="filters" role="group" aria-label="Filtrar por canal">
+          <span class="filter-label">Canal:</span>
+          <button class="fchip" data-chan="call" aria-pressed="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Llamada
+          </button>
+          <button class="fchip" data-chan="wa" aria-pressed="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            WhatsApp
+          </button>
+          <button class="fchip" data-chan="mail" aria-pressed="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+            Email
+          </button>
+        </div>
+      </div>
+
+      <!-- ---- ACTIVE FILTER BANNER ---- -->
+      <div class="fbanner" id="fbanner" role="status">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>
+        <span>Mostrando: <b id="fbanner-txt">Vencidas</b></span>
+        <button onclick="clearFilters()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          Quitar filtro
+        </button>
+      </div>
+
+      <!-- ---- TASK LIST ---- -->
+      <section class="tasklist" id="tasklist" aria-label="Lista de tareas">
+
+        <!-- SKELETON (carga) -->
+        <div id="skeleton" hidden>
+          <div class="sk-row"><div class="sk sk-box"></div><div style="flex:1"><div class="sk sk-line" style="width:46%;margin-bottom:8px"></div><div class="sk sk-line" style="width:30%"></div></div><div class="sk" style="width:40px;height:40px;border-radius:10px"></div></div>
+          <div class="sk-row"><div class="sk sk-box"></div><div style="flex:1"><div class="sk sk-line" style="width:60%;margin-bottom:8px"></div><div class="sk sk-line" style="width:38%"></div></div><div class="sk" style="width:40px;height:40px;border-radius:10px"></div></div>
+          <div class="sk-row"><div class="sk sk-box"></div><div style="flex:1"><div class="sk sk-line" style="width:52%;margin-bottom:8px"></div><div class="sk sk-line" style="width:26%"></div></div><div class="sk" style="width:40px;height:40px;border-radius:10px"></div></div>
+        </div>
+
+        <!-- ERROR -->
+        <div class="state error" id="errorState" role="alert">
+          <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+          <h3>No hemos podido cargar tus tareas</h3>
+          <p>Comprueba tu conexión e inténtalo de nuevo. Tus tareas están a salvo.</p>
+          <button class="btn btn-primary" onclick="loadTasks()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+            Reintentar
+          </button>
+        </div>
+
+        <!-- EMPTY (cero tareas, positivo) -->
+        <div class="state empty" id="emptyState">
+          <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3 id="emptyTitle">¡Todo al día!</h3>
+          <p id="emptyMsg">No tienes gestiones pendientes con estos filtros. Crea una tarea para no perder de vista ninguna llamada o presupuesto.</p>
+          <button class="btn btn-primary" onclick="openNewTask()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Nueva tarea
+          </button>
+        </div>
+
+        <!-- REAL CONTENT -->
+        <div id="groups">
+
+          <!-- ===== GROUP: VENCIDAS ===== -->
+          <div class="tgroup" data-group="due">
+            <div class="ghead g-due">
+              <span class="gtag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Vencidas</span>
+              <span class="gcount"><span class="g-num">3</span> sin resolver</span>
+            </div>
+
+            <div class="trow is-due" data-chan="call" data-prio="high">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Devolver llamada a Ana Torres" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Devolver llamada</span>
+                  <span class="badge b-high"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>Alta</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Ana Torres</span></span>
+                  <span class="m"><span class="badge b-chan call"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamada</span></span>
+                  <span class="m due-red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Venció hace 2 días · Mié 27 may 11:00</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Laura M.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Llamar a Ana Torres" title="Llamar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Enviar WhatsApp a Ana Torres" title="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Ana Torres" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+
+            <div class="trow is-due" data-chan="mail" data-prio="med">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Enviar presupuesto a Carlos Ruiz" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Enviar presupuesto de ortodoncia</span>
+                  <span class="badge b-med"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>Media</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Carlos Ruiz</span></span>
+                  <span class="m"><span class="badge b-chan mail"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>Email</span></span>
+                  <span class="m due-red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Venció ayer · Jue 28 may 17:00</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Laura M.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Enviar email a Carlos Ruiz" title="Enviar email"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Llamar a Carlos Ruiz" title="Llamar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Carlos Ruiz" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+
+            <div class="trow is-due" data-chan="wa" data-prio="high">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Confirmar cita por WhatsApp con Marta Gil" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Confirmar cita por WhatsApp</span>
+                  <span class="badge b-high"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>Alta</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Marta Gil</span></span>
+                  <span class="m"><span class="badge b-chan wa"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>WhatsApp</span></span>
+                  <span class="m due-red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Venció ayer · Jue 28 may 09:30</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Diego P.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Enviar WhatsApp a Marta Gil" title="Enviar WhatsApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Llamar a Marta Gil" title="Llamar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Marta Gil" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== GROUP: HOY ===== -->
+          <div class="tgroup" data-group="today">
+            <div class="ghead g-today">
+              <span class="gtag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoy</span>
+              <span class="gcount"><span class="g-num">4</span> para hoy</span>
+            </div>
+
+            <div class="trow is-today" data-chan="call" data-prio="high">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Llamar a Pedro Gil para recordar revisión" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Llamar para recordar revisión</span>
+                  <span class="badge b-high"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>Alta</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Pedro Gil</span></span>
+                  <span class="m"><span class="badge b-chan call"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamada</span></span>
+                  <span class="m due-amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoy 12:00</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Laura M.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Llamar a Pedro Gil" title="Llamar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Enviar WhatsApp a Pedro Gil" title="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Pedro Gil" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+
+            <div class="trow is-today" data-chan="wa" data-prio="med">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Responder duda de presupuesto a Lucía Romero" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Responder duda de presupuesto</span>
+                  <span class="badge b-med"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>Media</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Lucía Romero</span></span>
+                  <span class="m"><span class="badge b-chan wa"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>WhatsApp</span></span>
+                  <span class="m due-amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoy 15:30</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Laura M.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Enviar WhatsApp a Lucía Romero" title="Enviar WhatsApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Llamar a Lucía Romero" title="Llamar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Lucía Romero" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+
+            <div class="trow is-today" data-chan="mail" data-prio="low">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Enviar recordatorio de higiene a Javier Soto" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Enviar recordatorio de higiene dental</span>
+                  <span class="badge b-low"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>Baja</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Javier Soto</span></span>
+                  <span class="m"><span class="badge b-chan mail"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>Email</span></span>
+                  <span class="m due-amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoy 18:00</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Diego P.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Enviar email a Javier Soto" title="Enviar email"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Llamar a Javier Soto" title="Llamar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Javier Soto" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+
+            <div class="trow is-today" data-chan="call" data-prio="med">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Devolver llamada perdida a Sofía Navarro" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Devolver llamada perdida</span>
+                  <span class="badge b-med"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>Media</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Sofía Navarro</span></span>
+                  <span class="m"><span class="badge b-chan call"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamada</span></span>
+                  <span class="m due-amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoy 19:15</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Laura M.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Llamar a Sofía Navarro" title="Llamar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Enviar WhatsApp a Sofía Navarro" title="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Sofía Navarro" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== GROUP: PRÓXIMAS ===== -->
+          <div class="tgroup" data-group="upcoming">
+            <div class="ghead g-upcoming">
+              <span class="gtag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18"/><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4"/></svg>Próximas</span>
+              <span class="gcount"><span class="g-num">2</span> programadas</span>
+            </div>
+
+            <div class="trow is-upcoming" data-chan="call" data-prio="low">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Llamar para encuesta de satisfacción a Elena Vidal" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Llamar para encuesta de satisfacción</span>
+                  <span class="badge b-low"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>Baja</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Elena Vidal</span></span>
+                  <span class="m"><span class="badge b-chan call"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamada</span></span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Lun 2 jun 09:00</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Laura M.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Llamar a Elena Vidal" title="Llamar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Enviar WhatsApp a Elena Vidal" title="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Elena Vidal" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+
+            <div class="trow is-upcoming" data-chan="wa" data-prio="med">
+              <button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: Reactivar paciente inactivo por WhatsApp a Hugo Castro" onclick="toggleTask(this)">
+                <span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+              </button>
+              <div class="t-body">
+                <div class="t-top">
+                  <span class="t-title">Reactivar paciente inactivo</span>
+                  <span class="badge b-med"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>Media</span>
+                </div>
+                <div class="t-meta">
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">Hugo Castro</span></span>
+                  <span class="m"><span class="badge b-chan wa"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>WhatsApp</span></span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Mar 3 jun 10:30</span>
+                  <span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h.5"/></svg>Diego P.</span>
+                </div>
+              </div>
+              <div class="t-actions">
+                <a class="t-act primary" href="#" aria-label="Enviar WhatsApp a Hugo Castro" title="Enviar WhatsApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+                <a class="t-act more" href="#" aria-label="Llamar a Hugo Castro" title="Llamar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+                <button class="t-act more" aria-label="Editar tarea de Hugo Castro" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /#groups -->
+
+        <!-- LOAD MORE -->
+        <div class="loadmore" id="loadmore">
+          <button class="btn btn-ghost btn-sm" id="loadMoreBtn" onclick="loadMoreTasks(this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            Ver 6 tareas más
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= ACTIVITY TIMELINE ================= -->
+      <div class="section-head">
+        <h3>Actividad reciente</h3>
+        <span class="hint">Registro de lo que ya ha ocurrido</span>
+      </div>
+
+      <section class="timeline" id="timeline" aria-label="Actividad reciente">
+        <div class="tl-item">
+          <div class="tl-ic call" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="tl-body">
+            <div class="tl-head"><b>Llamada a Marta Gil</b><span class="tl-time">Hoy 10:42</span></div>
+            <div class="tl-desc">Confirmada cita de revisión para el martes. Paciente conforme.</div>
+            <div class="tl-who">Por Laura Méndez</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-ic wa" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></div>
+          <div class="tl-body">
+            <div class="tl-head"><b>WhatsApp a Carlos Ruiz</b><span class="tl-time">Hoy 09:15</span></div>
+            <div class="tl-desc">Enviado presupuesto de ortodoncia. A la espera de respuesta.</div>
+            <div class="tl-who">Por Laura Méndez</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-ic note" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></div>
+          <div class="tl-body">
+            <div class="tl-head"><b>Nota en ficha de Pedro Gil</b><span class="tl-time">Ayer 17:30</span></div>
+            <div class="tl-desc">Prefiere que le llamemos por las mañanas. Anotado.</div>
+            <div class="tl-who">Por Diego Pardo</div>
+          </div>
+        </div>
+        <div class="loadmore" style="border-top:none;padding-top:6px">
+          <button class="btn btn-ghost btn-sm" id="loadActBtn" onclick="loadMoreActivity(this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            Cargar más actividad
+          </button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ TOAST (aria-live, undo) ============ -->
+<div class="toast-wrap">
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="tic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+    <span id="toastMsg">Tarea completada</span>
+    <button class="undo" id="toastUndo" type="button" style="display:none">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
+      Deshacer
+    </button>
+    <button class="tx-close" id="toastClose" type="button" aria-label="Cerrar aviso"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+</div>
+
+<script>
+/* ===================== STATE ===================== */
+var counts = { due:3, today:4, upcoming:2 };
+var activeFilter = null;   // 'due' | 'today' | 'open'
+var activeChans = {};      // channel set
+
+/* ===================== TOAST ===================== */
+var toastEl = document.getElementById('toast');
+var toastMsg = document.getElementById('toastMsg');
+var toastUndo = document.getElementById('toastUndo');
+var toastClose = document.getElementById('toastClose');
+var toastTimer = null;
+var undoCallback = null;
+
+function showToast(msg, onUndo){
+  clearTimeout(toastTimer);
+  toastMsg.textContent = msg;
+  undoCallback = onUndo || null;
+  toastUndo.style.display = onUndo ? 'inline-flex' : 'none';
+  toastEl.classList.add('show');
+  toastTimer = setTimeout(hideToast, onUndo ? 6000 : 3200);
+}
+function hideToast(){ toastEl.classList.remove('show'); undoCallback = null; }
+toastClose.addEventListener('click', hideToast);
+toastUndo.addEventListener('click', function(){
+  if(undoCallback){ var cb = undoCallback; undoCallback = null; cb(); }
+  hideToast();
+});
+
+/* ===================== CORE: TOGGLE TASK ===================== */
+function recalcCounts(){
+  ['due','today','upcoming'].forEach(function(g){
+    var grp = document.querySelector('.tgroup[data-group="'+g+'"]');
+    if(!grp) return;
+    var open = grp.querySelectorAll('.trow:not(.done)').length;
+    counts[g] = open;
+    var num = grp.querySelector('.g-num');
+    if(num) num.textContent = open;
+  });
+  document.getElementById('cnt-due').textContent = counts.due;
+  document.getElementById('cnt-today').textContent = counts.today;
+  var total = counts.due + counts.today + counts.upcoming;
+  document.getElementById('cnt-open').textContent = total;
+  document.getElementById('tab-pend').textContent = total;
+  applyVisibility();
+}
+
+function toggleTask(btn){
+  var row = btn.closest('.trow');
+  var group = row.closest('.tgroup');
+  var title = btn.getAttribute('aria-label').replace(/^Marcar como hecha:\s*/,'');
+  var nowDone = btn.getAttribute('aria-checked') !== 'true';
+
+  if(nowDone){
+    // remember original position for undo
+    var nextSibling = row.nextElementSibling;
+    btn.setAttribute('aria-checked','true');
+    row.classList.add('done');
+    // move to bottom of its group (atenuar/reordenar)
+    group.appendChild(row);
+    recalcCounts();
+    showToast('Hecho: ' + shortTitle(title), function(){
+      btn.setAttribute('aria-checked','false');
+      row.classList.remove('done');
+      if(nextSibling) group.insertBefore(row, nextSibling);
+      else group.appendChild(row);
+      recalcCounts();
+      showToast('Tarea restaurada', null);
+    });
+  } else {
+    btn.setAttribute('aria-checked','false');
+    row.classList.remove('done');
+    recalcCounts();
+  }
+}
+function shortTitle(t){ return t.split(':')[0].split(' a ')[0]; }
+
+/* ===================== FILTERS: scards ===================== */
+var scards = document.querySelectorAll('.scard');
+scards.forEach(function(c){
+  c.addEventListener('click', function(){
+    var f = c.getAttribute('data-filter');
+    if(activeFilter === f){ clearFilters(); return; }
+    activeFilter = f;
+    scards.forEach(function(x){ x.setAttribute('aria-pressed', x===c ? 'true':'false'); });
+    var labels = { due:'Vencidas', today:'Para hoy', open:'En curso (todas)' };
+    setBanner(labels[f]);
+    applyVisibility();
+    // scroll to list
+    document.getElementById('tasklist').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+/* ===================== FILTERS: channel chips ===================== */
+document.querySelectorAll('.fchip').forEach(function(ch){
+  ch.addEventListener('click', function(){
+    var k = ch.getAttribute('data-chan');
+    var on = ch.getAttribute('aria-pressed') !== 'true';
+    ch.setAttribute('aria-pressed', on ? 'true':'false');
+    if(on) activeChans[k] = true; else delete activeChans[k];
+    updateChanBanner();
+    applyVisibility();
+  });
+});
+
+function setBanner(text){
+  var b = document.getElementById('fbanner');
+  document.getElementById('fbanner-txt').textContent = text;
+  b.classList.add('show');
+}
+function updateChanBanner(){
+  var keys = Object.keys(activeChans);
+  var names = { call:'Llamada', wa:'WhatsApp', mail:'Email' };
+  if(activeFilter || keys.length){
+    var parts = [];
+    if(activeFilter){ var l={due:'Vencidas',today:'Para hoy',open:'En curso (todas)'}; parts.push(l[activeFilter]); }
+    if(keys.length) parts.push(keys.map(function(k){return names[k];}).join(' / '));
+    setBanner(parts.join(' · '));
+  } else {
+    document.getElementById('fbanner').classList.remove('show');
+  }
+}
+function clearFilters(){
+  activeFilter = null; activeChans = {};
+  scards.forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+  document.querySelectorAll('.fchip').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+  document.getElementById('fbanner').classList.remove('show');
+  applyVisibility();
+}
+
+/* core visibility engine: applies group filter + channel filter, drives empty state */
+function applyVisibility(){
+  var groups = document.querySelectorAll('.tgroup');
+  var anyVisible = false;
+  groups.forEach(function(g){
+    var gid = g.getAttribute('data-group');
+    var groupAllowed = true;
+    if(activeFilter === 'due') groupAllowed = (gid === 'due');
+    else if(activeFilter === 'today') groupAllowed = (gid === 'today');
+    // 'open' and null => all groups
+    var rows = g.querySelectorAll('.trow');
+    var visibleRows = 0;
+    rows.forEach(function(r){
+      var chanOk = true;
+      var keys = Object.keys(activeChans);
+      if(keys.length) chanOk = activeChans[r.getAttribute('data-chan')] === true;
+      var show = groupAllowed && chanOk;
+      r.style.display = show ? '' : 'none';
+      if(show) visibleRows++;
+    });
+    g.style.display = (groupAllowed && visibleRows>0) ? '' : 'none';
+    if(groupAllowed && visibleRows>0) anyVisible = true;
+  });
+
+  // empty state when filters match nothing
+  var empty = document.getElementById('emptyState');
+  var groupsWrap = document.getElementById('groups');
+  var loadmore = document.getElementById('loadmore');
+  if(!anyVisible){
+    empty.style.display = 'flex';
+    document.getElementById('emptyTitle').textContent = (activeFilter||Object.keys(activeChans).length) ? 'Sin tareas con este filtro' : '¡Todo al día!';
+    document.getElementById('emptyMsg').textContent = (activeFilter||Object.keys(activeChans).length) ? 'No hay gestiones que coincidan. Prueba a quitar el filtro para ver todas tus tareas.' : 'No tienes gestiones pendientes. Crea una tarea para no perder de vista ninguna llamada o presupuesto.';
+    loadmore.style.display = 'none';
+  } else {
+    empty.style.display = 'none';
+    loadmore.style.display = activeFilter ? 'none' : 'flex';
+  }
+}
+
+/* ===================== TABS ===================== */
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(x){ x.setAttribute('aria-selected', x===t?'true':'false'); });
+    if(t.getAttribute('data-filter')==='done') showToast('Mostrando tareas completadas (demo)', null);
+    else applyVisibility();
+  });
+});
+
+/* ===================== SECONDARY MENU ===================== */
+var secBtn = document.getElementById('secBtn');
+var secMenu = document.getElementById('secMenu');
+secBtn.addEventListener('click', function(e){
+  e.stopPropagation();
+  var open = secMenu.classList.toggle('open');
+  secBtn.setAttribute('aria-expanded', open?'true':'false');
+});
+document.addEventListener('click', function(e){
+  if(!secMenu.contains(e.target) && e.target!==secBtn){
+    secMenu.classList.remove('open'); secBtn.setAttribute('aria-expanded','false');
+  }
+});
+function logActivity(kind){
+  secMenu.classList.remove('open'); secBtn.setAttribute('aria-expanded','false');
+  showToast(kind + ' registrada en la actividad', null);
+}
+function openNewTask(){ showToast('Abriendo formulario de nueva tarea…', null); }
+
+/* ===================== LOAD MORE (real append) ===================== */
+var loadedMore = false;
+function loadMoreTasks(btn){
+  if(loadedMore){ showToast('No hay más tareas pendientes', null); return; }
+  loadedMore = true;
+  var grp = document.querySelector('.tgroup[data-group="upcoming"]');
+  var extra = [
+    ['Beatriz Lago','Confirmar asistencia a limpieza','wa','low','WhatsApp','Mié 4 jun 11:00'],
+    ['Raúl Ferrer','Enviar plan de tratamiento','mail','med','Email','Jue 5 jun 09:30'],
+    ['Nuria Cano','Llamada de seguimiento post-cirugía','call','high','Llamada','Vie 6 jun 12:15']
+  ];
+  extra.forEach(function(d){ grp.insertAdjacentHTML('beforeend', rowHTML(d)); });
+  counts.upcoming += extra.length;
+  recalcCounts();
+  btn.textContent = 'No hay más tareas';
+  btn.disabled = true; btn.style.opacity = .6; btn.style.cursor='default';
+  showToast(extra.length + ' tareas más cargadas', null);
+}
+function rowHTML(d){
+  var pat=d[0], title=d[1], chan=d[2], prio=d[3], chanName=d[4], when=d[5];
+  var prioMap={high:['b-high','m18 15-6-6-6 6','Alta'],med:['b-med','M5 12h14','Media'],low:['b-low','m6 9 6 6 6-6','Baja']};
+  var p=prioMap[prio];
+  var chanCls={call:'call',wa:'wa',mail:'mail'}[chan];
+  return '<div class="trow is-upcoming" data-chan="'+chan+'" data-prio="'+prio+'">'+
+    '<button class="t-check" role="checkbox" aria-checked="false" aria-label="Marcar como hecha: '+title+' de '+pat+'" onclick="toggleTask(this)"><span class="box" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span></button>'+
+    '<div class="t-body"><div class="t-top"><span class="t-title">'+title+'</span>'+
+    '<span class="badge '+p[0]+'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="'+p[1]+'"/></svg>'+p[2]+'</span></div>'+
+    '<div class="t-meta"><span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="t-pat">'+pat+'</span></span>'+
+    '<span class="m"><span class="badge b-chan '+chanCls+'">'+chanName+'</span></span>'+
+    '<span class="m"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'+when+'</span></div></div>'+
+    '<div class="t-actions"><a class="t-act primary" href="#" aria-label="Contactar a '+pat+'" title="Contactar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg></a>'+
+    '<button class="t-act more" aria-label="Editar tarea de '+pat+'" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button></div></div>';
+}
+
+var loadedAct=false;
+function loadMoreActivity(btn){
+  if(loadedAct){ showToast('No hay más actividad', null); return; }
+  loadedAct=true;
+  var tl=document.getElementById('timeline');
+  var item=document.createElement('div');
+  item.className='tl-item';
+  item.innerHTML='<div class="tl-ic note" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></div>'+
+    '<div class="tl-body"><div class="tl-head"><b>Email a Lucía Romero</b><span class="tl-time">Ayer 12:05</span></div><div class="tl-desc">Enviada información de financiación de ortodoncia.</div><div class="tl-who">Por Laura Méndez</div></div>';
+  tl.insertBefore(item, btn.closest('.loadmore'));
+  btn.textContent='No hay más actividad'; btn.disabled=true; btn.style.opacity=.6; btn.style.cursor='default';
+}
+
+/* ===================== INITIAL LOAD (skeleton -> content) ===================== */
+function loadTasks(){
+  document.getElementById('errorState').style.display='none';
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('groups').style.display='none';
+  document.getElementById('loadmore').style.display='none';
+  document.getElementById('skeleton').hidden=false;
+  setTimeout(function(){
+    document.getElementById('skeleton').hidden=true;
+    document.getElementById('groups').style.display='';
+    recalcCounts();
+  }, 650);
+}
+// simulate first load
+loadTasks();
+</script>
+</body>
+</html>

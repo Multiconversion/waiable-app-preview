@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuentas de WhatsApp · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef1f4; --surface:#fff; --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771;
+    --line:#e3e8e6; --line-strong:#cfd8d4;
+    --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1;
+    --accent:#11a391; --ok:#157348; --warning:#b7791f; --danger:#b42318; --info:#2662a6;
+    --radius:14px; --radius-sm:10px;
+    --shadow-sm:0 1px 2px rgba(15,26,23,.06), 0 1px 3px rgba(15,26,23,.04);
+    --shadow-md:0 4px 16px rgba(15,26,23,.08);
+    --shadow-pop:0 12px 40px rgba(15,26,23,.16);
+    --sidebar:#0e1714; --sidebar-2:#16221e; --sidebar-line:#243029; --sidebar-text:#aebab4; --sidebar-active:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--bg); color:var(--text);
+    font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  ::selection{background:var(--primary-soft)}
+
+  /* ---------- LAYOUT ---------- */
+  .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    background:var(--sidebar); color:var(--sidebar-text);
+    display:flex;flex-direction:column;
+    border-right:1px solid var(--sidebar-line);
+    position:sticky;top:0;height:100vh;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    padding:18px 18px 16px; border-bottom:1px solid var(--sidebar-line);
+  }
+  .brand-logo{
+    width:30px;height:30px;border-radius:9px;
+    background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));
+    display:grid;place-items:center;color:#fff;flex:none;
+  }
+  .brand-name{color:#fff;font-weight:700;font-size:15px;letter-spacing:-.2px}
+  .brand-sub{font-size:12px;color:#7f8d86;font-weight:500;margin-top:1px}
+  .nav{flex:1;overflow-y:auto;padding:14px 12px 18px}
+  .nav-group{margin-bottom:16px}
+  .nav-label{
+    font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:#677570;padding:0 10px 7px;
+  }
+  .nav-item{
+    display:flex;align-items:center;gap:11px;
+    padding:8px 10px;border-radius:9px;color:var(--sidebar-text);
+    font-size:13.5px;font-weight:500;margin-bottom:2px;cursor:pointer;
+    transition:background .15s,color .15s;position:relative;
+  }
+  .nav-item svg{width:18px;height:18px;flex:none;opacity:.85}
+  .nav-item:hover{background:var(--sidebar-2);color:#e7eeeb}
+  .nav-item.active{background:var(--primary);color:#fff}
+  .nav-item.active svg{opacity:1}
+  .nav-item .nav-badge{
+    margin-left:auto;background:var(--sidebar-2);color:#cdd8d3;
+    font-size:12px;font-weight:600;padding:1px 7px;border-radius:999px;
+  }
+  .nav-item.active .nav-badge{background:rgba(255,255,255,.2);color:#fff}
+  .nav-foot{padding:12px;border-top:1px solid var(--sidebar-line)}
+  .nav-user{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;cursor:pointer}
+  .nav-user:hover{background:var(--sidebar-2)}
+  .nav-avatar{width:32px;height:32px;border-radius:8px;background:var(--primary-soft);color:var(--primary-dark);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+  .nav-user-name{color:#e7eeeb;font-size:13px;font-weight:600}
+  .nav-user-mail{font-size:12px;color:#7f8d86}
+
+  /* ---------- MAIN ---------- */
+  .main{display:flex;flex-direction:column;min-width:0}
+
+  /* topbar */
+  .topbar{
+    height:62px;background:var(--surface);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:16px;padding:0 24px;
+    position:sticky;top:0;z-index:20;
+  }
+  .search{
+    flex:1;max-width:440px;display:flex;align-items:center;gap:9px;
+    background:var(--bg);border:1px solid var(--line);border-radius:10px;
+    padding:8px 12px;color:var(--muted);
+  }
+  .search svg{width:17px;height:17px;flex:none}
+  .search input{border:0;background:none;outline:none;flex:1;font:inherit;font-size:13.5px;color:var(--text)}
+  .search input::placeholder{color:var(--muted)}
+  .search kbd{font:inherit;font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+  .top-status{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .status-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;
+    border:1px solid var(--line);background:var(--surface);color:var(--text-2);
+  }
+  .status-chip svg{width:14px;height:14px}
+  .status-chip .dot{width:7px;height:7px;border-radius:50%;flex:none}
+  .status-chip.ok{color:var(--ok);border-color:#bfe3cf;background:#f0faf4}
+  .status-chip.ok .dot{background:var(--ok)}
+  .status-chip.cal{color:var(--info);border-color:#c4dbf2;background:#eff5fc}
+  .status-chip.cal .dot{background:var(--info)}
+  /* IA chip atenuado: discreto y secundario */
+  .status-chip.auto{color:var(--muted);border-color:var(--line);background:var(--bg);font-weight:500}
+  .status-chip.auto .dot{background:var(--muted)}
+  .top-icon{
+    width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--surface);
+    display:grid;place-items:center;color:var(--text-2);cursor:pointer;position:relative;
+  }
+  .top-icon:hover{background:var(--bg)}
+  .top-icon svg{width:18px;height:18px}
+  .top-icon .ping{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--danger);border:2px solid var(--surface)}
+
+  /* content */
+  .content{padding:26px 28px 48px;max-width:1180px;width:100%;margin:0 auto}
+
+  .crumb{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12.5px;font-weight:500;margin-bottom:14px}
+  .crumb svg{width:14px;height:14px}
+  .crumb b{color:var(--text-2);font-weight:600}
+
+  .page-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:22px;flex-wrap:wrap}
+  .page-head .ph-text{min-width:0;flex:1}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.4px;line-height:1.2}
+  .page-sub{color:var(--text-2);font-size:14px;margin-top:6px;max-width:620px}
+  .page-actions{display:flex;align-items:center;gap:10px}
+
+  /* buttons */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;justify-content:center;
+    font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+    border-radius:10px;padding:9px 15px;border:1px solid var(--line-strong);
+    background:var(--surface);color:var(--text);transition:.15s;white-space:nowrap;
+  }
+  .btn svg{width:17px;height:17px}
+  .btn:hover{background:var(--bg)}
+  .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+  .btn.primary:hover{background:var(--primary-dark);border-color:var(--primary-dark)}
+  .btn.ghost{border-color:transparent;background:transparent;color:var(--text-2)}
+  .btn.ghost:hover{background:var(--bg)}
+  .btn.danger-ghost{border-color:transparent;background:transparent;color:var(--danger)}
+  .btn.danger-ghost:hover{background:#fdeceb}
+  .btn.sm{padding:6px 11px;font-size:12.5px}
+  .btn.sm svg{width:15px;height:15px}
+
+  /* ---------- VALUE STRIP (qué hacer ahora) ---------- */
+  .hint{
+    display:flex;align-items:center;gap:14px;
+    background:linear-gradient(180deg,#f3faf8,#fff);
+    border:1px solid #c9e7e1;border-radius:var(--radius);
+    padding:14px 16px;margin-bottom:22px;box-shadow:var(--shadow-sm);
+  }
+  .hint-ic{width:38px;height:38px;border-radius:10px;background:var(--primary-soft);color:var(--primary-dark);display:grid;place-items:center;flex:none}
+  .hint-ic svg{width:20px;height:20px}
+  .hint-txt{flex:1;min-width:0}
+  .hint-txt h3{font-size:14px;font-weight:700}
+  .hint-txt p{font-size:13px;color:var(--text-2);margin-top:2px}
+  .hint .btn{flex:none}
+
+  /* ---------- METRIC ROW ---------- */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .metric{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow-sm)}
+  .metric-top{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12.5px;font-weight:600}
+  .metric-top svg{width:16px;height:16px}
+  .metric-val{font-size:26px;font-weight:700;letter-spacing:-.6px;margin-top:8px;line-height:1}
+  .metric-sub{font-size:12px;color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:5px}
+  .metric-sub svg{width:13px;height:13px}
+  .metric-sub.up{color:var(--ok)}
+
+  /* ---------- SECTION ---------- */
+  .section-head{display:flex;align-items:center;gap:10px;margin:4px 0 13px}
+  .section-head h2{font-size:15.5px;font-weight:700}
+  .section-head .count{font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);border:1px solid var(--line);padding:1px 8px;border-radius:999px}
+  .section-head .spacer{flex:1}
+
+  /* ---------- ACCOUNT CARDS ---------- */
+  .accounts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:30px}
+  .acct{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);overflow:hidden;display:flex;flex-direction:column;
+    transition:box-shadow .15s,border-color .15s;
+  }
+  .acct:hover{box-shadow:var(--shadow-md)}
+  .acct-top{display:flex;align-items:flex-start;gap:13px;padding:16px 16px 13px}
+  .acct-logo{
+    width:46px;height:46px;border-radius:12px;flex:none;display:grid;place-items:center;color:#fff;
+    background:linear-gradient(135deg,#25d366,#128c7e);
+  }
+  .acct-logo svg{width:24px;height:24px}
+  .acct-id{min-width:0;flex:1}
+  .acct-name{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .acct-phone{font-size:13px;color:var(--text-2);margin-top:2px;font-variant-numeric:tabular-nums}
+  .acct-clinic{font-size:12px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px}
+  .acct-clinic svg{width:13px;height:13px}
+
+  .badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid transparent}
+  .badge svg{width:12px;height:12px}
+  .badge .dot{width:6px;height:6px;border-radius:50%}
+  .badge.ok{color:var(--ok);background:#eef9f2;border-color:#bfe3cf}
+  .badge.ok .dot{background:var(--ok)}
+  .badge.warn{color:var(--warning);background:#fdf6e9;border-color:#f0dcb0}
+  .badge.warn .dot{background:var(--warning)}
+  .badge.err{color:var(--danger);background:#fdeceb;border-color:#f3c7c3}
+  .badge.err .dot{background:var(--danger)}
+  .badge.neutral{color:var(--muted);background:var(--bg);border-color:var(--line)}
+  .badge.neutral .dot{background:var(--muted)}
+  /* badge automatización atenuado (IA secundaria) */
+  .badge.auto{color:var(--text-2);background:var(--bg);border-color:var(--line);font-weight:500}
+  .badge.auto svg{width:12px;height:12px;color:var(--muted)}
+
+  .acct-meta{display:flex;gap:0;border-top:1px solid var(--line);margin-top:auto}
+  .acct-meta .cell{flex:1;padding:12px 16px;border-right:1px solid var(--line)}
+  .acct-meta .cell:last-child{border-right:0}
+  .cell-k{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .cell-v{font-size:15px;font-weight:700;margin-top:4px;display:flex;align-items:center;gap:6px}
+  .cell-v small{font-size:12px;font-weight:500;color:var(--muted)}
+
+  .acct-foot{display:flex;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--line);background:#fbfcfc}
+  .acct-foot .grow{flex:1}
+  .switch-row{display:flex;align-items:center;gap:9px}
+  .switch-label{font-size:12.5px;font-weight:600;color:var(--text-2);display:flex;align-items:center;gap:6px}
+  .switch-label svg{width:15px;height:15px;color:var(--muted)}
+  .switch{position:relative;width:38px;height:22px;flex:none;cursor:pointer}
+  .switch input{opacity:0;width:0;height:0;position:absolute}
+  .switch .track{position:absolute;inset:0;background:var(--line-strong);border-radius:999px;transition:.18s}
+  .switch .knob{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:.18s}
+  .switch input:checked + .track{background:var(--primary)}
+  .switch input:checked + .track + .knob{transform:translateX(16px)}
+
+  .acct.warn-state{border-color:#f0dcb0}
+  .acct.warn-state .acct-logo{background:linear-gradient(135deg,#d8a13a,#b7791f)}
+  .acct.err-state{border-color:#f3c7c3}
+  .acct.err-state .acct-logo{background:linear-gradient(135deg,#c75046,#b42318);filter:grayscale(.2)}
+  .acct-alert{display:flex;align-items:center;gap:9px;padding:10px 16px;font-size:12.5px;font-weight:500}
+  .acct-alert svg{width:16px;height:16px;flex:none}
+  .acct-alert.warn{background:#fdf6e9;color:#8a5d12;border-top:1px solid #f0dcb0}
+  .acct-alert.err{background:#fdeceb;color:#8a1c14;border-top:1px solid #f3c7c3}
+
+  /* add card */
+  .acct-add{
+    border:1.5px dashed var(--line-strong);background:#fafcfb;border-radius:var(--radius);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    padding:30px 20px;text-align:center;cursor:pointer;color:var(--text-2);transition:.15s;min-height:180px;
+  }
+  .acct-add:hover{border-color:var(--primary);background:var(--primary-soft);color:var(--primary-dark)}
+  .acct-add .plus{width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;color:var(--primary)}
+  .acct-add:hover .plus{border-color:var(--primary)}
+  .acct-add .plus svg{width:22px;height:22px}
+  .acct-add h3{font-size:14px;font-weight:700;color:var(--text)}
+  .acct-add p{font-size:12.5px;max-width:230px}
+
+  /* ---------- HOW IT WORKS (compact aside) ---------- */
+  .help-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow-sm)}
+  .help-card h2{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .help-card h2 svg{width:18px;height:18px;color:var(--primary)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .step{display:flex;gap:11px}
+  .step-n{width:26px;height:26px;border-radius:8px;background:var(--primary-soft);color:var(--primary-dark);font-weight:700;font-size:13px;display:grid;place-items:center;flex:none}
+  .step h4{font-size:13px;font-weight:700}
+  .step p{font-size:12.5px;color:var(--text-2);margin-top:3px}
+
+  /* ---------- MODAL ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(15,26,23,.42);backdrop-filter:blur(2px);z-index:60;display:none;align-items:center;justify-content:center;padding:24px}
+  .overlay.open{display:flex}
+  .modal{background:var(--surface);border-radius:16px;box-shadow:var(--shadow-pop);width:100%;max-width:520px;overflow:hidden;animation:pop .18s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+  .modal-head{display:flex;align-items:flex-start;gap:13px;padding:20px 22px 4px}
+  .modal-ic{width:42px;height:42px;border-radius:11px;background:var(--primary-soft);color:var(--primary-dark);display:grid;place-items:center;flex:none}
+  .modal-ic svg{width:21px;height:21px}
+  .modal-head h2{font-size:17px;font-weight:700}
+  .modal-head p{font-size:13px;color:var(--text-2);margin-top:3px}
+  .modal-close{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--muted);cursor:pointer;flex:none}
+  .modal-close:hover{background:var(--bg)}
+  .modal-close svg{width:17px;height:17px}
+  .modal-body{padding:18px 22px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+  .field label .req{color:var(--danger)}
+  .field input,.field select{
+    width:100%;font:inherit;font-size:14px;color:var(--text);
+    border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;background:var(--surface);outline:none;transition:.15s;
+  }
+  .field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+  .field .hint-sm{font-size:12px;color:var(--muted);margin-top:6px}
+  .modal-foot{display:flex;align-items:center;gap:10px;padding:16px 22px;border-top:1px solid var(--line);background:#fbfcfc}
+  .modal-foot .grow{flex:1}
+
+  /* confirm modal danger */
+  .modal-ic.danger{background:#fdeceb;color:var(--danger)}
+
+  /* ---------- TOAST ---------- */
+  .toast-wrap{position:fixed;right:22px;bottom:22px;z-index:80;display:flex;flex-direction:column;gap:10px}
+  .toast{
+    display:flex;align-items:center;gap:11px;background:var(--text);color:#fff;
+    padding:12px 15px;border-radius:11px;box-shadow:var(--shadow-pop);font-size:13.5px;font-weight:500;
+    min-width:260px;animation:slidein .2s ease;
+  }
+  @keyframes slidein{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+  .toast .ti{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none}
+  .toast .ti svg{width:16px;height:16px}
+  .toast.ok .ti{background:rgba(21,115,72,.9)}
+  .toast.info .ti{background:rgba(38,98,166,.9)}
+  .toast b{font-weight:700}
+
+  @media (max-width:1040px){
+    .metrics{grid-template-columns:repeat(2,1fr)}
+    .accounts{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+  }
+  @media (max-width:860px){
+    .app{grid-template-columns:1fr}
+    .sidebar{display:none}
+    .metrics{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR (chrome, conservado) ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-sub">Clínica Dental Sonrisa</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-label">Principal</div>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Panel</a>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Agenda</a>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Pacientes</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Captación</div>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>Bandeja WhatsApp<span class="nav-badge">5</span></a>
+        <a class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>Cuentas WhatsApp</a>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-2"/><circle cx="4" cy="20" r="1"/></svg>Teléfono</a>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>Web y formularios</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Crecimiento</div>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>Huecos de agenda<span class="nav-badge">3</span></a>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Informes</a>
+        <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2"/></svg>Automatización</a>
+      </div>
+    </nav>
+
+    <div class="nav-foot">
+      <div class="nav-user">
+        <div class="nav-avatar">LM</div>
+        <div style="min-width:0">
+          <div class="nav-user-name">Laura Méndez</div>
+          <div class="nav-user-mail">Recepción</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <!-- topbar (chrome, conservado) -->
+    <header class="topbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="Buscar pacientes, citas, números…">
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="top-status">
+        <span class="status-chip ok"><span class="dot"></span>WhatsApp conectado</span>
+        <span class="status-chip cal"><span class="dot"></span>Agenda sincronizada</span>
+        <span class="status-chip auto" title="Las respuestas se envían como sugerencia para que recepción confirme"><span class="dot"></span>Respuestas en sugerencia</span>
+      </div>
+      <button class="top-icon" aria-label="Notificaciones"><span class="ping"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></button>
+      <button class="top-icon" aria-label="Ayuda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></button>
+    </header>
+
+    <!-- content -->
+    <main class="content">
+
+      <div class="crumb">
+        <span>Captación</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        <b>Cuentas WhatsApp</b>
+      </div>
+
+      <div class="page-head">
+        <div class="ph-text">
+          <h1>Cuentas de WhatsApp</h1>
+          <p class="page-sub">Conecta los números por los que escriben tus pacientes. Cada número conectado recibe mensajes, los vuelca en tu bandeja y ayuda a crear citas en la agenda sin trabajo manual.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn" id="syncBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>Comprobar estado</button>
+          <button class="btn primary" id="openConnect"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Conectar número</button>
+        </div>
+      </div>
+
+      <!-- QUÉ HACER AHORA -->
+      <div class="hint" id="actionHint">
+        <div class="hint-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.7 3.86a2 2 0 0 0-3.42 0Z"/></svg></div>
+        <div class="hint-txt">
+          <h3>Un número necesita reconexión</h3>
+          <p>El número de Urgencias se desconectó hace 2 horas. Mientras tanto, esos mensajes no llegan a tu bandeja. Vuelve a vincularlo para no perder pacientes.</p>
+        </div>
+        <button class="btn primary" id="fixUrg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>Reconectar ahora</button>
+      </div>
+
+      <!-- MÉTRICAS -->
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>Números conectados</div>
+          <div class="metric-val">2<small style="font-size:14px;color:var(--muted);font-weight:500"> / 3</small></div>
+          <div class="metric-sub">1 requiere atención</div>
+        </div>
+        <div class="metric">
+          <div class="metric-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>Mensajes hoy</div>
+          <div class="metric-val">148</div>
+          <div class="metric-sub up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>+18% vs. ayer</div>
+        </div>
+        <div class="metric">
+          <div class="metric-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>Citas desde WhatsApp</div>
+          <div class="metric-val">31</div>
+          <div class="metric-sub">esta semana</div>
+        </div>
+        <div class="metric">
+          <div class="metric-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Respuesta media</div>
+          <div class="metric-val">1m 12s</div>
+          <div class="metric-sub up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>más rápida que la semana pasada</div>
+        </div>
+      </div>
+
+      <!-- CUENTAS -->
+      <div class="section-head">
+        <h2>Tus números</h2>
+        <span class="count">3</span>
+      </div>
+
+      <div class="accounts">
+
+        <!-- Cuenta conectada -->
+        <div class="acct">
+          <div class="acct-top">
+            <div class="acct-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.18c-.25.7-1.45 1.34-2 1.42-.51.07-1.16.1-1.87-.12-.43-.13-.99-.32-1.7-.62-2.98-1.29-4.93-4.3-5.08-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.48.78-2.2 1.05-2.5.27-.3.59-.37.79-.37.2 0 .39 0 .56.01.18.01.43-.07.67.51.25.6.84 2.08.91 2.23.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.18-.31.39-.44.53-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.71.81 2 .96.3.15.5.22.57.35.07.12.07.72-.18 1.42Z"/></svg></div>
+            <div class="acct-id">
+              <div class="acct-name">Recepción principal <span class="badge ok"><span class="dot"></span>Conectado</span></div>
+              <div class="acct-phone">+34 911 23 45 67</div>
+              <div class="acct-clinic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>Sede Centro</div>
+            </div>
+          </div>
+          <div class="acct-meta">
+            <div class="cell"><div class="cell-k">Hoy</div><div class="cell-v">112 <small>mensajes</small></div></div>
+            <div class="cell"><div class="cell-k">Sin responder</div><div class="cell-v">3 <small>chats</small></div></div>
+            <div class="cell"><div class="cell-k">Última actividad</div><div class="cell-v" style="font-size:13px">hace 4 min</div></div>
+          </div>
+          <div class="acct-foot">
+            <div class="switch-row">
+              <span class="switch-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>Respuesta automática</span>
+              <label class="switch"><input type="checkbox" checked><span class="track"></span><span class="knob"></span></label>
+            </div>
+            <div class="grow"></div>
+            <button class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>Ajustes</button>
+          </div>
+        </div>
+
+        <!-- Cuenta conectada 2 -->
+        <div class="acct">
+          <div class="acct-top">
+            <div class="acct-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.18c-.25.7-1.45 1.34-2 1.42-.51.07-1.16.1-1.87-.12-.43-.13-.99-.32-1.7-.62-2.98-1.29-4.93-4.3-5.08-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.48.78-2.2 1.05-2.5.27-.3.59-.37.79-.37.2 0 .39 0 .56.01.18.01.43-.07.67.51.25.6.84 2.08.91 2.23.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.18-.31.39-.44.53-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.71.81 2 .96.3.15.5.22.57.35.07.12.07.72-.18 1.42Z"/></svg></div>
+            <div class="acct-id">
+              <div class="acct-name">Citas y recordatorios <span class="badge ok"><span class="dot"></span>Conectado</span></div>
+              <div class="acct-phone">+34 911 88 99 00</div>
+              <div class="acct-clinic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>Sede Norte</div>
+            </div>
+          </div>
+          <div class="acct-meta">
+            <div class="cell"><div class="cell-k">Hoy</div><div class="cell-v">36 <small>mensajes</small></div></div>
+            <div class="cell"><div class="cell-k">Sin responder</div><div class="cell-v">0 <small>chats</small></div></div>
+            <div class="cell"><div class="cell-k">Última actividad</div><div class="cell-v" style="font-size:13px">hace 18 min</div></div>
+          </div>
+          <div class="acct-foot">
+            <div class="switch-row">
+              <span class="switch-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>Respuesta automática</span>
+              <label class="switch"><input type="checkbox"><span class="track"></span><span class="knob"></span></label>
+            </div>
+            <div class="grow"></div>
+            <button class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>Ajustes</button>
+          </div>
+        </div>
+
+        <!-- Cuenta DESCONECTADA -->
+        <div class="acct err-state">
+          <div class="acct-top">
+            <div class="acct-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.18c-.25.7-1.45 1.34-2 1.42-.51.07-1.16.1-1.87-.12-.43-.13-.99-.32-1.7-.62-2.98-1.29-4.93-4.3-5.08-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.48.78-2.2 1.05-2.5.27-.3.59-.37.79-.37.2 0 .39 0 .56.01.18.01.43-.07.67.51.25.6.84 2.08.91 2.23.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.18-.31.39-.44.53-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.71.81 2 .96.3.15.5.22.57.35.07.12.07.72-.18 1.42Z"/></svg></div>
+            <div class="acct-id">
+              <div class="acct-name">Urgencias <span class="badge err"><span class="dot"></span>Desconectado</span></div>
+              <div class="acct-phone">+34 600 11 22 33</div>
+              <div class="acct-clinic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/></svg>Sede Centro</div>
+            </div>
+          </div>
+          <div class="acct-alert err">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            Sin conexión desde hace 2 h. Los mensajes a este número no llegan a tu bandeja.
+          </div>
+          <div class="acct-foot">
+            <button class="btn primary sm" id="fixUrg2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>Reconectar</button>
+            <div class="grow"></div>
+            <button class="btn sm danger-ghost" id="removeUrg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Quitar</button>
+          </div>
+        </div>
+
+        <!-- AÑADIR -->
+        <div class="acct-add" id="openConnect2">
+          <div class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>
+          <h3>Conectar otro número</h3>
+          <p>Vincula un nuevo número de WhatsApp Business en menos de 2 minutos.</p>
+        </div>
+
+      </div>
+
+      <!-- CÓMO FUNCIONA (compacto) -->
+      <div class="help-card">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Cómo se conecta un número</h2>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div><h4>Pulsa "Conectar número"</h4><p>Necesitas una cuenta de WhatsApp Business asociada al número.</p></div></div>
+          <div class="step"><div class="step-n">2</div><div><h4>Escanea el código</h4><p>Vincula el número desde el móvil, igual que en WhatsApp Web.</p></div></div>
+          <div class="step"><div class="step-n">3</div><div><h4>Listo</h4><p>Los mensajes empiezan a llegar a tu bandeja y a generar citas.</p></div></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ MODAL: CONECTAR ============ -->
+<div class="overlay" id="connectModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></div>
+      <div>
+        <h2>Conectar número de WhatsApp</h2>
+        <p>Da un nombre, elige la sede y vincula el número escaneando el código.</p>
+      </div>
+      <button class="modal-close" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Nombre del número <span class="req">*</span></label>
+        <input type="text" id="newName" placeholder="Ej. Recepción principal">
+        <div class="hint-sm">Te ayuda a identificarlo en la bandeja. Solo lo ves tú.</div>
+      </div>
+      <div class="field">
+        <label>Número de teléfono <span class="req">*</span></label>
+        <input type="tel" id="newPhone" placeholder="+34 600 00 00 00">
+      </div>
+      <div class="field">
+        <label>Sede asignada</label>
+        <select id="newClinic">
+          <option>Sede Centro</option>
+          <option>Sede Norte</option>
+          <option>Todas las sedes</option>
+        </select>
+        <div class="hint-sm">Las citas creadas se asignarán a esta sede.</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-close>Cancelar</button>
+      <div class="grow"></div>
+      <button class="btn primary" id="doConnect"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M21 21v.01M14 21h.01M21 14h.01"/></svg>Generar código QR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: ELIMINAR (confirmación destructiva) ============ -->
+<div class="overlay" id="removeModal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-head">
+      <div class="modal-ic danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></div>
+      <div>
+        <h2>Quitar este número</h2>
+        <p>Dejarás de recibir mensajes de <b>Urgencias (+34 600 11 22 33)</b>. El historial de chats se conserva.</p>
+      </div>
+      <button class="modal-close" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-close>Cancelar</button>
+      <div class="grow"></div>
+      <button class="btn" style="background:var(--danger);border-color:var(--danger);color:#fff" id="confirmRemove">Sí, quitar número</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<script>
+  (function(){
+    var connectModal = document.getElementById('connectModal');
+    var removeModal  = document.getElementById('removeModal');
+
+    function open(m){ m.classList.add('open'); }
+    function close(m){ m.classList.remove('open'); }
+
+    // open connect
+    ['openConnect','openConnect2','fixUrg','fixUrg2'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.addEventListener('click', function(){ open(connectModal); });
+    });
+
+    // remove flow
+    var removeBtn = document.getElementById('removeUrg');
+    if(removeBtn) removeBtn.addEventListener('click', function(){ open(removeModal); });
+
+    // close buttons + backdrop
+    document.querySelectorAll('[data-close]').forEach(function(b){
+      b.addEventListener('click', function(){ close(connectModal); close(removeModal); });
+    });
+    [connectModal, removeModal].forEach(function(m){
+      m.addEventListener('click', function(e){ if(e.target === m) close(m); });
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ close(connectModal); close(removeModal); }
+    });
+
+    // toast helper
+    function toast(msg, type){
+      type = type || 'ok';
+      var wrap = document.getElementById('toasts');
+      var t = document.createElement('div');
+      t.className = 'toast ' + type;
+      var icon = type === 'ok'
+        ? '<path d="M20 6 9 17l-5-5"/>'
+        : '<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>';
+      t.innerHTML = '<span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+icon+'</svg></span><span>'+msg+'</span>';
+      wrap.appendChild(t);
+      setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateX(12px)'; t.style.transition='.25s'; }, 3200);
+      setTimeout(function(){ t.remove(); }, 3500);
+    }
+
+    // connect action
+    document.getElementById('doConnect').addEventListener('click', function(){
+      var name = document.getElementById('newName').value.trim();
+      var phone = document.getElementById('newPhone').value.trim();
+      if(!name || !phone){
+        toast('Completa el nombre y el número.', 'info');
+        return;
+      }
+      close(connectModal);
+      toast('<b>'+name+'</b> conectado. Ya recibe mensajes.', 'ok');
+      document.getElementById('newName').value='';
+      document.getElementById('newPhone').value='';
+    });
+
+    // confirm remove
+    document.getElementById('confirmRemove').addEventListener('click', function(){
+      close(removeModal);
+      toast('Número de Urgencias retirado.', 'ok');
+    });
+
+    // sync / check status
+    var syncBtn = document.getElementById('syncBtn');
+    syncBtn.addEventListener('click', function(){
+      var icon = syncBtn.querySelector('svg');
+      icon.style.transition = 'transform .7s';
+      icon.style.transform = 'rotate(360deg)';
+      setTimeout(function(){ icon.style.transform=''; icon.style.transition=''; }, 720);
+      toast('Estado actualizado: 2 de 3 números conectados.', 'info');
+    });
+
+    // toggles feedback (respuesta automática)
+    document.querySelectorAll('.acct-foot .switch input').forEach(function(sw){
+      sw.addEventListener('change', function(){
+        toast(this.checked ? 'Respuesta automática activada para este número.' : 'Respuesta automática desactivada.', 'ok');
+      });
+    });
+  })();
+</script>
+</body>
+</html>

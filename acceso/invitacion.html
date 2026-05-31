@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aceptar invitación · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771;
+  --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486;
+  --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc;
+  --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06),0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08),0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12),0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:
+    radial-gradient(900px 500px at 12% -8%, #f3f7f9, transparent 60%),
+    radial-gradient(900px 500px at 110% 110%, #eaf3f1, transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  color:var(--text); min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding:32px 20px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ============ SHELL ============ */
+.wrap{width:100%;max-width:980px}
+.card{
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-lg); box-shadow:var(--shadow-lg);
+  overflow:hidden; display:grid; grid-template-columns:380px 1fr;
+}
+
+/* ============ ASIDE (left, brand/context) ============ */
+.aside{
+  position:relative; padding:32px 30px;
+  background:
+    radial-gradient(1200px 400px at -10% -10%, rgba(94,224,201,.16), transparent 60%),
+    linear-gradient(165deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color:#f3fcf9; display:flex; flex-direction:column; gap:22px;
+}
+.brand{display:flex;align-items:center;gap:11px}
+.brand .logo{
+  width:40px;height:40px;border-radius:11px;
+  background:linear-gradient(145deg,#ffffff,#dff5ef);
+  display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.18);
+}
+.brand .logo svg{width:22px;height:22px}
+.brand-name{font-size:17px;font-weight:800;letter-spacing:-.02em;color:#fff}
+.brand-sub{font-size:12.5px;color:rgba(240,252,249,.88);font-weight:500;margin-top:1px}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;align-self:flex-start;
+  padding:6px 12px;border-radius:var(--radius-pill);
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  font-size:12.5px;font-weight:600;color:#fff;letter-spacing:.01em;
+}
+.eyebrow svg{width:14px;height:14px}
+.aside-title{
+  margin-top:2px;
+  font-size:23px;font-weight:800;line-height:1.3;letter-spacing:-.02em;color:#fff
+}
+.aside-lead{font-size:13.5px;color:rgba(243,252,249,.92);font-weight:500;line-height:1.5}
+
+.org-card{
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--radius); padding:15px 16px;
+  backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:13px;
+}
+.org-head{display:flex;align-items:center;gap:12px}
+.org-logo{
+  width:44px;height:44px;border-radius:11px;flex-shrink:0;
+  background:linear-gradient(145deg,#ffffff,#d6f0ea);
+  display:grid;place-items:center;font-weight:800;color:var(--primary);font-size:17px;
+  box-shadow:0 4px 12px rgba(0,0,0,.16);
+}
+.org-name{font-size:15.5px;font-weight:700;color:#fff;letter-spacing:-.01em}
+.org-type{font-size:12.5px;color:rgba(243,252,249,.88);font-weight:500;margin-top:1px}
+.org-divider{height:1px;background:rgba(255,255,255,.18)}
+.org-row{display:flex;align-items:center;gap:10px}
+.org-row .ic{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  background:rgba(255,255,255,.16);display:grid;place-items:center;
+}
+.org-row .ic svg{width:15px;height:15px}
+.org-row .lbl{font-size:13px;color:rgba(243,252,249,.9);font-weight:500}
+.org-row .val{font-size:13.5px;color:#fff;font-weight:600;margin-top:1px}
+
+/* "qué podrás hacer" — valor real, no IA */
+.perks{display:flex;flex-direction:column;gap:9px}
+.perks .pk{display:flex;align-items:flex-start;gap:10px}
+.perks .pk .ic{
+  width:26px;height:26px;border-radius:7px;flex-shrink:0;margin-top:1px;
+  background:rgba(255,255,255,.16);display:grid;place-items:center;
+}
+.perks .pk .ic svg{width:15px;height:15px}
+.perks .pk .tx{font-size:12.5px;color:rgba(243,252,249,.92);font-weight:500;line-height:1.45}
+.perks .pk .tx b{color:#fff;font-weight:700}
+
+/* caducidad chip dentro del aside */
+.aside-exp{
+  display:flex;align-items:center;gap:9px;
+  padding:11px 13px;border-radius:var(--radius-sm);
+  background:rgba(255,244,220,.16);border:1px solid rgba(255,244,220,.32);
+}
+.aside-exp svg{width:17px;height:17px;flex-shrink:0;color:#ffe7b0}
+.aside-exp .et{font-size:13px;font-weight:600;color:#fff;line-height:1.4}
+.aside-exp .et b{font-weight:800}
+
+.aside-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.aside-foot .row{display:flex;align-items:center;gap:8px}
+.aside-foot .row svg{width:15px;height:15px;flex-shrink:0;opacity:.95}
+.aside-foot .row span{font-size:12.5px;color:rgba(243,252,249,.9);font-weight:500}
+
+/* ============ MAIN (right, form) ============ */
+.main{padding:34px 38px;display:flex;flex-direction:column}
+.main-head{margin-bottom:20px}
+.step-ind{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:600;color:var(--primary);
+  background:var(--primary-soft);padding:6px 12px;border-radius:var(--radius-pill);
+  margin-bottom:13px
+}
+.step-ind svg{width:15px;height:15px}
+.main-title{font-size:24px;font-weight:800;letter-spacing:-.025em;color:var(--text);line-height:1.2}
+.main-sub{font-size:13.5px;color:var(--text-2);margin-top:7px;line-height:1.5}
+
+.field{margin-bottom:17px}
+.field-label{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:7px
+}
+.field-label > span{display:inline-flex;align-items:center;gap:6px}
+.req-star{color:var(--danger);font-weight:700}
+.input-wrap{position:relative}
+input[type=text],input[type=email],input[type=password]{
+  width:100%;height:46px;padding:0 14px;font-family:inherit;
+  font-size:14px;color:var(--text);background:var(--surface-soft);
+  border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  transition:border-color .15s,box-shadow .15s;
+}
+input::placeholder{color:#6b7771;opacity:1}
+.pw-wrap input{padding-right:46px}
+input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+input[aria-invalid="true"]{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-soft)}
+input[readonly]{color:var(--text-2);cursor:default}
+
+/* email fijo badge */
+.fixed-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:600;color:var(--muted);
+  background:var(--surface-soft);border:1px solid var(--line);
+  padding:3px 9px;border-radius:var(--radius-pill);position:relative;cursor:help;
+}
+.fixed-badge svg{width:13px;height:13px}
+.fixed-badge .tip{
+  position:absolute;bottom:calc(100% + 8px);right:0;width:218px;
+  background:var(--text);color:#fff;font-size:12px;font-weight:500;line-height:1.45;
+  padding:9px 11px;border-radius:var(--radius-sm);box-shadow:var(--shadow-md);
+  opacity:0;visibility:hidden;transform:translateY(4px);transition:all .15s;
+  z-index:5;text-align:left;letter-spacing:0;
+}
+.fixed-badge .tip::after{
+  content:"";position:absolute;top:100%;right:14px;
+  border:6px solid transparent;border-top-color:var(--text);
+}
+.fixed-badge:hover .tip,.fixed-badge:focus-within .tip{opacity:1;visibility:visible;transform:translateY(0)}
+.field-hint{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}
+
+.toggle-eye{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border:none;background:transparent;cursor:pointer;
+  color:var(--muted);display:grid;place-items:center;border-radius:7px;
+}
+.toggle-eye:hover{background:var(--line);color:var(--text-2)}
+.toggle-eye:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.toggle-eye svg{width:18px;height:18px}
+
+/* strength meter */
+.meter-wrap{margin-top:10px}
+.meter{display:flex;gap:5px;margin-bottom:6px}
+.meter span{height:5px;flex:1;border-radius:2px;background:var(--line-strong);transition:background .2s}
+.meter.s1 span:nth-child(1){background:var(--danger)}
+.meter.s2 span:nth-child(-n+2){background:var(--warning)}
+.meter.s3 span:nth-child(-n+3){background:var(--accent)}
+.meter.s4 span{background:var(--ok)}
+.meter-label{font-size:12.5px;font-weight:600;color:var(--muted)}
+.meter-label .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px;background:var(--line-strong)}
+.meter-label.s1 .dot{background:var(--danger)}.meter-label.s1{color:var(--danger)}
+.meter-label.s2 .dot{background:var(--warning)}.meter-label.s2{color:var(--warning)}
+.meter-label.s3 .dot{background:var(--accent)}.meter-label.s3{color:var(--accent)}
+.meter-label.s4 .dot{background:var(--ok)}.meter-label.s4{color:var(--ok)}
+
+/* requirements */
+.reqs{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:7px 14px}
+.req{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);transition:color .15s}
+.req svg{width:15px;height:15px;flex-shrink:0}
+.req.ok{color:var(--ok)}
+
+/* caps-lock warning */
+.caps-warn{
+  display:none;align-items:center;gap:6px;margin-top:8px;
+  font-size:12.5px;font-weight:600;color:var(--warning);
+}
+.caps-warn.show{display:flex}
+.caps-warn svg{width:14px;height:14px;flex-shrink:0}
+
+/* match message (color + icon + text) */
+.match-msg{display:none;align-items:center;gap:6px;margin-top:8px;font-size:12.5px;font-weight:600}
+.match-msg svg{width:14px;height:14px;flex-shrink:0}
+.match-msg.ok{display:flex;color:var(--ok)}
+.match-msg.err{display:flex;color:var(--danger)}
+
+/* consent */
+.consent{
+  display:flex;align-items:flex-start;gap:10px;margin:18px 0 6px;
+  padding:13px 15px;background:var(--surface-soft);
+  border:1px solid var(--line);border-radius:var(--radius-sm);
+  transition:border-color .15s,background .15s;
+}
+.consent.err{border-color:var(--danger);background:var(--danger-soft)}
+.consent input{margin-top:1px;width:18px;height:18px;accent-color:var(--primary);flex-shrink:0;cursor:pointer}
+.consent input:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.consent label{font-size:12.5px;color:var(--text-2);line-height:1.5;cursor:pointer}
+.consent label .req-star{margin-left:2px}
+.consent a{color:var(--primary);font-weight:600;text-decoration:none}
+.consent a:hover{text-decoration:underline}
+
+/* inline form error (aria-live) */
+.form-error{
+  display:none;align-items:center;gap:8px;margin:12px 0 0;
+  padding:11px 13px;border-radius:var(--radius-sm);
+  background:var(--danger-soft);border:1px solid #f3c9c4;
+  font-size:13px;font-weight:600;color:var(--danger);line-height:1.4;
+}
+.form-error.show{display:flex}
+.form-error svg{width:17px;height:17px;flex-shrink:0}
+
+/* role / urgency recap near CTA */
+.cta-recap{
+  display:flex;align-items:center;gap:10px;margin:18px 0 12px;
+  padding:12px 14px;border-radius:var(--radius-sm);
+  background:var(--primary-tint);border:1px solid var(--primary-soft);
+}
+.cta-recap .ic{width:30px;height:30px;border-radius:8px;flex-shrink:0;background:var(--primary-soft);display:grid;place-items:center;color:var(--primary)}
+.cta-recap .ic svg{width:16px;height:16px}
+.cta-recap .tx{font-size:12.5px;color:var(--text-2);line-height:1.45}
+.cta-recap .tx b{color:var(--text);font-weight:700}
+.cta-recap .tx .exp{color:var(--warning);font-weight:600}
+
+/* CTA */
+.btn{
+  width:100%;min-height:50px;border:none;border-radius:var(--radius-sm);
+  font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  transition:transform .12s,box-shadow .2s,background .2s,opacity .2s;
+}
+.btn-primary{
+  background:linear-gradient(180deg,var(--primary-bright),var(--primary));
+  color:#fff;box-shadow:0 8px 20px rgba(15,118,110,.28),0 2px 6px rgba(15,118,110,.2);
+}
+.btn-primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 12px 26px rgba(15,118,110,.34)}
+.btn-primary:active:not(:disabled){transform:translateY(0)}
+.btn:focus-visible{outline:3px solid var(--primary-bright);outline-offset:3px}
+.btn:disabled{
+  background:var(--line-strong);color:#fff;
+  box-shadow:none;cursor:not-allowed;transform:none;opacity:.85;
+}
+.btn svg{width:18px;height:18px}
+.btn .btn-spinner{
+  width:18px;height:18px;border-radius:50%;
+  border:2.4px solid rgba(255,255,255,.45);border-top-color:#fff;
+  animation:spin .8s linear infinite;
+}
+
+.form-foot{
+  margin-top:15px;display:flex;align-items:center;justify-content:center;
+  gap:7px;font-size:12.5px;color:var(--muted);text-align:center
+}
+.form-foot svg{width:15px;height:15px;opacity:.8}
+
+/* page foot */
+.page-foot{
+  margin-top:22px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6
+}
+.page-foot a{color:var(--text-2);font-weight:500;text-decoration:none}
+.page-foot a:hover{color:var(--primary)}
+
+/* states */
+.state{display:none}
+.state.active{display:block}
+
+/* loading state */
+.loading-wrap{
+  grid-column:1/-1;padding:60px 40px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+.spinner{
+  width:44px;height:44px;border-radius:50%;
+  border:3px solid var(--line-strong);border-top-color:var(--primary);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-wrap .lt{font-size:16px;font-weight:700;color:var(--text)}
+.loading-wrap .ls{font-size:13.5px;color:var(--muted)}
+
+/* success state */
+.success-wrap{
+  grid-column:1/-1;padding:54px 44px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+.success-ic{
+  width:66px;height:66px;border-radius:50%;background:var(--ok-soft);
+  display:grid;place-items:center;color:var(--ok);
+  box-shadow:0 0 0 8px rgba(21,115,72,.08);
+}
+.success-ic svg{width:34px;height:34px}
+.success-wrap .st{font-size:21px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.success-wrap .ss{font-size:13.5px;color:var(--text-2);max-width:360px;line-height:1.55}
+.success-redirect{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--muted)}
+.success-redirect .spinner{width:18px;height:18px;border-width:2.4px}
+
+/* expired state */
+.expired-wrap{
+  grid-column:1/-1;padding:50px 44px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+.expired-ic{
+  width:60px;height:60px;border-radius:50%;background:var(--danger-soft);
+  display:grid;place-items:center;color:var(--danger);
+}
+.expired-ic svg{width:30px;height:30px}
+.expired-wrap .et{font-size:20px;font-weight:800;color:var(--text)}
+.expired-wrap .es{font-size:13.5px;color:var(--text-2);max-width:360px;line-height:1.55}
+.expired-wrap .btn{max-width:280px}
+
+/* visually hidden (for SR-only announcements) */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+@media(max-width:760px){
+  .card{grid-template-columns:1fr}
+  .aside{display:none}
+  .main{padding:28px 22px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="card" id="card">
+
+    <!-- ===== ASIDE ===== -->
+    <aside class="aside" id="aside">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#0f766e"><path d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">Waiable</div>
+          <div class="brand-sub">Clínicas</div>
+        </div>
+      </div>
+
+      <span class="eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Invitación de equipo
+      </span>
+
+      <div>
+        <h1 class="aside-title">Te han invitado a unirte al equipo</h1>
+        <p class="aside-lead">Activa tu acceso para gestionar la agenda y atender a los pacientes desde un solo panel: web, WhatsApp y teléfono.</p>
+      </div>
+
+      <div class="org-card">
+        <div class="org-head">
+          <div class="org-logo">A</div>
+          <div>
+            <div class="org-name">Clínica Dental Aurora</div>
+            <div class="org-type">Clínica dental · Madrid</div>
+          </div>
+        </div>
+        <div class="org-divider"></div>
+        <div class="org-row">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f3fcf9"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8"/></svg></div>
+          <div>
+            <div class="lbl">Rol asignado</div>
+            <div class="val">Recepción / Agenda</div>
+          </div>
+        </div>
+        <div class="org-row">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f3fcf9"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <div>
+            <div class="lbl">Invitada por</div>
+            <div class="val">Dra. Elena Ruiz</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perks">
+        <div class="pk">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f3fcf9"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <div class="tx">Gestiona la <b>agenda y las citas</b> de toda la clínica</div>
+        </div>
+        <div class="pk">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f3fcf9"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="tx">Atiende a pacientes por <b>WhatsApp y teléfono</b></div>
+        </div>
+        <div class="pk">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f3fcf9"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div class="tx">Con respuestas sugeridas que <b>ahorran trabajo</b> en recepción</div>
+        </div>
+      </div>
+
+      <div class="aside-exp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="et">Esta invitación caduca en <b>6 días</b>. Actívala cuanto antes para no perderla.</div>
+      </div>
+
+      <div class="aside-foot">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f3fcf9"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Conexión cifrada y segura</span></div>
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f3fcf9"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>Cumplimiento RGPD</span></div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN: FORM (default) ===== -->
+    <main class="main state active" id="state-form">
+      <div class="main-head">
+        <span class="step-ind">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Paso final · Crea tu contraseña
+        </span>
+        <h2 class="main-title">Configura tu acceso</h2>
+        <p class="main-sub">Crea una contraseña segura para activar tu cuenta. Tardarás menos de un minuto y entrarás directamente al panel.</p>
+      </div>
+
+      <form id="inviteForm" onsubmit="submitForm(event)" novalidate>
+        <div class="field">
+          <label class="field-label" for="email">
+            <span>Correo de la invitación</span>
+            <span class="fixed-badge" tabindex="0" role="note" aria-label="Tu correo es fijo: no se puede cambiar porque la invitación fue enviada a esta dirección.">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Fijo
+              <span class="tip">Este correo es fijo: la invitación se envió a esta dirección y no se puede modificar.</span>
+            </span>
+          </label>
+          <div class="input-wrap">
+            <input type="email" id="email" value="recepcion@aurora.es" readonly>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="pw">
+            <span>Contraseña <span class="req-star" aria-hidden="true">*</span></span>
+          </label>
+          <div class="input-wrap pw-wrap">
+            <input type="password" id="pw" placeholder="Mínimo 8 caracteres" oninput="onPw()" onkeyup="checkCaps(event)" autocomplete="new-password" aria-describedby="meterLabel reqs capsWarn">
+            <button type="button" class="toggle-eye" id="eye1" aria-label="Mostrar contraseña" onclick="toggleEye('pw','eye1')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="caps-warn" id="capsWarn" role="status" aria-live="polite">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 12h4v6h10v-6h4z"/><path d="M7 21h10"/></svg>
+            Bloq Mayús está activado
+          </div>
+          <div class="meter-wrap">
+            <div class="meter" id="meter" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="meter-label" id="meterLabel" role="status" aria-live="polite"><span class="dot"></span>Introduce una contraseña</div>
+          </div>
+          <div class="reqs" id="reqs" role="status" aria-live="polite" aria-label="Requisitos de la contraseña">
+            <div class="req" id="r-len"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>8+ caracteres</div>
+            <div class="req" id="r-upp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>1 mayúscula</div>
+            <div class="req" id="r-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>1 número</div>
+            <div class="req" id="r-sym"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>1 símbolo</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="pw2">
+            <span>Repite la contraseña <span class="req-star" aria-hidden="true">*</span></span>
+          </label>
+          <div class="input-wrap pw-wrap">
+            <input type="password" id="pw2" placeholder="Vuelve a escribirla" oninput="onPw2()" onkeyup="checkCaps(event)" autocomplete="new-password" aria-describedby="matchMsg">
+            <button type="button" class="toggle-eye" id="eye2" aria-label="Mostrar contraseña" onclick="toggleEye('pw2','eye2')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="match-msg" id="matchMsg" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="consent" id="consentBox">
+          <input type="checkbox" id="consent" onchange="refreshCta()" aria-describedby="consentLabel">
+          <label for="consent" id="consentLabel">He leído y acepto las <a href="#">Condiciones del servicio</a> y la <a href="#">Política de privacidad</a> de Waiable.<span class="req-star" aria-hidden="true">*</span></label>
+        </div>
+
+        <!-- recap de rol + urgencia junto al CTA -->
+        <div class="cta-recap">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8"/></svg></div>
+          <div class="tx">Te unes a <b>Clínica Dental Aurora</b> como <b>Recepción / Agenda</b>. <span class="exp">La invitación caduca en 6 días.</span> Podrás cambiar tu contraseña cuando quieras.</div>
+        </div>
+
+        <!-- inline validation message (aria-live) -->
+        <div class="form-error" id="formError" role="alert" aria-live="assertive">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          <span id="formErrorText"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn" disabled aria-disabled="true">
+          <svg id="btnIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span id="btnText">Activar acceso</span>
+        </button>
+
+        <div class="form-foot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Tus datos están protegidos. No los compartiremos.
+        </div>
+      </form>
+    </main>
+
+    <!-- ===== LOADING STATE ===== -->
+    <div class="state" id="state-loading">
+      <div class="loading-wrap">
+        <div class="spinner" role="status" aria-label="Validando invitación"></div>
+        <div>
+          <div class="lt">Validando tu invitación…</div>
+          <div class="ls">Un momento, estamos comprobando el enlace.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SUCCESS STATE ===== -->
+    <div class="state" id="state-success">
+      <div class="success-wrap">
+        <div class="success-ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <div>
+          <div class="st">Acceso activado</div>
+          <div class="ss">¡Bienvenida al equipo de Clínica Dental Aurora! Ya tienes acceso al panel como Recepción / Agenda.</div>
+        </div>
+        <div class="success-redirect" role="status" aria-live="polite">
+          <div class="spinner"></div>
+          Entrando al panel…
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EXPIRED STATE ===== -->
+    <div class="state" id="state-expired">
+      <div class="expired-wrap">
+        <div class="expired-ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+        </div>
+        <div>
+          <div class="et">Esta invitación ha caducado</div>
+          <div class="es">El enlace de invitación tiene una validez limitada. Pide a tu administrador que te envíe una nueva invitación para activar tu acceso.</div>
+        </div>
+        <button class="btn btn-primary" onclick="setState('form')">Solicitar nueva invitación</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-foot">
+    ¿Problemas para activar tu cuenta? <a href="#">Contacta con soporte</a> · Waiable Clínicas © 2026
+  </div>
+</div>
+
+<script>
+/* ---------- show / hide password ---------- */
+function toggleEye(id,btn){
+  const inp=document.getElementById(id);
+  const b=document.getElementById(btn);
+  const show=inp.type==='password';
+  inp.type=show?'text':'password';
+  b.setAttribute('aria-label',show?'Ocultar contraseña':'Mostrar contraseña');
+  b.innerHTML=show
+    ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-10-7-10-7a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 10 7 10 7a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>'
+    :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+}
+
+/* ---------- caps lock warning ---------- */
+function checkCaps(e){
+  const w=document.getElementById('capsWarn');
+  let on=false;
+  try{ on=e.getModifierState && e.getModifierState('CapsLock'); }catch(_){ on=false; }
+  w.classList.toggle('show',!!on);
+}
+
+/* ---------- validation state ---------- */
+function pwChecks(){
+  const v=document.getElementById('pw').value;
+  return {len:v.length>=8,upp:/[A-Z]/.test(v),num:/[0-9]/.test(v),sym:/[^A-Za-z0-9]/.test(v)};
+}
+function reqsMet(){
+  const c=pwChecks();
+  return c.len&&c.upp&&c.num&&c.sym;
+}
+function pwMatch(){
+  const a=document.getElementById('pw').value,b=document.getElementById('pw2').value;
+  return a.length>0 && a===b;
+}
+function consentGiven(){
+  return document.getElementById('consent').checked;
+}
+function formValid(){
+  return reqsMet() && pwMatch() && consentGiven();
+}
+
+function onPw(){
+  const v=document.getElementById('pw').value;
+  const c=pwChecks();
+  setReq('r-len',c.len);setReq('r-upp',c.upp);setReq('r-num',c.num);setReq('r-sym',c.sym);
+  const score=Object.values(c).filter(Boolean).length;
+  const meter=document.getElementById('meter');
+  meter.className='meter'+(v?(' s'+score):'');
+  const labels=['','Muy débil','Débil','Buena','Fuerte'];
+  const ml=document.getElementById('meterLabel');
+  ml.className='meter-label'+(v?(' s'+score):'');
+  ml.innerHTML='<span class="dot"></span>'+(v?('Seguridad: '+labels[score]):'Introduce una contraseña');
+  onPw2();
+}
+function setReq(id,ok){
+  const el=document.getElementById(id);
+  el.className='req'+(ok?' ok':'');
+  el.querySelector('svg').innerHTML=ok
+    ?'<circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>'
+    :'<circle cx="12" cy="12" r="10"/>';
+}
+function onPw2(){
+  const a=document.getElementById('pw').value,b=document.getElementById('pw2').value;
+  const inp=document.getElementById('pw2');
+  const m=document.getElementById('matchMsg');
+  if(!b){
+    m.textContent='';m.className='match-msg';inp.removeAttribute('aria-invalid');
+  }else if(a===b){
+    m.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>Las contraseñas coinciden';
+    m.className='match-msg ok';inp.removeAttribute('aria-invalid');
+  }else{
+    m.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Las contraseñas no coinciden';
+    m.className='match-msg err';inp.setAttribute('aria-invalid','true');
+  }
+  refreshCta();
+}
+
+/* ---------- smart CTA ---------- */
+function refreshCta(){
+  const btn=document.getElementById('submitBtn');
+  const ok=formValid();
+  btn.disabled=!ok;
+  btn.setAttribute('aria-disabled',(!ok).toString());
+  if(ok){
+    document.getElementById('formError').classList.remove('show');
+    document.getElementById('consentBox').classList.remove('err');
+  }
+}
+
+function missingReason(){
+  if(!reqsMet()) return 'Tu contraseña aún no cumple todos los requisitos.';
+  if(!pwMatch()) return 'Las contraseñas no coinciden. Revísalas antes de continuar.';
+  if(!consentGiven()) return 'Debes aceptar las condiciones para continuar.';
+  return '';
+}
+
+/* ---------- submit + success ---------- */
+function submitForm(e){
+  if(e&&e.preventDefault) e.preventDefault();
+  if(!formValid()){
+    const reason=missingReason();
+    const fe=document.getElementById('formError');
+    document.getElementById('formErrorText').textContent=reason;
+    fe.classList.add('show');
+    if(!consentGiven()){
+      document.getElementById('consentBox').classList.add('err');
+      document.getElementById('consent').focus();
+    }else if(!reqsMet()){
+      document.getElementById('pw').focus();
+    }else{
+      document.getElementById('pw2').focus();
+    }
+    return false;
+  }
+  // submitting state on the button
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  btn.setAttribute('aria-disabled','true');
+  document.getElementById('btnIcon').outerHTML='<span class="btn-spinner" id="btnIcon" aria-hidden="true"></span>';
+  document.getElementById('btnText').textContent='Activando…';
+  // simulate request, then success view + redirect
+  setTimeout(function(){
+    setState('success');
+    setTimeout(function(){
+      // demo: aquí iría window.location = '/panel'
+    },1600);
+  },1100);
+  return false;
+}
+
+/* ---------- state switcher (used by states) ---------- */
+function setState(s){
+  document.querySelectorAll('.state').forEach(e=>e.classList.remove('active'));
+  document.getElementById('state-'+s).classList.add('active');
+  const aside=document.getElementById('aside');
+  aside.style.display=(s==='form')?'':'none';
+  if(s==='form'){
+    // reset CTA back to idle if user returns to form
+    const btn=document.getElementById('submitBtn');
+    const icon=document.getElementById('btnIcon');
+    if(icon && icon.tagName.toLowerCase()!=='svg'){
+      icon.outerHTML='<svg id="btnIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>';
+    }
+    document.getElementById('btnText').textContent='Activar acceso';
+    refreshCta();
+  }
+}
+
+/* init */
+refreshCta();
+</script>
+</body>
+</html>

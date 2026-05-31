@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oportunidades · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#5b6661; --muted-soft:#6b7771; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06),0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08),0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12),0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.5}
+
+/* ACCESSIBILITY */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+.kpi.hero :focus-visible{outline-color:var(--cyan)}
+
+/* LAYOUT */
+.app{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:248px;background:linear-gradient(180deg,#0c1f1c,#0a1816);color:#e8efec;display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;z-index:40;border-right:1px solid rgba(255,255,255,.06)}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 18px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--primary-bright),var(--cyan));display:grid;place-items:center;color:#08221f;font-weight:800;font-size:17px;flex-shrink:0}
+.brand .bn{font-weight:700;font-size:15px;letter-spacing:-.01em}
+.brand .bs{font-size:12px;color:rgba(255,255,255,.62)}
+.nav{flex:1;overflow-y:auto;padding:14px 12px}
+.nav-group{margin-bottom:6px}
+.nav-label{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:rgba(255,255,255,.55);padding:10px 12px 6px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:10px;color:rgba(255,255,255,.82);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:1px;position:relative;transition:.15s;min-height:40px}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 4px 12px rgba(15,118,110,.3)}
+.nav-item .ico{width:18px;height:18px;flex-shrink:0;opacity:.85}
+.nav-item .badge{margin-left:auto;background:var(--cyan);color:#08221f;font-size:12px;font-weight:700;padding:1px 7px;border-radius:999px}
+.nav-item.active .badge{background:rgba(255,255,255,.92);color:var(--primary-dark)}
+.nav-divider{height:1px;background:rgba(255,255,255,.07);margin:10px 12px}
+.sb-foot{padding:12px;border-top:1px solid rgba(255,255,255,.07)}
+.profile{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;cursor:pointer;min-height:40px}
+.profile:hover{background:rgba(255,255,255,.06)}
+.profile .av{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1f6f66,#2aa595);display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff}
+.profile .pn{font-size:13px;font-weight:600}
+.profile .pr{font-size:12px;color:rgba(255,255,255,.72)}
+.main{flex:1;margin-left:248px;display:flex;flex-direction:column;min-height:100vh}
+
+/* TOPBAR */
+.topbar{height:62px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 24px;position:sticky;top:0;z-index:30}
+.search{flex:1;max-width:460px;position:relative}
+.search input{width:100%;height:40px;border:1px solid var(--line-strong);border-radius:11px;background:var(--surface-soft);padding:0 14px 0 40px;font-size:13.5px;font-family:inherit;color:var(--text)}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);background:#fff}
+.search .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search .kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:2px 6px}
+.topbar .tb-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.tb-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line-strong);background:var(--surface-soft);display:grid;place-items:center;color:var(--text-2);cursor:pointer;position:relative}
+.tb-btn:hover{background:#fff;border-color:var(--primary);color:var(--primary)}
+.tb-dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+.tb-label{font-size:12px;color:var(--muted)}
+/* TOPBAR STATUS CHIPS — captación primero, automatización discreta */
+.tb-status{display:flex;align-items:center;gap:8px}
+.st-chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;border:1px solid var(--line-strong);background:var(--surface-soft);color:var(--text-2)}
+.st-chip .st-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.st-chip.ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.st-chip.ok .st-dot{background:var(--ok)}
+.st-chip.soft{background:transparent;border-color:var(--line-strong);color:var(--muted);font-weight:500}
+.st-chip.soft .st-dot{background:var(--accent)}
+@media(max-width:1100px){.tb-status{display:none}}
+
+/* PAGE */
+.page{padding:24px 28px 60px;max-width:1600px}
+.crumb{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);margin-bottom:14px}
+.crumb a{color:var(--muted);text-decoration:none}
+.crumb a:hover{color:var(--primary)}
+.crumb .sep{opacity:.5}
+.crumb .cur{color:var(--text-2);font-weight:500}
+
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:22px;flex-wrap:wrap}
+.page-head h1{font-size:25px;font-weight:800;letter-spacing:-.02em;margin-bottom:5px}
+.page-head .sub{font-size:13.5px;color:var(--text-2);max-width:600px;line-height:1.55}
+.head-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:11px;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer;border:1px solid transparent;transition:.15s;white-space:nowrap;text-decoration:none}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 4px 12px rgba(15,118,110,.25)}
+.btn-primary:hover{filter:brightness(1.07);box-shadow:0 6px 18px rgba(15,118,110,.32)}
+.btn-lg{height:44px;padding:0 20px;font-size:14px}
+.btn-ghost{background:var(--surface-soft);color:var(--text-2);border-color:var(--line-strong)}
+.btn-ghost:hover{background:#fff;border-color:var(--primary);color:var(--primary)}
+.btn-sm{height:40px;padding:0 14px;font-size:13px;border-radius:9px}
+.btn-icon{width:40px;padding:0}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:14px;margin-bottom:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.kpi.hero{background:linear-gradient(135deg,#0c1f1c,#0f766e);color:#fff;border:none}
+.kpi .kl{font-size:12.5px;color:var(--muted);font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.kpi.hero .kl{color:rgba(255,255,255,.85)}
+.kpi .kv{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.kpi .kc{font-size:12.5px;margin-top:8px;display:flex;align-items:center;gap:5px}
+.kpi.hero .kv{font-size:32px}
+.kpi-foot{font-size:12.5px;margin-top:8px;color:var(--muted)}
+.chg{display:inline-flex;align-items:center;gap:3px;font-weight:600}
+.chg.up{color:var(--ok)}
+.chg.down{color:var(--danger)}
+.kpi.hero .chg.up{color:var(--cyan)}
+
+/* TOOLBAR */
+.board-tools{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--surface-soft);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px}
+.seg button{height:34px;padding:0 13px;border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--muted);border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.seg button.active{background:#fff;color:var(--primary);box-shadow:var(--shadow-sm)}
+.filter-chip{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 14px;border-radius:10px;border:1px dashed var(--line-strong);background:var(--surface-soft);font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer}
+.filter-chip:hover{border-color:var(--primary);color:var(--primary)}
+.filter-chip.active{background:var(--primary-soft);border-style:solid;border-color:var(--primary);color:var(--primary-dark)}
+.spacer{flex:1}
+
+/* GUIDED BANNER — "qué hacer ahora" */
+.do-now{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#fff,var(--primary-tint));border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;box-shadow:var(--shadow-sm)}
+.do-now .dn-ic{width:38px;height:38px;border-radius:11px;background:var(--primary-soft);color:var(--primary-dark);display:grid;place-items:center;flex-shrink:0}
+.do-now .dn-tx{flex:1;min-width:0}
+.do-now .dn-t{font-size:14px;font-weight:700;letter-spacing:-.01em;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.do-now .dn-d{font-size:13px;color:var(--text-2);line-height:1.5}
+.do-now .dn-d strong{color:var(--danger)}
+.dn-auto{font-size:12px;font-weight:600;color:var(--muted);background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:1px 9px;display:inline-flex;align-items:center;gap:5px}
+.dn-auto svg{width:13px;height:13px;opacity:.75}
+
+/* BOARD */
+.board-wrap{position:relative}
+.board{display:flex;gap:14px;overflow-x:auto;padding:4px 4px 16px;min-width:max-content}
+.col{width:288px;flex-shrink:0;background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius);display:flex;flex-direction:column;max-height:calc(100vh - 320px);transition:width .2s,box-shadow .2s}
+.col.drop{outline:2px dashed var(--primary);outline-offset:-2px;background:var(--primary-tint)}
+.col.is-close{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary-soft),var(--shadow-sm)}
+.col.collapsed{width:58px}
+.col.collapsed .col-sub,.col.collapsed .col-bar,.col.collapsed .col-list,.col.collapsed .col-name,.col.collapsed .count-pill{display:none}
+.col.collapsed .col-head{writing-mode:vertical-rl;transform:rotate(180deg);border-bottom:none;height:100%;padding:14px 0;text-align:center}
+.col.collapsed .col-top{flex-direction:column;gap:10px;margin:0;height:100%}
+.col.collapsed .col-collapsed-name{display:inline-block;font-size:13px;font-weight:700;color:var(--text)}
+.col-collapsed-name{display:none}
+.col-head{padding:13px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface-soft);border-radius:var(--radius) var(--radius) 0 0;z-index:1}
+.col-head .col-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.stage-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.col-name{font-size:13.5px;font-weight:700;letter-spacing:-.01em}
+.col-name .muted{color:var(--muted);font-weight:500}
+.col-collapse{width:24px;height:24px;border:none;background:none;color:var(--muted);cursor:pointer;border-radius:6px;display:grid;place-items:center;flex-shrink:0;margin-left:2px}
+.col-collapse:hover{background:#fff;color:var(--primary)}
+.count-pill{font-size:12px;font-weight:700;color:var(--text-2);background:#fff;border:1px solid var(--line-strong);border-radius:999px;padding:2px 9px}
+.col-top .count-pill{margin-left:auto}
+.col-sub{display:flex;align-items:baseline;gap:6px;margin-bottom:9px}
+.col-sub .acv{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.col-sub .exp{font-size:12.5px;color:var(--muted);font-weight:500}
+.col-bar{height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+.col-bar span{display:block;height:100%;border-radius:999px}
+.col-list{padding:10px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;flex:1}
+.col-foot{padding:8px 10px 11px}
+
+/* DROP PLACEHOLDER */
+.drop-ph{height:0;border-radius:var(--radius-sm);border:2px dashed var(--primary);background:var(--primary-tint);opacity:0;transition:.12s;overflow:hidden}
+.drop-ph.show{height:64px;opacity:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;color:var(--primary-dark)}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px;cursor:grab;box-shadow:var(--shadow-sm);position:relative;transition:.12s}
+.card:hover{box-shadow:var(--shadow-md);border-color:var(--line-strong);transform:translateY(-1px)}
+.card:active{cursor:grabbing}
+.card.dragging{opacity:.5;transform:rotate(2deg)}
+.card.risk{border-left:3px solid var(--danger)}
+.card .drag{position:absolute;top:8px;right:8px;width:28px;height:28px;border:none;background:none;color:var(--muted);cursor:grab;opacity:.38;transition:.15s;border-radius:6px;display:grid;place-items:center}
+.card:hover .drag,.card .drag:focus-visible{opacity:1;background:var(--surface-soft)}
+.card-top{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px;padding-right:34px}
+.card .avatar{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--primary-soft),#d6ede8);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--primary-dark);flex-shrink:0}
+.card-name{font-size:13.5px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.card-meta{font-size:13px;color:var(--muted);margin-top:2px}
+.card-amount{display:flex;align-items:baseline;gap:6px;margin:8px 0}
+.card-amount .amt{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.card-amount .per{font-size:13px;color:var(--muted);font-weight:500}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-soft);border:1px solid var(--line);color:var(--text-2)}
+.tag.svc{background:var(--primary-soft);color:var(--primary-dark);border-color:transparent}
+.tag.hot{background:var(--warning-soft);color:var(--warning);border-color:transparent}
+.next-action{display:flex;align-items:center;gap:6px;font-size:13px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}
+.next-action .na-ico{width:15px;height:15px;flex-shrink:0}
+.next-action.soon{color:var(--warning)}
+.next-action.over{color:var(--danger);font-weight:600}
+.next-action.ok{color:var(--text-2)}
+.owner{display:flex;align-items:center;gap:6px;margin-top:9px;font-size:13px;color:var(--muted)}
+.owner .ow-av{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#1f6f66,#2aa595);display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.close-date{margin-left:auto;font-size:13px;color:var(--muted)}
+.prob{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600}
+.prob.hi{color:var(--ok)}.prob.mid{color:var(--warning)}.prob.lo{color:var(--danger)}
+.lost-reason{font-size:13px;color:var(--danger);background:var(--danger-soft);border-radius:8px;padding:6px 9px;margin-top:9px;display:flex;align-items:center;gap:6px}
+.won-banner{font-size:13px;color:var(--ok);background:var(--ok-soft);border-radius:8px;padding:6px 9px;margin-top:9px;display:flex;align-items:center;gap:6px;font-weight:600}
+
+/* CARD ACTIONS (move + quick actions) */
+.card-actions{display:flex;gap:6px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
+.card-act{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;border-radius:9px;border:1px solid var(--line-strong);background:var(--surface-soft);color:var(--text-2);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:.14s}
+.card-act:hover{border-color:var(--primary);color:var(--primary);background:#fff}
+.card-act.advance{background:var(--primary-soft);border-color:transparent;color:var(--primary-dark)}
+.card-act.advance:hover{background:var(--primary);color:#fff}
+.card-act svg{width:15px;height:15px;flex-shrink:0}
+
+/* MOVE MENU (popover) */
+.move-pop{position:fixed;z-index:200;background:#fff;border:1px solid var(--line-strong);border-radius:12px;box-shadow:var(--shadow-lg);padding:6px;min-width:212px;max-width:240px}
+.move-pop .mp-h{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;padding:7px 10px 5px}
+.move-pop button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:none;border:none;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--text);padding:9px 10px;border-radius:8px;cursor:pointer;min-height:40px}
+.move-pop button:hover,.move-pop button:focus-visible{background:var(--surface-soft)}
+.move-pop button .mp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.move-pop button[aria-current="true"]{color:var(--muted);cursor:default}
+.move-pop button[aria-current="true"]::after{content:'actual';margin-left:auto;font-size:12px;color:var(--muted)}
+
+.col-foot .add-card{width:100%;height:40px;border:1px dashed var(--line-strong);background:none;border-radius:10px;color:var(--muted);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:.15s}
+.col-foot .add-card:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-tint)}
+.col-empty{padding:24px 14px;text-align:center;color:var(--muted)}
+.col-empty svg{opacity:.4;margin-bottom:8px}
+.col-empty .ce-t{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:3px}
+.col-empty .ce-d{font-size:12.5px;line-height:1.5;margin-bottom:12px}
+
+/* SKELETON */
+.sk-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px;box-shadow:var(--shadow-sm)}
+.sk-line{height:11px;border-radius:6px;background:linear-gradient(90deg,#eef2f1 25%,#e2e8e6 37%,#eef2f1 63%);background-size:400% 100%;animation:shimmer 1.3s ease infinite}
+.sk-row{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.sk-av{width:34px;height:34px;border-radius:9px;flex-shrink:0;background:linear-gradient(90deg,#eef2f1 25%,#e2e8e6 37%,#eef2f1 63%);background-size:400% 100%;animation:shimmer 1.3s ease infinite}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;top:0;bottom:16px;width:48px;pointer-events:none;z-index:5;opacity:0;transition:.2s}
+.scroll-hint.r{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.scroll-hint.l{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.scroll-hint.show{opacity:1}
+.scroll-arrow{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--line-strong);box-shadow:var(--shadow-md);display:grid;place-items:center;color:var(--text-2);cursor:pointer;z-index:6;opacity:0;transition:.2s}
+.scroll-arrow:hover{color:var(--primary);border-color:var(--primary)}
+.scroll-arrow.r{right:6px}.scroll-arrow.l{left:6px}
+.scroll-arrow.show{opacity:1}
+
+/* TOAST */
+.toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:300;display:flex;flex-direction:column;gap:8px;align-items:center}
+.toast{background:#0c1f1c;color:#fff;border-radius:12px;padding:12px 16px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px;font-size:13.5px;font-weight:500;animation:slideUp .3s}
+.toast.err{background:#5b1410}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.toast .t-act{color:var(--cyan);font-weight:700;cursor:pointer;text-decoration:none;background:none;border:none;font-family:inherit;font-size:13.5px;padding:4px}
+.toast.err .t-act{color:#ffb4a8}
+.toast .t-close{color:rgba(255,255,255,.7);cursor:pointer;background:none;border:none;font-size:14px;padding:4px}
+
+/* HELP TOOLTIP */
+.help{position:relative;display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:var(--line);color:var(--text-2);font-size:12px;font-weight:700;cursor:help;flex-shrink:0}
+.kpi.hero .help{background:rgba(255,255,255,.22);color:#fff}
+.help .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:218px;background:#0c1f1c;color:#fff;font-size:12.5px;font-weight:500;line-height:1.5;padding:9px 11px;border-radius:9px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transition:.18s;z-index:50;text-transform:none;letter-spacing:normal;text-align:left}
+.help:hover .tip,.help:focus-visible .tip{transform:translateX(-50%) translateY(-4px);opacity:1;visibility:visible}
+.help .tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#0c1f1c}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.kpi-row{grid-template-columns:1fr 1fr}.sidebar{transform:translateX(-100%)}.main{margin-left:0}.col{width:264px}}
+@media(max-width:640px){.col{width:240px}}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">W</div>
+    <div>
+      <div class="bn">Waiable</div>
+      <div class="bs">Clínica Dental Sonrisa</div>
+    </div>
+  </div>
+  <nav class="nav" aria-label="Navegación principal">
+    <div class="nav-group">
+      <div class="nav-label">Principal</div>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg> Inicio</a>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg> Panel</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Captación</div>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg> Leads <span class="badge">12</span></a>
+      <a class="nav-item active" href="#" aria-current="page"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 4-6"/></svg> Oportunidades</a>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg> Contactos</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Conversión</div>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Agenda</a>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Mensajes <span class="badge">5</span></a>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Huecos de agenda <span class="badge">4</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Gestión</div>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Facturación</a>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Ajustes</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Automatización</div>
+      <a class="nav-item" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6H4zM4 14h16v6H4z"/><path d="M8 7h.01M8 17h.01"/></svg> Reglas y avisos</a>
+    </div>
+  </nav>
+  <div class="sb-foot">
+    <div class="profile">
+      <div class="av">MG</div>
+      <div>
+        <div class="pn">María García</div>
+        <div class="pr">Recepción · Sede Centro</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="search">
+      <svg class="si" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+      <label for="globalSearch" class="sr-only">Buscar oportunidades, pacientes o servicios</label>
+      <input id="globalSearch" type="text" placeholder="Buscar oportunidades, pacientes, servicios…">
+      <span class="kbd">⌘K</span>
+    </div>
+    <div class="tb-status" aria-label="Estado de las integraciones">
+      <span class="st-chip ok"><span class="st-dot" aria-hidden="true"></span>WhatsApp conectado</span>
+      <span class="st-chip ok"><span class="st-dot" aria-hidden="true"></span>Agenda sincronizada</span>
+      <span class="st-chip soft" title="La automatización detecta tareas y huecos en segundo plano"><span class="st-dot" aria-hidden="true"></span>Automatización activa</span>
+    </div>
+    <div class="tb-actions">
+      <button class="tb-btn" aria-label="Filtrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg></button>
+      <button class="tb-btn" aria-label="Notificaciones (hay novedades)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="tb-dot"></span></button>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <div class="page">
+    <nav class="crumb" aria-label="Ruta de navegación">
+      <a href="#">CRM</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <span class="cur" aria-current="page">Oportunidades</span>
+    </nav>
+
+    <div class="page-head">
+      <div>
+        <h1>Oportunidades</h1>
+        <p class="sub">Avanza cada oportunidad por el embudo: arrástrala entre etapas o pulsa <strong>Avanzar</strong> en la tarjeta. El valor del embudo se actualiza solo.</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-ghost" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Exportar</button>
+        <button class="btn btn-primary btn-lg" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Nueva oportunidad</button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi hero">
+        <div class="kl">Valor total del embudo <span class="help" tabindex="0" role="button" aria-label="Qué es el valor total del embudo">?<span class="tip" role="tooltip">Suma del valor de todos los tratamientos y servicios de las oportunidades activas. Es el ingreso potencial si se cerraran todas.</span></span></div>
+        <div class="kv">187.400 €</div>
+        <div class="kc"><span class="chg up">▲ 12,4%</span> <span style="opacity:.8">vs. mes anterior</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Oportunidades activas <span class="help" tabindex="0" role="button" aria-label="Qué son las oportunidades activas">?<span class="tip" role="tooltip">Número de oportunidades en etapas abiertas (sin ganar ni perder).</span></span></div>
+        <div class="kv">34</div>
+        <div class="kc"><span class="chg up">▲ 6</span> <span class="kpi-foot" style="margin:0">este mes</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Tasa de conversión <span class="help" tabindex="0" role="button" aria-label="Qué es la tasa de conversión">?<span class="tip" role="tooltip">Porcentaje de oportunidades que llegan a la etapa Ganada (cita confirmada).</span></span></div>
+        <div class="kv">28,5%</div>
+        <div class="kc"><span class="chg up">▲ 3,1%</span> <span class="kpi-foot" style="margin:0">últimos 30 días</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Ciclo medio <span class="help" tabindex="0" role="button" aria-label="Qué es el ciclo medio">?<span class="tip" role="tooltip">Tiempo medio desde que entra una oportunidad hasta que se gana.</span></span></div>
+        <div class="kv">18 <span style="font-size:15px;font-weight:600;color:var(--muted)">días</span></div>
+        <div class="kc"><span class="chg down">▼ 2 días</span> <span class="kpi-foot" style="margin:0">más rápido</span></div>
+      </div>
+    </div>
+
+    <!-- DO NOW: qué hacer ahora -->
+    <div class="do-now" role="status">
+      <div class="dn-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+      <div class="dn-tx">
+        <div class="dn-t">Lo urgente primero <span class="dn-auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="3"/></svg>Detectado automáticamente</span></div>
+        <div class="dn-d"><strong>3 oportunidades con tarea vencida</strong> · entre ellas Fernando Torres (8.900 €) en Propuesta. Llámalas y avánzalas de etapa para no perderlas.</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" type="button">Ver vencidas</button>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="board-tools">
+      <div class="seg" role="tablist" aria-label="Vista del embudo">
+        <button class="active" role="tab" aria-selected="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg> Kanban</button>
+        <button role="tab" aria-selected="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg> Lista</button>
+      </div>
+      <button class="filter-chip active" type="button" aria-pressed="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg> Todos los responsables</button>
+      <button class="filter-chip" type="button" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Sede Centro</button>
+      <div class="spacer"></div>
+      <div class="tb-label">Actualizado hace 2 min</div>
+    </div>
+
+    <!-- BOARD -->
+    <div class="board-wrap">
+      <div class="scroll-hint l" id="hintL"></div>
+      <div class="scroll-hint r" id="hintR"></div>
+      <button class="scroll-arrow l" id="arrL" type="button" aria-label="Desplazar embudo a la izquierda"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="scroll-arrow r" id="arrR" type="button" aria-label="Desplazar embudo a la derecha (etapas de cierre)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+      <div class="board" id="board">
+
+        <!-- COL 1: Captado / MQL -->
+        <section class="col" data-stage="Captado" data-color="#94a3b8" aria-label="Etapa Captado, 8 oportunidades">
+          <div class="col-head">
+            <div class="col-top">
+              <span class="stage-dot" style="background:#94a3b8" aria-hidden="true"></span>
+              <span class="col-name">Captado <span class="muted">· MQL</span></span>
+              <span class="col-collapsed-name">Captado</span>
+              <span class="count-pill" aria-label="8 oportunidades">8</span>
+              <button class="col-collapse" type="button" aria-label="Plegar columna Captado"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            </div>
+            <div class="col-sub">
+              <span class="acv">42.300 €</span>
+              <span class="exp">· 8.460 € pond.</span>
+            </div>
+            <div class="col-bar" role="img" aria-label="Probabilidad de la etapa: 23%"><span style="width:23%;background:#94a3b8"></span></div>
+          </div>
+          <div class="col-list">
+
+            <article class="card" draggable="true" tabindex="0" data-name="Laura Pérez">
+              <button class="drag" aria-label="Arrastrar oportunidad de Laura Pérez" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">LP</div>
+                <div>
+                  <div class="card-name">Laura Pérez</div>
+                  <div class="card-meta">Implante unitario</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">1.450 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Implantología</span>
+                <span class="tag">Nuevo</span>
+              </div>
+              <div class="next-action soon">
+                <svg class="na-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Llamar hoy 17:00
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">MG</span> <span class="sr-only">Responsable</span>María G.
+                <span class="close-date">Cierre 15 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Avanzar</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <article class="card risk" draggable="true" tabindex="0" data-name="Jorge Molina">
+              <button class="drag" aria-label="Arrastrar oportunidad de Jorge Molina" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">JM</div>
+                <div>
+                  <div class="card-name">Jorge Molina</div>
+                  <div class="card-meta">Ortodoncia invisible</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">3.200 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Ortodoncia</span>
+              </div>
+              <div class="next-action over">
+                <svg class="na-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                Seguimiento vencido · 2 días
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">CR</span> <span class="sr-only">Responsable</span>Carlos R.
+                <span class="close-date">Cierre 12 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Avanzar</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <article class="card" draggable="true" tabindex="0" data-name="Ana Soler">
+              <button class="drag" aria-label="Arrastrar oportunidad de Ana Soler" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">AS</div>
+                <div>
+                  <div class="card-name">Ana Soler</div>
+                  <div class="card-meta">Limpieza + revisión</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">90 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Higiene</span>
+                <span class="tag">Recurrente</span>
+              </div>
+              <div class="next-action ok">
+                <svg class="na-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                Email enviado
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">MG</span> <span class="sr-only">Responsable</span>María G.
+                <span class="close-date">Cierre 20 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Avanzar</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <div class="drop-ph" aria-hidden="true">Suelta aquí</div>
+          </div>
+          <div class="col-foot">
+            <button class="add-card" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Añadir oportunidad</button>
+          </div>
+        </section>
+
+        <!-- COL 2: Contactado / SQL -->
+        <section class="col" data-stage="Contactado" data-color="#3b9eff" aria-label="Etapa Contactado, 7 oportunidades">
+          <div class="col-head">
+            <div class="col-top">
+              <span class="stage-dot" style="background:#3b9eff" aria-hidden="true"></span>
+              <span class="col-name">Contactado <span class="muted">· SQL</span></span>
+              <span class="col-collapsed-name">Contactado</span>
+              <span class="count-pill" aria-label="7 oportunidades">7</span>
+              <button class="col-collapse" type="button" aria-label="Plegar columna Contactado"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            </div>
+            <div class="col-sub">
+              <span class="acv">38.900 €</span>
+              <span class="exp">· 15.560 € pond.</span>
+            </div>
+            <div class="col-bar" role="img" aria-label="Probabilidad de la etapa: 42%"><span style="width:42%;background:#3b9eff"></span></div>
+          </div>
+          <div class="col-list">
+
+            <article class="card" draggable="true" tabindex="0" data-name="Roberto Vidal">
+              <button class="drag" aria-label="Arrastrar oportunidad de Roberto Vidal" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">RV</div>
+                <div>
+                  <div class="card-name">Roberto Vidal</div>
+                  <div class="card-meta">Implante + corona</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">2.100 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Implantología</span>
+              </div>
+              <div class="next-action soon">
+                <svg class="na-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Enviar presupuesto mañana
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">CR</span> <span class="sr-only">Responsable</span>Carlos R.
+                <span class="close-date">Cierre 18 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Avanzar</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <article class="card" draggable="true" tabindex="0" data-name="Carmen Ortiz">
+              <button class="drag" aria-label="Arrastrar oportunidad de Carmen Ortiz" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">CO</div>
+                <div>
+                  <div class="card-name">Carmen Ortiz</div>
+                  <div class="card-meta">Blanqueamiento</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">390 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Estética</span>
+              </div>
+              <div class="next-action ok">
+                <svg class="na-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+                Reunión agendada
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">MG</span> <span class="sr-only">Responsable</span>María G.
+                <span class="close-date">Cierre 22 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Avanzar</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <div class="drop-ph" aria-hidden="true">Suelta aquí</div>
+          </div>
+          <div class="col-foot">
+            <button class="add-card" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Añadir oportunidad</button>
+          </div>
+        </section>
+
+        <!-- COL 3: Propuesta -->
+        <section class="col" data-stage="Propuesta" data-color="#a855f7" aria-label="Etapa Propuesta, 6 oportunidades">
+          <div class="col-head">
+            <div class="col-top">
+              <span class="stage-dot" style="background:#a855f7" aria-hidden="true"></span>
+              <span class="col-name">Propuesta <span class="muted">· Presupuesto</span></span>
+              <span class="col-collapsed-name">Propuesta</span>
+              <span class="count-pill" aria-label="6 oportunidades">6</span>
+              <button class="col-collapse" type="button" aria-label="Plegar columna Propuesta"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            </div>
+            <div class="col-sub">
+              <span class="acv">51.200 €</span>
+              <span class="exp">· 30.720 € pond.</span>
+            </div>
+            <div class="col-bar" role="img" aria-label="Probabilidad de la etapa: 60%"><span style="width:60%;background:#a855f7"></span></div>
+          </div>
+          <div class="col-list">
+
+            <article class="card risk" draggable="true" tabindex="0" data-name="Fernando Torres">
+              <button class="drag" aria-label="Arrastrar oportunidad de Fernando Torres" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">FT</div>
+                <div>
+                  <div class="card-name">Fernando Torres</div>
+                  <div class="card-meta">Rehabilitación completa</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">8.900 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Implantología</span>
+                <span class="tag hot">Alto valor</span>
+              </div>
+              <div class="next-action over">
+                <svg class="na-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                Llamada vencida · 1 día
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">CR</span> <span class="sr-only">Responsable</span>Carlos R.
+                <span class="close-date">Cierre 10 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Avanzar</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <div class="drop-ph" aria-hidden="true">Suelta aquí</div>
+          </div>
+          <div class="col-foot">
+            <button class="add-card" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Añadir oportunidad</button>
+          </div>
+        </section>
+
+        <!-- COL 4: Negociación -->
+        <section class="col" data-stage="Negociación" data-color="#f59e0b" aria-label="Etapa Negociación, 5 oportunidades">
+          <div class="col-head">
+            <div class="col-top">
+              <span class="stage-dot" style="background:#f59e0b" aria-hidden="true"></span>
+              <span class="col-name">Negociación <span class="muted">· Cierre</span></span>
+              <span class="col-collapsed-name">Negociación</span>
+              <span class="count-pill" aria-label="5 oportunidades">5</span>
+              <button class="col-collapse" type="button" aria-label="Plegar columna Negociación"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            </div>
+            <div class="col-sub">
+              <span class="acv">38.500 €</span>
+              <span class="exp">· 28.875 € pond.</span>
+            </div>
+            <div class="col-bar" role="img" aria-label="Probabilidad de la etapa: 78%"><span style="width:78%;background:#f59e0b"></span></div>
+          </div>
+          <div class="col-list">
+
+            <article class="card" draggable="true" tabindex="0" data-name="Patricia Núñez">
+              <button class="drag" aria-label="Arrastrar oportunidad de Patricia Núñez" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">PN</div>
+                <div>
+                  <div class="card-name">Patricia Núñez</div>
+                  <div class="card-meta">Ortodoncia + retención</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">4.600 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Ortodoncia</span>
+              </div>
+              <div class="next-action soon">
+                <svg class="na-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Cierre previsto viernes
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">MG</span> <span class="sr-only">Responsable</span>María G.
+                <span class="close-date">Cierre 14 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Ganar cita</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <div class="drop-ph" aria-hidden="true">Suelta aquí</div>
+          </div>
+          <div class="col-foot">
+            <button class="add-card" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Añadir oportunidad</button>
+          </div>
+        </section>
+
+        <!-- COL 5: Ganada -->
+        <section class="col is-close" data-stage="Ganada" data-color="#10b981" aria-label="Etapa Ganada (objetivo de conversión), 8 oportunidades">
+          <div class="col-head">
+            <div class="col-top">
+              <span class="stage-dot" style="background:#10b981" aria-hidden="true"></span>
+              <span class="col-name">Ganada <span class="muted">· Cita</span></span>
+              <span class="col-collapsed-name">Ganada</span>
+              <span class="count-pill" aria-label="8 oportunidades">8</span>
+              <button class="col-collapse" type="button" aria-label="Plegar columna Ganada"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            </div>
+            <div class="col-sub">
+              <span class="acv">16.500 €</span>
+              <span class="exp">· 16.500 € confirmado</span>
+            </div>
+            <div class="col-bar" role="img" aria-label="Etapa de cierre: 100%"><span style="width:100%;background:#10b981"></span></div>
+          </div>
+          <div class="col-list">
+
+            <article class="card" draggable="true" tabindex="0" data-name="Diego Gil">
+              <button class="drag" aria-label="Arrastrar oportunidad de Diego Gil" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">DG</div>
+                <div>
+                  <div class="card-name">Diego Gil</div>
+                  <div class="card-meta">Implante unitario</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt">1.500 €</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag svc">Implantología</span>
+              </div>
+              <div class="won-banner">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+                Cita confirmada · 16 jun 10:00
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">MG</span> <span class="sr-only">Responsable</span>María G.
+              </div>
+              <div class="card-actions">
+                <button class="card-act" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Ver cita</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <div class="drop-ph" aria-hidden="true">Suelta aquí</div>
+          </div>
+          <div class="col-foot">
+            <button class="add-card" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Añadir oportunidad</button>
+          </div>
+        </section>
+
+        <!-- COL 6: Perdida -->
+        <section class="col" data-stage="Perdida" data-color="#ef4444" aria-label="Etapa Perdida, 3 oportunidades">
+          <div class="col-head">
+            <div class="col-top">
+              <span class="stage-dot" style="background:#ef4444" aria-hidden="true"></span>
+              <span class="col-name">Perdida <span class="muted">· Descartada</span></span>
+              <span class="col-collapsed-name">Perdida</span>
+              <span class="count-pill" aria-label="3 oportunidades">3</span>
+              <button class="col-collapse" type="button" aria-label="Plegar columna Perdida"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            </div>
+            <div class="col-sub">
+              <span class="acv">—</span>
+              <span class="exp">recuperable</span>
+            </div>
+            <div class="col-bar" role="img" aria-label="Etapa cerrada como perdida"><span style="width:100%;background:#ef4444"></span></div>
+          </div>
+          <div class="col-list">
+
+            <article class="card" draggable="true" tabindex="0" data-name="Sofía Marín">
+              <button class="drag" aria-label="Arrastrar oportunidad de Sofía Marín" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button>
+              <div class="card-top">
+                <div class="avatar" aria-hidden="true">SM</div>
+                <div>
+                  <div class="card-name">Sofía Marín</div>
+                  <div class="card-meta">Ortodoncia invisible</div>
+                </div>
+              </div>
+              <div class="card-amount">
+                <span class="amt" style="color:var(--muted)">2.800 €</span>
+              </div>
+              <div class="lost-reason">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                Precio · eligió competencia
+              </div>
+              <div class="owner">
+                <span class="ow-av" aria-hidden="true">CR</span> <span class="sr-only">Responsable</span>Carlos R.
+                <span class="close-date">Perdida 5 jun</span>
+              </div>
+              <div class="card-actions">
+                <button class="card-act advance" type="button" data-advance><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Recuperar</button>
+                <button class="card-act" type="button" data-move aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg> Mover a…</button>
+              </div>
+            </article>
+
+            <div class="drop-ph" aria-hidden="true">Suelta aquí</div>
+          </div>
+          <div class="col-foot">
+            <button class="add-card" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Añadir oportunidad</button>
+          </div>
+        </section>
+
+        <!-- COL 7: empty example -->
+        <section class="col" data-stage="Reactivar" data-color="#6b7280" aria-label="Etapa Reactivar, sin oportunidades">
+          <div class="col-head">
+            <div class="col-top">
+              <span class="stage-dot" style="background:#6b7280" aria-hidden="true"></span>
+              <span class="col-name">Reactivar <span class="muted">· Dormidas</span></span>
+              <span class="col-collapsed-name">Reactivar</span>
+              <span class="count-pill" aria-label="0 oportunidades">0</span>
+              <button class="col-collapse" type="button" aria-label="Plegar columna Reactivar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            </div>
+            <div class="col-sub">
+              <span class="acv">—</span>
+              <span class="exp">sin oportunidades</span>
+            </div>
+            <div class="col-bar" role="img" aria-label="Etapa vacía"><span style="width:0%;background:#6b7280"></span></div>
+          </div>
+          <div class="col-list">
+            <div class="col-empty">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+              <div class="ce-t">Sin oportunidades</div>
+              <div class="ce-d">Las oportunidades inactivas más de 90 días aparecen aquí para que las recuperes con una oferta.</div>
+              <button class="btn btn-ghost btn-sm" type="button">Ver dormidas</button>
+            </div>
+            <div class="drop-ph" aria-hidden="true">Suelta aquí</div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE REGION for screen readers -->
+<div class="sr-only" id="liveRegion" aria-live="polite" aria-atomic="true"></div>
+
+<!-- TOAST -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* Orden de etapas del embudo */
+const STAGES=['Captado','Contactado','Propuesta','Negociación','Ganada','Perdida','Reactivar'];
+const live=document.getElementById('liveRegion');
+function announce(msg){live.textContent='';setTimeout(()=>{live.textContent=msg;},40);}
+
+/* DRAG & DROP */
+let dragEl=null, dragFrom=null;
+const board=document.getElementById('board');
+
+function hideAllPlaceholders(){document.querySelectorAll('.drop-ph').forEach(p=>p.classList.remove('show'));}
+
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('dragstart',e=>{
+    dragEl=card; dragFrom=card.closest('.col');
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed='move';
+  });
+  card.addEventListener('dragend',()=>{
+    card.classList.remove('dragging');
+    document.querySelectorAll('.col').forEach(c=>c.classList.remove('drop'));
+    hideAllPlaceholders();
+    dragEl=null;
+  });
+});
+
+document.querySelectorAll('.col').forEach(col=>{
+  const list=col.querySelector('.col-list');
+  const ph=col.querySelector('.drop-ph');
+  col.addEventListener('dragover',e=>{
+    e.preventDefault();
+    if(col.classList.contains('collapsed'))return;
+    col.classList.add('drop');
+    const dragging=document.querySelector('.dragging');
+    if(!dragging)return;
+    const after=getAfter(list,e.clientY);
+    if(ph)ph.classList.add('show');
+    if(after==null){ if(ph)list.insertBefore(dragging,ph); else list.appendChild(dragging); }
+    else list.insertBefore(dragging,after);
+  });
+  col.addEventListener('dragleave',e=>{
+    if(!col.contains(e.relatedTarget)){col.classList.remove('drop');if(ph)ph.classList.remove('show');}
+  });
+  col.addEventListener('drop',e=>{
+    e.preventDefault();
+    col.classList.remove('drop');
+    if(ph)ph.classList.remove('show');
+    if(!dragEl)return;
+    const to=col.dataset.stage;
+    const name=dragEl.dataset.name||'Oportunidad';
+    if(dragFrom!==col) commitMove(dragEl,col,`${name} movida a ${to}`);
+  });
+});
+
+function getAfter(list,y){
+  const els=[...list.querySelectorAll('.card:not(.dragging)')];
+  return els.reduce((closest,child)=>{
+    const box=child.getBoundingClientRect();
+    const offset=y-box.top-box.height/2;
+    if(offset<0&&offset>closest.offset)return{offset:offset,element:child};
+    else return closest;
+  },{offset:-Infinity}).element;
+}
+
+/* COMMIT MOVE — simula persistencia con posible error y reintento */
+function commitMove(card,toCol,msg,onDone){
+  announce(msg);
+  // Simulación: 1 de cada 6 movimientos falla al guardar
+  const fails=Math.random()<0.16;
+  setTimeout(()=>{
+    if(fails){
+      announce('Error al guardar el cambio de etapa. Vuelve a intentarlo.');
+      showError('No se pudo guardar el movimiento.',()=>commitMove(card,toCol,msg,onDone));
+    }else{
+      showToast(msg,()=>{ /* deshacer: aquí revertiría */ announce('Cambio deshecho'); });
+      if(onDone)onDone();
+    }
+  },420);
+}
+
+/* AVANZAR (botón directo a la siguiente etapa) */
+document.querySelectorAll('[data-advance]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const card=btn.closest('.card');
+    const col=card.closest('.col');
+    const idx=STAGES.indexOf(col.dataset.stage);
+    // Captado..Negociación avanzan a la siguiente; Perdida -> Captado (recuperar)
+    let to;
+    if(col.dataset.stage==='Perdida') to='Captado';
+    else to=STAGES[Math.min(idx+1,4)]; // tope en Ganada
+    moveCardToStage(card,to);
+  });
+});
+
+/* MOVER A… (menú accesible) */
+let openPop=null;
+document.querySelectorAll('[data-move]').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(openPop){closePop();return;}
+    const card=btn.closest('.card');
+    const current=card.closest('.col').dataset.stage;
+    openMovePop(btn,card,current);
+  });
+});
+
+function openMovePop(btn,card,current){
+  closePop();
+  const pop=document.createElement('div');
+  pop.className='move-pop';
+  pop.setAttribute('role','menu');
+  let html='<div class="mp-h">Mover a etapa</div>';
+  document.querySelectorAll('.col').forEach(c=>{
+    const st=c.dataset.stage, color=c.dataset.color||'#94a3b8';
+    const isCur=st===current;
+    html+=`<button role="menuitem" data-to="${st}" ${isCur?'aria-current="true" disabled':''}><span class="mp-dot" style="background:${color}"></span>${st}</button>`;
+  });
+  pop.innerHTML=html;
+  document.body.appendChild(pop);
+  const r=btn.getBoundingClientRect();
+  let top=r.bottom+6, left=r.left;
+  if(left+228>window.innerWidth)left=window.innerWidth-236;
+  if(top+pop.offsetHeight>window.innerHeight)top=r.top-pop.offsetHeight-6;
+  pop.style.top=top+'px'; pop.style.left=left+'px';
+  btn.setAttribute('aria-expanded','true');
+  openPop={pop,btn,card};
+  const items=[...pop.querySelectorAll('button:not([disabled])')];
+  if(items[0])items[0].focus();
+  items.forEach(it=>it.addEventListener('click',()=>{moveCardToStage(card,it.dataset.to);closePop();}));
+  pop.addEventListener('keydown',e=>{
+    const i=items.indexOf(document.activeElement);
+    if(e.key==='ArrowDown'){e.preventDefault();(items[i+1]||items[0]).focus();}
+    if(e.key==='ArrowUp'){e.preventDefault();(items[i-1]||items[items.length-1]).focus();}
+    if(e.key==='Escape'){closePop();btn.focus();}
+  });
+}
+function closePop(){if(openPop){openPop.btn.setAttribute('aria-expanded','false');openPop.pop.remove();openPop=null;}}
+document.addEventListener('click',e=>{if(openPop&&!openPop.pop.contains(e.target))closePop();});
+
+/* Mueve la tarjeta al DOM de la columna destino y persiste */
+function moveCardToStage(card,to){
+  const fromCol=card.closest('.col');
+  if(fromCol.dataset.stage===to){announce('La oportunidad ya está en '+to);return;}
+  const name=card.dataset.name||'esta oportunidad';
+  // Confirmación en acción destructiva: marcar como Perdida
+  if(to==='Perdida'&&!confirm(`¿Marcar la oportunidad de ${name} como Perdida? Saldrá del embudo activo (podrás recuperarla más tarde).`))return;
+  const toCol=[...document.querySelectorAll('.col')].find(c=>c.dataset.stage===to);
+  if(!toCol)return;
+  const ph=toCol.querySelector('.drop-ph');
+  const list=toCol.querySelector('.col-list');
+  if(ph)list.insertBefore(card,ph); else list.appendChild(card);
+  const name=card.dataset.name||'Oportunidad';
+  commitMove(card,toCol,`${name} movida a ${to}`,()=>{card.focus();});
+}
+
+/* TOAST éxito con deshacer */
+function showToast(msg,onUndo){
+  const wrap=document.getElementById('toastWrap');
+  const t=document.createElement('div');
+  t.className='toast';
+  t.setAttribute('role','status');
+  t.innerHTML=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5ee0c9" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> <span>${msg}</span> <button class="t-act" type="button">Deshacer</button> <button class="t-close" type="button" aria-label="Cerrar">✕</button>`;
+  wrap.appendChild(t);
+  const close=()=>t.remove();
+  t.querySelector('.t-close').onclick=close;
+  t.querySelector('.t-act').onclick=()=>{if(onUndo)onUndo();close();};
+  setTimeout(close,4500);
+}
+
+/* TOAST error con reintento */
+function showError(msg,onRetry){
+  const wrap=document.getElementById('toastWrap');
+  const t=document.createElement('div');
+  t.className='toast err';
+  t.setAttribute('role','alert');
+  t.innerHTML=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ffb4a8" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> <span>${msg}</span> <button class="t-act" type="button">Reintentar</button> <button class="t-close" type="button" aria-label="Cerrar">✕</button>`;
+  wrap.appendChild(t);
+  const close=()=>t.remove();
+  t.querySelector('.t-close').onclick=close;
+  t.querySelector('.t-act').onclick=()=>{close();if(onRetry)onRetry();};
+  setTimeout(close,7000);
+}
+
+/* PLEGAR / DESPLEGAR COLUMNAS */
+document.querySelectorAll('.col-collapse').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const col=btn.closest('.col');
+    col.classList.toggle('collapsed');
+    const collapsed=col.classList.contains('collapsed');
+    btn.setAttribute('aria-label',(collapsed?'Desplegar':'Plegar')+' columna '+col.dataset.stage);
+    setTimeout(updateHints,220);
+  });
+});
+
+/* SCROLL HINTS + FLECHAS */
+function updateHints(){
+  const sl=board.scrollLeft, max=board.scrollWidth-board.clientWidth;
+  const showL=sl>8, showR=sl<max-8;
+  document.getElementById('hintL').classList.toggle('show',showL);
+  document.getElementById('hintR').classList.toggle('show',showR);
+  document.getElementById('arrL').classList.toggle('show',showL);
+  document.getElementById('arrR').classList.toggle('show',showR);
+}
+document.getElementById('arrL').onclick=()=>board.scrollBy({left:-310,behavior:'smooth'});
+document.getElementById('arrR').onclick=()=>board.scrollBy({left:310,behavior:'smooth'});
+board.addEventListener('scroll',updateHints);
+window.addEventListener('resize',updateHints);
+updateHints();
+
+/* DEMO: skeleton de carga inicial por columna (se sustituye por datos a los 600 ms) */
+(function initialSkeleton(){
+  const params=new URLSearchParams(location.search);
+  if(!params.has('loading'))return; // visible con ?loading para demostración
+  document.querySelectorAll('.col-list').forEach(list=>{
+    const real=[...list.children];
+    real.forEach(c=>c.style.display='none');
+    for(let i=0;i<2;i++){
+      const s=document.createElement('div');
+      s.className='sk-card sk-demo';
+      s.innerHTML='<div class="sk-row"><div class="sk-av"></div><div style="flex:1"><div class="sk-line" style="width:60%;margin-bottom:6px"></div><div class="sk-line" style="width:40%"></div></div></div><div class="sk-line" style="width:45%;height:16px;margin-bottom:9px"></div><div class="sk-line" style="width:80%"></div>';
+      list.appendChild(s);
+    }
+  });
+  setTimeout(()=>{
+    document.querySelectorAll('.sk-demo').forEach(s=>s.remove());
+    document.querySelectorAll('.col-list>*').forEach(c=>{c.style.display='';});
+    announce('Oportunidades cargadas');
+  },800);
+})();
+</script>
+
+</body>
+</html>

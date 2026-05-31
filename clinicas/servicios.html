@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicios · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#586862; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc;
+  --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06),0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08),0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12),0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;font-size:14px}
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+
+/* ============ SIDEBAR ============ */
+.sidebar{background:linear-gradient(180deg,#0d1f1c,#0a1714);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;border-right:1px solid rgba(255,255,255,.06)}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 18px 18px}
+.brand-logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#11a391,#0a5d57);display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 4px 12px rgba(17,163,145,.35)}
+.brand-name{font-weight:700;font-size:16px;letter-spacing:-.2px}
+.brand-sub{font-size:12px;color:var(--cyan);font-weight:600;letter-spacing:.3px}
+.nav{flex:1;overflow-y:auto;padding:8px 12px 20px}
+.nav-group{margin-top:16px}
+.nav-group-title{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.62);font-weight:600;padding:0 10px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;color:rgba(255,255,255,.82);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;transition:.15s;cursor:pointer;position:relative}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-item.active{background:linear-gradient(135deg,rgba(17,163,145,.22),rgba(17,163,145,.08));color:#fff}
+.nav-item.active::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--cyan);border-radius:0 3px 3px 0}
+.nav-item svg{width:18px;height:18px;flex-shrink:0;opacity:.9}
+.nav-badge{margin-left:auto;background:var(--cyan);color:#04201a;font-size:12px;font-weight:700;padding:1px 7px;border-radius:999px}
+.nav-item.active .nav-badge{background:var(--cyan)}
+.um{margin-top:auto;padding:12px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.um-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#11a391,#0a5d57);display:grid;place-items:center;font-weight:700;font-size:14px}
+.um-info{flex:1;min-width:0}
+.um-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.um-role{font-size:12px;color:rgba(255,255,255,.66)}
+.um-logout{color:rgba(255,255,255,.66);cursor:pointer;display:grid;place-items:center;padding:6px;border-radius:8px;transition:.15s;background:none;border:none}
+.um-logout:hover{background:rgba(255,255,255,.08);color:#fff}
+
+/* ============ TOPBAR ============ */
+.main{display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:64px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 26px;position:sticky;top:0;z-index:50}
+.tb-search{flex:1;max-width:380px;position:relative;transition:.2s}
+.tb-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.tb-search input{width:100%;height:40px;border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--surface-soft);padding:0 14px 0 40px;font-size:13px;font-family:inherit;color:var(--text);outline:none;transition:.15s;opacity:.88}
+.tb-search input::placeholder{color:var(--muted)}
+.tb-search input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);background:#fff;opacity:1}
+.tb-kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.tb-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.tb-icon{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--text-2);cursor:pointer;transition:.15s;position:relative}
+.tb-icon:hover{border-color:var(--line-strong);background:var(--surface-soft)}
+.tb-dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+.tb-chip{display:flex;align-items:center;gap:7px;height:40px;padding:0 13px;border-radius:var(--radius-pill);border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer}
+.tb-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.tb-chip.connected .dot{background:var(--ok)}
+.tb-chip.synced{color:var(--info)}
+.tb-chip.synced .dot{background:var(--info)}
+/* automation status: discreet, neutral, secondary — must not compete with connection chips */
+.tb-chip.auto{font-weight:500;color:var(--muted);background:var(--surface-soft);border-color:var(--line)}
+.tb-chip.auto .dot{background:var(--muted)}
+
+/* ============ LAYOUT ============ */
+.content{padding:26px 30px 60px;max-width:1320px;width:100%;margin:0 auto;flex:1}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+.ph-left h1{font-size:25px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px}
+.ph-sub{font-size:14px;color:var(--text-2);max-width:560px;line-height:1.5}
+.ph-actions{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;min-height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--line-strong);background:var(--surface);color:var(--text);font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s;font-family:inherit;text-decoration:none;white-space:nowrap}
+.btn svg{width:17px;height:17px}
+.btn:hover{background:var(--surface-soft);border-color:var(--muted)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;box-shadow:0 4px 12px rgba(15,118,110,.25);height:44px;padding:0 20px;font-size:14px}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--text-2)}
+.btn-ghost:hover{background:var(--surface-soft);border-color:var(--line)}
+.btn-sm{height:36px;padding:0 12px;font-size:13px}
+.btn-danger{color:var(--danger);border-color:var(--line-strong)}
+.btn-danger:hover{background:var(--danger-soft);border-color:var(--danger)}
+
+/* ============ STAT STRIP ============ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.stat-top{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.stat-ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex-shrink:0}
+.stat-ic svg{width:18px;height:18px}
+.stat-ic.teal{background:var(--primary-soft);color:var(--primary)}
+.stat-ic.ok{background:var(--ok-soft);color:var(--ok)}
+.stat-ic.info{background:var(--info-soft);color:var(--info)}
+.stat-ic.warn{background:var(--warning-soft);color:var(--warning)}
+.stat-label{font-size:12.5px;color:var(--text-2);font-weight:600}
+.stat-val{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}
+.stat-meta{font-size:12.5px;color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:5px}
+.stat-meta svg{width:13px;height:13px}
+.stat-meta.up{color:var(--ok)}
+
+/* ============ TOOLBAR / FILTERS ============ */
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.svc-search{position:relative;flex:1;min-width:240px;max-width:380px}
+.svc-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.svc-search input{width:100%;height:42px;border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);padding:0 14px 0 40px;font-size:14px;font-family:inherit;color:var(--text);outline:none;transition:.15s;box-shadow:var(--shadow-sm)}
+.svc-search input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.svc-search input::placeholder{color:var(--muted)}
+.chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 13px;border-radius:var(--radius-pill);border:1px solid var(--line-strong);background:var(--surface);font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;transition:.15s;font-family:inherit}
+.chip:hover{border-color:var(--muted);background:var(--surface-soft)}
+.chip[aria-pressed="true"]{background:var(--primary-soft);border-color:var(--primary);color:var(--primary-dark)}
+.chip .ct{font-size:12px;background:var(--surface-soft);border-radius:999px;padding:1px 7px;color:var(--muted)}
+.chip[aria-pressed="true"] .ct{background:#fff;color:var(--primary-dark)}
+.view-toggle{display:flex;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;margin-left:auto;background:var(--surface)}
+.view-btn{width:42px;height:40px;display:grid;place-items:center;background:none;border:none;color:var(--muted);cursor:pointer;transition:.15s}
+.view-btn svg{width:18px;height:18px}
+.view-btn:hover{background:var(--surface-soft);color:var(--text-2)}
+.view-btn[aria-pressed="true"]{background:var(--primary-soft);color:var(--primary)}
+
+/* ============ ACTION HINT (sober, secondary) ============ */
+.ai-banner{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:13px 16px;margin-bottom:22px;box-shadow:var(--shadow-sm)}
+.ai-banner-ic{width:38px;height:38px;border-radius:10px;background:var(--surface-soft);border:1px solid var(--line);display:grid;place-items:center;flex-shrink:0;color:var(--muted)}
+.ai-banner-ic svg{width:18px;height:18px}
+.ai-banner-txt{flex:1;min-width:0}
+.ai-banner-txt b{font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:var(--text)}
+.ai-banner-txt span{font-size:13px;color:var(--text-2)}
+.ai-banner-txt span b{display:inline;font-weight:700;color:var(--text)}
+
+/* ============ SERVICE GRID (CARDS) ============ */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;margin-bottom:26px}
+.svc-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm);transition:.18s;display:flex;flex-direction:column;gap:13px;position:relative}
+.svc-card:hover{box-shadow:var(--shadow-md);border-color:var(--line-strong)}
+.svc-card.inactive{opacity:.82;background:var(--surface-soft)}
+.svc-head{display:flex;align-items:flex-start;gap:12px}
+.svc-color{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;color:#fff}
+.svc-color svg{width:20px;height:20px}
+.svc-titles{flex:1;min-width:0}
+.svc-name{font-size:15.5px;font-weight:700;letter-spacing:-.2px;line-height:1.3}
+.svc-cat{font-size:12.5px;color:var(--text-2);font-weight:600;margin-top:2px;display:inline-flex;align-items:center;gap:5px}
+.svc-cat .cat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.svc-menu{width:32px;height:32px;border-radius:8px;border:1px solid transparent;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:.15s}
+.svc-menu:hover{background:var(--surface-soft);border-color:var(--line);color:var(--text-2)}
+.svc-menu svg{width:18px;height:18px}
+
+.svc-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.meta-item{display:flex;flex-direction:column;gap:3px}
+.meta-label{font-size:12px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:4px}
+.meta-label svg{width:12px;height:12px}
+.meta-val{font-size:14px;font-weight:700;color:var(--text)}
+.meta-val small{font-size:12px;font-weight:600;color:var(--muted)}
+
+/* status row: AI bookable + active toggle */
+.svc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ia-status{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;padding:6px 11px;border-radius:var(--radius-pill);border:1px solid transparent}
+.ia-status svg{width:14px;height:14px;flex-shrink:0}
+.ia-status.on{background:var(--ok-soft);color:var(--ok);border-color:rgba(21,115,72,.18)}
+.ia-status.off{background:var(--surface-soft);color:var(--text-2);border-color:var(--line-strong)}
+
+/* Active/inactive switch - real accessible button */
+.sw-wrap{display:inline-flex;align-items:center;gap:9px}
+.sw-label{font-size:12.5px;font-weight:700;color:var(--text-2);display:inline-flex;align-items:center;gap:4px}
+.sw-label svg{width:13px;height:13px}
+.switch{position:relative;width:44px;height:24px;min-height:40px;padding:8px 0;border:none;background:none;cursor:pointer;display:inline-flex;align-items:center}
+.switch .track{display:block;width:44px;height:24px;border-radius:999px;background:var(--line-strong);transition:.18s;position:relative}
+.switch .track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.18s}
+.switch[aria-checked="true"] .track{background:var(--ok)}
+.switch[aria-checked="true"] .track::after{transform:translateX(20px)}
+.switch:focus-visible{outline:none}
+.switch:focus-visible .track{outline:2px solid var(--primary);outline-offset:2px}
+
+/* ============ TABLE VIEW ============ */
+.svc-table-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:26px}
+table.svc-table{width:100%;border-collapse:collapse}
+.svc-table thead th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;padding:13px 16px;background:var(--surface-soft);border-bottom:1px solid var(--line);white-space:nowrap}
+.svc-table tbody td{padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+.svc-table tbody tr:last-child td{border-bottom:none}
+.svc-table tbody tr:hover{background:var(--surface-soft)}
+.td-name{font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:11px}
+.td-dot{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+.td-dot svg{width:16px;height:16px}
+.td-cat{font-size:12.5px;color:var(--text-2);font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.td-cat .cat-dot{width:7px;height:7px;border-radius:50%}
+.td-num{font-weight:700;font-variant-numeric:tabular-nums}
+.td-num small{font-weight:600;color:var(--muted);font-size:12px}
+
+/* ============ EXPAND CATALOG STRIP (collapsible) ============ */
+.expand-strip{background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--radius);margin-bottom:26px;overflow:hidden}
+.expand-head{display:flex;align-items:center;gap:12px;padding:15px 18px;cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:inherit}
+.expand-head:hover{background:var(--surface-soft)}
+.expand-ic{width:34px;height:34px;border-radius:9px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex-shrink:0}
+.expand-ic svg{width:18px;height:18px}
+.expand-txt{flex:1}
+.expand-txt b{font-size:14px;font-weight:700;display:block}
+.expand-txt span{font-size:12.5px;color:var(--text-2)}
+.expand-chev{color:var(--muted);transition:.2s}
+.expand-chev svg{width:20px;height:20px}
+.expand-strip.open .expand-chev{transform:rotate(180deg)}
+.expand-body{display:none;padding:0 18px 18px;border-top:1px solid var(--line)}
+.expand-strip.open .expand-body{display:block}
+.tmpl-note{font-size:12.5px;color:var(--muted);padding:12px 0 14px;display:flex;align-items:center;gap:7px}
+.tmpl-note svg{width:14px;height:14px;flex-shrink:0}
+.tmpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+
+/* suggested items */
+.si{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);transition:.15s}
+.si:hover{border-color:var(--line-strong);background:#fff}
+.si-ic{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+.si-ic svg{width:18px;height:18px}
+.si-info{flex:1;min-width:0}
+.si-name{font-size:14px;font-weight:700}
+.si-meta{font-size:12.5px;color:var(--text-2);margin-top:1px}
+.si-add{flex-shrink:0;width:auto;height:36px;padding:0 13px;border-radius:9px;border:1px solid var(--primary);background:var(--primary-soft);color:var(--primary-dark);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s;font-family:inherit;min-height:40px}
+.si-add svg{width:15px;height:15px}
+.si-add:hover{background:var(--primary);color:#fff}
+.si-add:disabled{opacity:.6;cursor:default}
+.si.added{opacity:.7}
+.si.added .si-add{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);pointer-events:none}
+
+/* ============ EMPTY STATE (0 services) ============ */
+.empty-state{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:38px 32px;box-shadow:var(--shadow-sm);text-align:center;margin-bottom:26px}
+.empty-ic{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--primary-soft),var(--primary-tint));color:var(--primary);display:grid;place-items:center;margin:0 auto 16px}
+.empty-ic svg{width:30px;height:30px}
+.empty-state h2{font-size:20px;font-weight:800;letter-spacing:-.3px;margin-bottom:7px}
+.empty-state p{font-size:14px;color:var(--text-2);max-width:480px;margin:0 auto 22px;line-height:1.55}
+.empty-sugg{max-width:560px;margin:0 auto}
+.empty-sugg-title{font-size:12.5px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;text-align:left;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.empty-sugg-title svg{width:15px;height:15px;color:var(--primary)}
+.empty-sugg .tmpl-grid{margin-bottom:18px}
+
+/* ============ SKELETON / ERROR ============ */
+.sk-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm)}
+.sk{background:linear-gradient(90deg,#eef1f3 25%,#e3e8e6 37%,#eef1f3 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;border-radius:7px}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.sk-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sk-line{height:11px}
+.error-state{background:var(--surface);border:1px solid var(--danger-soft);border-radius:var(--radius);padding:30px;text-align:center;box-shadow:var(--shadow-sm);margin-bottom:26px}
+.error-ic{width:52px;height:52px;border-radius:14px;background:var(--danger-soft);color:var(--danger);display:grid;place-items:center;margin:0 auto 14px}
+.error-ic svg{width:26px;height:26px}
+.error-state h3{font-size:16px;font-weight:700;margin-bottom:5px}
+.error-state p{font-size:13.5px;color:var(--text-2);margin-bottom:16px}
+
+/* ============ MODAL ============ */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,26,23,.45);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;z-index:100;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);width:100%;max-width:560px;box-shadow:var(--shadow-lg);animation:rise .22s ease}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:22px 24px 0}
+.modal-head h2{font-size:19px;font-weight:800;letter-spacing:-.3px}
+.modal-head p{font-size:13px;color:var(--text-2);margin-top:3px}
+.modal-x{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;display:grid;place-items:center;flex-shrink:0}
+.modal-x:hover{background:var(--surface-soft);color:var(--text)}
+.modal-x svg{width:18px;height:18px}
+.modal-body{padding:20px 24px}
+.modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--line);background:var(--surface-soft);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+.modal-foot .err-inline{margin-right:auto;font-size:13px;color:var(--danger);font-weight:600;display:none;align-items:center;gap:6px}
+.modal-foot .err-inline.show{display:inline-flex}
+.modal-foot .err-inline svg{width:15px;height:15px}
+
+.field{margin-bottom:16px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+label.lbl{display:block;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+label.lbl .req{color:var(--danger);font-weight:700}
+.lbl-help{display:inline-flex;align-items:center;gap:5px}
+.inp,.sel{width:100%;height:42px;border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);padding:0 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;transition:.15s}
+.inp:focus,.sel:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.inp[aria-invalid="true"]{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-soft)}
+.inp-affix{position:relative}
+.inp-affix .suffix{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);font-weight:600;pointer-events:none}
+.inp-affix .inp{padding-right:46px}
+.field-err{font-size:12.5px;color:var(--danger);font-weight:600;margin-top:6px;display:none;align-items:center;gap:5px}
+.field-err.show{display:flex}
+.field-err svg{width:13px;height:13px;flex-shrink:0}
+
+/* help tooltip (accessible: focus + hover) */
+.help{position:relative;display:inline-flex}
+.help-btn{width:18px;height:18px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface-soft);color:var(--muted);font-size:12px;font-weight:700;cursor:help;display:grid;place-items:center;padding:0;line-height:1}
+.help-btn:hover,.help-btn:focus-visible{background:var(--primary-soft);color:var(--primary);border-color:var(--primary)}
+.help-tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:230px;background:#0f1a17;color:#fff;font-size:12.5px;font-weight:500;line-height:1.45;padding:10px 12px;border-radius:9px;box-shadow:var(--shadow-md);opacity:0;visibility:hidden;transition:.15s;z-index:10;text-align:left}
+.help-tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#0f1a17}
+.help:hover .help-tip,.help-btn:focus-visible + .help-tip,.help-btn:focus + .help-tip{opacity:1;visibility:visible}
+
+/* fieldset / professionals pills */
+fieldset.pro-group{border:none;padding:0;margin:0}
+fieldset.pro-group legend{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;padding:0}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;height:36px;min-height:40px;padding:0 13px;border-radius:var(--radius-pill);border:1px solid var(--line-strong);background:var(--surface);font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;transition:.15s;font-family:inherit}
+.pill:hover{border-color:var(--muted)}
+.pill svg{width:14px;height:14px}
+.pill .pill-check{display:none}
+.pill[aria-pressed="true"]{background:var(--primary-soft);border-color:var(--primary);color:var(--primary-dark)}
+.pill[aria-pressed="true"] .pill-check{display:inline-flex}
+.pill.add{border-style:dashed;color:var(--primary);border-color:var(--primary)}
+.pill.add:hover{background:var(--primary-soft)}
+
+/* Bookable-online switch in modal - real control (neutral, not AI-forward) */
+.ia-control{display:flex;align-items:flex-start;gap:13px;padding:14px 16px;border:1px solid var(--line);background:var(--surface-soft);border-radius:var(--radius);margin-top:4px}
+.ia-control .switch{flex-shrink:0;margin-top:1px}
+.ia-control-txt{flex:1}
+.ia-control-txt label{font-size:14px;font-weight:700;color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.ia-control-txt label svg{width:16px;height:16px;color:var(--muted)}
+.ia-control-txt p{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.5}
+.ia-control-txt .auto-note{font-size:12.5px;color:var(--muted);margin-top:6px;display:inline-flex;align-items:center;gap:5px}
+.ia-control-txt .auto-note svg{width:13px;height:13px;flex-shrink:0;opacity:.8}
+
+.color-picker{display:flex;gap:8px;flex-wrap:wrap}
+.color-opt{width:30px;height:30px;border-radius:8px;border:2px solid transparent;cursor:pointer;position:relative;padding:0}
+.color-opt[aria-pressed="true"]{border-color:var(--text);box-shadow:0 0 0 2px #fff inset}
+.color-opt[aria-pressed="true"]::after{content:"";position:absolute;inset:0;display:grid;place-items:center;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>') center no-repeat}
+
+/* ============ TOAST ============ */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.toast{display:flex;align-items:center;gap:11px;background:#0f1a17;color:#fff;padding:13px 17px;border-radius:11px;box-shadow:var(--shadow-lg);font-size:13.5px;font-weight:600;animation:toastIn .25s ease;max-width:360px}
+.toast.err{background:var(--danger)}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.toast-ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:rgba(255,255,255,.15)}
+.toast-ic svg{width:15px;height:15px}
+
+.hidden{display:none !important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+@media(max-width:1080px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){.app{grid-template-columns:1fr}.sidebar{display:none}.field-row,.field-row-3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-logo">W</div>
+    <div>
+      <div class="brand-name">Waiable</div>
+      <div class="brand-sub">CLÍNICAS</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Inicio</a>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Operación</div>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Agenda</a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> Conversaciones <span class="nav-badge">7</span></a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Llamadas</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Captación</div>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> CRM / Pacientes</a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg> Marketing</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Configuración</div>
+      <a class="nav-item active" href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16"/><path d="M3 21h18M9 7h1m-1 4h1m4-4h1m-1 4h1M9 21v-4h6v4"/></svg> Clínica</a>
+      <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Ajustes</a>
+    </div>
+  </nav>
+  <div class="um">
+    <div class="um-av">MR</div>
+    <div class="um-info">
+      <div class="um-name">María Ruiz</div>
+      <div class="um-role">Recepción · Sede Centro</div>
+    </div>
+    <button class="um-logout" title="Cerrar sesión" aria-label="Cerrar sesión"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>
+  </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="tb-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" aria-label="Buscar en toda la app" placeholder="Buscar en la app…">
+      <span class="tb-kbd">⌘K</span>
+    </div>
+    <div class="tb-actions">
+      <div class="tb-chip connected" title="WhatsApp conectado"><span class="dot"></span> WhatsApp conectado</div>
+      <div class="tb-chip synced" title="Agenda sincronizada con Google Calendar"><span class="dot"></span> Agenda sincronizada</div>
+      <div class="tb-chip auto" title="La automatización propone respuestas y citas; tú decides"><span class="dot"></span> Automatización: sugerir</div>
+      <button class="tb-icon" title="Ayuda" aria-label="Ayuda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></button>
+      <button class="tb-icon" title="Notificaciones" aria-label="Notificaciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="tb-dot"></span></button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- PAGE HEAD -->
+    <div class="page-head">
+      <div class="ph-left">
+        <h1>Servicios</h1>
+        <p class="ph-sub">Define cada servicio con su duración y tiempo de limpieza. Una agenda bien configurada llena más huecos, evita solapes y deja que se reserve por web, WhatsApp o teléfono.</p>
+      </div>
+      <div class="ph-actions">
+        <button class="btn btn-ghost" id="importBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Importar
+        </button>
+        <button class="btn btn-primary" id="newSvcBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Nuevo servicio
+        </button>
+      </div>
+    </div>
+
+    <!-- STAT STRIP -->
+    <div class="stats" id="statStrip">
+      <div class="stat">
+        <div class="stat-top">
+          <div class="stat-ic teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <span class="stat-label">Servicios totales</span>
+        </div>
+        <div class="stat-val" id="kpiTotal">6</div>
+        <div class="stat-meta">En el catálogo de esta sede</div>
+      </div>
+      <div class="stat">
+        <div class="stat-top">
+          <div class="stat-ic ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div>
+          <span class="stat-label">Reservables online</span>
+        </div>
+        <div class="stat-val" id="kpiBookable">4</div>
+        <div class="stat-meta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg> Visibles en web y WhatsApp</div>
+      </div>
+      <div class="stat">
+        <div class="stat-top">
+          <div class="stat-ic info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+          <span class="stat-label">Profesionales</span>
+        </div>
+        <div class="stat-val">5</div>
+        <div class="stat-meta">Asignados a servicios</div>
+      </div>
+      <div class="stat">
+        <div class="stat-top">
+          <div class="stat-ic warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <span class="stat-label">Duración media</span>
+        </div>
+        <div class="stat-val">38<small style="font-size:16px;font-weight:600;color:var(--muted)"> min</small></div>
+        <div class="stat-meta">Sobre servicios activos</div>
+      </div>
+    </div>
+
+    <!-- ACTION HINT -->
+    <div class="ai-banner">
+      <div class="ai-banner-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div class="ai-banner-txt">
+        <b>Hay 2 servicios activos que aún no se reservan online</b>
+        <span>Marca un servicio como <b>reservable online</b> para que aparezca en tu web y se pueda pedir cita por WhatsApp. La automatización solo ayuda a proponer huecos de fondo.</span>
+      </div>
+      <button class="btn btn-sm" id="reviewBtn" type="button" style="flex-shrink:0">Revisar</button>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar" role="search">
+      <div class="svc-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" id="svcSearch" aria-label="Buscar en el catálogo de servicios" placeholder="Buscar servicio o categoría…">
+      </div>
+      <div class="chips" role="group" aria-label="Filtrar servicios">
+        <button class="chip" data-filter="all" aria-pressed="true" type="button">Todos <span class="ct">6</span></button>
+        <button class="chip" data-filter="bookable" aria-pressed="false" type="button">Reservables online <span class="ct">4</span></button>
+        <button class="chip" data-filter="active" aria-pressed="false" type="button">Activos <span class="ct">5</span></button>
+        <button class="chip" data-filter="inactive" aria-pressed="false" type="button">Inactivos <span class="ct">1</span></button>
+      </div>
+      <div class="view-toggle" role="group" aria-label="Cambiar vista">
+        <button class="view-btn" id="viewGrid" aria-pressed="true" aria-label="Vista de tarjetas" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+        <button class="view-btn" id="viewList" aria-pressed="false" aria-label="Vista de tabla" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></button>
+      </div>
+    </div>
+
+    <!-- SKELETON (shown during load) -->
+    <div class="svc-grid" id="skeleton" aria-hidden="true">
+      <div class="sk-card"><div class="sk-row"><div class="sk" style="width:40px;height:40px;border-radius:11px"></div><div style="flex:1"><div class="sk sk-line" style="width:60%;margin-bottom:7px"></div><div class="sk sk-line" style="width:40%"></div></div></div><div class="sk sk-line" style="width:100%;height:50px;margin-bottom:12px"></div><div class="sk sk-line" style="width:80%"></div></div>
+      <div class="sk-card"><div class="sk-row"><div class="sk" style="width:40px;height:40px;border-radius:11px"></div><div style="flex:1"><div class="sk sk-line" style="width:55%;margin-bottom:7px"></div><div class="sk sk-line" style="width:45%"></div></div></div><div class="sk sk-line" style="width:100%;height:50px;margin-bottom:12px"></div><div class="sk sk-line" style="width:75%"></div></div>
+      <div class="sk-card"><div class="sk-row"><div class="sk" style="width:40px;height:40px;border-radius:11px"></div><div style="flex:1"><div class="sk sk-line" style="width:65%;margin-bottom:7px"></div><div class="sk sk-line" style="width:35%"></div></div></div><div class="sk sk-line" style="width:100%;height:50px;margin-bottom:12px"></div><div class="sk sk-line" style="width:85%"></div></div>
+    </div>
+
+    <!-- ERROR STATE (hidden by default) -->
+    <div class="error-state hidden" id="errorState" role="alert">
+      <div class="error-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+      <h3>No se pudieron cargar los servicios</h3>
+      <p>Ha ocurrido un problema al recuperar el catálogo. Comprueba tu conexión e inténtalo de nuevo.</p>
+      <button class="btn btn-primary" id="retryBtn" type="button" style="margin:0 auto;height:40px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Reintentar
+      </button>
+    </div>
+
+    <!-- EMPTY STATE (0 services) -->
+    <div class="empty-state hidden" id="emptyState">
+      <div class="empty-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h6M17 14.5v6"/></svg></div>
+      <h2>Empieza tu catálogo de servicios</h2>
+      <p>Crea tu primer servicio para empezar a recibir citas por web, WhatsApp y teléfono. Añade uno desde una plantilla en un clic: se crea <b>activo</b> y <b>reservable online</b> con duración y buffer recomendados.</p>
+      <div class="empty-sugg">
+        <div class="empty-sugg-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 15.09 8.26 22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Plantillas habituales para empezar</div>
+        <div class="tmpl-grid" id="emptyTmplGrid"></div>
+        <button class="btn btn-primary" id="emptyNewBtn" type="button" style="margin:0 auto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Crear servicio personalizado
+        </button>
+      </div>
+    </div>
+
+    <!-- SERVICE GRID (cards) -->
+    <div class="svc-grid hidden" id="svcGrid"></div>
+
+    <!-- SERVICE TABLE -->
+    <div class="svc-table-wrap hidden" id="svcTableWrap">
+      <table class="svc-table">
+        <thead>
+          <tr>
+            <th scope="col">Servicio</th>
+            <th scope="col">Duración</th>
+            <th scope="col">Buffer</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Reserva online</th>
+            <th scope="col">Estado</th>
+            <th scope="col"><span class="sr-only">Acciones</span></th>
+          </tr>
+        </thead>
+        <tbody id="svcTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- EXPAND CATALOG STRIP (collapsible, shown when catalog has items) -->
+    <div class="expand-strip" id="expandStrip">
+      <button class="expand-head" id="expandHead" type="button" aria-expanded="false" aria-controls="expandBody">
+        <span class="expand-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        <span class="expand-txt">
+          <b>Ampliar catálogo</b>
+          <span>Añade más servicios desde plantillas. Cada alta queda activa y reservable online.</span>
+        </span>
+        <span class="expand-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button>
+      <div class="expand-body" id="expandBody">
+        <p class="tmpl-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Sugerencias basadas en las categorías que ya usas en esta sede (Odontología, Estética, Rehabilitación).</p>
+        <div class="tmpl-grid" id="expandTmplGrid"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ===== MODAL: NEW / EDIT SERVICE ===== -->
+<div class="modal-overlay" id="svcModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="modalTitle">Nuevo servicio</h2>
+        <p>Define duración y tiempo de limpieza: marcan cuánto ocupa cada cita en la agenda.</p>
+      </div>
+      <button class="modal-x" id="modalClose" type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <form id="svcForm" novalidate>
+        <div class="field">
+          <label class="lbl" for="fName">Nombre del servicio <span class="req" aria-hidden="true">*</span></label>
+          <input class="inp" id="fName" name="name" type="text" placeholder="Ej. Limpieza dental" required aria-required="true" aria-describedby="fNameErr">
+          <div class="field-err" id="fNameErr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> Indica un nombre para el servicio.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl" for="fCat">Categoría</label>
+            <select class="sel" id="fCat" name="category">
+              <option>Odontología</option>
+              <option>Estética</option>
+              <option>Rehabilitación</option>
+              <option>Diagnóstico</option>
+              <option>Otra</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="fPrice">Precio</label>
+            <div class="inp-affix">
+              <input class="inp" id="fPrice" name="price" type="number" min="0" step="1" placeholder="0">
+              <span class="suffix">€</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl" for="fDur">Duración <span class="req" aria-hidden="true">*</span></label>
+            <div class="inp-affix">
+              <input class="inp" id="fDur" name="duration" type="number" min="5" step="5" placeholder="30" required aria-required="true" aria-describedby="fDurErr">
+              <span class="suffix">min</span>
+            </div>
+            <div class="field-err" id="fDurErr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> Indica una duración válida.</div>
+          </div>
+          <div class="field">
+            <label class="lbl" for="fBuffer">
+              <span class="lbl-help">Buffer
+                <span class="help">
+                  <button class="help-btn" type="button" aria-label="Qué es el buffer">?</button>
+                  <span class="help-tip" role="tooltip">Tiempo de margen tras la cita (limpieza, notas). Se reserva entre citas para no solaparlas en la agenda.</span>
+                </span>
+              </span>
+            </label>
+            <div class="inp-affix">
+              <input class="inp" id="fBuffer" name="buffer" type="number" min="0" step="5" placeholder="10">
+              <span class="suffix">min</span>
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="pro-group field">
+          <legend>Profesionales que lo realizan</legend>
+          <div class="pills" id="proPills">
+            <button class="pill" type="button" aria-pressed="true">
+              <svg class="pill-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+              Dra. Laura Gómez
+            </button>
+            <button class="pill" type="button" aria-pressed="true">
+              <svg class="pill-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+              Dr. Marc Vidal
+            </button>
+            <button class="pill" type="button" aria-pressed="false">
+              <svg class="pill-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+              Ana Soler
+            </button>
+            <button class="pill add" type="button" id="addProBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Añadir
+            </button>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label class="lbl" id="colorLbl">Color en agenda</label>
+          <div class="color-picker" role="group" aria-labelledby="colorLbl" id="colorPicker">
+            <button class="color-opt" type="button" aria-label="Teal" aria-pressed="true" style="background:#0f766e"></button>
+            <button class="color-opt" type="button" aria-label="Azul" aria-pressed="false" style="background:#2662a6"></button>
+            <button class="color-opt" type="button" aria-label="Violeta" aria-pressed="false" style="background:#7c3aed"></button>
+            <button class="color-opt" type="button" aria-label="Ámbar" aria-pressed="false" style="background:#b7791f"></button>
+            <button class="color-opt" type="button" aria-label="Rosa" aria-pressed="false" style="background:#d6336c"></button>
+            <button class="color-opt" type="button" aria-label="Verde" aria-pressed="false" style="background:#157348"></button>
+          </div>
+        </div>
+
+        <!-- BOOKABLE ONLINE: real accessible switch -->
+        <div class="ia-control">
+          <button type="button" class="switch" role="switch" aria-checked="true" id="fBookable" aria-labelledby="fBookableLbl" aria-describedby="fBookableDesc">
+            <span class="track" aria-hidden="true"></span>
+          </button>
+          <div class="ia-control-txt">
+            <label id="fBookableLbl" for="fBookable">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Reservable online
+            </label>
+            <p id="fBookableDesc">Aparece en tu web de reservas y se puede pedir cita por WhatsApp o teléfono.</p>
+            <span class="auto-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="M18 12h4"/><path d="M12 18v4"/><path d="M2 12h4"/></svg> La automatización usará la duración para proponer huecos.</span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <span class="err-inline" id="formErr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> Revisa los campos marcados.</span>
+      <button class="btn" id="cancelBtn" type="button">Cancelar</button>
+      <button class="btn btn-primary" id="saveBtn" type="submit" form="svcForm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+        Guardar servicio
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOASTS ===== -->
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ===== DATA =====
+  var COLORS = {teal:'#0f766e', blue:'#2662a6', violet:'#7c3aed', amber:'#b7791f', pink:'#d6336c', green:'#157348'};
+  var CAT_COLOR = {'Odontología':'#0f766e','Estética':'#d6336c','Rehabilitación':'#2662a6','Diagnóstico':'#7c3aed','Otra':'#586862'};
+
+  var svcIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>';
+  var ICONS = {
+    tooth:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5.5c-1.5-1.5-4-2-6-1-2 1-2.5 4-2 7 .4 2.4 1 5 1.5 7 .3 1.2 2 1.3 2.4 0l1.2-4c.2-.7 1.2-.7 1.4 0l1.2 4c.4 1.3 2.1 1.2 2.4 0 .5-2 1.1-4.6 1.5-7 .5-3 0-6-2-7-2-1-4.5-.5-6 1z"/></svg>',
+    spark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 15.09 8.26 22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+    activity:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    scan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>',
+    smile:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>'
+  };
+
+  var services = [
+    {id:1,name:'Limpieza dental',cat:'Odontología',dur:30,buffer:10,price:45,bookable:true,active:true,color:'teal',icon:'tooth'},
+    {id:2,name:'Revisión y diagnóstico',cat:'Odontología',dur:20,buffer:5,price:0,bookable:true,active:true,color:'teal',icon:'scan'},
+    {id:3,name:'Ortodoncia (revisión)',cat:'Odontología',dur:25,buffer:10,price:60,bookable:false,active:true,color:'blue',icon:'tooth'},
+    {id:4,name:'Limpieza facial profunda',cat:'Estética',dur:60,buffer:15,price:75,bookable:true,active:true,color:'pink',icon:'spark'},
+    {id:5,name:'Sesión de fisioterapia',cat:'Rehabilitación',dur:45,buffer:10,price:50,bookable:true,active:true,color:'blue',icon:'activity'},
+    {id:6,name:'Blanqueamiento dental',cat:'Odontología',dur:50,buffer:15,price:180,bookable:false,active:false,color:'amber',icon:'smile'}
+  ];
+
+  // Templates derived from the clinic's real categories
+  var templates = [
+    {name:'Empaste (obturación)',cat:'Odontología',dur:40,buffer:10,price:55,icon:'tooth',color:'teal'},
+    {name:'Endodoncia',cat:'Odontología',dur:60,buffer:15,price:160,icon:'tooth',color:'teal'},
+    {name:'Mesoterapia facial',cat:'Estética',dur:45,buffer:10,price:90,icon:'spark',color:'pink'},
+    {name:'Rehabilitación de rodilla',cat:'Rehabilitación',dur:45,buffer:10,price:50,icon:'activity',color:'blue'},
+    {name:'Radiografía panorámica',cat:'Diagnóstico',dur:15,buffer:5,price:35,icon:'scan',color:'violet'},
+    {name:'Drenaje linfático',cat:'Estética',dur:50,buffer:10,price:65,icon:'spark',color:'pink'}
+  ];
+
+  var addedTemplates = {};
+  var currentFilter = 'all';
+  var searchTerm = '';
+  var viewMode = 'grid';
+  var idSeq = 100;
+
+  // ===== ELEMENTS =====
+  var $ = function(id){ return document.getElementById(id); };
+  var grid = $('svcGrid'), tableBody = $('svcTableBody'), tableWrap = $('svcTableWrap');
+  var skeleton = $('skeleton'), errorState = $('errorState'), emptyState = $('emptyState');
+  var expandStrip = $('expandStrip');
+
+  function catDot(cat){ return CAT_COLOR[cat] || '#586862'; }
+  function priceTxt(p){ return p>0 ? p+' €' : 'Gratis'; }
+
+  // ===== RENDER CARDS =====
+  function filtered(){
+    return services.filter(function(s){
+      if(currentFilter==='bookable' && !s.bookable) return false;
+      if(currentFilter==='active' && !s.active) return false;
+      if(currentFilter==='inactive' && s.active) return false;
+      if(searchTerm){
+        var t=(s.name+' '+s.cat).toLowerCase();
+        if(t.indexOf(searchTerm)===-1) return false;
+      }
+      return true;
+    });
+  }
+
+  function cardHTML(s){
+    var iaOn = s.bookable && s.active;
+    var ia = iaOn
+      ? '<span class="ia-status on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Reservable online</span>'
+      : '<span class="ia-status off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg> Solo en clínica</span>';
+    var stateLbl = s.active
+      ? '<span class="sw-label" style="color:var(--ok)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Activo</span>'
+      : '<span class="sw-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg> Inactivo</span>';
+    return '<div class="svc-card'+(s.active?'':' inactive')+'" data-id="'+s.id+'">'+
+      '<div class="svc-head">'+
+        '<div class="svc-color" style="background:'+COLORS[s.color]+'">'+(ICONS[s.icon]||svcIcon)+'</div>'+
+        '<div class="svc-titles">'+
+          '<div class="svc-name">'+s.name+'</div>'+
+          '<div class="svc-cat"><span class="cat-dot" style="background:'+catDot(s.cat)+'"></span>'+s.cat+'</div>'+
+        '</div>'+
+        '<button class="svc-menu" type="button" aria-label="Más opciones de '+s.name+'" data-edit="'+s.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>'+
+      '</div>'+
+      '<div class="svc-meta">'+
+        '<div class="meta-item"><span class="meta-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Duración</span><span class="meta-val">'+s.dur+'<small> min</small></span></div>'+
+        '<div class="meta-item"><span class="meta-label">Buffer</span><span class="meta-val">'+s.buffer+'<small> min</small></span></div>'+
+        '<div class="meta-item"><span class="meta-label">Precio</span><span class="meta-val">'+priceTxt(s.price)+'</span></div>'+
+      '</div>'+
+      '<div class="svc-foot">'+
+        ia+
+        '<div class="sw-wrap">'+stateLbl+
+          '<button type="button" class="switch" role="switch" aria-checked="'+(s.active?'true':'false')+'" aria-label="Servicio activo: '+s.name+'" data-toggle="'+s.id+'"><span class="track" aria-hidden="true"></span></button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function rowHTML(s){
+    var iaOn = s.bookable && s.active;
+    var ia = iaOn
+      ? '<span class="ia-status on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Online</span>'
+      : '<span class="ia-status off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg> En clínica</span>';
+    var stateLbl = s.active
+      ? '<span class="sw-label" style="color:var(--ok)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Activo</span>'
+      : '<span class="sw-label">Inactivo</span>';
+    return '<tr data-id="'+s.id+'">'+
+      '<td><div class="td-name"><span class="td-dot" style="background:'+COLORS[s.color]+'">'+(ICONS[s.icon]||svcIcon)+'</span><div>'+s.name+'<div class="td-cat"><span class="cat-dot" style="background:'+catDot(s.cat)+'"></span>'+s.cat+'</div></div></div></td>'+
+      '<td class="td-num">'+s.dur+'<small> min</small></td>'+
+      '<td class="td-num">'+s.buffer+'<small> min</small></td>'+
+      '<td class="td-num">'+priceTxt(s.price)+'</td>'+
+      '<td>'+ia+'</td>'+
+      '<td><div class="sw-wrap">'+stateLbl+'<button type="button" class="switch" role="switch" aria-checked="'+(s.active?'true':'false')+'" aria-label="Servicio activo: '+s.name+'" data-toggle="'+s.id+'"><span class="track" aria-hidden="true"></span></button></div></td>'+
+      '<td><button class="svc-menu" type="button" aria-label="Editar '+s.name+'" data-edit="'+s.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></td>'+
+    '</tr>';
+  }
+
+  function tmplHTML(t,i){
+    var key = t.name;
+    var added = !!addedTemplates[key];
+    var btn = added
+      ? '<button class="si-add" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Añadido</button>'
+      : '<button class="si-add" type="button" data-tmpl="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Añadir</button>';
+    return '<div class="si'+(added?' added':'')+'">'+
+      '<div class="si-ic" style="background:'+COLORS[t.color]+'">'+(ICONS[t.icon]||svcIcon)+'</div>'+
+      '<div class="si-info"><div class="si-name">'+t.name+'</div><div class="si-meta">'+t.dur+' min · buffer '+t.buffer+' min · '+priceTxt(t.price)+'</div></div>'+
+      btn+
+    '</div>';
+  }
+
+  function renderTemplates(){
+    var html = templates.map(tmplHTML).join('');
+    $('expandTmplGrid').innerHTML = html;
+    $('emptyTmplGrid').innerHTML = html;
+  }
+
+  function updateKPIs(){
+    $('kpiTotal').textContent = services.length;
+    $('kpiBookable').textContent = services.filter(function(s){return s.bookable && s.active;}).length;
+    // chip counts
+    document.querySelector('.chip[data-filter="all"] .ct').textContent = services.length;
+    document.querySelector('.chip[data-filter="bookable"] .ct').textContent = services.filter(function(s){return s.bookable;}).length;
+    document.querySelector('.chip[data-filter="active"] .ct').textContent = services.filter(function(s){return s.active;}).length;
+    document.querySelector('.chip[data-filter="inactive"] .ct').textContent = services.filter(function(s){return !s.active;}).length;
+  }
+
+  function render(){
+    var list = filtered();
+    updateKPIs();
+    // 0 services in catalog -> empty state
+    if(services.length===0){
+      emptyState.classList.remove('hidden');
+      grid.classList.add('hidden'); tableWrap.classList.add('hidden'); expandStrip.classList.add('hidden');
+      return;
+    }
+    emptyState.classList.add('hidden');
+    expandStrip.classList.remove('hidden');
+    if(viewMode==='grid'){
+      grid.innerHTML = list.length ? list.map(cardHTML).join('') : emptyFilterHTML();
+      grid.classList.remove('hidden'); tableWrap.classList.add('hidden');
+    } else {
+      tableBody.innerHTML = list.length ? list.map(rowHTML).join('') : '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:30px">Ningún servicio coincide con el filtro.</td></tr>';
+      tableWrap.classList.remove('hidden'); grid.classList.add('hidden');
+    }
+  }
+
+  function emptyFilterHTML(){
+    return '<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:36px;font-size:14px">Ningún servicio coincide con el filtro. <button class="btn btn-sm" type="button" id="clearFilter" style="margin-left:8px">Quitar filtros</button></div>';
+  }
+
+  // ===== TOASTS =====
+  function toast(msg, type){
+    var t = document.createElement('div');
+    t.className = 'toast' + (type==='err'?' err':'');
+    var ic = type==='err'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>';
+    t.innerHTML = '<span class="toast-ic">'+ic+'</span><span>'+msg+'</span>';
+    $('toastWrap').appendChild(t);
+    setTimeout(function(){ t.style.transition='.3s'; t.style.opacity='0'; t.style.transform='translateX(20px)'; setTimeout(function(){t.remove();},300); }, 3200);
+  }
+
+  // ===== EVENTS: delegated clicks =====
+  document.addEventListener('click', function(e){
+    var toggleEl = e.target.closest('[data-toggle]');
+    if(toggleEl){ toggleActive(parseInt(toggleEl.getAttribute('data-toggle'),10)); return; }
+    var editEl = e.target.closest('[data-edit]');
+    if(editEl){ openModal(parseInt(editEl.getAttribute('data-edit'),10)); return; }
+    var tmplEl = e.target.closest('[data-tmpl]');
+    if(tmplEl){ addTemplate(parseInt(tmplEl.getAttribute('data-tmpl'),10), tmplEl); return; }
+    if(e.target.closest('#clearFilter')){ setFilter('all'); document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed', c.getAttribute('data-filter')==='all'?'true':'false');}); }
+  });
+
+  // keyboard support for role=switch (Enter/Space)
+  document.addEventListener('keydown', function(e){
+    var sw = e.target.closest('.switch[role="switch"]');
+    if(sw && (e.key===' '||e.key==='Enter'||e.key==='Spacebar')){
+      e.preventDefault();
+      if(sw.id==='fBookable'){ toggleModalSwitch(sw); }
+      else { var id = sw.getAttribute('data-toggle'); if(id) toggleActive(parseInt(id,10)); }
+    }
+  });
+
+  function toggleActive(id){
+    var s = services.find(function(x){return x.id===id;});
+    if(!s) return;
+    s.active = !s.active;
+    render();
+    if(s.active && s.bookable){ toast('“'+s.name+'” activo y reservable online. Ya aparece en web y WhatsApp.'); }
+    else if(s.active){ toast('“'+s.name+'” activado. Márcalo como reservable online para ofrecerlo en web y WhatsApp.'); }
+    else { toast('“'+s.name+'” desactivado. Deja de ofrecerse en la reserva online.'); }
+  }
+
+  // ===== FILTERS =====
+  function setFilter(f){ currentFilter = f; render(); }
+  document.querySelectorAll('.chip[data-filter]').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('.chip[data-filter]').forEach(function(c){ c.setAttribute('aria-pressed','false'); });
+      chip.setAttribute('aria-pressed','true');
+      setFilter(chip.getAttribute('data-filter'));
+    });
+  });
+
+  $('svcSearch').addEventListener('input', function(e){ searchTerm = e.target.value.trim().toLowerCase(); render(); });
+
+  // ===== VIEW TOGGLE =====
+  $('viewGrid').addEventListener('click', function(){ viewMode='grid'; $('viewGrid').setAttribute('aria-pressed','true'); $('viewList').setAttribute('aria-pressed','false'); render(); });
+  $('viewList').addEventListener('click', function(){ viewMode='list'; $('viewList').setAttribute('aria-pressed','true'); $('viewGrid').setAttribute('aria-pressed','false'); render(); });
+
+  // ===== EXPAND STRIP =====
+  $('expandHead').addEventListener('click', function(){
+    var open = expandStrip.classList.toggle('open');
+    this.setAttribute('aria-expanded', open?'true':'false');
+  });
+
+  // ===== TEMPLATES: one-click add (active + bookable) =====
+  function addTemplate(i, btn){
+    var t = templates[i];
+    if(!t || addedTemplates[t.name]) return;
+    if(btn){ btn.disabled = true; btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin .7s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.5"/></svg> Añadiendo…'; }
+    // simulate async
+    setTimeout(function(){
+      services.push({id:++idSeq,name:t.name,cat:t.cat,dur:t.dur,buffer:t.buffer,price:t.price,bookable:true,active:true,color:t.color,icon:t.icon});
+      addedTemplates[t.name] = true;
+      renderTemplates();
+      render();
+      toast('“'+t.name+'” creado, activo y reservable online.');
+    }, 450);
+  }
+
+  // ===== MODAL =====
+  var modal = $('svcModal'), editingId = null, lastFocus = null;
+
+  function openModal(id){
+    editingId = id || null;
+    resetForm();
+    if(id){
+      var s = services.find(function(x){return x.id===id;});
+      if(s){
+        $('modalTitle').textContent = 'Editar servicio';
+        $('fName').value = s.name;
+        $('fCat').value = s.cat;
+        $('fPrice').value = s.price || '';
+        $('fDur').value = s.dur;
+        $('fBuffer').value = s.buffer;
+        setModalSwitch($('fBookable'), s.bookable);
+      }
+    } else {
+      $('modalTitle').textContent = 'Nuevo servicio';
+      setModalSwitch($('fBookable'), true);
+    }
+    lastFocus = document.activeElement;
+    modal.classList.add('open');
+    setTimeout(function(){ $('fName').focus(); }, 50);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function resetForm(){
+    $('svcForm').reset();
+    $('fNameErr').classList.remove('show'); $('fDurErr').classList.remove('show'); $('formErr').classList.remove('show');
+    $('fName').setAttribute('aria-invalid','false'); $('fDur').setAttribute('aria-invalid','false');
+  }
+
+  $('newSvcBtn').addEventListener('click', function(){ openModal(null); });
+  $('emptyNewBtn').addEventListener('click', function(){ openModal(null); });
+  $('modalClose').addEventListener('click', closeModal);
+  $('cancelBtn').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+
+  // modal IA switch (click + keyboard)
+  function setModalSwitch(sw, on){ sw.setAttribute('aria-checked', on?'true':'false'); }
+  function toggleModalSwitch(sw){ setModalSwitch(sw, sw.getAttribute('aria-checked')!=='true'); }
+  $('fBookable').addEventListener('click', function(){ toggleModalSwitch(this); });
+
+  // professionals pills (toggle aria-pressed)
+  $('proPills').addEventListener('click', function(e){
+    var pill = e.target.closest('.pill');
+    if(!pill) return;
+    if(pill.id==='addProBtn'){ toast('Abriendo selector de profesionales…'); return; }
+    pill.setAttribute('aria-pressed', pill.getAttribute('aria-pressed')==='true'?'false':'true');
+  });
+
+  // color picker
+  $('colorPicker').addEventListener('click', function(e){
+    var opt = e.target.closest('.color-opt');
+    if(!opt) return;
+    this.querySelectorAll('.color-opt').forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+    opt.setAttribute('aria-pressed','true');
+  });
+
+  // help button focus (touch/keyboard): toggle tip visibility class
+  document.querySelectorAll('.help-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      var tip = this.parentNode.querySelector('.help-tip');
+      var vis = tip.style.visibility==='visible';
+      tip.style.visibility = vis?'':'visible';
+      tip.style.opacity = vis?'':'1';
+    });
+    b.addEventListener('blur', function(){
+      var tip = this.parentNode.querySelector('.help-tip');
+      tip.style.visibility=''; tip.style.opacity='';
+    });
+  });
+
+  // ===== SAVE: validation + simulated async + error/success feedback =====
+  $('svcForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = $('fName').value.trim();
+    var dur = $('fDur').value.trim();
+    var ok = true;
+    if(!name){ $('fNameErr').classList.add('show'); $('fName').setAttribute('aria-invalid','true'); ok=false; }
+    else { $('fNameErr').classList.remove('show'); $('fName').setAttribute('aria-invalid','false'); }
+    if(!dur || parseInt(dur,10)<5){ $('fDurErr').classList.add('show'); $('fDur').setAttribute('aria-invalid','true'); ok=false; }
+    else { $('fDurErr').classList.remove('show'); $('fDur').setAttribute('aria-invalid','false'); }
+
+    if(!ok){
+      $('formErr').classList.add('show');
+      if(!name) $('fName').focus(); else $('fDur').focus();
+      return;
+    }
+    $('formErr').classList.remove('show');
+
+    var btn = $('saveBtn');
+    btn.disabled = true;
+    var orig = btn.innerHTML;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin .7s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.5"/></svg> Guardando…';
+
+    setTimeout(function(){
+      btn.disabled = false; btn.innerHTML = orig;
+      var bookable = $('fBookable').getAttribute('aria-checked')==='true';
+      var cat = $('fCat').value;
+      var data = {
+        name:name, cat:cat,
+        dur:parseInt(dur,10),
+        buffer:parseInt($('fBuffer').value||'0',10),
+        price:parseInt($('fPrice').value||'0',10),
+        bookable:bookable, active:true,
+        color:(CAT_COLOR[cat]==='#0f766e'?'teal':'blue'), icon:'tooth'
+      };
+      if(editingId){
+        var s = services.find(function(x){return x.id===editingId;});
+        Object.assign(s, data);
+        toast('“'+name+'” actualizado correctamente.');
+      } else {
+        data.id = ++idSeq;
+        services.push(data);
+        toast(bookable ? '“'+name+'” creado y reservable online.' : '“'+name+'” creado. Márcalo como reservable online para ofrecerlo en web y WhatsApp.');
+      }
+      render();
+      closeModal();
+    }, 650);
+  });
+
+  // header secondary actions
+  $('importBtn').addEventListener('click', function(){ toast('Importación de servicios: próximamente.'); });
+  $('reviewBtn').addEventListener('click', function(){
+    document.querySelectorAll('.chip[data-filter]').forEach(function(c){ c.setAttribute('aria-pressed', c.getAttribute('data-filter')==='active'?'true':'false'); });
+    setFilter('active');
+    toast('Mostrando servicios activos. Marca como reservables online los que falten.');
+  });
+
+  // ===== INITIAL LOAD: skeleton -> data =====
+  function load(){
+    skeleton.style.display=''; errorState.classList.add('hidden');
+    grid.classList.add('hidden'); tableWrap.classList.add('hidden');
+    emptyState.classList.add('hidden'); expandStrip.classList.add('hidden');
+    setTimeout(function(){
+      skeleton.style.display='none';
+      renderTemplates();
+      render();
+    }, 850);
+  }
+  $('retryBtn').addEventListener('click', load);
+
+  // spin keyframes
+  var st = document.createElement('style');
+  st.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+  document.head.appendChild(st);
+
+  load();
+})();
+</script>
+</body>
+</html>

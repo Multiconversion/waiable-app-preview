@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contactos (pacientes) · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#5b6760; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg); color:var(--text);
+  font-size:14px; line-height:1.55; min-height:100vh;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--primary-bright);outline-offset:2px;border-radius:6px}
+svg{display:block;flex:none}
+.tnum{font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* ===== LAYOUT ===== */
+.app{display:flex;min-height:100vh}
+
+/* ===== SIDEBAR (CHROME) ===== */
+.sidebar{
+  width:232px;flex:none;position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%),
+    linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+  color:#e8f1ef; padding:18px 14px; z-index:40;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 6px 4px}
+.brand-mark{
+  width:34px;height:34px;border-radius:var(--radius-sm);background:var(--accent);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;
+  box-shadow:0 6px 16px rgba(17,163,145,.4);
+}
+.brand-name{font-weight:600;font-size:16px;color:#fff;line-height:1.1}
+.brand-sub{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-top:2px}
+.nav{margin-top:18px;flex:1;overflow-y:auto;overflow-x:hidden}
+.nav::-webkit-scrollbar{width:0}
+.nav-group{margin-bottom:14px}
+.nav-head{
+  font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;
+  color:rgba(255,255,255,.55);padding:6px 10px 5px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:var(--radius-sm);
+  color:rgba(232,241,239,.86);font-size:14px;font-weight:500;position:relative;
+  min-height:40px;transition:background .16s ease,color .16s ease;
+}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--primary-bright);color:#fff;box-shadow:0 4px 14px rgba(15,148,134,.4)}
+.nav-item.active::before{
+  content:"";position:absolute;left:-14px;top:50%;transform:translateY(-50%);
+  width:3px;height:22px;background:var(--cyan);border-radius:0 3px 3px 0;
+}
+.nav-item svg{width:19px;height:19px;opacity:.95}
+.nav-label{white-space:nowrap}
+.nav-item .badge-n{
+  margin-left:auto;background:rgba(94,224,201,.18);color:var(--cyan);
+  font-size:12px;font-weight:700;min-width:20px;height:20px;padding:0 6px;
+  border-radius:999px;display:grid;place-items:center;
+}
+.nav-item.active .badge-n{background:rgba(255,255,255,.22);color:#fff}
+.side-foot{margin-top:auto;padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.plan-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--radius-sm);padding:11px 12px;
+}
+.plan-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.plan-name{font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px}
+.plan-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px rgba(94,224,201,.18)}
+.plan-link{font-size:12px;color:var(--cyan);font-weight:600}
+.user-mini{display:flex;align-items:center;gap:10px;padding:7px 6px}
+.user-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--primary-bright),var(--accent));display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px;flex:none}
+.user-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.user-role{font-size:12px;color:rgba(232,241,239,.7)}
+
+/* ===== MAIN ===== */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* ===== TOPBAR (CHROME) ===== */
+.topbar{
+  height:60px;background:var(--surface);box-shadow:var(--shadow-xs);
+  display:flex;align-items:center;gap:18px;padding:0 22px;position:sticky;top:0;z-index:30;
+  border-bottom:1px solid var(--line);
+}
+.tb-titles{min-width:0}
+.tb-title{font-size:18px;font-weight:600;line-height:1.2}
+.tb-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.tb-search{
+  flex:1;max-width:440px;margin:0 auto;display:flex;align-items:center;gap:9px;
+  background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);
+  padding:8px 14px;color:var(--muted);min-height:40px;transition:border-color .16s,box-shadow .16s;
+}
+.tb-search:focus-within{border-color:var(--primary-bright);box-shadow:0 0 0 3px var(--primary-soft);background:#fff}
+.tb-search input{border:none;background:none;outline:none;flex:1;font-size:14px;color:var(--text);min-width:0}
+.tb-search input::placeholder{color:var(--muted)}
+.kbd{font-size:12px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:2px 6px;white-space:nowrap}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.venue{
+  display:flex;align-items:center;gap:8px;background:var(--surface-soft);border:1px solid var(--line);
+  border-radius:var(--radius-pill);padding:7px 12px;font-size:13px;font-weight:500;min-height:40px;color:var(--text-2);
+}
+.venue svg{width:16px;height:16px;color:var(--primary)}
+.status-chips{display:flex;gap:7px}
+.schip{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  padding:6px 11px;border-radius:var(--radius-pill);
+}
+.schip svg{width:14px;height:14px}
+.schip.ok{background:var(--ok-soft);color:var(--ok)}
+.schip.info{background:var(--info-soft);color:var(--info)}
+.schip.brand{background:var(--primary-soft);color:var(--primary-dark)}
+/* estado de automatización: discreto y secundario, no compite con WhatsApp/Agenda */
+.schip.subtle{background:transparent;color:var(--muted);border:1px solid var(--line-strong);font-weight:600}
+.schip.subtle .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.schip.subtle svg{color:var(--muted)}
+.icon-btn{
+  width:40px;height:40px;border-radius:var(--radius-pill);display:grid;place-items:center;
+  color:var(--text-2);position:relative;transition:background .16s;border:1px solid transparent;
+}
+.icon-btn:hover{background:var(--surface-soft);border-color:var(--line)}
+.icon-btn svg{width:20px;height:20px}
+.dot-badge{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+.tb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-bright));display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px;flex:none}
+
+/* ===== CONTENT ===== */
+.content{padding:24px 26px 40px;max-width:1500px;width:100%;margin:0 auto}
+
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.page-h1{font-size:26px;font-weight:800;letter-spacing:-.01em;line-height:1.2;display:flex;align-items:center;gap:10px}
+.page-lead{font-size:14px;color:var(--text-2);margin-top:5px;max-width:600px}
+.page-lead b{color:var(--text);font-weight:700}
+.head-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;border-radius:var(--radius-sm);padding:10px 16px;min-height:44px;border:1px solid transparent;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:linear-gradient(180deg,var(--primary-bright),var(--primary));color:#fff;box-shadow:0 8px 18px rgba(15,118,110,.26),inset 0 1px 0 rgba(255,255,255,.18)}
+.btn-primary:hover{background:linear-gradient(180deg,#11a08f,var(--primary-dark));transform:translateY(-1px);box-shadow:0 10px 22px rgba(15,118,110,.3)}
+.btn-secondary{background:var(--surface);color:var(--text-2);border:1px solid var(--line-strong);box-shadow:var(--shadow-sm)}
+.btn-secondary:hover{background:var(--primary-tint);border-color:var(--primary);color:var(--primary);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text-2);padding:9px 12px}
+.btn-ghost:hover{background:var(--surface-soft)}
+.btn-sm{padding:7px 12px;min-height:40px;font-size:13px}
+
+/* ===== SUMMARY CARDS ===== */
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease;position:relative;overflow:hidden;
+}
+.stat:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.stat-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.stat-label{font-size:13px;font-weight:600;color:var(--muted)}
+.stat-ico{width:34px;height:34px;border-radius:var(--radius-sm);display:grid;place-items:center}
+.stat-ico svg{width:18px;height:18px}
+.ico-teal{background:var(--primary-soft);color:var(--primary)}
+.ico-ok{background:var(--ok-soft);color:var(--ok)}
+.ico-info{background:var(--info-soft);color:var(--info)}
+.ico-warn{background:var(--warning-soft);color:var(--warning)}
+.stat-num{font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.stat-foot{font-size:13px;margin-top:8px;display:flex;align-items:center;gap:5px;color:var(--text-2)}
+.trend{display:inline-flex;align-items:center;gap:3px;font-weight:700}
+.trend.up{color:var(--ok)} .trend.flat{color:var(--muted)}
+.trend svg{width:14px;height:14px}
+/* feature card = the priority cohort the clinic must attack first */
+.stat.feature{background:linear-gradient(135deg,#fff,var(--primary-tint));border-color:#bfe3dc;box-shadow:var(--shadow-md)}
+.stat.feature::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--primary-bright),var(--primary))}
+.stat-act{margin-top:11px}
+.link-act{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--primary);padding:5px 0;min-height:40px}
+.link-act svg{width:15px;height:15px;transition:transform .16s}
+.link-act:hover{color:var(--primary-dark)}
+.link-act:hover svg{transform:translateX(3px)}
+
+/* ===== TOOLBAR / FILTERS ===== */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden}
+.toolbar{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:13px}
+.toolbar-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-box{
+  flex:1;min-width:240px;max-width:460px;display:flex;align-items:center;gap:9px;background:var(--surface-soft);
+  border:1.5px solid var(--line-strong);border-radius:var(--radius-sm);padding:0 13px;color:var(--muted);min-height:44px;position:relative;transition:border-color .16s,box-shadow .16s,background .16s;
+}
+.search-box:focus-within{border-color:var(--primary-bright);box-shadow:0 0 0 3px var(--primary-soft);background:#fff}
+.search-box svg.s-ico{width:18px;height:18px}
+.search-box input{border:none;background:none;outline:none;flex:1;font-size:14px;color:var(--text);min-width:0;height:42px}
+.search-box input::placeholder{color:var(--muted)}
+.search-box .clear-x{width:28px;height:28px;border-radius:8px;color:var(--muted);display:none;place-items:center;flex:none}
+.search-box .clear-x:hover{background:var(--line);color:var(--text)}
+.search-box.has-val .clear-x{display:grid}
+.search-box .scope{font-size:12px;font-weight:700;color:var(--primary-dark);background:var(--primary-soft);border-radius:6px;padding:2px 7px;white-space:nowrap;flex:none}
+
+.tb-spacer{margin-left:auto}
+.select-wrap{position:relative}
+.select-wrap svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;width:15px;height:15px}
+.select-wrap select{
+  height:44px;border:1.5px solid var(--line-strong);background:var(--surface);
+  border-radius:var(--radius-sm);padding:0 34px 0 12px;font-size:13px;font-weight:600;color:var(--text-2);
+  appearance:none;cursor:pointer;
+}
+.select-wrap select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+
+.chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chips-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:2px}
+.fchip{
+  display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 13px;
+  border-radius:var(--radius-pill);border:1.5px solid var(--line-strong);
+  background:var(--surface);color:var(--text-2);font-size:13px;font-weight:600;transition:.15s;
+}
+.fchip:hover{border-color:var(--primary);color:var(--primary)}
+.fchip svg{width:15px;height:15px}
+.fchip .c-n{font-size:12px;color:var(--muted);font-weight:600}
+.fchip.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.fchip.active .c-n{color:rgba(255,255,255,.85)}
+.fchip.score-high{border-color:#bfe6d0}
+.fchip.score-high svg{color:var(--ok)}
+.fchip.score-high.active{background:var(--ok);border-color:var(--ok)}
+.fchip.score-high.active svg{color:#fff}
+.chip-clear{font-size:13px;font-weight:600;color:var(--muted);padding:8px;border-radius:6px;min-height:40px}
+.chip-clear:hover{color:var(--danger);background:var(--danger-soft)}
+
+/* ===== BULK BAR ===== */
+.bulkbar{
+  display:none;align-items:center;gap:14px;padding:11px 18px;background:var(--primary-dark);color:#fff;flex-wrap:wrap;
+}
+.bulkbar.show{display:flex}
+.bulk-count{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.bulk-badge{background:rgba(255,255,255,.18);border-radius:var(--radius-pill);padding:2px 10px;font-size:13px;font-weight:700}
+.bulk-actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;align-items:center}
+.bulk-btn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-sm);padding:0 12px;min-height:40px;transition:background .16s}
+.bulk-btn:hover{background:rgba(255,255,255,.22)}
+.bulk-btn.primary{background:var(--accent);border-color:var(--accent);box-shadow:0 4px 12px rgba(17,163,145,.4)}
+.bulk-btn.primary:hover{background:var(--primary-bright)}
+.bulk-btn.danger:hover{background:var(--danger);border-color:var(--danger)}
+.bulk-btn svg{width:16px;height:16px}
+.bulk-link{font-size:13px;font-weight:600;color:rgba(255,255,255,.78);padding:0 8px;min-height:40px;border-radius:8px}
+.bulk-link:hover{color:#fff;background:rgba(255,255,255,.12)}
+.bulk-link.danger:hover{background:var(--danger)}
+.bulk-close{color:rgba(255,255,255,.85);width:40px;height:40px;display:grid;place-items:center;border-radius:8px;flex:none}
+.bulk-close:hover{background:rgba(255,255,255,.14)}
+.bulk-close svg{width:18px;height:18px}
+
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto;overflow-y:visible}
+table{width:100%;border-collapse:collapse;min-width:1040px}
+thead th{
+  text-align:left;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;
+  padding:11px 14px;background:var(--surface-soft);border-bottom:1.5px solid var(--line);white-space:nowrap;position:sticky;top:0;z-index:3;
+}
+.th-sort{
+  display:inline-flex;align-items:center;gap:6px;background:none;border:none;
+  font:inherit;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--muted);padding:3px 5px;margin:-3px -5px;border-radius:7px;min-height:auto;
+}
+.th-sort:hover{color:var(--text-2);background:var(--line)}
+.th-sort:focus-visible{outline:2px solid var(--primary-bright);outline-offset:1px;color:var(--text-2)}
+.th-sort .arr{display:inline-flex}
+.th-sort .arr svg{width:13px;height:13px;color:var(--line-strong)}
+th[aria-sort="ascending"] .th-sort,
+th[aria-sort="descending"] .th-sort{color:var(--primary)}
+th[aria-sort="ascending"] .arr svg,
+th[aria-sort="descending"] .arr svg{color:var(--primary)}
+th[aria-sort="none"] .arr-up,th[aria-sort="none"] .arr-dn{opacity:.4}
+th[aria-sort="ascending"] .arr-dn,th[aria-sort="ascending"] .arr-up{display:none}
+th[aria-sort="ascending"] .arr-asc{display:inline-flex}
+th[aria-sort="descending"] .arr-up,th[aria-sort="descending"] .arr-dn{display:none}
+th[aria-sort="descending"] .arr-desc{display:inline-flex}
+.arr-asc,.arr-desc{display:none}
+th[aria-sort="none"] .arr-asc,th[aria-sort="none"] .arr-desc{display:none}
+
+.help-i{position:relative;display:inline-flex;vertical-align:middle;margin-left:5px}
+.help-btn{
+  width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line-strong);
+  background:var(--surface);color:var(--muted);font-size:12px;font-weight:700;
+  display:grid;place-items:center;line-height:1;padding:0;
+}
+.help-btn:hover,.help-btn:focus-visible{outline:none;border-color:var(--primary);color:var(--primary);background:var(--primary-tint)}
+.help-btn:focus-visible{box-shadow:0 0 0 3px var(--primary-soft)}
+.tip{
+  position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(4px);
+  width:236px;background:#0f1a17;color:#e7f0ed;font-size:12px;font-weight:500;line-height:1.5;
+  text-transform:none;letter-spacing:0;padding:10px 12px;border-radius:10px;
+  box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transition:.16s;z-index:60;text-align:left;pointer-events:none;
+}
+.tip b{color:var(--cyan)}
+.tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#0f1a17}
+.tip.right{left:auto;right:-6px;transform:translateX(0) translateY(4px)}
+.tip.right::after{left:auto;right:13px}
+.help-i:hover .tip,.help-btn:focus-visible + .tip,.help-btn:focus + .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.help-i:hover .tip.right,.help-btn:focus-visible + .tip.right,.help-btn:focus + .tip.right{transform:translateX(0) translateY(0)}
+
+tbody td{padding:13px 14px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+tbody tr{transition:background .12s;cursor:pointer}
+tbody tr:hover{background:var(--primary-tint)}
+tbody tr:focus-within{background:var(--primary-tint)}
+tbody tr.row-focus{background:var(--primary-soft);box-shadow:inset 3px 0 0 var(--primary)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr.sel{background:var(--primary-soft)}
+.col-check{width:44px;padding-left:18px}
+.col-act{text-align:right;padding-right:18px}
+.ck{width:18px;height:18px;border-radius:5px;border:1.6px solid var(--line-strong);accent-color:var(--primary);cursor:pointer}
+.ck:focus-visible{outline:none;box-shadow:0 0 0 3px var(--primary-soft)}
+
+.person{display:flex;align-items:center;gap:11px;min-width:180px}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px;flex:none}
+.av1{background:linear-gradient(135deg,#0f766e,#11a391)}
+.av2{background:linear-gradient(135deg,#2662a6,#5ea0e0)}
+.av3{background:linear-gradient(135deg,#b7791f,#dba43f)}
+.av4{background:linear-gradient(135deg,#7d4fb3,#a87fd6)}
+.av5{background:linear-gradient(135deg,#157348,#3aa873)}
+.av6{background:linear-gradient(135deg,#b42318,#e0685e)}
+.pmeta{min-width:0}
+.p-name{font-size:14px;font-weight:700;color:var(--text);line-height:1.3;display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.p-sub{font-size:13px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.tag-new{font-size:12px;font-weight:700;color:var(--info);background:var(--info-soft);border:1px solid #cfe0f5;border-radius:999px;padding:1px 7px;line-height:1.4;flex:none}
+.cell-mail{color:var(--text-2);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:215px;display:block}
+.cell-mut{color:var(--muted);font-size:13px}
+.cell-phone{color:var(--text);font-size:14px}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:var(--radius-pill);padding:5px 10px;white-space:nowrap;border:1px solid transparent}
+.badge svg{width:13px;height:13px}
+.b-ok{background:var(--ok-soft);color:#0d5a38;border-color:#bfe6d0}
+.b-warn{background:var(--warning-soft);color:#8a5d12;border-color:#f0dcae}
+.b-danger{background:var(--danger-soft);color:var(--danger)}
+.b-info{background:var(--info-soft);color:#1f4f86;border-color:#cfe0f5}
+.b-mut{background:var(--surface-soft);color:var(--text-2);border-color:var(--line-strong)}
+
+/* AI score — color + number + LEVEL LABEL */
+.score{display:flex;align-items:center;gap:9px;min-width:132px}
+.score-meter{flex:1;min-width:50px}
+.score-bar{height:7px;border-radius:var(--radius-pill);background:var(--line);overflow:hidden}
+.score-bar i{display:block;height:100%;border-radius:var(--radius-pill)}
+.sc-high .score-bar i{background:linear-gradient(90deg,#15b8a3,var(--ok))}
+.sc-mid .score-bar i{background:linear-gradient(90deg,#f0c14a,var(--warning))}
+.sc-low .score-bar i{background:var(--line-strong)}
+.score-info{display:flex;flex-direction:column;line-height:1.15}
+.score-num{font-size:14px;font-weight:800;color:var(--text)}
+.score-lvl{font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+.score-lvl svg{width:11px;height:11px}
+.lvl-high{color:var(--ok)}
+.lvl-mid{color:var(--warning)}
+.lvl-low{color:var(--muted)}
+
+/* row actions — Abrir ficha dominant, WhatsApp/Llamar secondary */
+.row-act{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.r-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line-strong);background:var(--surface);display:grid;place-items:center;color:var(--muted);transition:.14s}
+.r-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-tint)}
+.r-btn.wa:hover{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.r-btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--primary-soft)}
+.r-btn svg{width:18px;height:18px}
+.r-open{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 15px;border-radius:10px;background:linear-gradient(180deg,var(--primary-bright),var(--primary));color:#fff;font-size:13px;font-weight:700;box-shadow:0 6px 14px rgba(15,118,110,.26),inset 0 1px 0 rgba(255,255,255,.18);transition:.15s;white-space:nowrap}
+.r-open:hover{background:linear-gradient(180deg,#11a08f,var(--primary-dark))}
+.r-open:hover svg{transform:translateX(2px)}
+.r-open:focus-visible{outline:none;box-shadow:0 0 0 3px var(--primary-soft)}
+.r-open svg{width:15px;height:15px;transition:transform .15s}
+
+/* footer / pagination */
+.table-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line);flex-wrap:wrap;background:var(--surface-soft)}
+.foot-info{font-size:13px;color:var(--text-2)}
+.foot-info b{color:var(--text);font-weight:700}
+.pager{display:flex;align-items:center;gap:6px}
+.pg{min-width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--text-2);border:1px solid var(--line-strong);background:#fff;transition:all .14s;padding:0 9px}
+.pg:hover{border-color:var(--primary);color:var(--primary)}
+.pg.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.pg:disabled{opacity:.45;cursor:not-allowed}
+.pg.dots{border:none;background:none;cursor:default}
+.pg svg{width:16px;height:16px}
+
+/* ===== STATES: loading / error / empty ===== */
+.skel-row td{padding:13px 14px}
+.skel{display:block;height:13px;border-radius:7px;background:linear-gradient(90deg,var(--surface-soft) 25%,#eef2f1 37%,var(--surface-soft) 63%);background-size:400% 100%;animation:shimmer 1.3s ease infinite}
+.skel.circle{width:38px;height:38px;border-radius:50%}
+.skel.w90{width:90%}.skel.w70{width:70%}.skel.w50{width:50%}.skel.w40{width:40%}.skel.w30{width:30%}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
+.state-block{display:none;flex-direction:column;align-items:center;text-align:center;padding:60px 24px}
+.state-block.show{display:flex}
+.state-ill{width:84px;height:84px;border-radius:24px;display:grid;place-items:center;margin-bottom:18px}
+.state-ill.neutral{background:linear-gradient(135deg,var(--primary-soft),var(--primary-tint));color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary-soft)}
+.state-ill.danger{background:var(--danger-soft);color:var(--danger);box-shadow:inset 0 0 0 1px #eccfcb}
+.state-ill svg{width:38px;height:38px}
+.state-block h3{font-size:19px;font-weight:700;margin-bottom:7px}
+.state-block p{font-size:14px;color:var(--text-2);max-width:430px;margin-bottom:20px;line-height:1.6}
+.state-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+/* toast */
+.toast-wrap{position:fixed;right:24px;bottom:24px;z-index:90;display:flex;flex-direction:column;gap:10px}
+.toast{
+  display:flex;align-items:center;gap:11px;min-width:280px;max-width:390px;
+  background:#0f1a17;color:#e7f0ed;border-radius:13px;padding:13px 15px;
+  box-shadow:var(--shadow-lg);font-size:14px;font-weight:500;
+  transform:translateY(14px);opacity:0;transition:.28s cubic-bezier(.2,.8,.2,1);
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast .t-ico{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none;background:var(--ok);color:#fff}
+.toast.info .t-ico{background:var(--info)}
+.toast.warn .t-ico{background:var(--warning)}
+.toast .t-ico svg{width:17px;height:17px}
+.toast b{color:#fff;font-weight:700}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .sidebar{width:74px;padding:18px 12px}
+  .brand-name,.brand-sub,.nav-head,.nav-label,.plan-card,.user-name,.user-role,.nav-item .badge-n{display:none}
+  .brand{justify-content:center;padding:6px 0}
+  .nav-item{justify-content:center;padding:11px 0}
+  .nav-item.active::before{left:-12px}
+  .user-mini{justify-content:center;padding:7px 0}
+  .side-foot{align-items:center}
+  .nav-item{position:relative}
+  .nav-item::after{
+    content:attr(data-label);position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);
+    background:#0f1a17;color:#fff;font-size:12px;font-weight:500;padding:6px 10px;border-radius:8px;white-space:nowrap;
+    opacity:0;visibility:hidden;transition:opacity .14s;z-index:60;box-shadow:var(--shadow-md);
+  }
+  .nav-item:hover::after{opacity:1;visibility:visible}
+  .summary{grid-template-columns:repeat(2,1fr)}
+  .tb-search{max-width:none}
+}
+@media(max-width:880px){
+  .status-chips,.tb-search,.venue .v-name{display:none}
+  .tb-crumb{display:none}
+  .content{padding:18px 16px 36px}
+  .page-h1{font-size:22px}
+}
+@media(max-width:620px){
+  .summary{grid-template-columns:1fr}
+  .head-actions{width:100%}
+  .head-actions .btn{flex:1;justify-content:center}
+  .topbar{padding:0 14px;gap:10px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== SIDEBAR (CHROME) ===== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-sub">Clínicas</div>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav-group">
+        <div class="nav-head">Inicio</div>
+        <a class="nav-item" data-label="Panel" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span class="nav-label">Panel</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Agenda</div>
+        <a class="nav-item" data-label="Citas" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span class="nav-label">Citas</span>
+        </a>
+        <a class="nav-item" data-label="Huecos de agenda" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h2M8 18h2"/></svg>
+          <span class="nav-label">Huecos de agenda</span>
+        </a>
+        <a class="nav-item" data-label="Solicitudes" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 14l2 2 4-4"/></svg>
+          <span class="nav-label">Solicitudes</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Conversaciones</div>
+        <a class="nav-item" data-label="WhatsApp" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span class="nav-label">WhatsApp</span>
+        </a>
+        <a class="nav-item" data-label="Llamadas" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span class="nav-label">Llamadas</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Pacientes</div>
+        <a class="nav-item active" data-label="Contactos" href="contactos.html" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="nav-label">Contactos</span>
+          <span class="badge-n">2.8k</span>
+        </a>
+        <a class="nav-item" data-label="Oportunidades" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span class="nav-label">Oportunidades</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Automatización</div>
+        <a class="nav-item" data-label="Respuestas y flujos" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V9a2 2 0 0 1 2-2h12M20 7v8a2 2 0 0 1-2 2H6"/><path d="m8 13-4 4 4 4M16 11l4-4-4-4"/></svg>
+          <span class="nav-label">Respuestas y flujos</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Crecimiento</div>
+        <a class="nav-item" data-label="Campañas" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+          <span class="nav-label">Campañas</span>
+        </a>
+        <a class="nav-item" data-label="Informes" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+          <span class="nav-label">Informes</span>
+        </a>
+        <a class="nav-item" data-label="Integraciones" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+          <span class="nav-label">Integraciones</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Configuración</div>
+        <a class="nav-item" data-label="Clínica" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h2M13 9h2M9 13h2M13 13h2M9 17h2M13 17h2"/></svg>
+          <span class="nav-label">Clínica</span>
+        </a>
+        <a class="nav-item" data-label="Ajustes" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="nav-label">Ajustes</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="side-foot">
+      <div class="plan-card">
+        <div class="plan-row">
+          <span class="plan-name"><span class="plan-dot"></span>Plan Growth</span>
+          <a class="plan-link" href="#">gestionar</a>
+        </div>
+      </div>
+      <div class="user-mini">
+        <div class="user-av">L</div>
+        <div>
+          <div class="user-name">Laura Gómez</div>
+          <div class="user-role">Recepción</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+
+    <!-- TOPBAR (CHROME) -->
+    <header class="topbar">
+      <div class="tb-titles">
+        <div class="tb-title">Contactos</div>
+        <div class="tb-crumb">
+          <span>Pacientes</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          <span>Contactos</span>
+        </div>
+      </div>
+
+      <form class="tb-search" role="search" onsubmit="return false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <label for="globalSearch" class="sr-only">Buscar en toda la aplicación</label>
+        <input id="globalSearch" type="search" placeholder="Buscar en toda la app: pacientes, citas, conversaciones…" autocomplete="off">
+        <span class="kbd" aria-hidden="true">⌘K</span>
+      </form>
+
+      <div class="tb-right">
+        <div class="venue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="v-name">Madrid Centro</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="status-chips">
+          <span class="schip ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</span>
+          <span class="schip info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 3v6h-6"/></svg>Agenda</span>
+          <span class="schip subtle" title="Las respuestas automáticas solo se sugieren; tú decides cuándo enviarlas"><span class="dot"></span>Sugerencias activas</span>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Notificaciones" onclick="toast('Tienes 3 notificaciones nuevas','info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="dot-badge" aria-hidden="true"></span>
+        </button>
+        <div class="tb-avatar">L</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- PAGE HEAD -->
+      <div class="page-head">
+        <div>
+          <h1 class="page-h1">Contactos <span class="badge b-mut" style="padding:4px 10px">2.847 pacientes</span></h1>
+          <p class="page-lead">Encuentra a un paciente y <b>abre su ficha</b> para hacer seguimiento y cerrar la cita. Arriba tienes a los <b>listos para contactar</b>: empieza por ellos para llenar la agenda con menos trabajo.</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-secondary" type="button" onclick="toast('Importación CSV iniciada','info')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            Importar CSV
+          </button>
+          <button class="btn btn-primary" type="button" onclick="toast('Nuevo contacto creado','ok')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Crear contacto
+          </button>
+        </div>
+      </div>
+
+      <!-- SUMMARY -->
+      <section class="summary" aria-label="Resumen de pacientes">
+        <div class="stat">
+          <div class="stat-top">
+            <span class="stat-label">Total de pacientes</span>
+            <span class="stat-ico ico-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+          </div>
+          <div class="stat-num tnum">2.847</div>
+          <div class="stat-foot"><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>+4,2%</span>respecto al mes pasado</div>
+        </div>
+
+        <div class="stat feature">
+          <div class="stat-top">
+            <span class="stat-label">Listos para contactar</span>
+            <span class="stat-ico ico-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></span>
+          </div>
+          <div class="stat-num tnum">342</div>
+          <div class="stat-foot">Alta probabilidad de cita · priorizados automáticamente</div>
+          <div class="stat-act"><a class="link-act" href="#" onclick="filterScoreHigh();return false;">Ver y contactar primero
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-top">
+            <span class="stat-label">Nuevos este mes</span>
+            <span class="stat-ico ico-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+          </div>
+          <div class="stat-num tnum">128</div>
+          <div class="stat-foot"><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>+18</span>frente a mayo</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-top">
+            <span class="stat-label">Sin consentimiento</span>
+            <span class="stat-ico ico-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+          </div>
+          <div class="stat-num tnum">61</div>
+          <div class="stat-foot">No se les puede enviar marketing</div>
+        </div>
+      </section>
+
+      <!-- PANEL -->
+      <section class="panel" aria-label="Lista de pacientes">
+
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+          <div class="toolbar-top">
+            <div class="search-box" id="tblSearchWrap">
+              <svg class="s-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <label for="tblSearch" class="sr-only">Filtrar esta lista de pacientes</label>
+              <input id="tblSearch" type="search" placeholder="Filtrar esta lista por nombre, email o teléfono…" autocomplete="off" oninput="onTblSearch(this)">
+              <span class="scope">en esta lista</span>
+              <button class="clear-x" type="button" aria-label="Borrar filtro" onclick="clearTblSearch()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+            </div>
+
+            <div class="tb-spacer"></div>
+
+            <div class="select-wrap">
+              <label for="sortSel" class="sr-only">Ordenar por</label>
+              <select id="sortSel" onchange="onSortSelect(this.value)">
+                <option value="score-desc" selected>Probabilidad de cita (mayor primero)</option>
+                <option value="score-asc">Probabilidad de cita (menor primero)</option>
+                <option value="name-asc">Nombre (A–Z)</option>
+                <option value="recent">Más recientes</option>
+                <option value="visit">Última actividad</option>
+              </select>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+          </div>
+
+          <div class="chips" role="group" aria-label="Filtros rápidos">
+            <span class="chips-label">Filtrar</span>
+            <button class="fchip score-high active" type="button" aria-pressed="true" onclick="toggleChip(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.4 7.4H22l-6 4.5 2.3 7.1-6.3-4.6L5.7 21 8 14 2 9.4h7.6z"/></svg>
+              Listos para contactar <span class="c-n">342</span>
+            </button>
+            <button class="fchip" type="button" aria-pressed="false" onclick="toggleChip(this)">Nuevos <span class="c-n">128</span></button>
+            <button class="fchip" type="button" aria-pressed="false" onclick="toggleChip(this)">Con cita activa <span class="c-n">412</span></button>
+            <button class="fchip" type="button" aria-pressed="false" onclick="toggleChip(this)">Inactivos <span class="c-n">203</span></button>
+            <button class="fchip" type="button" aria-pressed="false" onclick="toggleChip(this)">Sin consentimiento <span class="c-n">61</span></button>
+            <button class="chip-clear" type="button" onclick="resetFilters()">Limpiar</button>
+          </div>
+        </div>
+
+        <!-- BULK BAR -->
+        <div class="bulkbar" id="bulkbar" role="region" aria-label="Acciones sobre la selección">
+          <span class="bulk-count"><span class="bulk-badge" id="bulkCount">0</span> pacientes seleccionados</span>
+          <div class="bulk-actions">
+            <button class="bulk-btn primary" type="button" onclick="bulkAction('Enviar WhatsApp')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Enviar WhatsApp</button>
+            <button class="bulk-btn" type="button" onclick="bulkAction('Enviar email')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>Enviar email</button>
+            <button class="bulk-btn" type="button" onclick="bulkAction('Añadir etiqueta')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>Etiquetar</button>
+            <button class="bulk-link" type="button" onclick="bulkAction('Exportar selección')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;display:inline;vertical-align:-3px;margin-right:5px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exportar</button>
+            <button class="bulk-link danger" type="button" onclick="confirmBulkDelete()">Eliminar</button>
+          </div>
+          <button class="bulk-close" type="button" aria-label="Cancelar selección" onclick="clearSelection()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-wrap" id="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-check" scope="col"><input class="ck" type="checkbox" id="ckAll" aria-label="Seleccionar todos los pacientes" onclick="toggleAll(this)"></th>
+                <th scope="col" aria-sort="none">
+                  <button class="th-sort" type="button" onclick="sortBy(this,'name')">Paciente
+                    <span class="arr"><svg class="arr-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px"><path d="m18 15-6-6-6 6"/></svg><svg class="arr-dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg><svg class="arr-asc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg><svg class="arr-desc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                  </button>
+                </th>
+                <th scope="col">Email</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Seguro</th>
+                <th scope="col">
+                  Consent.
+                  <span class="help-i">
+                    <button class="help-btn" type="button" aria-label="Qué es el consentimiento" aria-describedby="tip-consent">?</button>
+                    <span class="tip right" id="tip-consent" role="tooltip">El paciente ha dado <b>opt-in</b> (consentimiento RGPD) para recibir comunicaciones por WhatsApp y email. Sin él no se le puede enviar marketing.</span>
+                  </span>
+                </th>
+                <th scope="col" aria-sort="descending">
+                  <button class="th-sort" type="button" onclick="sortBy(this,'score')">Probabilidad
+                    <span class="arr"><svg class="arr-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px"><path d="m18 15-6-6-6 6"/></svg><svg class="arr-dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg><svg class="arr-asc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg><svg class="arr-desc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                  </button>
+                  <span class="help-i">
+                    <button class="help-btn" type="button" aria-label="Qué es la probabilidad de cita" aria-describedby="tip-score">?</button>
+                    <span class="tip right" id="tip-score" role="tooltip">Probabilidad estimada (0–100) de que el paciente reserve o vuelva pronto. La calcula la automatización a partir de su actividad; cuanto más alta, más conviene contactarle antes.</span>
+                  </span>
+                </th>
+                <th scope="col" aria-sort="none">
+                  <button class="th-sort" type="button" onclick="sortBy(this,'visit')">Última actividad
+                    <span class="arr"><svg class="arr-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px"><path d="m18 15-6-6-6 6"/></svg><svg class="arr-dn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg><svg class="arr-asc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg><svg class="arr-desc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                  </button>
+                </th>
+                <th class="col-act" scope="col">Acciones</th>
+              </tr>
+            </thead>
+
+            <!-- LOADING (skeleton) -->
+            <tbody id="tbodySkel" hidden aria-hidden="true">
+              <tr class="skel-row"><td class="col-check"><span class="skel" style="width:18px;height:18px"></span></td><td><div style="display:flex;align-items:center;gap:11px"><span class="skel circle"></span><div style="flex:1"><span class="skel w70" style="margin-bottom:6px"></span><span class="skel w50"></span></div></div></td><td><span class="skel w90"></span></td><td><span class="skel w70"></span></td><td><span class="skel w40"></span></td><td><span class="skel w40"></span></td><td><span class="skel w70"></span></td><td><span class="skel w50"></span></td><td><span class="skel w50" style="margin-left:auto"></span></td></tr>
+              <tr class="skel-row"><td class="col-check"><span class="skel" style="width:18px;height:18px"></span></td><td><div style="display:flex;align-items:center;gap:11px"><span class="skel circle"></span><div style="flex:1"><span class="skel w50" style="margin-bottom:6px"></span><span class="skel w70"></span></div></div></td><td><span class="skel w70"></span></td><td><span class="skel w90"></span></td><td><span class="skel w40"></span></td><td><span class="skel w40"></span></td><td><span class="skel w90"></span></td><td><span class="skel w50"></span></td><td><span class="skel w50" style="margin-left:auto"></span></td></tr>
+              <tr class="skel-row"><td class="col-check"><span class="skel" style="width:18px;height:18px"></span></td><td><div style="display:flex;align-items:center;gap:11px"><span class="skel circle"></span><div style="flex:1"><span class="skel w70" style="margin-bottom:6px"></span><span class="skel w40"></span></div></div></td><td><span class="skel w90"></span></td><td><span class="skel w70"></span></td><td><span class="skel w40"></span></td><td><span class="skel w40"></span></td><td><span class="skel w70"></span></td><td><span class="skel w50"></span></td><td><span class="skel w50" style="margin-left:auto"></span></td></tr>
+              <tr class="skel-row"><td class="col-check"><span class="skel" style="width:18px;height:18px"></span></td><td><div style="display:flex;align-items:center;gap:11px"><span class="skel circle"></span><div style="flex:1"><span class="skel w50" style="margin-bottom:6px"></span><span class="skel w50"></span></div></div></td><td><span class="skel w70"></span></td><td><span class="skel w90"></span></td><td><span class="skel w40"></span></td><td><span class="skel w40"></span></td><td><span class="skel w70"></span></td><td><span class="skel w50"></span></td><td><span class="skel w50" style="margin-left:auto"></span></td></tr>
+              <tr class="skel-row"><td class="col-check"><span class="skel" style="width:18px;height:18px"></span></td><td><div style="display:flex;align-items:center;gap:11px"><span class="skel circle"></span><div style="flex:1"><span class="skel w70" style="margin-bottom:6px"></span><span class="skel w50"></span></div></div></td><td><span class="skel w90"></span></td><td><span class="skel w70"></span></td><td><span class="skel w40"></span></td><td><span class="skel w40"></span></td><td><span class="skel w90"></span></td><td><span class="skel w50"></span></td><td><span class="skel w50" style="margin-left:auto"></span></td></tr>
+              <tr class="skel-row"><td class="col-check"><span class="skel" style="width:18px;height:18px"></span></td><td><div style="display:flex;align-items:center;gap:11px"><span class="skel circle"></span><div style="flex:1"><span class="skel w50" style="margin-bottom:6px"></span><span class="skel w70"></span></div></div></td><td><span class="skel w70"></span></td><td><span class="skel w90"></span></td><td><span class="skel w40"></span></td><td><span class="skel w40"></span></td><td><span class="skel w70"></span></td><td><span class="skel w50"></span></td><td><span class="skel w50" style="margin-left:auto"></span></td></tr>
+            </tbody>
+
+            <!-- DATA -->
+            <tbody id="tbody">
+
+              <!-- Row 1 — score alto -->
+              <tr tabindex="0" data-href="ficha-contacto.html" onclick="openRow(event,this)" onkeydown="rowKey(event,this)">
+                <td class="col-check"><input class="ck" type="checkbox" aria-label="Seleccionar a Carmen Ruiz" onclick="rowCheck(event,this)"></td>
+                <td>
+                  <div class="person">
+                    <div class="avatar av1">CR</div>
+                    <div class="pmeta">
+                      <div class="p-name">Carmen Ruiz <span class="tag-new">Nuevo</span></div>
+                      <div class="p-sub">Pidió presupuesto · Implante dental</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cell-mail" title="carmen.ruiz@gmail.com">carmen.ruiz@gmail.com</span></td>
+                <td><span class="cell-phone tnum">+34 612 345 678</span></td>
+                <td><span class="badge b-mut">Particular</span></td>
+                <td><span class="badge b-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sí</span></td>
+                <td>
+                  <div class="score sc-high">
+                    <div class="score-meter"><div class="score-bar"><i style="width:94%"></i></div></div>
+                    <div class="score-info"><span class="score-num">94</span><span class="score-lvl lvl-high"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>Alto</span></div>
+                  </div>
+                </td>
+                <td><span class="cell-mut">Hace 3 días</span></td>
+                <td class="col-act">
+                  <div class="row-act">
+                    <button class="r-btn wa" type="button" aria-label="Enviar WhatsApp a Carmen Ruiz" onclick="rowContact(event,'WhatsApp','Carmen Ruiz')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+                    <button class="r-btn" type="button" aria-label="Llamar a Carmen Ruiz" onclick="rowContact(event,'Llamada','Carmen Ruiz')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+                    <a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2 — score alto -->
+              <tr tabindex="0" data-href="ficha-contacto.html" onclick="openRow(event,this)" onkeydown="rowKey(event,this)">
+                <td class="col-check"><input class="ck" type="checkbox" aria-label="Seleccionar a Javier Ortega Ruiz" onclick="rowCheck(event,this)"></td>
+                <td>
+                  <div class="person">
+                    <div class="avatar av2">JO</div>
+                    <div class="pmeta">
+                      <div class="p-name">Javier Ortega Ruiz</div>
+                      <div class="p-sub">Revisión pendiente · Ortodoncia</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cell-mail" title="javier.ortega.ruiz@outlook.com">javier.ortega.ruiz@outlook.com</span></td>
+                <td><span class="cell-phone tnum">+34 655 217 640</span></td>
+                <td><span class="badge b-info">Adeslas</span></td>
+                <td><span class="badge b-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sí</span></td>
+                <td>
+                  <div class="score sc-high">
+                    <div class="score-meter"><div class="score-bar"><i style="width:88%"></i></div></div>
+                    <div class="score-info"><span class="score-num">88</span><span class="score-lvl lvl-high"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>Alto</span></div>
+                  </div>
+                </td>
+                <td><span class="cell-mut">Hace 1 semana</span></td>
+                <td class="col-act">
+                  <div class="row-act">
+                    <button class="r-btn wa" type="button" aria-label="Enviar WhatsApp a Javier Ortega Ruiz" onclick="rowContact(event,'WhatsApp','Javier Ortega')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+                    <button class="r-btn" type="button" aria-label="Llamar a Javier Ortega Ruiz" onclick="rowContact(event,'Llamada','Javier Ortega')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+                    <a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3 — score alto, llamada perdida -->
+              <tr tabindex="0" data-href="ficha-contacto.html" onclick="openRow(event,this)" onkeydown="rowKey(event,this)">
+                <td class="col-check"><input class="ck" type="checkbox" aria-label="Seleccionar a Pablo Navarro Gil" onclick="rowCheck(event,this)"></td>
+                <td>
+                  <div class="person">
+                    <div class="avatar av5">PN</div>
+                    <div class="pmeta">
+                      <div class="p-name">Pablo Navarro Gil <span class="tag-new">Nuevo</span></div>
+                      <div class="p-sub">Llamada perdida · Urgencia</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cell-mail" title="pablo.navarro@gmail.com">pablo.navarro@gmail.com</span></td>
+                <td><span class="cell-phone tnum">+34 622 113 058</span></td>
+                <td><span class="badge b-mut">Particular</span></td>
+                <td><span class="badge b-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sí</span></td>
+                <td>
+                  <div class="score sc-high">
+                    <div class="score-meter"><div class="score-bar"><i style="width:91%"></i></div></div>
+                    <div class="score-info"><span class="score-num">91</span><span class="score-lvl lvl-high"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>Alto</span></div>
+                  </div>
+                </td>
+                <td><span class="cell-mut">Hoy</span></td>
+                <td class="col-act">
+                  <div class="row-act">
+                    <button class="r-btn wa" type="button" aria-label="Enviar WhatsApp a Pablo Navarro Gil" onclick="rowContact(event,'WhatsApp','Pablo Navarro')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+                    <button class="r-btn" type="button" aria-label="Llamar a Pablo Navarro Gil" onclick="rowContact(event,'Llamada','Pablo Navarro')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+                    <a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 4 — score medio -->
+              <tr tabindex="0" data-href="ficha-contacto.html" onclick="openRow(event,this)" onkeydown="rowKey(event,this)">
+                <td class="col-check"><input class="ck" type="checkbox" aria-label="Seleccionar a Carmen Vidal Peña" onclick="rowCheck(event,this)"></td>
+                <td>
+                  <div class="person">
+                    <div class="avatar av3">CV</div>
+                    <div class="pmeta">
+                      <div class="p-name">Carmen Vidal Peña</div>
+                      <div class="p-sub">Particular · Limpieza dental</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cell-mail" title="carmen.vidal@gmail.com">carmen.vidal@gmail.com</span></td>
+                <td><span class="cell-phone tnum">+34 600 331 892</span></td>
+                <td><span class="badge b-mut">Particular</span></td>
+                <td><span class="badge b-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sí</span></td>
+                <td>
+                  <div class="score sc-mid">
+                    <div class="score-meter"><div class="score-bar"><i style="width:62%"></i></div></div>
+                    <div class="score-info"><span class="score-num">62</span><span class="score-lvl lvl-mid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>Medio</span></div>
+                  </div>
+                </td>
+                <td><span class="cell-mut">Hace 3 semanas</span></td>
+                <td class="col-act">
+                  <div class="row-act">
+                    <button class="r-btn wa" type="button" aria-label="Enviar WhatsApp a Carmen Vidal Peña" onclick="rowContact(event,'WhatsApp','Carmen Vidal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+                    <button class="r-btn" type="button" aria-label="Llamar a Carmen Vidal Peña" onclick="rowContact(event,'Llamada','Carmen Vidal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+                    <a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 5 — sin consentimiento, score medio -->
+              <tr tabindex="0" data-href="ficha-contacto.html" onclick="openRow(event,this)" onkeydown="rowKey(event,this)">
+                <td class="col-check"><input class="ck" type="checkbox" aria-label="Seleccionar a Diego Fernández Lara" onclick="rowCheck(event,this)"></td>
+                <td>
+                  <div class="person">
+                    <div class="avatar av4">DF</div>
+                    <div class="pmeta">
+                      <div class="p-name">Diego Fernández Lara</div>
+                      <div class="p-sub">Empaste · seguimiento</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cell-mail" title="diego.fernandez.lara.dentista@gmail.com">diego.fernandez.lara.dentista@gmail.com</span></td>
+                <td><span class="cell-phone tnum">+34 677 901 245</span></td>
+                <td><span class="badge b-info">Sanitas</span></td>
+                <td><span class="badge b-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>No</span></td>
+                <td>
+                  <div class="score sc-mid">
+                    <div class="score-meter"><div class="score-bar"><i style="width:54%"></i></div></div>
+                    <div class="score-info"><span class="score-num">54</span><span class="score-lvl lvl-mid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>Medio</span></div>
+                  </div>
+                </td>
+                <td><span class="cell-mut">Hace 2 meses</span></td>
+                <td class="col-act">
+                  <div class="row-act">
+                    <button class="r-btn wa" type="button" aria-label="Enviar WhatsApp a Diego Fernández Lara" onclick="rowContact(event,'WhatsApp','Diego Fernández')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+                    <button class="r-btn" type="button" aria-label="Llamar a Diego Fernández Lara" onclick="rowContact(event,'Llamada','Diego Fernández')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+                    <a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 6 — score bajo, inactivo -->
+              <tr tabindex="0" data-href="ficha-contacto.html" onclick="openRow(event,this)" onkeydown="rowKey(event,this)">
+                <td class="col-check"><input class="ck" type="checkbox" aria-label="Seleccionar a Rosa Giménez Alba" onclick="rowCheck(event,this)"></td>
+                <td>
+                  <div class="person">
+                    <div class="avatar av6">RG</div>
+                    <div class="pmeta">
+                      <div class="p-name">Rosa Giménez Alba</div>
+                      <div class="p-sub">Particular · Sin actividad reciente</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="cell-mail" title="rosa.gimenez@hotmail.com">rosa.gimenez@hotmail.com</span></td>
+                <td><span class="cell-phone tnum">+34 688 456 712</span></td>
+                <td><span class="badge b-mut">Particular</span></td>
+                <td><span class="badge b-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sí</span></td>
+                <td>
+                  <div class="score sc-low">
+                    <div class="score-meter"><div class="score-bar"><i style="width:28%"></i></div></div>
+                    <div class="score-info"><span class="score-num">28</span><span class="score-lvl lvl-low"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>Bajo</span></div>
+                  </div>
+                </td>
+                <td><span class="cell-mut">Hace 11 meses</span></td>
+                <td class="col-act">
+                  <div class="row-act">
+                    <button class="r-btn wa" type="button" aria-label="Enviar WhatsApp a Rosa Giménez Alba" onclick="rowContact(event,'WhatsApp','Rosa Giménez')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+                    <button class="r-btn" type="button" aria-label="Llamar a Rosa Giménez Alba" onclick="rowContact(event,'Llamada','Rosa Giménez')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+                    <a class="r-open" href="ficha-contacto.html" onclick="event.stopPropagation()">Abrir ficha<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- EMPTY (sin resultados) -->
+          <div class="state-block" id="stateEmpty">
+            <div class="state-ill neutral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+            <h3>Ningún paciente coincide</h3>
+            <p>Prueba con otro nombre, email o teléfono, o quita algún filtro. Si es un paciente nuevo, créalo en un momento.</p>
+            <div class="state-actions">
+              <button class="btn btn-secondary" type="button" onclick="resetFilters()">Quitar filtros</button>
+              <button class="btn btn-primary" type="button" onclick="toast('Nuevo contacto creado','ok')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Crear contacto</button>
+            </div>
+          </div>
+
+          <!-- ERROR -->
+          <div class="state-block" id="stateError">
+            <div class="state-ill danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v8"/></svg></div>
+            <h3>No pudimos cargar los pacientes</h3>
+            <p>Ha habido un problema de conexión al recuperar la lista. Comprueba tu internet y vuelve a intentarlo.</p>
+            <div class="state-actions">
+              <button class="btn btn-primary" type="button" onclick="retryLoad()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Reintentar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE FOOT -->
+        <div class="table-foot" id="tfoot">
+          <div class="foot-info">Mostrando <b>1–6</b> de <b>2.847</b> pacientes</div>
+          <nav class="pager" aria-label="Paginación">
+            <button class="pg" type="button" aria-label="Página anterior" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="pg active" type="button" aria-current="page">1</button>
+            <button class="pg" type="button">2</button>
+            <button class="pg" type="button">3</button>
+            <button class="pg dots" type="button" disabled>…</button>
+            <button class="pg" type="button">475</button>
+            <button class="pg" type="button" aria-label="Página siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </nav>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+/* ===== NAV: abrir ficha (fila clicable) ===== */
+function openRow(e, tr){
+  if (e.target.closest('a, button, input, .help-i, .ck')) return;
+  window.location.href = tr.getAttribute('data-href');
+}
+function rowKey(e, tr){
+  if (e.target.closest('a, button, input')) return;
+  if (e.key === 'Enter'){ e.preventDefault(); window.location.href = tr.getAttribute('data-href'); }
+}
+
+/* ===== SELECCIÓN / BULKBAR ===== */
+function getRowChecks(){ return Array.from(document.querySelectorAll('#tbody .ck')); }
+function refreshBulk(){
+  var checked = getRowChecks().filter(function(c){return c.checked;});
+  var bar = document.getElementById('bulkbar');
+  document.getElementById('bulkCount').textContent = checked.length;
+  bar.classList.toggle('show', checked.length > 0);
+  getRowChecks().forEach(function(c){ c.closest('tr').classList.toggle('sel', c.checked); });
+  var all = document.getElementById('ckAll');
+  all.checked = checked.length > 0 && checked.length === getRowChecks().length;
+  all.indeterminate = checked.length > 0 && checked.length < getRowChecks().length;
+}
+function rowCheck(e, cb){ e.stopPropagation(); refreshBulk(); }
+function toggleAll(master){ getRowChecks().forEach(function(c){ c.checked = master.checked; }); refreshBulk(); }
+function clearSelection(){
+  getRowChecks().forEach(function(c){ c.checked = false; });
+  document.getElementById('ckAll').checked = false;
+  document.getElementById('ckAll').indeterminate = false;
+  refreshBulk();
+}
+function bulkAction(label){
+  var n = getRowChecks().filter(function(c){return c.checked;}).length;
+  toast(label + ' a <b>' + n + '</b> paciente' + (n===1?'':'s'), label.indexOf('Export')>=0?'info':'ok');
+}
+function confirmBulkDelete(){
+  var n = getRowChecks().filter(function(c){return c.checked;}).length;
+  if (window.confirm('¿Eliminar ' + n + ' paciente' + (n===1?'':'s') + '? Esta acción no se puede deshacer.')){
+    toast('<b>' + n + '</b> paciente' + (n===1?'':'s') + ' eliminado' + (n===1?'':'s'), 'warn');
+    clearSelection();
+  }
+}
+
+/* ===== CONTACTO POR FILA ===== */
+function rowContact(e, type, name){
+  e.stopPropagation();
+  toast(type + ' a <b>' + name + '</b> iniciado', type==='WhatsApp'?'ok':'info');
+}
+
+/* ===== FILTROS / CHIPS ===== */
+function toggleChip(btn){
+  var on = !btn.classList.contains('active');
+  btn.classList.toggle('active', on);
+  btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+function filterScoreHigh(){
+  var chip = document.querySelector('.fchip.score-high');
+  chip.classList.add('active');
+  chip.setAttribute('aria-pressed','true');
+  document.querySelector('.panel').scrollIntoView({behavior:'smooth', block:'start'});
+  toast('Mostrando pacientes <b>listos para contactar</b>', 'info');
+}
+function resetFilters(){
+  document.querySelectorAll('.fchip.active').forEach(function(c){ c.classList.remove('active'); c.setAttribute('aria-pressed','false'); });
+  clearTblSearch();
+  showState('data');
+}
+
+/* ===== BUSCADOR DE TABLA ===== */
+function onTblSearch(input){
+  document.getElementById('tblSearchWrap').classList.toggle('has-val', input.value.length>0);
+}
+function clearTblSearch(){
+  var i = document.getElementById('tblSearch');
+  i.value=''; document.getElementById('tblSearchWrap').classList.remove('has-val'); i.focus();
+}
+
+/* ===== ORDEN DE CABECERAS ===== */
+function setSortHeader(th, dir){
+  document.querySelectorAll('th[aria-sort]').forEach(function(h){ if(h!==th) h.setAttribute('aria-sort','none'); });
+  th.setAttribute('aria-sort', dir);
+}
+function sortBy(btn, key){
+  var th = btn.closest('th');
+  var cur = th.getAttribute('aria-sort');
+  var next = cur === 'descending' ? 'ascending' : 'descending';
+  setSortHeader(th, next);
+  var sel = document.getElementById('sortSel');
+  if (key==='score') sel.value = next==='descending'?'score-desc':'score-asc';
+  else if (key==='name') sel.value = 'name-asc';
+  else if (key==='visit') sel.value = 'visit';
+  toast('Ordenado por <b>' + th.querySelector('.th-sort').textContent.trim() + '</b> (' + (next==='descending'?'mayor primero':'menor primero') + ')', 'info');
+}
+function onSortSelect(val){
+  document.querySelectorAll('th[aria-sort]').forEach(function(h){ h.setAttribute('aria-sort','none'); });
+  function findTh(label){ var b = Array.from(document.querySelectorAll('.th-sort')).find(function(x){return x.textContent.indexOf(label)>=0;}); return b?b.closest('th'):null; }
+  if (val==='score-desc') setSortHeader(findTh('Probabilidad'),'descending');
+  else if (val==='score-asc') setSortHeader(findTh('Probabilidad'),'ascending');
+  else if (val==='name-asc') setSortHeader(findTh('Paciente'),'ascending');
+  else if (val==='visit'||val==='recent') setSortHeader(findTh('Última'),'descending');
+  toast('Lista reordenada', 'info');
+}
+
+/* ===== ESTADOS (loading / data / empty / error) ===== */
+function showState(which){
+  document.getElementById('tbodySkel').hidden = which!=='loading';
+  document.getElementById('tbody').hidden = which!=='data';
+  document.getElementById('stateEmpty').classList.toggle('show', which==='empty');
+  document.getElementById('stateError').classList.toggle('show', which==='error');
+  document.getElementById('tfoot').style.display = which==='data' ? '' : 'none';
+}
+function retryLoad(){
+  showState('loading');
+  setTimeout(function(){ showState('data'); toast('Pacientes cargados', 'ok'); }, 1100);
+}
+
+/* ===== TOASTS ===== */
+function toast(msg, type){
+  type = type || 'ok';
+  var wrap = document.getElementById('toastWrap');
+  var el = document.createElement('div');
+  el.className = 'toast ' + (type==='ok'?'':type);
+  var icons = {
+    ok:'<path d="M20 6 9 17l-5-5"/>',
+    info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+    warn:'<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/>'
+  };
+  el.innerHTML = '<span class="t-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+(icons[type]||icons.ok)+'</svg></span><span>'+msg+'</span>';
+  wrap.appendChild(el);
+  requestAnimationFrame(function(){ el.classList.add('show'); });
+  setTimeout(function(){ el.classList.remove('show'); setTimeout(function(){ el.remove(); }, 320); }, 3400);
+}
+
+/* ===== ATAJO ⌘K / Ctrl+K (real) ===== */
+document.addEventListener('keydown', function(e){
+  if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){
+    e.preventDefault();
+    document.getElementById('globalSearch').focus();
+  }
+});
+
+/* init */
+refreshBulk();
+showState('data');
+</script>
+</body>
+</html>

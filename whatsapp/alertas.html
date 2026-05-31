@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pendientes y SLA · WhatsApp · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#566159; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#9a6410; --warning-soft:#fff4dc; --danger:#a51f15; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.5;font-size:14px;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+svg{display:block;flex-shrink:0}
+::selection{background:var(--primary-soft)}
+
+/* ============ LAYOUT ============ */
+.app{display:flex;min-height:100vh}
+
+/* ============ SIDEBAR (chrome, conservar) ============ */
+.sidebar{
+  width:232px;flex-shrink:0;position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%),
+    linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+  color:#e8f1ef;padding:18px 14px;overflow-y:auto;z-index:30;
+}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:99px}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 18px}
+.brand-mark{
+  width:34px;height:34px;border-radius:var(--radius-sm);background:var(--accent);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(17,163,145,.4);
+}
+.brand-name{font-size:16px;font-weight:600;color:#fff;line-height:1.1}
+.brand-tag{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:2px}
+.nav-group{margin-bottom:16px}
+.nav-head{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.55);font-weight:600;padding:0 10px 7px}
+.nav-item{
+  display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:var(--radius-sm);
+  color:rgba(232,241,239,.85);font-size:14px;font-weight:500;margin-bottom:2px;position:relative;
+  transition:background .14s ease,color .14s ease;min-height:40px;
+}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item svg{width:18px;height:18px;opacity:.9}
+.nav-item.active{background:var(--primary-bright);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(15,148,134,.35)}
+.nav-item.active::before{
+  content:"";position:absolute;left:-14px;top:50%;transform:translateY(-50%);
+  width:3px;height:22px;background:var(--cyan);border-radius:0 4px 4px 0;
+}
+.nav-item .nav-pill{margin-left:auto;font-size:12px;font-weight:700;background:var(--danger);color:#fff;border-radius:99px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 6px;line-height:1}
+.sidebar-foot{margin-top:auto;padding-top:14px}
+.plan-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--radius-sm);padding:12px;margin-bottom:12px;
+}
+.plan-card .pl-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.plan-name{font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px}
+.plan-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.plan-link{font-size:12px;color:var(--cyan);font-weight:600}
+.userbox{display:flex;align-items:center;gap:10px;padding:7px 4px}
+.avatar{
+  width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));
+  display:grid;place-items:center;color:#fff;font-weight:600;font-size:13px;flex-shrink:0;
+}
+.user-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.user-role{font-size:12px;color:rgba(232,241,239,.7)}
+
+/* ============ MAIN ============ */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* ============ TOPBAR (chrome, conservar) ============ */
+.topbar{
+  position:sticky;top:0;z-index:20;height:60px;background:var(--surface);
+  box-shadow:var(--shadow-xs);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:18px;padding:0 24px;
+}
+.tb-title h2{font-size:18px;font-weight:600;line-height:1.15}
+.tb-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-top:1px}
+.tb-crumb svg{width:12px;height:12px}
+.tb-search{
+  flex:1;max-width:440px;margin:0 auto;display:flex;align-items:center;gap:9px;
+  background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);
+  padding:8px 14px;color:var(--muted);transition:border .14s,box-shadow .14s;
+}
+.tb-search:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.tb-search svg{width:16px;height:16px}
+.tb-search input{border:none;background:none;outline:none;flex:1;font-size:14px;color:var(--text)}
+.tb-search input::placeholder{color:var(--muted)}
+.kbd{font-size:12px;font-weight:600;color:var(--muted);background:var(--surface);border:1px solid var(--line-strong);border-radius:6px;padding:2px 6px;line-height:1.2}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.sede-sel{
+  display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--text-2);
+  background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:7px 12px;
+  transition:border .14s;
+}
+.sede-sel:hover{border-color:var(--line-strong)}
+.sede-sel svg{width:15px;height:15px;color:var(--primary)}
+.chip-status{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  border-radius:var(--radius-pill);padding:6px 11px;white-space:nowrap;
+}
+.chip-status svg{width:14px;height:14px}
+.chip-ok{background:var(--ok-soft);color:var(--ok)}
+.chip-info{background:var(--info-soft);color:var(--info)}
+.chip-danger{background:var(--danger-soft);color:var(--danger)}
+/* IA atenuada: estado secundario, neutro y discreto (no compite con conexión/sincronía) */
+.chip-status.chip-muted{background:var(--surface-soft);color:var(--muted);font-weight:500;border:1px solid var(--line)}
+.chip-status.chip-muted svg{opacity:.7}
+.icon-btn{
+  width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--text-2);
+  position:relative;transition:background .14s;
+}
+.icon-btn:hover{background:var(--surface-soft)}
+.icon-btn svg{width:19px;height:19px}
+.badge-dot{
+  position:absolute;top:5px;right:6px;min-width:18px;height:18px;border-radius:99px;background:var(--danger);
+  color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 4px;border:2px solid var(--surface);line-height:1;
+}
+.notif-dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid var(--surface);pointer-events:none}
+.tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));display:grid;place-items:center;color:#fff;font-weight:600;font-size:13px}
+.hide-lg{display:none}
+
+/* ============ CONTENT ============ */
+.content{padding:26px 32px 60px;max-width:1280px;width:100%;margin:0 auto}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.ph-left h1{font-size:26px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:11px}
+.ph-icon{width:38px;height:38px;border-radius:var(--radius-sm);background:var(--primary-soft);color:var(--primary);display:grid;place-items:center}
+.ph-icon svg{width:21px;height:21px}
+.ph-sub{font-size:14px;color:var(--text-2);margin-top:7px;max-width:640px;line-height:1.55}
+.ph-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;border-radius:var(--radius-sm);padding:10px 16px;transition:all .16s ease;min-height:42px;white-space:nowrap}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.22)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 8px 22px rgba(15,118,110,.28)}
+.btn-secondary{background:var(--surface);color:var(--text-2);border:1px solid var(--line-strong);box-shadow:var(--shadow-xs)}
+.btn-secondary:hover{border-color:var(--muted);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.btn-ghost{background:transparent;color:var(--text-2);padding:9px 12px}
+.btn-ghost:hover{background:var(--surface-soft);color:var(--text)}
+.btn-sm{padding:7px 12px;font-size:13px;min-height:40px;border-radius:var(--radius-sm)}
+.btn-sm svg{width:15px;height:15px}
+.btn-block{min-width:168px}
+.btn-danger-soft{background:var(--danger-soft);color:var(--danger);border:1px solid rgba(165,31,21,.2)}
+.btn-danger-soft:hover{background:#ffe5e0;transform:translateY(-1px)}
+.btn-cta{font-size:15px;padding:12px 20px;min-height:46px}
+
+/* Overflow menu (Reasignar como ... ) */
+.ovf{position:relative}
+.ovf-btn{width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--text-2);background:transparent;transition:background .14s}
+.ovf-btn:hover{background:var(--surface-soft);color:var(--text)}
+.ovf-btn svg{width:18px;height:18px}
+.ovf-menu{
+  position:absolute;top:calc(100% + 6px);right:0;min-width:200px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);
+  padding:6px;z-index:50;opacity:0;visibility:hidden;transform:translateY(-4px);transition:all .15s;
+}
+.ovf.open .ovf-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.ovf-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font-size:14px;font-weight:500;color:var(--text-2);padding:9px 11px;border-radius:8px;min-height:40px}
+.ovf-item:hover{background:var(--surface-soft);color:var(--text)}
+.ovf-item svg{width:16px;height:16px;color:var(--muted)}
+
+/* ============ TRIAGE / QUE HACER AHORA ============ */
+.triage{
+  background:linear-gradient(135deg,#fff 0%,var(--primary-tint) 130%);
+  border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
+  padding:20px 22px;margin-bottom:24px;
+  display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;
+}
+.triage-headline{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.triage-headline svg{width:16px;height:16px}
+.triage-text{font-size:18px;font-weight:600;line-height:1.45;max-width:560px}
+.triage-text b{color:var(--danger)}
+.triage-text .em-warn{color:var(--warning);font-weight:700}
+.triage-cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.triage-stats{display:flex;gap:10px}
+.tstat{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;min-width:108px;text-align:center;box-shadow:var(--shadow-xs);
+}
+.tstat-num{font-size:32px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tstat-lbl{font-size:12px;color:var(--text-2);font-weight:600;margin-top:7px;display:flex;align-items:center;justify-content:center;gap:5px}
+.tstat-lbl svg{width:13px;height:13px}
+.tstat.danger .tstat-num{color:var(--danger)}
+.tstat.warning .tstat-num{color:var(--warning)}
+.tstat.info .tstat-num{color:var(--info)}
+
+/* ============ FILTER BAR ============ */
+.filterbar{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.fb-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-right:2px}
+.chip-f{
+  display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text-2);
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius-pill);
+  padding:8px 14px;transition:all .14s;min-height:40px;
+}
+.chip-f:hover{border-color:var(--muted);background:var(--surface-soft)}
+.chip-f svg{width:14px;height:14px}
+.chip-f .cnt{font-size:12px;font-weight:700;background:var(--surface-soft);color:var(--text-2);border-radius:99px;padding:1px 7px;border:1px solid var(--line)}
+.chip-f.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 12px rgba(15,118,110,.2)}
+.chip-f.active .cnt{background:rgba(255,255,255,.22);color:#fff;border-color:transparent}
+.fb-spacer{flex:1}
+
+/* ============ SECTION ============ */
+.section{margin-bottom:28px}
+.sec-head{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.sec-head h2{font-size:18px;font-weight:600;display:flex;align-items:center;gap:9px}
+.sec-head h2 svg{width:19px;height:19px}
+.sec-count{font-size:12px;font-weight:700;border-radius:var(--radius-pill);padding:3px 10px;display:inline-flex;align-items:center;gap:5px}
+.sec-count svg{width:12px;height:12px}
+.sec-count.danger{background:var(--danger-soft);color:var(--danger)}
+.sec-count.warning{background:var(--warning-soft);color:var(--warning)}
+.sec-count.info{background:var(--info-soft);color:var(--info)}
+.sec-count.ok{background:var(--ok-soft);color:var(--ok)}
+.sec-help{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--surface-soft);border:1px solid var(--line);color:var(--text-2);font-size:12px;font-weight:700;cursor:help;position:relative}
+.sec-help:hover .tip,.sec-help:focus-visible .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.tip{
+  position:absolute;bottom:150%;left:50%;transform:translateX(-50%) translateY(4px);
+  background:var(--text);color:#fff;font-size:13px;font-weight:400;line-height:1.5;
+  padding:10px 13px;border-radius:var(--radius-sm);width:240px;z-index:40;
+  opacity:0;visibility:hidden;transition:all .16s;box-shadow:var(--shadow-md);text-align:left;letter-spacing:0;text-transform:none;
+}
+.tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--text)}
+.sec-link{margin-left:auto;font-size:13px;font-weight:600;color:var(--primary);display:flex;align-items:center;gap:5px;padding:6px 8px;border-radius:8px;min-height:36px}
+.sec-link svg{width:15px;height:15px}
+.sec-link:hover{color:var(--primary-dark);background:var(--surface-soft)}
+.sec-collapse{margin-left:auto;display:flex;align-items:center;gap:8px;background:transparent;padding:6px 8px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text-2);min-height:36px}
+.sec-collapse:hover{background:var(--surface-soft)}
+.sec-headrow{display:flex;align-items:center;gap:11px;width:100%}
+
+/* ============ SLA CARDS ============ */
+.sla-grid{display:flex;flex-direction:column;gap:12px}
+.sla-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);padding:16px 18px;display:grid;
+  grid-template-columns:4px 1fr 232px;gap:0 18px;align-items:center;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;position:relative;overflow:hidden;
+}
+.sla-card.is-crit{border-left-color:var(--danger)}
+.sla-card:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.sla-rail{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px}
+.sla-rail.crit{background:var(--danger)}
+.sla-rail.warn{background:var(--warning)}
+.sla-body{display:flex;align-items:flex-start;gap:14px;padding-left:10px;min-width:0}
+.pat-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;font-size:15px;flex-shrink:0}
+.pa-1{background:linear-gradient(135deg,#0f9486,#0a5d57)}
+.pa-2{background:linear-gradient(135deg,#2662a6,#1b4877)}
+.pa-3{background:linear-gradient(135deg,#9a6410,#7a4f0d)}
+.sla-info{min-width:0}
+.sla-name{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sla-sev{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-radius:var(--radius-pill);padding:3px 9px}
+.sla-sev svg{width:13px;height:13px}
+.sla-sev.crit{background:var(--danger-soft);color:var(--danger)}
+.sla-sev.warn{background:var(--warning-soft);color:var(--warning)}
+.sla-meta{font-size:13px;color:var(--text-2);margin-top:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sla-meta .dotsep{width:3px;height:3px;border-radius:50%;background:var(--line-strong)}
+.sla-meta svg{width:14px;height:14px;opacity:.85}
+.sla-snippet{font-size:13px;color:var(--text-2);margin-top:7px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:480px}
+.sla-snippet b{color:var(--text);font-weight:600}
+.sla-warnline{font-size:12px;color:var(--danger);font-weight:600;margin-top:7px;display:flex;align-items:center;gap:6px;line-height:1.4}
+.sla-warnline svg{width:14px;height:14px;flex-shrink:0}
+.sla-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;justify-self:end}
+.sla-timer{display:flex;align-items:center;gap:9px;text-align:right}
+.timer-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.timer-ic svg{width:19px;height:19px}
+.timer-ic.crit{background:var(--danger-soft);color:var(--danger)}
+.timer-ic.warn{background:var(--warning-soft);color:var(--warning)}
+.timer-num{font-size:26px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.timer-num.crit{color:var(--danger)}
+.timer-num.warn{color:var(--warning)}
+.timer-lbl{font-size:12px;color:var(--text-2);font-weight:600;margin-top:4px;text-align:right;line-height:1.35}
+.sla-actions{display:flex;align-items:center;gap:8px;width:100%;justify-content:flex-end}
+.sla-actions .btn-cta{flex:1}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;border-radius:var(--radius-pill);padding:3px 9px;white-space:nowrap}
+.badge svg{width:13px;height:13px}
+.badge-crit{background:var(--danger-soft);color:var(--danger)}
+.badge-warn{background:var(--warning-soft);color:var(--warning)}
+.badge-info{background:var(--info-soft);color:var(--info)}
+.badge-ok{background:var(--ok-soft);color:var(--ok)}
+.badge-neutral{background:var(--surface-soft);color:var(--text-2);border:1px solid var(--line)}
+.assignee{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-2);background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:3px 9px 3px 4px}
+.assignee .mini-av{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#0f9486,#0a5d57);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;line-height:1}
+
+/* ============ OUTBOX (mensajes pendientes) ============ */
+.outbox{display:flex;flex-direction:column;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.ob-row{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:flex-start;padding:15px 18px;border-bottom:1px solid var(--line);transition:background .14s}
+.ob-row:last-child{border-bottom:none}
+.ob-row:hover{background:var(--surface-soft)}
+.ob-status-ic{width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.ob-status-ic svg{width:20px;height:20px}
+.ob-ic-danger{background:var(--danger-soft);color:var(--danger)}
+.ob-ic-warn{background:var(--warning-soft);color:var(--warning)}
+.ob-mid{min-width:0}
+.ob-to{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ob-msg{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:520px}
+.ob-reason{font-size:12px;color:var(--text-2);margin-top:6px;display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.ob-reason svg{width:14px;height:14px;flex-shrink:0;margin-top:1px}
+.ob-reason b{font-weight:700;color:var(--text)}
+.ob-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+
+/* ============ ALERTS LIST ============ */
+.alert-list{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.al-row{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line);transition:background .14s;width:100%;text-align:left;cursor:pointer}
+.al-row:last-child{border-bottom:none}
+.al-row:hover{background:var(--surface-soft)}
+.al-lvl{width:36px;height:36px;border-radius:var(--radius-sm);display:grid;place-items:center;flex-shrink:0}
+.al-lvl svg{width:18px;height:18px}
+.al-danger{background:var(--danger-soft);color:var(--danger)}
+.al-warn{background:var(--warning-soft);color:var(--warning)}
+.al-info{background:var(--info-soft);color:var(--info)}
+.al-ok{background:var(--ok-soft);color:var(--ok)}
+.al-mid{min-width:0}
+.al-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.al-lvltxt{font-size:14px;font-weight:600}
+.al-origin{font-size:12px;font-weight:600;color:var(--text-2);background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:2px 9px;display:inline-flex;align-items:center;gap:5px}
+.al-origin svg{width:12px;height:12px}
+.al-text{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.5}
+.al-time{font-size:12px;color:var(--text-2);font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:5px;flex-shrink:0}
+.al-time svg{width:13px;height:13px}
+
+/* ============ SKELETONS ============ */
+.skel{position:relative;overflow:hidden;background:var(--surface-soft);border-radius:8px}
+.skel::after{content:"";position:absolute;inset:0;transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);animation:shimmer 1.3s infinite}
+@keyframes shimmer{100%{transform:translateX(100%)}}
+.skel-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:16px 18px;display:flex;align-items:center;gap:14px}
+.skel-av{width:42px;height:42px;border-radius:50%;flex-shrink:0}
+.skel-lines{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-line{height:12px}
+.skel-btn{width:160px;height:42px;border-radius:var(--radius-sm)}
+
+/* ============ ERROR / DISCONNECTED ============ */
+.banner{
+  display:flex;align-items:flex-start;gap:13px;background:var(--danger-soft);
+  border:1px solid rgba(165,31,21,.25);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;
+}
+.banner.warn{background:var(--warning-soft);border-color:rgba(154,100,16,.28)}
+.banner-ic{width:38px;height:38px;border-radius:var(--radius-sm);background:#fff;display:grid;place-items:center;flex-shrink:0;color:var(--danger)}
+.banner.warn .banner-ic{color:var(--warning)}
+.banner-ic svg{width:20px;height:20px}
+.banner-body{flex:1;min-width:0}
+.banner-title{font-size:14px;font-weight:700;color:var(--text)}
+.banner-text{font-size:13px;color:var(--text-2);margin-top:3px;line-height:1.5}
+.banner-act{flex-shrink:0;display:flex;align-items:center}
+.error-state{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:34px 28px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.error-ic{width:56px;height:56px;border-radius:50%;background:var(--danger-soft);color:var(--danger);display:grid;place-items:center;margin-bottom:14px}
+.error-ic svg{width:24px;height:24px}
+.error-state h3{font-size:17px;font-weight:600}
+.error-state p{font-size:14px;color:var(--text-2);margin-top:6px;max-width:380px;line-height:1.55}
+.error-state .btn{margin-top:16px}
+
+/* ============ EMPTY STATE ============ */
+.empty{
+  background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--radius);
+  padding:40px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;
+}
+.empty-ic{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;margin-bottom:16px}
+.empty-ic svg{width:24px;height:24px}
+.empty h3{font-size:18px;font-weight:600}
+.empty p{font-size:14px;color:var(--text-2);margin-top:7px;max-width:380px;line-height:1.55}
+.empty .btn{margin-top:18px}
+
+/* divulgacion progresiva collapse */
+.chevron{transition:transform .2s;width:18px;height:18px;color:var(--muted)}
+.collapsed .chevron{transform:rotate(-90deg)}
+.collapsed .sec-body{display:none}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1100px){
+  .sidebar{width:72px;padding:18px 10px}
+  .brand-name,.brand-tag,.nav-head,.nav-item span,.nav-item .nav-pill,.plan-card,.userbox .user-meta{display:none}
+  .brand{justify-content:center;padding:6px 0 18px}
+  .nav-item{justify-content:center;padding:11px 0}
+  .nav-item.active::before{left:-10px}
+  .userbox{justify-content:center}
+  .tb-search{display:none}
+  .sede-sel span,.chip-status{display:none}
+  .hide-lg{display:none}
+}
+@media (max-width:900px){
+  .triage{grid-template-columns:1fr;gap:18px}
+  .triage-stats{flex-wrap:wrap}
+  .sla-card{grid-template-columns:1fr;gap:14px}
+  .sla-rail{width:100%;height:4px;border-radius:4px 4px 0 0}
+  .sla-right{flex-direction:column;align-items:stretch;width:100%}
+  .sla-timer{justify-content:flex-start;text-align:left}
+  .timer-lbl{text-align:left}
+  .sla-actions{justify-content:stretch}
+  .sla-snippet{max-width:100%;white-space:normal}
+}
+@media (max-width:820px){
+  .content{padding:20px 16px 50px}
+  .ob-row{grid-template-columns:auto 1fr}
+  .ob-actions{grid-column:2;justify-self:start;padding-top:2px}
+  .al-row{grid-template-columns:auto 1fr}
+  .al-time{grid-column:2;justify-self:start;padding-top:2px}
+  .page-head{flex-direction:column}
+  .ph-actions{width:100%}
+}
+.focusable:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-sm)}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:90;display:flex;align-items:center;gap:11px;
+  background:var(--text);color:#fff;padding:14px 18px;border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  font-size:14px;font-weight:500;transform:translateY(120%);opacity:0;transition:all .3s cubic-bezier(.2,.8,.2,1);max-width:380px;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast svg{width:19px;height:19px;color:var(--cyan);flex-shrink:0}
+
+/* Modal de confirmacion */
+.modal-back{position:fixed;inset:0;background:rgba(15,26,23,.45);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-back.show{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);max-width:420px;width:100%;padding:24px}
+.modal-ic{width:48px;height:48px;border-radius:var(--radius-sm);background:var(--warning-soft);color:var(--warning);display:grid;place-items:center;margin-bottom:14px}
+.modal-ic svg{width:24px;height:24px}
+.modal h3{font-size:18px;font-weight:700}
+.modal p{font-size:14px;color:var(--text-2);margin-top:8px;line-height:1.55}
+.modal-acts{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR (CHROME) ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-tag">Clínicas</div>
+      </div>
+    </div>
+
+    <nav aria-label="Navegación principal">
+      <div class="nav-group">
+        <div class="nav-head">Inicio</div>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Panel</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Agenda</div>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Citas</span></a>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16h6"/></svg><span>Huecos de agenda</span></a>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg><span>Solicitudes</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Conversaciones</div>
+        <a class="nav-item active focusable" href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg><span>WhatsApp</span><span class="nav-pill" aria-label="5 alertas sin leer">5</span></a>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Llamadas</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Pacientes</div>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Contactos</span></a>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Oportunidades</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Crecimiento</div>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Campañas</span></a>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg><span>Informes</span></a>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10h10V2zM22 12H12v10h10V12zM22 2h-6v6h6V2zM8 16H2v6h6v-6z"/></svg><span>Integraciones</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Configuración</div>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v0M9 12v0M9 15v0"/></svg><span>Clínica</span></a>
+        <a class="nav-item focusable" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Ajustes</span></a>
+      </div>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="plan-card">
+        <div class="pl-row">
+          <span class="plan-name"><span class="plan-dot"></span>Plan Growth</span>
+        </div>
+        <a href="#" class="plan-link">gestionar plan</a>
+      </div>
+      <div class="userbox">
+        <div class="avatar">LM</div>
+        <div class="user-meta">
+          <div class="user-name">Laura Méndez</div>
+          <div class="user-role">Recepción</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <!-- TOPBAR (CHROME) -->
+    <header class="topbar">
+      <div class="tb-title">
+        <h2>WhatsApp</h2>
+        <div class="tb-crumb">Conversaciones
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          Pendientes y SLA
+        </div>
+      </div>
+
+      <div class="tb-search focusable" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <label for="globalSearch" class="sr-only">Buscar pacientes, citas o conversaciones</label>
+        <input id="globalSearch" type="text" placeholder="Buscar pacientes, citas, conversaciones…" />
+        <span class="kbd">⌘K</span>
+      </div>
+
+      <div class="tb-right">
+        <button class="sede-sel focusable">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Madrid Centro</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <span class="chip-status chip-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>WhatsApp conectado</span>
+        <span class="chip-status chip-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Agenda sincronizada</span>
+        <span class="chip-status chip-muted" title="Las respuestas automáticas solo se sugieren: nada se envía sin tu aprobación"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>Sugerencias activas</span>
+        <button class="icon-btn focusable" aria-label="Notificaciones: 5 alertas sin leer">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+          <span class="notif-dot" aria-hidden="true"></span>
+        </button>
+        <div class="tb-avatar">LM</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- PAGE HEAD: H1 + contexto + UNA accion primaria de valor -->
+      <div class="page-head">
+        <div class="ph-left">
+          <h1>
+            <span class="ph-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M21 17H3a2 2 0 0 0 2-2V9a7 7 0 0 1 14 0v6a2 2 0 0 0 2 2Z"/></svg>
+            </span>
+            Pendientes y SLA
+          </h1>
+          <p class="ph-sub">Que no se te escape ninguna conversación. Aquí ves quién espera respuesta y cuánto tiempo lleva, para atender primero lo urgente y no perder citas. Responde lo marcado en rojo antes de que se pase de plazo.</p>
+        </div>
+        <div class="ph-actions">
+          <button class="btn btn-secondary focusable" id="refreshBtn" aria-label="Actualizar alertas y SLA">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            <span class="refresh-label">Actualizar</span>
+          </button>
+          <!-- ACCION PRIMARIA GLOBAL: atender la conversacion mas urgente (Carmen Ruiz) -->
+          <button class="btn btn-primary btn-cta focusable" onclick="goToWorst()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Atender la más urgente
+          </button>
+        </div>
+      </div>
+
+      <!-- ESTADO: WhatsApp desconectado (oculto por defecto; se muestra si falla la conexion) -->
+      <div class="banner warn" id="waBanner" role="status" style="display:none">
+        <div class="banner-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+        <div class="banner-body">
+          <div class="banner-title">WhatsApp desconectado</div>
+          <div class="banner-text">Mientras esté caído, los contadores de tiempo no se actualizan y no podrás responder. Reconecta para no perder conversaciones.</div>
+        </div>
+        <div class="banner-act"><button class="btn btn-secondary btn-sm focusable" onclick="reconnectWa()">Reconectar</button></div>
+      </div>
+
+      <!-- TRIAGE / QUE HACER AHORA (con accion de valor) -->
+      <section class="triage" aria-labelledby="triageHead">
+        <div>
+          <div class="triage-headline" id="triageHead">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Qué hacer ahora
+          </div>
+          <p class="triage-text">Tienes <b>2 conversaciones con el SLA vencido</b> y <span class="em-warn">3 mensajes sin enviar</span>. <b>Carmen Ruiz</b> lleva <b>47 min</b> esperando: respóndele ya para no perder la cita.</p>
+          <div class="triage-cta">
+            <button class="btn btn-primary focusable" onclick="goToWorst()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-6 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              Atender a Carmen Ruiz
+            </button>
+            <button class="btn btn-ghost focusable" onclick="document.getElementById('outboxSection').scrollIntoView({behavior:'smooth'})">Revisar mensajes pendientes</button>
+          </div>
+        </div>
+        <div class="triage-stats" role="group" aria-label="Resumen de alertas">
+          <div class="tstat danger">
+            <div class="tstat-num">2</div>
+            <div class="tstat-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>SLA vencido</div>
+          </div>
+          <div class="tstat warning">
+            <div class="tstat-num">3</div>
+            <div class="tstat-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Pendientes</div>
+          </div>
+          <div class="tstat info">
+            <div class="tstat-num">5</div>
+            <div class="tstat-lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg>Sin leer</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FILTER BAR (contadores cuadrados con una sola fuente de verdad) -->
+      <div class="filterbar" role="group" aria-label="Filtrar alertas por severidad">
+        <span class="fb-label">Filtrar</span>
+        <button class="chip-f active focusable" aria-pressed="true">Todo <span class="cnt">12</span></button>
+        <button class="chip-f focusable" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="#a51f15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Crítico <span class="cnt">4</span></button>
+        <button class="chip-f focusable" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="#9a6410" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Aviso <span class="cnt">5</span></button>
+        <button class="chip-f focusable" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="#2662a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Info <span class="cnt">3</span></button>
+        <div class="fb-spacer"></div>
+        <button class="chip-f focusable" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+          Solo asignados a mí
+        </button>
+      </div>
+
+      <!-- ===== SECTION: SLA ===== -->
+      <section class="section" aria-labelledby="slaHead">
+        <div class="sec-head">
+          <h2 id="slaHead">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            SLA: respuestas fuera de plazo
+          </h2>
+          <span class="sec-count danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>2 vencidos</span>
+          <span class="sec-help focusable" tabindex="0" role="note" aria-label="Qué es el SLA">?
+            <span class="tip">El SLA es el tiempo máximo que te marcas para responder a un paciente. Si se supera, la conversación aparece aquí ordenada por urgencia.</span>
+          </span>
+          <a href="#" class="sec-link">Configurar tiempos
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </div>
+
+        <!-- SKELETON de carga (oculto; se muestra al actualizar) -->
+        <div class="sla-grid" id="slaSkeleton" style="display:none" aria-hidden="true">
+          <div class="skel-card"><div class="skel skel-av"></div><div class="skel-lines"><div class="skel skel-line" style="width:40%"></div><div class="skel skel-line" style="width:65%"></div><div class="skel skel-line" style="width:55%"></div></div><div class="skel skel-btn"></div></div>
+          <div class="skel-card"><div class="skel skel-av"></div><div class="skel-lines"><div class="skel skel-line" style="width:38%"></div><div class="skel skel-line" style="width:62%"></div><div class="skel skel-line" style="width:50%"></div></div><div class="skel skel-btn"></div></div>
+        </div>
+
+        <div class="sla-grid" id="slaGrid">
+          <!-- SLA card 1 - VENCIDO + ventana 24h cerrada => Enviar plantilla -->
+          <article class="sla-card is-crit" id="card-carmen">
+            <div class="sla-rail crit"></div>
+            <div class="sla-body">
+              <div class="pat-avatar pa-1">CR</div>
+              <div class="sla-info">
+                <div class="sla-name">
+                  Carmen Ruiz
+                  <span class="sla-sev crit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Vencido</span>
+                  <span class="badge badge-crit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>Prioridad alta</span>
+                </div>
+                <div class="sla-meta">
+                  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg> WhatsApp</span>
+                  <span class="dotsep"></span>
+                  <span>Limpieza dental</span>
+                  <span class="dotsep"></span>
+                  <span class="assignee"><span class="mini-av">LM</span>Laura Méndez</span>
+                </div>
+                <div class="sla-snippet"><b>Paciente:</b> "Hola, quería confirmar si tenéis hueco esta tarde para una limpieza…"</div>
+                <div class="sla-warnline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>La ventana de 24 h de WhatsApp está cerrada: solo puedes contactar con una plantilla aprobada.</div>
+              </div>
+            </div>
+            <div class="sla-right">
+              <div class="sla-timer">
+                <div class="timer-ic crit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6M12 5V2"/></svg></div>
+                <div>
+                  <div class="timer-num crit">47 min</div>
+                  <div class="timer-lbl">vencido · objetivo 15 min</div>
+                </div>
+              </div>
+              <div class="sla-actions">
+                <!-- Ventana cerrada => el unico camino que no falla es Enviar plantilla -->
+                <button class="btn btn-primary btn-cta focusable" onclick="sendTemplate('Carmen Ruiz')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                  Enviar plantilla
+                </button>
+                <div class="ovf">
+                  <button class="ovf-btn focusable" aria-haspopup="true" aria-expanded="false" aria-label="Más acciones para Carmen Ruiz" onclick="toggleOvf(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>
+                  </button>
+                  <div class="ovf-menu" role="menu">
+                    <button class="ovf-item focusable" role="menuitem" onclick="closeOvf();showToast('Abriendo conversación de Carmen Ruiz')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>Abrir conversación</button>
+                    <button class="ovf-item focusable" role="menuitem" onclick="closeOvf();showToast('Conversación reasignada')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7"/></svg>Reasignar a otra persona</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SLA card 2 - EN RIESGO (ventana abierta => Responder ahora) -->
+          <article class="sla-card" id="card-javier">
+            <div class="sla-rail warn"></div>
+            <div class="sla-body">
+              <div class="pat-avatar pa-2">JT</div>
+              <div class="sla-info">
+                <div class="sla-name">
+                  Javier Torres
+                  <span class="sla-sev warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>En riesgo</span>
+                  <span class="badge badge-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Prioridad media</span>
+                </div>
+                <div class="sla-meta">
+                  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg> WhatsApp</span>
+                  <span class="dotsep"></span>
+                  <span>Fisioterapia · Dr. David Alonso</span>
+                  <span class="dotsep"></span>
+                  <span class="assignee"><span class="mini-av" style="background:linear-gradient(135deg,#2662a6,#1b4877)">DA</span>David Alonso</span>
+                </div>
+                <div class="sla-snippet"><b>Paciente:</b> "¿Puedo cambiar mi sesión de punción seca del jueves a otra hora?"</div>
+              </div>
+            </div>
+            <div class="sla-right">
+              <div class="sla-timer">
+                <div class="timer-ic warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6M12 5V2"/></svg></div>
+                <div>
+                  <div class="timer-num warn">22 min</div>
+                  <div class="timer-lbl">en riesgo · objetivo 15 min</div>
+                </div>
+              </div>
+              <div class="sla-actions">
+                <button class="btn btn-primary btn-cta focusable" onclick="showToast('Abriendo conversación de Javier Torres')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-6 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                  Responder ahora
+                </button>
+                <div class="ovf">
+                  <button class="ovf-btn focusable" aria-haspopup="true" aria-expanded="false" aria-label="Más acciones para Javier Torres" onclick="toggleOvf(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>
+                  </button>
+                  <div class="ovf-menu" role="menu">
+                    <button class="ovf-item focusable" role="menuitem" onclick="closeOvf();showToast('Conversación reasignada')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7"/></svg>Reasignar a otra persona</button>
+                    <button class="ovf-item focusable" role="menuitem" onclick="closeOvf();showToast('Conversación silenciada 1 h')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>Posponer 1 hora</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- ESTADO DE ERROR de carga (oculto; se muestra si falla la peticion) -->
+        <div class="error-state" id="slaError" style="display:none" role="alert">
+          <div class="error-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+          <h3>No pudimos cargar los SLA</h3>
+          <p>Hubo un problema al conectar con el servidor. Mientras tanto no se ven las conversaciones en riesgo.</p>
+          <button class="btn btn-primary focusable" onclick="retryLoad()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            Reintentar
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== SECTION: MENSAJES PENDIENTES (OUTBOX) ===== -->
+      <section class="section" id="outboxSection" aria-labelledby="obHead">
+        <div class="sec-head">
+          <h2 id="obHead">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Mensajes pendientes de envío
+          </h2>
+          <span class="sec-count warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>3 bloqueados</span>
+          <span class="sec-help focusable" tabindex="0" role="note" aria-label="Qué son los mensajes pendientes">?
+            <span class="tip">Mensajes que no han salido: porque requieren tu aprobación (respuestas sugeridas) o por un error de envío. Revisa el motivo y actúa.</span>
+          </span>
+          <!-- Reenvio masivo degradado a secundario, dentro del header de la seccion y con confirmacion -->
+          <button class="btn btn-secondary btn-sm focusable" style="margin-left:auto" onclick="confirmResendAll()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            Reenviar todo
+          </button>
+        </div>
+
+        <div class="outbox" id="outboxList">
+          <!-- outbox row 1 - modo seguro: Aprobar y enviar -->
+          <div class="ob-row" id="ob-marta">
+            <div class="ob-status-ic ob-ic-warn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="ob-mid">
+              <div class="ob-to">Para Marta Alonso <span class="badge badge-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Modo seguro</span></div>
+              <div class="ob-msg">"Hola Marta, te confirmamos tu cita de Botox el martes 3 de junio a las 17:30 con la Dra. Marta Ruiz. ¿Te viene bien?"</div>
+              <div class="ob-reason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span><b>Motivo:</b> respuesta sugerida: requiere tu aprobación antes de enviar · hace 8 min</span></div>
+            </div>
+            <div class="ob-actions">
+              <button class="btn btn-secondary btn-sm focusable" onclick="showToast('Abriendo editor de mensaje')">Editar</button>
+              <button class="btn btn-primary btn-sm btn-block focusable" onclick="resolveOutbox('ob-marta','Mensaje aprobado y enviado a Marta Alonso')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                Aprobar y enviar
+              </button>
+              <div class="ovf">
+                <button class="ovf-btn focusable" aria-haspopup="true" aria-expanded="false" aria-label="Más acciones para Marta Alonso" onclick="toggleOvf(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>
+                </button>
+                <div class="ovf-menu" role="menu">
+                  <button class="ovf-item focusable" role="menuitem" onclick="closeOvf();resolveOutbox('ob-marta','Mensaje descartado')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Descartar mensaje</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- outbox row 2 - error de envio Carmen (ventana 24h cerrada) => Enviar plantilla -->
+          <div class="ob-row" id="ob-carmen">
+            <div class="ob-status-ic ob-ic-danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+            </div>
+            <div class="ob-mid">
+              <div class="ob-to">Para Carmen Ruiz <span class="badge badge-crit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Error de envío</span> <span class="badge badge-neutral">Misma conversación que el SLA</span></div>
+              <div class="ob-msg">"Te esperamos hoy a las 18:00 para tu limpieza dental. Si necesitas reprogramar, responde a este mensaje."</div>
+              <div class="ob-reason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg><span><b>Motivo:</b> la ventana de 24 h de WhatsApp está cerrada · 2 reintentos fallidos · hace 31 min. Reintentar con texto libre volvería a fallar: usa una plantilla aprobada.</span></div>
+            </div>
+            <div class="ob-actions">
+              <button class="btn btn-secondary btn-sm focusable" onclick="showToast('Abriendo editor de plantilla')">Editar</button>
+              <button class="btn btn-primary btn-sm btn-block focusable" onclick="resolveOutbox('ob-carmen','Plantilla enviada a Carmen Ruiz')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                Enviar plantilla
+              </button>
+              <div class="ovf">
+                <button class="ovf-btn focusable" aria-haspopup="true" aria-expanded="false" aria-label="Más acciones para Carmen Ruiz en el outbox" onclick="toggleOvf(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>
+                </button>
+                <div class="ovf-menu" role="menu">
+                  <button class="ovf-item focusable" role="menuitem" onclick="closeOvf();resolveOutbox('ob-carmen','Mensaje descartado')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Descartar mensaje</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- outbox row 3 - modo seguro: Aprobar y enviar -->
+          <div class="ob-row" id="ob-javier">
+            <div class="ob-status-ic ob-ic-warn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="ob-mid">
+              <div class="ob-to">Para Javier Torres <span class="badge badge-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Modo seguro</span></div>
+              <div class="ob-msg">"Tu sesión de fisioterapia se ha movido al jueves 5 de junio a las 10:00. Avísanos si necesitas otro horario."</div>
+              <div class="ob-reason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span><b>Motivo:</b> requiere aprobación manual antes de enviar (cambio de cita) · hace 12 min</span></div>
+            </div>
+            <div class="ob-actions">
+              <button class="btn btn-secondary btn-sm focusable" onclick="showToast('Abriendo editor de mensaje')">Editar</button>
+              <button class="btn btn-primary btn-sm btn-block focusable" onclick="resolveOutbox('ob-javier','Mensaje aprobado y enviado a Javier Torres')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                Aprobar y enviar
+              </button>
+              <div class="ovf">
+                <button class="ovf-btn focusable" aria-haspopup="true" aria-expanded="false" aria-label="Más acciones para Javier Torres en el outbox" onclick="toggleOvf(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>
+                </button>
+                <div class="ovf-menu" role="menu">
+                  <button class="ovf-item focusable" role="menuitem" onclick="closeOvf();resolveOutbox('ob-javier','Mensaje descartado')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Descartar mensaje</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SECTION: LISTA DE ALERTAS (colapsada por defecto) ===== -->
+      <section class="section collapsed" id="alertsSection" aria-labelledby="alHead">
+        <div class="sec-headrow">
+          <button class="sec-collapse focusable" aria-expanded="false" aria-controls="alertsBody" onclick="toggleSection('alertsSection', this)">
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            <span id="alHead" style="display:flex;align-items:center;gap:9px;font-size:18px;font-weight:600;color:var(--text)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--info)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:19px;height:19px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              Todas las alertas
+            </span>
+            <span class="sec-count info" style="margin-left:2px">12 hoy</span>
+          </button>
+          <a href="#" class="sec-link" onclick="event.stopPropagation();showToast('Todas las alertas marcadas como leídas')">Marcar todo leído</a>
+        </div>
+
+        <div class="sec-body" id="alertsBody" style="margin-top:14px">
+          <div class="alert-list" aria-live="polite">
+            <!-- danger -->
+            <button class="al-row focusable" onclick="showToast('Abriendo conversación de Carmen Ruiz')">
+              <span class="al-lvl al-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></span>
+              <span class="al-mid">
+                <span class="al-top">
+                  <span class="al-lvltxt">Crítico</span>
+                  <span class="al-origin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>WhatsApp</span>
+                </span>
+                <span class="al-text">Conversación de Carmen Ruiz sin respuesta desde hace 47 min (SLA superado).</span>
+              </span>
+              <span class="al-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>09:42</span>
+            </button>
+
+            <!-- danger -->
+            <button class="al-row focusable" onclick="showToast('Abriendo mensaje pendiente de Carmen Ruiz')">
+              <span class="al-lvl al-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></span>
+              <span class="al-mid">
+                <span class="al-top">
+                  <span class="al-lvltxt">Crítico</span>
+                  <span class="al-origin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Outbox</span>
+                </span>
+                <span class="al-text">El mensaje a Carmen Ruiz falló: la ventana de 24 h de WhatsApp se ha cerrado. Envía una plantilla aprobada.</span>
+              </span>
+              <span class="al-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>09:11</span>
+            </button>
+
+            <!-- warning -->
+            <button class="al-row focusable" onclick="showToast('Abriendo conversación de Javier Torres')">
+              <span class="al-lvl al-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+              <span class="al-mid">
+                <span class="al-top">
+                  <span class="al-lvltxt">Aviso</span>
+                  <span class="al-origin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>WhatsApp</span>
+                </span>
+                <span class="al-text">Javier Torres lleva 22 min esperando respuesta (objetivo 15 min).</span>
+              </span>
+              <span class="al-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>09:30</span>
+            </button>
+
+            <!-- warning -->
+            <button class="al-row focusable" onclick="document.getElementById('outboxSection').scrollIntoView({behavior:'smooth'})">
+              <span class="al-lvl al-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+              <span class="al-mid">
+                <span class="al-top">
+                  <span class="al-lvltxt">Aviso</span>
+                  <span class="al-origin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Pendientes</span>
+                </span>
+                <span class="al-text">3 respuestas sugeridas esperan tu aprobación antes de salir.</span>
+              </span>
+              <span class="al-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>09:18</span>
+            </button>
+
+            <!-- info -->
+            <button class="al-row focusable" onclick="showToast('Abriendo solicitud de cita de Marta Alonso')">
+              <span class="al-lvl al-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+              <span class="al-mid">
+                <span class="al-top">
+                  <span class="al-lvltxt">Información</span>
+                  <span class="al-origin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Agenda</span>
+                </span>
+                <span class="al-text">Nueva solicitud de cita por WhatsApp: Marta Alonso pide revisión esta semana.</span>
+              </span>
+              <span class="al-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>08:54</span>
+            </button>
+
+            <!-- info -->
+            <button class="al-row focusable" onclick="showToast('Abriendo resumen de automatización')">
+              <span class="al-lvl al-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+              <span class="al-mid">
+                <span class="al-top">
+                  <span class="al-lvltxt">Información</span>
+                  <span class="al-origin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10.01-3-3"/></svg>Automatización</span>
+                </span>
+                <span class="al-text">14 consultas habituales se resolvieron solas esta mañana, sin trabajo de recepción.</span>
+              </span>
+              <span class="al-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>08:30</span>
+            </button>
+
+            <!-- ok -->
+            <button class="al-row focusable" onclick="showToast('Abriendo conversación de Marta Alonso')">
+              <span class="al-lvl al-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10.01-3-3"/></svg></span>
+              <span class="al-mid">
+                <span class="al-top">
+                  <span class="al-lvltxt">Resuelto</span>
+                  <span class="al-origin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>WhatsApp</span>
+                </span>
+                <span class="al-text">SLA de Marta Alonso recuperado: respondida por Laura Méndez en 4 min.</span>
+              </span>
+              <span class="al-time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>08:12</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10.01-3-3"/></svg>
+  <span id="toastMsg">Hecho</span>
+</div>
+
+<!-- Modal de confirmacion (reenvio masivo) -->
+<div class="modal-back" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="modal">
+    <div class="modal-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+    <h3 id="confirmTitle">¿Reenviar todo el outbox?</h3>
+    <p>Se intentarán enviar los 3 mensajes pendientes. Uno (Carmen Ruiz) tiene la ventana de 24 h cerrada y volverá a fallar: te recomendamos enviarle una plantilla en su lugar.</p>
+    <div class="modal-acts">
+      <button class="btn btn-secondary focusable" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary focusable" onclick="closeModal();showToast('Reenviando outbox: 2 enviados, 1 requiere plantilla')">Reenviar de todas formas</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- Toast ----
+  let toastTimer;
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    document.getElementById('toastMsg').textContent=msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+  }
+
+  // ---- Accion primaria: ir a la conversacion mas urgente (Carmen Ruiz) ----
+  function goToWorst(){
+    const card=document.getElementById('card-carmen');
+    card.scrollIntoView({behavior:'smooth',block:'center'});
+    card.animate(
+      [{boxShadow:'0 0 0 0 rgba(165,31,21,.35)'},{boxShadow:'0 0 0 6px rgba(165,31,21,0)'}],
+      {duration:900}
+    );
+    showToast('Carmen Ruiz · 47 min: la ventana está cerrada, envíale una plantilla');
+  }
+
+  // ---- Plantilla (camino correcto cuando la ventana 24h esta cerrada) ----
+  function sendTemplate(name){ resolveSla('card-carmen','Plantilla enviada a '+name+' · conversación reactivada'); }
+
+  // ---- Quitar fila al actuar (feedback inmediato) ----
+  function resolveSla(id,msg){
+    const el=document.getElementById(id);
+    if(el){ el.style.transition='opacity .25s,transform .25s'; el.style.opacity='0'; el.style.transform='translateX(12px)'; setTimeout(()=>el.remove(),250); }
+    showToast(msg);
+  }
+  function resolveOutbox(id,msg){
+    const el=document.getElementById(id);
+    if(el){ el.style.transition='opacity .25s,transform .25s'; el.style.opacity='0'; el.style.transform='translateX(12px)'; setTimeout(()=>el.remove(),250); }
+    showToast(msg);
+  }
+
+  // ---- Reenvio masivo con confirmacion ----
+  function confirmResendAll(){ document.getElementById('confirmModal').classList.add('show'); }
+  function closeModal(){ document.getElementById('confirmModal').classList.remove('show'); }
+  document.getElementById('confirmModal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+
+  // ---- Colapsar / expandir seccion de alertas (boton accesible) ----
+  function toggleSection(id, btn){
+    const sec=document.getElementById(id);
+    const collapsed=sec.classList.toggle('collapsed');
+    if(btn) btn.setAttribute('aria-expanded', (!collapsed).toString());
+  }
+
+  // ---- Menu de overflow ----
+  function toggleOvf(btn){
+    const ovf=btn.closest('.ovf');
+    const isOpen=ovf.classList.contains('open');
+    closeOvf();
+    if(!isOpen){ ovf.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+  }
+  function closeOvf(){
+    document.querySelectorAll('.ovf.open').forEach(o=>{ o.classList.remove('open'); const b=o.querySelector('.ovf-btn'); if(b) b.setAttribute('aria-expanded','false'); });
+  }
+  document.addEventListener('click',function(e){ if(!e.target.closest('.ovf')) closeOvf(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeOvf(); closeModal(); } });
+
+  // ---- Boton Actualizar: muestra skeleton de SLA brevemente ----
+  function retryLoad(){
+    document.getElementById('slaError').style.display='none';
+    document.getElementById('slaGrid').style.display='';
+    showToast('Alertas actualizadas');
+  }
+  document.getElementById('refreshBtn').addEventListener('click',function(){
+    const grid=document.getElementById('slaGrid');
+    const skel=document.getElementById('slaSkeleton');
+    grid.style.display='none'; skel.style.display=''; skel.setAttribute('aria-hidden','false');
+    this.querySelector('.refresh-label').textContent='Actualizando…';
+    const btn=this;
+    setTimeout(()=>{
+      skel.style.display='none'; skel.setAttribute('aria-hidden','true'); grid.style.display='';
+      btn.querySelector('.refresh-label').textContent='Actualizar';
+      showToast('Alertas y SLA actualizados');
+    },1100);
+  });
+
+  // ---- Estado WhatsApp desconectado (demo) ----
+  function reconnectWa(){ document.getElementById('waBanner').style.display='none'; showToast('WhatsApp reconectado'); }
+
+  // ---- Chips de filtro (selección única en el grupo de severidad) ----
+  document.querySelectorAll('.filterbar .chip-f').forEach(c=>{
+    c.addEventListener('click',function(){
+      if(this.textContent.includes('asignados')){ this.setAttribute('aria-pressed', this.getAttribute('aria-pressed')==='true'?'false':'true'); return; }
+      document.querySelectorAll('.filterbar .chip-f').forEach(x=>{
+        if(!x.textContent.includes('asignados')){ x.classList.remove('active'); x.setAttribute('aria-pressed','false'); }
+      });
+      this.classList.add('active'); this.setAttribute('aria-pressed','true');
+    });
+  });
+</script>
+</body>
+</html>

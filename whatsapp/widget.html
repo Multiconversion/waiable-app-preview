@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Widget web embebible · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,textarea,select{font-family:inherit}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+::selection{background:var(--primary-soft)}
+:focus-visible{outline:2px solid var(--primary-bright);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ============ LAYOUT ============ */
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+
+/* ============ SIDEBAR ============ */
+.sidebar{
+  background:
+    radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%),
+    linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+  color:#e8f1ef;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;padding:18px 14px;gap:6px;z-index:30
+}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 16px}
+.brand-mark{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--accent);display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 4px 12px rgba(17,163,145,.4);flex-shrink:0}
+.brand-name{font-weight:600;font-size:16px;color:#fff;line-height:1.1}
+.brand-tag{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-top:2px}
+.nav{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px;margin:0 -4px;padding:0 4px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.nav::-webkit-scrollbar{width:5px}.nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px}
+.nav-group{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.55);font-weight:600;padding:14px 10px 5px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:var(--radius-sm);color:rgba(232,241,239,.82);font-size:14px;font-weight:500;position:relative;transition:background .14s ease,color .14s ease}
+.nav-item svg{width:18px;height:18px;flex-shrink:0;opacity:.9}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--primary-bright);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(15,148,134,.35)}
+.nav-item.active::before{content:"";position:absolute;left:-4px;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--cyan);border-radius:0 3px 3px 0}
+.nav-item .badge-dot{margin-left:auto;background:var(--cyan);color:#07242b;font-size:12px;font-weight:700;min-width:18px;height:18px;border-radius:var(--radius-pill);display:grid;place-items:center;padding:0 5px}
+.sidebar-foot{display:flex;flex-direction:column;gap:10px;padding-top:12px}
+.plan-card{background:linear-gradient(135deg,rgba(17,163,145,.18),rgba(17,163,145,.06));border:1px solid rgba(94,224,201,.22);border-radius:var(--radius-sm);padding:11px 12px}
+.plan-card .pc-row{display:flex;align-items:center;justify-content:space-between}
+.plan-card .pc-name{font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px}
+.plan-card .pc-name svg{width:15px;height:15px;color:var(--cyan)}
+.plan-card .pc-link{font-size:12px;color:var(--cyan);font-weight:500}
+.user-mini{display:flex;align-items:center;gap:10px;padding:8px 6px}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));display:grid;place-items:center;color:#fff;font-weight:600;font-size:13px;flex-shrink:0}
+.user-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.user-role{font-size:12px;color:rgba(232,241,239,.55)}
+
+/* ============ MAIN ============ */
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{height:60px;background:var(--surface);box-shadow:var(--shadow-xs);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 24px;position:sticky;top:0;z-index:20}
+.tb-title{display:flex;flex-direction:column;min-width:0}
+.tb-h2{font-size:18px;font-weight:600;line-height:1.2}
+.tb-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.tb-crumb svg{width:12px;height:12px}
+.tb-search{flex:1;max-width:440px;margin:0 auto;position:relative;display:flex;align-items:center}
+.tb-search svg{position:absolute;left:13px;width:17px;height:17px;color:var(--muted)}
+.tb-search input{width:100%;height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:var(--surface-soft);padding:0 14px 0 38px;font-size:14px;color:var(--text);transition:border .14s,background .14s}
+.tb-search input::placeholder{color:var(--muted)}
+.tb-search input:focus{outline:none;border-color:var(--primary-bright);background:#fff}
+.tb-kbd{position:absolute;right:10px;font-size:12px;color:var(--text-2);background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:2px 6px;font-weight:500}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.sede-sel{display:flex;align-items:center;gap:7px;height:38px;padding:0 12px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);font-size:13px;font-weight:500;background:var(--surface);color:var(--text-2);transition:border .14s,box-shadow .14s}
+.sede-sel:hover{border-color:var(--primary-bright)}
+.sede-sel svg{width:15px;height:15px;color:var(--muted)}
+.tb-chips{display:flex;gap:7px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;white-space:nowrap}
+.chip svg{width:13px;height:13px}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.info{background:var(--info-soft);color:var(--info)}
+.chip.primary{background:var(--primary-soft);color:var(--primary)}
+.chip.subtle{height:28px;padding:0 9px;background:var(--bg-deep);color:var(--muted);font-weight:500}
+.chip.subtle svg{width:12px;height:12px;opacity:.8}
+.chip.subtle .chip-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.icon-btn{width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--text-2);position:relative;transition:background .14s}
+.icon-btn:hover{background:var(--surface-soft)}
+.icon-btn svg{width:19px;height:19px}
+.notif-dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid var(--surface);pointer-events:none}
+.tb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px}
+
+/* ============ CONTENT ============ */
+.content{padding:26px 30px 60px;max-width:1480px;width:100%;margin:0 auto}
+.page-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:6px;flex-wrap:wrap}
+.page-head .ph-text{min-width:0;flex:1}
+.h1{font-size:26px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.page-sub{font-size:15px;color:var(--muted);margin-top:6px;max-width:640px}
+.ph-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* status banner for active state */
+.status-banner{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:14px 18px;margin:20px 0 24px}
+.status-banner .sb-icon{width:42px;height:42px;border-radius:var(--radius-sm);background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;flex-shrink:0}
+.status-banner .sb-icon svg{width:22px;height:22px}
+.status-banner .sb-text strong{font-size:15px;font-weight:600;display:block}
+.status-banner .sb-text span{font-size:13px;color:var(--text-2)}
+.status-banner .sb-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:var(--radius-pill);font-size:12px;font-weight:600}
+.badge svg{width:13px;height:13px}
+.badge.ok{background:var(--ok-soft);color:var(--ok)}
+.badge.muted{background:var(--bg-deep);color:var(--muted)}
+
+/* toggle switch */
+.toggle{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none;min-height:40px;border-radius:var(--radius-pill);padding:0 4px}
+.toggle .tg-label{font-size:13px;font-weight:600;color:var(--text-2)}
+.toggle .tg-state{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--ok)}
+.toggle .tg-state svg{width:14px;height:14px}
+.toggle.off .tg-state{color:var(--muted)}
+.tg-track{width:46px;height:26px;border-radius:var(--radius-pill);background:var(--primary);position:relative;transition:background .18s ease;flex-shrink:0;box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}
+.tg-track::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .18s ease}
+.toggle.off .tg-track{background:var(--line-strong)}
+.toggle.off .tg-track::after{transform:translateX(0)}
+.toggle .tg-track::after{transform:translateX(20px)}
+.toggle:focus-visible{outline:2px solid var(--primary-bright);outline-offset:2px}
+
+/* ============ GRID LAYOUT ============ */
+.layout{display:grid;grid-template-columns:380px 1fr 380px;gap:20px;align-items:start}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.card-head{display:flex;align-items:center;gap:11px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.card-head .ch-ic{width:32px;height:32px;border-radius:var(--radius-sm);background:var(--primary-tint);color:var(--primary);display:grid;place-items:center;flex-shrink:0}
+.card-head .ch-ic svg{width:17px;height:17px}
+.card-head h2{font-size:16px;font-weight:600;line-height:1.2}
+.card-head p{font-size:13px;color:var(--text-2);margin-top:2px;line-height:1.4}
+.card-body{padding:18px}
+
+/* form fields */
+.field{margin-bottom:20px}
+.field:last-child{margin-bottom:0}
+.field label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:8px}
+.help-ic{width:18px;height:18px;border-radius:50%;background:var(--bg-deep);color:var(--text-2);display:inline-grid;place-items:center;font-size:12px;font-weight:700;cursor:help;position:relative}
+.help-ic svg{width:10px;height:10px}
+.tooltip{position:relative;display:inline-flex}
+.tooltip .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#07242b;color:#fff;font-size:12px;font-weight:500;line-height:1.4;padding:8px 11px;border-radius:8px;width:210px;text-align:left;box-shadow:var(--shadow-md);opacity:0;visibility:hidden;transition:opacity .14s,visibility .14s;z-index:50;pointer-events:none}
+.tooltip .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#07242b}
+.tooltip:hover .tip{opacity:1;visibility:visible}
+.input,.textarea{width:100%;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface-soft);padding:10px 12px;font-size:14px;color:var(--text);transition:border .14s,background .14s,box-shadow .14s}
+.input:focus,.textarea:focus{outline:none;border-color:var(--primary-bright);background:#fff;box-shadow:0 0 0 3px var(--primary-soft)}
+.textarea{resize:vertical;min-height:74px;line-height:1.5}
+.char-count{font-size:13px;color:var(--muted);text-align:right;margin-top:6px}
+
+/* color presets */
+.color-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.swatch{width:40px;height:40px;border-radius:var(--radius-sm);cursor:pointer;position:relative;border:2px solid transparent;transition:transform .14s}
+.swatch:hover{transform:scale(1.08)}
+.swatch:focus-visible{outline:2px solid var(--primary-bright);outline-offset:3px}
+.swatch.sel{border-color:#fff;box-shadow:0 0 0 2px var(--text)}
+.swatch.sel::after{content:"";position:absolute;inset:0;display:grid;place-items:center;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/16px no-repeat}
+.hex-input{display:flex;align-items:center;gap:8px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface-soft);padding:0 12px;height:38px;width:120px}
+.hex-input .hex-prev{width:18px;height:18px;border-radius:5px;flex-shrink:0}
+.hex-input input{border:none;background:none;width:100%;font-size:14px;font-weight:500;text-transform:uppercase}
+.hex-input input:focus{outline:none}
+
+/* segmented / position grid */
+.seg{display:flex;background:var(--surface-soft);border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:4px;gap:4px}
+.seg button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:38px;border-radius:7px;font-size:13px;font-weight:600;color:var(--muted);transition:all .14s}
+.seg button svg{width:16px;height:16px}
+.seg button.sel{background:#fff;color:var(--primary);box-shadow:var(--shadow-xs)}
+.seg button:focus-visible{outline:2px solid var(--primary-bright);outline-offset:-2px}
+.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pos-opt{display:flex;align-items:center;gap:10px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:11px 13px;cursor:pointer;background:var(--surface-soft);transition:all .14s}
+.pos-opt:hover{border-color:var(--primary-bright)}
+.pos-opt.sel{border-color:var(--primary);background:var(--primary-tint);box-shadow:0 0 0 1px var(--primary)}
+.pos-mini{width:30px;height:24px;border:1.5px solid var(--line-strong);border-radius:5px;position:relative;flex-shrink:0;background:#fff}
+.pos-opt.sel .pos-mini{border-color:var(--primary)}
+.pos-mini .dot{position:absolute;width:8px;height:8px;border-radius:2px;background:var(--primary)}
+.pos-mini .dot.br{bottom:3px;right:3px}
+.pos-mini .dot.bl{bottom:3px;left:3px}
+.pos-opt .po-txt{font-size:13px;font-weight:600;color:var(--text-2)}
+
+/* ============ PREVIEW (center) ============ */
+.preview-card{position:sticky;top:80px}
+.preview-toolbar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface-soft);border-radius:var(--radius) var(--radius) 0 0}
+.browser-dots{display:flex;gap:6px}
+.browser-dots span{width:11px;height:11px;border-radius:50%}
+.browser-dots span:nth-child(1){background:#ff5f57}
+.browser-dots span:nth-child(2){background:#febc2e}
+.browser-dots span:nth-child(3){background:#28c840}
+.url-bar{flex:1;height:30px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-pill);display:flex;align-items:center;gap:7px;padding:0 12px;font-size:12px;color:var(--muted);max-width:340px}
+.url-bar svg{width:12px;height:12px;color:var(--ok)}
+.live-tag{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--primary)}
+.live-tag .pulse{width:8px;height:8px;border-radius:50%;background:var(--primary-bright);position:relative}
+.live-tag .pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--primary-bright);animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(3);opacity:0}}
+
+/* mockup website */
+.mockup{position:relative;height:560px;background:linear-gradient(180deg,#fafcfb 0%,#f2f6f5 100%);overflow:hidden;border-radius:0 0 var(--radius) var(--radius)}
+.mock-nav{display:flex;align-items:center;gap:8px;padding:16px 22px;background:#fff;border-bottom:1px solid var(--line)}
+.mock-logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#0f766e,#11a391)}
+.mock-logo-txt{font-size:14px;font-weight:700;color:var(--text)}
+.mock-nav .mn-links{margin-left:auto;display:flex;gap:18px}
+.mock-nav .mn-links span{font-size:12px;color:var(--muted);font-weight:500}
+.mock-hero{padding:40px 36px}
+.mock-eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:12px}
+.mock-h{font-size:30px;font-weight:700;color:var(--text);line-height:1.2;max-width:380px;letter-spacing:-.01em}
+.mock-p{font-size:14px;color:var(--muted);margin-top:14px;max-width:360px;line-height:1.6}
+.mock-bar{height:11px;border-radius:6px;background:#e8eeec;margin-top:10px}
+.mock-bar.w1{width:78%}.mock-bar.w2{width:62%}.mock-bar.w3{width:70%}
+.mock-cta{margin-top:24px;display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-2);box-shadow:var(--shadow-xs)}
+.mock-cards{display:flex;gap:14px;padding:0 36px 30px}
+.mock-mini-card{flex:1;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-xs)}
+.mock-mini-card .mc-ic{width:30px;height:30px;border-radius:8px;background:var(--primary-tint);margin-bottom:10px}
+.mock-mini-card .mc-l{height:9px;border-radius:5px;background:#eaefed}
+.mock-mini-card .mc-l.s{width:70%;margin-top:8px;background:#f0f4f3}
+
+/* the actual widget being previewed */
+.widget{position:absolute;bottom:22px;transition:all .25s ease;z-index:10}
+.widget.br{right:22px}
+.widget.bl{left:22px}
+.widget-bubble{display:flex;align-items:center;gap:11px;background:var(--w-color,#0f766e);color:#fff;padding:13px 18px 13px 15px;border-radius:var(--radius-pill);box-shadow:0 12px 30px rgba(15,118,110,.38),0 4px 10px rgba(0,0,0,.12);font-size:14px;font-weight:600;cursor:pointer;max-width:280px}
+.widget-bubble .wb-av{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;flex-shrink:0}
+.widget-bubble .wb-av svg{width:21px;height:21px}
+.widget-bubble .wb-txt{line-height:1.3;min-width:0}
+.widget-bubble .wb-txt small{display:block;font-size:12px;font-weight:500;opacity:.85;margin-top:1px}
+.widget-launcher{width:60px;height:60px;border-radius:50%;background:var(--w-color,#0f766e);box-shadow:0 12px 30px rgba(15,118,110,.4),0 4px 10px rgba(0,0,0,.14);display:grid;place-items:center;color:#fff;margin-top:12px;margin-left:auto;cursor:pointer}
+.widget.bl .widget-launcher{margin-left:0;margin-right:auto}
+.widget-launcher svg{width:28px;height:28px}
+/* open chat panel inside preview */
+.chat-panel{width:300px;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(15,26,23,.22),0 8px 18px rgba(0,0,0,.12);overflow:hidden;margin-bottom:14px;border:1px solid var(--line)}
+.widget.bl .chat-panel{margin-right:auto}
+.chat-head{background:var(--w-color,#0f766e);color:#fff;padding:16px 16px 15px;display:flex;align-items:center;gap:11px}
+.chat-head .ch-av{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;flex-shrink:0}
+.chat-head .ch-av svg{width:22px;height:22px}
+.chat-head .ch-tt{font-size:15px;font-weight:700;line-height:1.25}
+.chat-head .ch-st{font-size:12px;font-weight:500;opacity:.9;display:flex;align-items:center;gap:5px;margin-top:2px}
+.chat-head .ch-st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cyan)}
+.chat-body{padding:16px 14px;background:var(--surface-soft);max-height:200px;overflow:hidden}
+.chat-msg{background:#fff;border:1px solid var(--line);border-radius:4px 16px 16px 16px;padding:11px 13px;font-size:14px;color:var(--text);line-height:1.45;box-shadow:var(--shadow-xs);max-width:88%}
+.chat-quick{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.chat-quick button{text-align:left;background:#fff;border:1.5px solid var(--w-color,#0f766e);color:var(--w-color,#0f766e);border-radius:var(--radius-pill);padding:9px 14px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.chat-quick button svg{width:15px;height:15px;flex-shrink:0}
+.chat-foot{display:flex;align-items:center;gap:8px;padding:11px 13px;border-top:1px solid var(--line);background:#fff}
+.chat-foot .cf-input{flex:1;height:36px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);padding:0 14px;font-size:13px;color:var(--muted);display:flex;align-items:center}
+.chat-foot .cf-send{width:36px;height:36px;border-radius:50%;background:var(--w-color,#0f766e);color:#fff;display:grid;place-items:center;flex-shrink:0}
+.chat-foot .cf-send svg{width:17px;height:17px}
+.widget[data-open="false"] .chat-panel{display:none}
+.widget[data-open="true"] .widget-bubble{display:none}
+.widget[data-open="true"] .widget-launcher{margin-top:0}
+.widget-launcher.has-close svg.ic-close{display:none}
+.widget[data-open="true"] .widget-launcher svg.ic-chat{display:none}
+.widget[data-open="true"] .widget-launcher svg.ic-close{display:block}
+
+.preview-foot{display:flex;align-items:center;gap:10px;padding:13px 18px;background:var(--surface-soft);border-top:1px solid var(--line);font-size:13px;color:var(--text-2);flex-wrap:wrap}
+.preview-foot .pf-toggle{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:#fff;font-size:13px;font-weight:600;color:var(--text-2);transition:all .14s}
+.preview-foot .pf-toggle:hover{border-color:var(--primary-bright);color:var(--primary)}
+.preview-foot .pf-toggle.on{background:var(--primary-tint);border-color:var(--primary);color:var(--primary)}
+.preview-foot .pf-toggle svg{width:15px;height:15px;color:inherit}
+.preview-foot svg{width:16px;height:16px;color:var(--info);flex-shrink:0}
+.preview-foot .pf-controls{margin-left:auto;display:flex;gap:6px}
+.pf-ctl{width:30px;height:30px;border-radius:7px;border:1px solid var(--line-strong);background:#fff;display:grid;place-items:center;color:var(--muted);transition:all .14s}
+.pf-ctl:hover{border-color:var(--primary-bright);color:var(--primary)}
+.pf-ctl:focus-visible{outline:2px solid var(--primary-bright);outline-offset:2px}
+.pf-ctl svg{width:15px;height:15px;color:inherit}
+.pf-ctl.sel{background:var(--primary-tint);border-color:var(--primary);color:var(--primary)}
+
+/* ============ RIGHT COLUMN ============ */
+.code-card .card-body{padding:16px}
+.code-block{background:#07242b;border-radius:var(--radius-sm);overflow:hidden;border:1px solid #0e3640}
+.code-top{display:flex;align-items:center;gap:8px;padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02)}
+.code-top .ct-name{font-size:12px;color:rgba(255,255,255,.6);font-weight:500;font-family:'SF Mono',ui-monospace,monospace}
+.code-top .ct-dot{width:7px;height:7px;border-radius:50%;background:#28c840}
+.code-pre{padding:14px 15px;overflow-x:auto;font-family:'SF Mono','Fira Code',ui-monospace,monospace;font-size:12.5px;line-height:1.7;color:#cfe8e2;white-space:pre;scrollbar-width:thin}
+.code-pre::-webkit-scrollbar{height:6px}.code-pre::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px}
+.tk-tag{color:#5ee0c9}.tk-attr{color:#a5d8ce}.tk-str{color:#ffd9a0}.tk-com{color:#5e7a78}.tk-pun{color:#7fa8a0}
+.copy-btn{width:100%;margin-top:14px;min-height:52px;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--primary);color:#fff;border-radius:var(--radius-sm);padding:14px 18px;font-size:16px;font-weight:700;box-shadow:0 8px 20px rgba(15,118,110,.28);transition:background .14s,transform .14s,box-shadow .14s}
+.copy-btn:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 12px 26px rgba(15,118,110,.34)}
+.copy-btn:active{transform:translateY(0)}
+.copy-btn.copied{background:var(--ok);box-shadow:0 8px 20px rgba(21,115,72,.28)}
+.copy-btn svg{width:20px;height:20px}
+.copy-sub{font-size:13px;color:var(--text-2);text-align:center;margin-top:8px;line-height:1.5}
+.copy-sub strong{color:var(--text);font-weight:700}
+.code-hint{font-size:13px;color:var(--text-2);margin-top:12px;display:flex;align-items:flex-start;gap:8px;line-height:1.55}
+.code-hint svg{width:16px;height:16px;color:var(--info);flex-shrink:0;margin-top:1px}
+/* clinic id confirmation pill */
+.id-ok{display:flex;align-items:flex-start;gap:9px;background:var(--ok-soft);border:1px solid #c2e6d0;border-radius:var(--radius-sm);padding:11px 13px;margin-top:12px}
+.id-ok svg{width:18px;height:18px;color:var(--ok);flex-shrink:0;margin-top:1px}
+.id-ok .io-t{font-size:13px;color:var(--text-2);line-height:1.5}
+.id-ok .io-t strong{color:var(--ok);font-weight:700}
+.id-ok .io-t code{font-family:'SF Mono',ui-monospace,monospace;font-weight:700;color:var(--text);background:#fff;border:1px solid #c2e6d0;border-radius:5px;padding:1px 6px;font-size:13px}
+/* highlight injected id in snippet */
+.tk-id{color:#ffd9a0;background:rgba(94,224,201,.14);border-radius:4px;padding:0 3px;box-shadow:0 0 0 1px rgba(94,224,201,.35)}
+
+/* steps */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:14px;padding:16px 0;position:relative}
+.step:not(:last-child)::after{content:"";position:absolute;left:15px;top:42px;bottom:-2px;width:2px;background:var(--line)}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:15px;font-weight:700;flex-shrink:0;z-index:1;border:2px solid var(--surface);box-shadow:0 2px 6px rgba(15,118,110,.25)}
+.step.done .step-num{background:var(--ok);color:#fff;box-shadow:0 2px 6px rgba(21,115,72,.25)}
+.step.done .step-num svg{width:16px;height:16px}
+.step-body h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.step-body p{font-size:14px;color:var(--text-2);line-height:1.55}
+.step-body p strong{color:var(--text);font-weight:700;background:var(--bg-deep);padding:1px 6px;border-radius:5px;font-family:'SF Mono',ui-monospace,monospace;font-size:13px}
+.step-body .step-tag{display:inline-flex;align-items:center;gap:5px;margin-top:9px;font-size:13px;font-weight:600;color:var(--primary);background:var(--primary-tint);padding:5px 11px;border-radius:var(--radius-pill);border:1px solid var(--primary-soft)}
+.step-body .step-tag:hover{background:var(--primary-soft)}
+.step-body .step-tag svg{width:12px;height:12px}
+
+/* help footer card */
+.help-card{margin-top:20px;background:linear-gradient(135deg,var(--primary-tint),var(--surface));border:1px solid var(--primary-soft)}
+.help-card .card-body{display:flex;align-items:center;gap:14px}
+.help-card .hc-ic{width:40px;height:40px;border-radius:var(--radius-sm);background:#fff;color:var(--primary);display:grid;place-items:center;flex-shrink:0;box-shadow:var(--shadow-xs)}
+.help-card .hc-ic svg{width:20px;height:20px}
+.help-card .hc-txt strong{font-size:14px;font-weight:600;display:block}
+.help-card .hc-txt span{font-size:13px;color:var(--muted)}
+.help-card .hc-btn{margin-left:auto;font-size:13px;font-weight:600;color:var(--primary);white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.help-card .hc-btn svg{width:14px;height:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:all .16s ease;white-space:nowrap}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.22)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-secondary{background:var(--surface);color:var(--text-2);border:1px solid var(--line-strong)}
+.btn-secondary:hover{border-color:var(--primary-bright);color:var(--primary);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text-2)}
+.btn-ghost:hover{background:var(--surface-soft)}
+.btn:disabled{opacity:.55;cursor:default;transform:none;box-shadow:none}
+.btn.is-loading{pointer-events:none}
+.btn .spin{width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* mobile preview frame */
+.mockup.is-mobile{display:flex;align-items:flex-end;justify-content:center;padding:24px 0 0}
+.mockup.is-mobile .mock-nav,.mockup.is-mobile .mock-hero,.mockup.is-mobile .mock-cards{display:none}
+.mockup .phone{display:none}
+.mockup.is-mobile .phone{display:block;position:relative;width:268px;height:512px;background:linear-gradient(180deg,#fff,#f4f7f6);border:8px solid #0f1a17;border-bottom:0;border-radius:30px 30px 0 0;box-shadow:0 16px 40px rgba(15,26,23,.18);overflow:hidden}
+.mockup.is-mobile .phone .ph-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:90px;height:6px;border-radius:99px;background:#0f1a17}
+.mockup.is-mobile .phone .ph-page{padding:34px 16px 16px}
+.mockup.is-mobile .phone .ph-page .mock-eyebrow{font-size:12px;margin-bottom:8px}
+.mockup.is-mobile .phone .ph-page .ph-title{font-size:20px;font-weight:700;line-height:1.25;color:var(--text)}
+.mockup.is-mobile .phone .ph-page .mock-bar{margin-top:10px}
+
+.section-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title .st-line{flex:1;height:1px;background:var(--line)}
+
+/* toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(120px);background:#07242b;color:#fff;padding:13px 20px;border-radius:var(--radius);box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:11px;font-size:14px;font-weight:500;z-index:100;transition:transform .3s cubic-bezier(.34,1.3,.64,1);max-width:90vw}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast .t-ic{width:24px;height:24px;border-radius:50%;background:var(--primary-bright);display:grid;place-items:center;flex-shrink:0}
+.toast .t-ic svg{width:15px;height:15px}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1320px){
+  .layout{grid-template-columns:1fr 1fr;}
+  .preview-card{grid-column:1/-1;position:static}
+}
+@media (max-width:1100px){
+  .app{grid-template-columns:64px 1fr}
+  .brand-name,.brand-tag,.nav-group,.nav-item span,.plan-card,.user-name,.user-role,.nav-item .badge-dot{display:none}
+  .brand{justify-content:center;padding:6px 0 16px}
+  .nav-item{justify-content:center;padding:11px}
+  .nav-item.active::before{display:none}
+  .user-mini{justify-content:center;padding:8px 0}
+  .sidebar{padding:18px 8px}
+  .tb-search{display:none}
+  .tb-chips{display:none}
+  .layout{grid-template-columns:1fr}
+}
+@media (max-width:680px){
+  .content{padding:18px 14px 50px}
+  .h1{font-size:22px}
+  .sede-sel span{display:none}
+  .status-banner{flex-wrap:wrap}
+  .status-banner .sb-right{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-tag">Clínicas</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">Inicio</div>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Panel</span></a>
+
+      <div class="nav-group">Agenda</div>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Citas</span></a>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/></svg><span>Huecos de agenda</span></a>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg><span>Solicitudes</span></a>
+
+      <div class="nav-group">Conversaciones</div>
+      <a class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg><span>WhatsApp</span></a>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Llamadas</span></a>
+
+      <div class="nav-group">Pacientes</div>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Contactos</span></a>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M18 9l-5 5-3-3-4 4"/></svg><span>Oportunidades</span></a>
+
+      <div class="nav-group">Crecimiento</div>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Campañas</span></a>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="7"/><rect x="12" y="6" width="3" height="11"/><rect x="17" y="13" width="3" height="4"/></svg><span>Informes</span></a>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg><span>Integraciones</span></a>
+
+      <div class="nav-group">Configuración</div>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9h.01M9 13h.01M9 17h.01"/></svg><span>Clínica</span></a>
+      <a class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Ajustes</span></a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="plan-card">
+        <div class="pc-row">
+          <div class="pc-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>Plan Growth</div>
+        </div>
+        <a class="pc-link">Gestionar plan</a>
+      </div>
+      <div class="user-mini">
+        <div class="user-avatar">LG</div>
+        <div>
+          <div class="user-name">Laura García</div>
+          <div class="user-role">Recepción</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="tb-title">
+        <div class="tb-h2">WhatsApp</div>
+        <div class="tb-crumb">Conversaciones<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>Widget web</div>
+      </div>
+      <div class="tb-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Buscar pacientes, citas, conversaciones…">
+        <span class="tb-kbd">⌘K</span>
+      </div>
+      <div class="tb-right">
+        <button class="sede-sel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Madrid Centro</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="tb-chips">
+          <span class="chip ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>WhatsApp conectado</span>
+          <span class="chip info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 3v6h-6"/></svg>Agenda sincronizada</span>
+          <span class="chip subtle" title="La automatización ayuda en segundo plano"><span class="chip-dot"></span>Automatización</span>
+        </div>
+        <button class="icon-btn has-dot" aria-label="Notificaciones"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg><span class="notif-dot"></span></button>
+        <div class="tb-avatar">LG</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- PAGE HEAD -->
+      <div class="page-head">
+        <div class="ph-text">
+          <h1 class="h1">Widget web embebible</h1>
+          <p class="page-sub">Capta citas 24/7 desde tu web. Personalízalo, míralo en vivo y <strong style="color:var(--text-2);font-weight:700">copia el código de instalación</strong> para ponerlo en marcha. No necesitas conocimientos técnicos.</p>
+        </div>
+        <div class="ph-actions">
+          <button class="btn btn-ghost" onclick="resetAll()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Restablecer</button>
+          <button class="btn btn-secondary" id="saveBtn" disabled onclick="saveChanges()"><svg id="saveIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg><span id="saveLabel">Guardar cambios</span></button>
+        </div>
+      </div>
+
+      <!-- STATUS BANNER -->
+      <div class="status-banner">
+        <div class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div>
+        <div class="sb-text">
+          <strong>El widget está activo en tu web</strong>
+          <span>Visible en clinicasonrisa.es · Última publicación hace 2 horas</span>
+        </div>
+        <div class="sb-right">
+          <button class="toggle" id="statusToggle" type="button" role="switch" aria-checked="true" aria-label="Mostrar el widget en la web: activado" onclick="toggleStatus()">
+            <span class="tg-label">Mostrar en la web</span>
+            <span class="tg-track"></span>
+            <span class="tg-state" id="statusState"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Activo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-COLUMN LAYOUT -->
+      <div class="layout">
+
+        <!-- LEFT: CONFIG -->
+        <section class="card">
+          <div class="card-head">
+            <div class="ch-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2v-1c0-.6.4-1 1-1h2.5a4.5 4.5 0 0 0 4.5-4.5C22 6.5 17.5 2 12 2z"/></svg></div>
+            <div>
+              <h2>Personalización</h2>
+              <p>Adapta el widget a tu marca</p>
+            </div>
+          </div>
+          <div class="card-body">
+
+            <!-- color -->
+            <div class="field">
+              <label>Color principal
+                <span class="tooltip"><span class="help-ic">?</span><span class="tip">El color del botón flotante. Usa el de tu marca para que combine con tu web.</span></span>
+              </label>
+              <div class="color-row" role="radiogroup" aria-label="Color principal del widget">
+                <button type="button" class="swatch sel" style="background:#0f766e" data-color="#0f766e" data-name="Verde teal" role="radio" aria-checked="true" aria-label="Verde teal" onclick="pickColor(this)"></button>
+                <button type="button" class="swatch" style="background:#2662a6" data-color="#2662a6" data-name="Azul" role="radio" aria-checked="false" aria-label="Azul" onclick="pickColor(this)"></button>
+                <button type="button" class="swatch" style="background:#7c3aed" data-color="#7c3aed" data-name="Morado" role="radio" aria-checked="false" aria-label="Morado" onclick="pickColor(this)"></button>
+                <button type="button" class="swatch" style="background:#db2777" data-color="#db2777" data-name="Rosa" role="radio" aria-checked="false" aria-label="Rosa" onclick="pickColor(this)"></button>
+                <button type="button" class="swatch" style="background:#ea580c" data-color="#ea580c" data-name="Naranja" role="radio" aria-checked="false" aria-label="Naranja" onclick="pickColor(this)"></button>
+                <button type="button" class="swatch" style="background:#0f172a" data-color="#0f172a" data-name="Negro" role="radio" aria-checked="false" aria-label="Negro" onclick="pickColor(this)"></button>
+                <div class="hex-input">
+                  <span class="hex-prev" id="hexPrev" style="background:#0f766e"></span>
+                  <label for="hexInput" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Código hexadecimal del color</label>
+                  <input type="text" id="hexInput" value="0F766E" aria-label="Código hexadecimal del color" oninput="hexChange(this.value)">
+                </div>
+              </div>
+            </div>
+
+            <!-- channel -->
+            <div class="field">
+              <label>Canal del widget
+                <span class="tooltip"><span class="help-ic">?</span><span class="tip">¿Qué hace el botón al pulsarlo? Abrir WhatsApp o un formulario de reserva con los huecos de tu agenda.</span></span>
+              </label>
+              <div class="seg" role="radiogroup" aria-label="Canal del widget">
+                <button type="button" class="sel" data-ch="whatsapp" role="radio" aria-checked="true" onclick="pickChannel(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>WhatsApp</button>
+                <button type="button" data-ch="reserva" role="radio" aria-checked="false" onclick="pickChannel(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg>Reserva</button>
+              </div>
+            </div>
+
+            <!-- position -->
+            <div class="field">
+              <label>Posición en la pantalla</label>
+              <div class="pos-grid" role="radiogroup" aria-label="Posición del widget">
+                <button type="button" class="pos-opt sel" data-pos="br" role="radio" aria-checked="true" aria-label="Abajo derecha" onclick="pickPosition(this)">
+                  <span class="pos-mini"><span class="dot br"></span></span>
+                  <span class="po-txt">Abajo derecha</span>
+                </button>
+                <button type="button" class="pos-opt" data-pos="bl" role="radio" aria-checked="false" aria-label="Abajo izquierda" onclick="pickPosition(this)">
+                  <span class="pos-mini"><span class="dot bl"></span></span>
+                  <span class="po-txt">Abajo izquierda</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- welcome text -->
+            <div class="field">
+              <label for="welcomeTxt">Título del widget</label>
+              <textarea class="textarea" id="welcomeTxt" maxlength="80" oninput="welcomeChange(this.value)">Reserva tu cita</textarea>
+              <div class="char-count"><span id="charNow">15</span>/80 caracteres</div>
+            </div>
+
+            <!-- subtitle -->
+            <div class="field">
+              <label for="subTxt">Mensaje de bienvenida
+                <span class="tooltip"><span class="help-ic">?</span><span class="tip">Texto que ve el paciente al abrir el widget. Orientado a reservar: refuerza que puede pedir cita a cualquier hora.</span></span>
+              </label>
+              <input class="input" type="text" id="subTxt" value="Hola, te ayudo a pedir cita 24/7" maxlength="60" oninput="subChange(this.value)">
+            </div>
+
+          </div>
+        </section>
+
+        <!-- CENTER: LIVE PREVIEW -->
+        <section class="card preview-card">
+          <div class="preview-toolbar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="url-bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>clinicasonrisa.es</div>
+            <span class="live-tag"><span class="pulse"></span>Vista previa en vivo</span>
+          </div>
+
+          <div class="mockup" id="mockup">
+            <div class="mock-nav">
+              <div class="mock-logo"></div>
+              <div class="mock-logo-txt">Clínica Sonrisa</div>
+              <div class="mn-links"><span>Tratamientos</span><span>Equipo</span><span>Contacto</span></div>
+            </div>
+            <div class="mock-hero">
+              <div class="mock-eyebrow">Tu salud dental, en buenas manos</div>
+              <div class="mock-h">Sonríe con total confianza</div>
+              <p class="mock-p">Limpieza dental, revisiones y tratamientos de estética en el centro de Madrid.</p>
+              <div class="mock-bar w1"></div>
+              <div class="mock-bar w2"></div>
+              <div class="mock-bar w3"></div>
+              <div class="mock-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Pedir cita</div>
+            </div>
+            <div class="mock-cards">
+              <div class="mock-mini-card"><div class="mc-ic"></div><div class="mc-l"></div><div class="mc-l s"></div></div>
+              <div class="mock-mini-card"><div class="mc-ic"></div><div class="mc-l"></div><div class="mc-l s"></div></div>
+              <div class="mock-mini-card"><div class="mc-ic"></div><div class="mc-l"></div><div class="mc-l s"></div></div>
+            </div>
+
+            <!-- THE WIDGET -->
+            <div class="widget br" id="widget" data-open="true" style="--w-color:#0f766e">
+
+              <!-- open chat panel (default shown so el cliente ve el resultado real) -->
+              <div class="chat-panel">
+                <div class="chat-head">
+                  <div class="ch-av"><svg id="wIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+                  <div>
+                    <div class="ch-tt" id="wTitle">Reserva tu cita</div>
+                    <div class="ch-st">En línea · responde 24/7</div>
+                  </div>
+                </div>
+                <div class="chat-body">
+                  <div class="chat-msg" id="wSub">Hola, te ayudo a pedir cita 24/7</div>
+                  <div class="chat-quick">
+                    <button type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Pedir cita ahora</button>
+                    <button type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Ver huecos de hoy</button>
+                  </div>
+                </div>
+                <div class="chat-foot">
+                  <span class="cf-input">Escribe tu mensaje…</span>
+                  <span class="cf-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>
+                </div>
+              </div>
+
+              <!-- closed bubble -->
+              <div class="widget-bubble">
+                <div class="wb-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+                <div class="wb-txt"><span id="wTitleBubble">Reserva tu cita</span><small id="wSubBubble">Hola, te ayudo a pedir cita 24/7</small></div>
+              </div>
+
+              <!-- launcher (open / close) -->
+              <button type="button" class="widget-launcher has-close" aria-label="Abrir o cerrar la vista previa del chat" onclick="toggleWidgetOpen()">
+                <svg class="ic-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <!-- mobile phone frame (hidden until vista móvil) -->
+            <div class="phone" aria-hidden="true">
+              <span class="ph-notch"></span>
+              <div class="ph-page">
+                <div class="mock-eyebrow">Tu salud dental</div>
+                <div class="ph-title">Sonríe con confianza</div>
+                <div class="mock-bar w1"></div>
+                <div class="mock-bar w2"></div>
+                <div class="mock-bar w3"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-foot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Así verán el widget tus pacientes
+            <button class="pf-toggle on" id="viewToggle" type="button" onclick="toggleView()">
+              <svg id="viewIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              <span id="viewLabel">Escritorio</span>
+            </button>
+            <div class="pf-controls">
+              <button class="pf-ctl sel" id="dtBtn" title="Escritorio" aria-label="Vista escritorio" aria-pressed="true" onclick="setView('desktop')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+              <button class="pf-ctl" id="mbBtn" title="Móvil" aria-label="Vista móvil" aria-pressed="false" onclick="setView('mobile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></button>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: CODE + STEPS -->
+        <div>
+          <section class="card code-card">
+            <div class="card-head">
+              <div class="ch-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+              <div>
+                <h2>Código de instalación</h2>
+                <p>Cópialo y pégalo en tu web una sola vez</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="code-block">
+                <div class="code-top"><span class="ct-dot"></span><span class="ct-name">Pégalo antes de &lt;/body&gt;</span></div>
+<pre class="code-pre"><span class="tk-com">&lt;!-- Widget de Waiable · Clínica Sonrisa --&gt;</span>
+<span class="tk-pun">&lt;</span><span class="tk-tag">script</span> <span class="tk-attr">src</span>=<span class="tk-str">"https://cdn.waiable.com/w.js"</span>
+  <span class="tk-attr">data-id</span>=<span class="tk-id" id="codeId">"wgt_8f3a21"</span>
+  <span class="tk-attr">data-color</span>=<span class="tk-str" id="codeColor">"#0F766E"</span>
+  <span class="tk-attr">data-channel</span>=<span class="tk-str" id="codeChannel">"whatsapp"</span>
+  <span class="tk-attr">data-position</span>=<span class="tk-str" id="codePos">"bottom-right"</span>
+  <span class="tk-attr">async</span><span class="tk-pun">&gt;&lt;/</span><span class="tk-tag">script</span><span class="tk-pun">&gt;</span></pre>
+              </div>
+
+              <!-- PRIMARY VALUE ACTION -->
+              <button class="copy-btn" id="copyBtn" onclick="copyCode()">
+                <svg id="copyIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span id="copyLabel">Copiar código de instalación</span>
+              </button>
+              <p class="copy-sub" id="copyStatus" aria-live="polite">Pégalo antes de <strong>&lt;/body&gt;</strong> y el widget capta citas 24/7.</p>
+
+              <!-- CLINIC_ID confirmation -->
+              <div class="id-ok">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+                <span class="io-t">Tu ID de clínica <code>wgt_8f3a21</code> ya está incluido. No tienes que cambiar nada: copia y pega tal cual.</span>
+              </div>
+
+              <div class="code-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>El código se actualiza solo cuando guardas cambios. No necesitas volver a pegarlo.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- STEPS -->
+          <section class="card" style="margin-top:20px">
+            <div class="card-head">
+              <div class="ch-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+              <div>
+                <h2>Instalación en 3 pasos</h2>
+                <p>Menos de 5 minutos</p>
+              </div>
+            </div>
+            <div class="card-body" style="padding-top:6px;padding-bottom:8px">
+              <div class="steps">
+                <div class="step" id="step1">
+                  <div class="step-num" id="step1num">1</div>
+                  <div class="step-body">
+                    <h3>Copia el código</h3>
+                    <p>Pulsa el botón verde <strong>Copiar código de instalación</strong> de arriba para llevarlo al portapapeles.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div class="step-body">
+                    <h3>Pégalo en tu web</h3>
+                    <p>Colócalo justo antes de la etiqueta <strong>&lt;/body&gt;</strong> de tu página, o en el bloque de "scripts" de tu gestor (WordPress, Wix…).</p>
+                    <a href="#" class="step-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>¿Usas WordPress? Ver guía</a>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div class="step-body">
+                    <h3>Recarga y verifica</h3>
+                    <p>Recarga tu web y confirma que aparece la burbuja en la esquina elegida. Si no se ve, revisa que el script esté <strong>antes de &lt;/body&gt;</strong> y vuelve a guardar tu página.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- HELP CARD -->
+          <section class="card help-card">
+            <div class="card-body">
+              <div class="hc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div>
+              <div class="hc-txt">
+                <strong>¿Te ayudamos a instalarlo?</strong>
+                <span>Lo dejamos listo en tu web sin coste.</span>
+              </div>
+              <a class="hc-btn">Pedir ayuda<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#fff"><path d="M20 6 9 17l-5-5"/></svg></span>
+  <span id="toastMsg">Código copiado al portapapeles</span>
+</div>
+
+<script>
+// ---- icons for channel ----
+const ICONS = {
+  whatsapp:'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/>',
+  reserva:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/>'
+};
+
+// ---- dirty state / save enablement ----
+let dirty=false;
+function markDirty(){
+  if(dirty) return;
+  dirty=true;
+  const b=document.getElementById('saveBtn');
+  b.disabled=false;
+  b.classList.remove('btn-secondary');
+  b.classList.add('btn-primary');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ---- color ----
+function applyColor(hex){
+  document.getElementById('widget').style.setProperty('--w-color',hex);
+  document.getElementById('hexPrev').style.background=hex;
+  document.getElementById('codeColor').textContent='"'+hex.toUpperCase()+'"';
+}
+function pickColor(el){
+  document.querySelectorAll('.swatch').forEach(s=>{s.classList.remove('sel');s.setAttribute('aria-checked','false');});
+  el.classList.add('sel');el.setAttribute('aria-checked','true');
+  const hex=el.dataset.color;
+  document.getElementById('hexInput').value=hex.replace('#','').toUpperCase();
+  applyColor(hex);markDirty();
+}
+function hexChange(v){
+  let h=v.replace(/[^0-9a-fA-F]/g,'').slice(0,6);
+  if(h.length===6){
+    const hex='#'+h;
+    document.querySelectorAll('.swatch').forEach(s=>{s.classList.remove('sel');s.setAttribute('aria-checked','false');});
+    applyColor(hex);markDirty();
+  }
+}
+
+// ---- channel ----
+function pickChannel(el){
+  document.querySelectorAll('.seg button').forEach(b=>{b.classList.remove('sel');b.setAttribute('aria-checked','false');});
+  el.classList.add('sel');el.setAttribute('aria-checked','true');
+  const ch=el.dataset.ch;
+  document.getElementById('wIcon').innerHTML=ICONS[ch];
+  document.getElementById('codeChannel').textContent='"'+ch+'"';
+  markDirty();
+}
+
+// ---- position ----
+function pickPosition(el){
+  document.querySelectorAll('.pos-opt').forEach(p=>{p.classList.remove('sel');p.setAttribute('aria-checked','false');});
+  el.classList.add('sel');el.setAttribute('aria-checked','true');
+  const pos=el.dataset.pos;
+  const w=document.getElementById('widget');
+  w.classList.remove('br','bl');
+  w.classList.add(pos);
+  document.getElementById('codePos').textContent= pos==='br'?'"bottom-right"':'"bottom-left"';
+  markDirty();
+}
+
+// ---- text (sync chat panel + closed bubble) ----
+function welcomeChange(v){
+  const t=v||'Reserva tu cita';
+  document.getElementById('wTitle').textContent=t;
+  document.getElementById('wTitleBubble').textContent=t;
+  document.getElementById('charNow').textContent=v.length;
+  markDirty();
+}
+function subChange(v){
+  const s=v||'Hola, te ayudo a pedir cita 24/7';
+  document.getElementById('wSub').textContent=s;
+  document.getElementById('wSubBubble').textContent=s;
+  markDirty();
+}
+
+// ---- copy (PRIMARY VALUE ACTION) ----
+function copyCode(){
+  const code='<!-- Widget de Waiable · Clínica Sonrisa -->\n<script src="https://cdn.waiable.com/w.js"\n  data-id="wgt_8f3a21"\n  data-color="'+document.getElementById('codeColor').textContent.replace(/"/g,'')+'"\n  data-channel="'+document.getElementById('codeChannel').textContent.replace(/"/g,'')+'"\n  data-position="'+document.getElementById('codePos').textContent.replace(/"/g,'')+'"\n  async><\/script>';
+  const status=document.getElementById('copyStatus');
+  const done=()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    document.getElementById('copyLabel').textContent='¡Copiado!';
+    document.getElementById('copyIcon').innerHTML='<path d="M20 6 9 17l-5-5"/>';
+    status.innerHTML='<strong style="color:var(--ok)">¡Copiado!</strong> Ahora pégalo antes de &lt;/body&gt; en tu web.';
+    showToast('Código copiado al portapapeles');
+    // mark step 1 as done
+    const s1=document.getElementById('step1'); s1.classList.add('done');
+    document.getElementById('step1num').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    setTimeout(()=>{
+      btn.classList.remove('copied');
+      document.getElementById('copyLabel').textContent='Copiar código de instalación';
+      document.getElementById('copyIcon').innerHTML='<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>';
+    },2600);
+  };
+  if(navigator.clipboard){navigator.clipboard.writeText(code).then(done).catch(done);}else{done();}
+}
+
+// ---- status toggle (switch) ----
+function toggleStatus(){
+  const t=document.getElementById('statusToggle');
+  const off=t.classList.toggle('off');
+  t.setAttribute('aria-checked', off?'false':'true');
+  t.setAttribute('aria-label', off?'Mostrar el widget en la web: desactivado':'Mostrar el widget en la web: activado');
+  const st=document.getElementById('statusState');
+  const w=document.getElementById('widget');
+  if(off){
+    w.style.opacity='.25';w.style.pointerEvents='none';
+    st.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Oculto';
+    showToast('Widget ocultado de la web');
+  }else{
+    w.style.opacity='1';w.style.pointerEvents='auto';
+    st.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Activo';
+    showToast('Widget visible en la web');
+  }
+}
+
+// ---- open/close chat preview ----
+function toggleWidgetOpen(){
+  const w=document.getElementById('widget');
+  w.dataset.open = w.dataset.open==='true' ? 'false' : 'true';
+}
+
+// ---- desktop / mobile preview ----
+function setView(mode){
+  const m=document.getElementById('mockup');
+  const dt=document.getElementById('dtBtn'), mb=document.getElementById('mbBtn');
+  const tg=document.getElementById('viewToggle');
+  if(mode==='mobile'){
+    m.classList.add('is-mobile');
+    mb.classList.add('sel');dt.classList.remove('sel');
+    mb.setAttribute('aria-pressed','true');dt.setAttribute('aria-pressed','false');
+    tg.classList.remove('on');
+    document.getElementById('viewLabel').textContent='Móvil';
+    document.getElementById('viewIcon').innerHTML='<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>';
+  }else{
+    m.classList.remove('is-mobile');
+    dt.classList.add('sel');mb.classList.remove('sel');
+    dt.setAttribute('aria-pressed','true');mb.setAttribute('aria-pressed','false');
+    tg.classList.add('on');
+    document.getElementById('viewLabel').textContent='Escritorio';
+    document.getElementById('viewIcon').innerHTML='<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>';
+  }
+}
+function toggleView(){
+  const isMobile=document.getElementById('mockup').classList.contains('is-mobile');
+  setView(isMobile?'desktop':'mobile');
+}
+
+// ---- save with states ----
+function saveChanges(){
+  const b=document.getElementById('saveBtn');
+  if(b.disabled) return;
+  b.classList.add('is-loading');
+  document.getElementById('saveIcon').outerHTML='<span class="spin" id="saveIcon"></span>';
+  document.getElementById('saveLabel').textContent='Guardando…';
+  setTimeout(()=>{
+    b.classList.remove('is-loading');
+    document.getElementById('saveIcon').outerHTML='<svg id="saveIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    document.getElementById('saveLabel').textContent='Cambios guardados';
+    showToast('Cambios guardados. Tu código ya está actualizado.');
+    dirty=false;b.disabled=true;
+    b.classList.remove('btn-primary');b.classList.add('btn-secondary');
+    setTimeout(()=>{
+      document.getElementById('saveIcon').outerHTML='<svg id="saveIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>';
+      document.getElementById('saveLabel').textContent='Guardar cambios';
+    },2200);
+  },1100);
+}
+
+// ---- reset ----
+function resetAll(){
+  showToast('Configuración restablecida a los valores por defecto');
+  document.querySelector('.swatch[data-color="#0f766e"]').click();
+  document.querySelector('.seg button[data-ch="whatsapp"]').click();
+  document.querySelector('.pos-opt[data-pos="br"]').click();
+  const wt=document.getElementById('welcomeTxt'); wt.value='Reserva tu cita'; welcomeChange(wt.value);
+  const st=document.getElementById('subTxt'); st.value='Hola, te ayudo a pedir cita 24/7'; subChange(st.value);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurar clínica · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg); color:var(--text);
+  font-size:15px; line-height:1.55; min-height:100vh;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+svg{display:block;flex-shrink:0}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== LAYOUT ===== */
+.layout{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  background:radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%), linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+  color:#e8f1ef;padding:18px 14px;overflow-y:auto;z-index:30;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 18px}
+.brand-mark{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--accent);display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 4px 12px rgba(17,163,145,.4)}
+.brand-name{font-weight:600;font-size:16px;color:#fff;line-height:1.1}
+.brand-tag{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:2px}
+.nav-group{margin-top:14px}
+.nav-head{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.62);font-weight:600;padding:0 10px 7px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;color:rgba(232,241,239,.85);position:relative;margin-bottom:2px;min-height:40px;transition:background .14s ease,color .14s ease}
+.nav-item svg{width:18px;height:18px;opacity:.85}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--primary-bright);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(15,148,134,.4)}
+.nav-item.active svg{opacity:1}
+.nav-item.active::before{content:"";position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:3px;height:22px;background:var(--cyan);border-radius:0 3px 3px 0}
+.nav-badge{margin-left:auto;background:rgba(94,224,201,.18);color:var(--cyan);font-size:12px;font-weight:600;padding:1px 8px;border-radius:var(--radius-pill)}
+.sidebar-foot{margin-top:auto;padding-top:16px;display:flex;flex-direction:column;gap:10px}
+.plan-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:11px 12px}
+.plan-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.plan-name{font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px}
+.plan-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px rgba(94,224,201,.18)}
+.plan-link{font-size:13px;color:var(--cyan);font-weight:600}
+.user-mini{display:flex;align-items:center;gap:10px;padding:6px 4px}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:13px;flex-shrink:0}
+.user-mini .avatar{background:linear-gradient(135deg,var(--accent),var(--primary));color:#fff}
+.user-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.user-role{font-size:12px;color:rgba(232,241,239,.7)}
+
+/* ===== MAIN ===== */
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{
+  position:sticky;top:0;z-index:20;background:var(--surface);box-shadow:var(--shadow-xs);
+  border-bottom:1px solid var(--line);height:60px;display:flex;align-items:center;gap:18px;padding:0 24px;
+}
+.topbar-title h2{font-size:18px;font-weight:600;line-height:1.2}
+.crumb{font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:5px}
+.crumb svg{width:13px;height:13px}
+.search{flex:1;max-width:440px;margin:0 auto;position:relative}
+.search input{
+  width:100%;height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  background:var(--surface-soft);padding:0 64px 0 38px;font-size:14px;color:var(--text);font-family:inherit;
+}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{outline:none;border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px var(--primary-soft)}
+.search .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.search .kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:2px 6px;font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.venue-sel{display:flex;align-items:center;gap:7px;height:38px;padding:0 12px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);font-size:13px;font-weight:600;color:var(--text-2)}
+.venue-sel svg{width:15px;height:15px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;white-space:nowrap}
+.chip svg{width:13px;height:13px}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.info{background:var(--info-soft);color:var(--info)}
+.chip.primary{background:var(--primary-soft);color:var(--primary)}
+/* AI status chip toned down: neutral, secondary, not competing with WhatsApp/Agenda */
+.chip.subtle{background:var(--surface);color:var(--muted);border:1px solid var(--line)}
+.chip.subtle svg{color:var(--muted)}
+.chips-row{display:flex;gap:7px}
+.icon-btn{width:38px;height:38px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--text-2);border:1px solid var(--line);background:var(--surface);position:relative}
+.icon-btn:hover{background:var(--surface-soft)}
+.icon-btn svg{width:18px;height:18px}
+.icon-btn .notif-dot{position:absolute;top:7px;right:8px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid #fff}
+.topbar-right .avatar{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;cursor:pointer}
+
+/* ===== CONTENT ===== */
+.content{padding:26px 32px 56px;max-width:1080px;width:100%;margin:0 auto}
+
+/* Page header */
+.page-head{margin-bottom:22px}
+.page-head h1{font-size:26px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.page-head .lede{font-size:15px;color:var(--text-2);margin-top:6px;max-width:680px;line-height:1.55}
+
+/* ===== HERO PROGRESS ===== */
+.hero{
+  position:relative;overflow:hidden;border-radius:var(--radius-lg);padding:26px 28px;margin-bottom:22px;
+  background:radial-gradient(circle at 88% 10%, rgba(94,224,201,.16), transparent 46%), linear-gradient(135deg,#084b46 0%,#0a5d57 48%,#0f766e 100%);
+  color:#fff;box-shadow:var(--shadow-md);
+}
+.hero::after{content:"";position:absolute;right:-40px;bottom:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero-grid{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;position:relative;z-index:1}
+.hero-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);border-radius:var(--radius-pill);padding:5px 12px;font-size:12px;font-weight:600;margin-bottom:12px;color:#fff}
+.hero-pill svg{width:14px;height:14px}
+.hero h2{font-size:23px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.hero p{font-size:14.5px;color:rgba(255,255,255,.92);margin-top:7px;max-width:520px;line-height:1.55}
+.hero-bar-wrap{margin-top:18px;max-width:560px}
+.hero-bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.hero-bar-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.94)}
+.hero-pct{font-variant-numeric:tabular-nums;font-size:15px;font-weight:800}
+.hero-bar{height:12px;background:rgba(0,0,0,.24);border-radius:var(--radius-pill);overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.22)}
+.hero-bar-fill{height:100%;width:71%;border-radius:var(--radius-pill);background:linear-gradient(90deg,var(--cyan),#a8f0e0);box-shadow:0 0 12px rgba(94,224,201,.55);transition:width .6s cubic-bezier(.4,0,.2,1)}
+.hero-bar-foot{font-size:13px;color:rgba(255,255,255,.92);margin-top:9px;display:flex;align-items:center;gap:6px;line-height:1.5}
+.hero-bar-foot svg{width:14px;height:14px;flex-shrink:0}
+/* radial ring — DECORATIVO, deriva de la misma fuente que la barra */
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ring{position:relative;width:128px;height:128px}
+.ring svg{transform:rotate(-90deg)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-num{font-size:34px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.ring-num span{font-size:18px;font-weight:600;color:rgba(255,255,255,.78)}
+.ring-sub{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.82);margin-top:3px}
+.ring-cap{font-size:13px;font-weight:600;color:rgba(255,255,255,.9)}
+
+/* ===== NEXT ACTION BANNER — ÚNICO CTA PRIMARIO ===== */
+.next-action{
+  display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--line);
+  border-left:4px solid var(--primary);border-radius:var(--radius);padding:18px 22px;margin-bottom:24px;
+  box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
+}
+.next-action::before{content:"";position:absolute;left:0;top:0;bottom:0;width:160px;background:radial-gradient(circle at left,var(--primary-tint),transparent 72%);pointer-events:none}
+.na-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#1faf54,#0d8a3e);color:#fff;display:grid;place-items:center;flex-shrink:0;position:relative;z-index:1;box-shadow:0 6px 16px rgba(13,138,62,.3)}
+.na-icon svg{width:26px;height:26px}
+.na-body{flex:1;min-width:0;position:relative;z-index:1}
+.na-kicker{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--primary);background:var(--primary-soft);border-radius:var(--radius-pill);padding:3px 10px}
+.na-kicker svg{width:13px;height:13px}
+.na-title{font-size:17px;font-weight:700;margin-top:8px;letter-spacing:-.01em;line-height:1.3}
+.na-desc{font-size:13.5px;color:var(--text-2);margin-top:4px;line-height:1.5}
+.na-proof{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+.na-stat{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-2);background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:4px 11px}
+.na-stat b{color:var(--primary);font-weight:800}
+.na-stat svg{width:14px;height:14px;color:var(--primary)}
+.na-cta{position:relative;z-index:1;flex-shrink:0}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;line-height:1.2;border:1px solid transparent;transition:transform .16s ease,box-shadow .16s ease,background .16s ease;white-space:nowrap}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.24)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 10px 22px rgba(15,118,110,.3)}
+.btn-primary.lg{height:48px;font-size:15px;padding:0 24px}
+.btn-secondary{background:var(--surface);color:var(--primary);border:1px solid var(--line-strong)}
+.btn-secondary:hover{background:var(--primary-tint);border-color:var(--primary);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text-2);height:38px;padding:0 12px}
+.btn-ghost:hover{background:var(--surface-soft);color:var(--text)}
+.btn-sm{height:36px;padding:0 13px;font-size:13px}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.6;cursor:not-allowed;pointer-events:none}
+.btn.is-loading{pointer-events:none}
+.btn.is-loading .btn-spin{display:inline-block}
+.btn.is-loading .btn-label-default{display:none}
+.btn-spin{display:none;width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+.btn-label-default{display:inline-flex;align-items:center;gap:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== GROUPS (acordeón) ===== */
+.group{margin-bottom:18px}
+.group-head{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 6px;border-radius:var(--radius-sm)}
+.group-head.toggle{cursor:pointer}
+.group-head.toggle:hover{background:var(--surface-soft)}
+.group-title{font-size:16px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.group-title svg{width:19px;height:19px}
+.group-count{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-2);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-pill);padding:3px 11px}
+.group-count.complete{color:var(--ok);background:var(--ok-soft);border-color:#bfe6cf}
+.group-count svg{width:14px;height:14px}
+.group-chevron{margin-left:auto;color:var(--muted);transition:transform .2s ease;display:grid;place-items:center}
+.group-chevron svg{width:18px;height:18px}
+.group[data-collapsed="true"] .group-chevron{transform:rotate(-90deg)}
+.group[data-collapsed="true"] .group-body{display:none}
+.group-body{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+
+/* ===== STEP CARDS (current + pending — expandidos) ===== */
+.step{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;
+  box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+.step:hover{box-shadow:var(--shadow-md)}
+.step.current{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary),var(--shadow-md)}
+.step-top{display:flex;align-items:flex-start;gap:15px}
+.step-marker{width:40px;height:40px;border-radius:12px;flex-shrink:0;display:grid;place-items:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.step-marker svg{width:20px;height:20px}
+.step-marker.current{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(15,118,110,.3)}
+.step-marker.pending{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line-strong)}
+.step-main{flex:1;min-width:0}
+.step-titlerow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.step-title{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.step-why{font-size:13.5px;color:var(--text-2);margin-top:6px;line-height:1.55;max-width:62ch}
+.step-meta{display:flex;align-items:center;gap:14px;margin-top:11px;flex-wrap:wrap}
+.step-stat{font-size:13px;color:var(--text-2);font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.step-stat svg{width:15px;height:15px;color:var(--muted);opacity:.85}
+.step-actions{display:flex;align-items:center;gap:10px;margin-top:15px;flex-wrap:wrap}
+
+.badge{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:var(--radius-pill);font-size:12px;font-weight:700;white-space:nowrap;border:1px solid transparent}
+.badge svg{width:13px;height:13px}
+.badge.done{background:var(--ok-soft);color:var(--ok);border-color:#bfe6cf}
+.badge.current{background:var(--primary-soft);color:var(--primary-dark);border-color:#a9ddd5}
+.badge.pending{background:var(--surface-soft);color:var(--text-2);border-color:var(--line-strong)}
+.badge.optional{background:var(--info-soft);color:var(--info);border-color:#bcd6f1}
+
+/* current step detail */
+.step-detail{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line-strong)}
+.qr-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.qr-box{width:118px;height:118px;border-radius:var(--radius-sm);border:1px solid var(--line-strong);background:var(--surface-soft);display:grid;place-items:center;flex-shrink:0;color:var(--muted)}
+.qr-hint{flex:1;min-width:220px}
+.qr-hint h4{font-size:14px;font-weight:700}
+.qr-hint ol{margin:8px 0 0;padding-left:18px}
+.qr-hint li{font-size:13.5px;color:var(--text-2);margin-bottom:5px;line-height:1.5}
+
+/* ===== DONE — filas compactas ===== */
+.done-row{display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow-sm);transition:border-color .16s ease}
+.done-row:hover{border-color:var(--line-strong)}
+.done-check{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;background:var(--ok-soft);color:var(--ok)}
+.done-check svg{width:16px;height:16px}
+.done-title{font-size:14px;font-weight:600;flex:1;min-width:0}
+.done-meta{font-size:13px;color:var(--muted);font-weight:500}
+.done-edit{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--primary);border:1px solid transparent;border-radius:var(--radius-sm);padding:6px 11px;min-height:36px;transition:.15s}
+.done-edit svg{width:14px;height:14px}
+.done-edit:hover{background:var(--primary-tint);border-color:var(--line)}
+
+/* ===== WIDGET SNIPPET ===== */
+.snippet-wrap{margin-top:14px}
+.snippet-label{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px;flex-wrap:wrap}
+.snippet-label label{font-size:13px;font-weight:600;color:var(--text-2)}
+.snippet-label code{font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;background:var(--surface-soft);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.snippet-code{
+  width:100%;min-height:92px;resize:vertical;font-family:'SF Mono',ui-monospace,Menlo,monospace;
+  font-size:13px;line-height:1.6;color:var(--text);background:var(--surface-soft);
+  border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:12px 14px;
+}
+.snippet-code:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:var(--primary)}
+
+/* help tooltip */
+.help{position:relative;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--surface-soft);border:1px solid var(--line-strong);color:var(--muted);font-size:12px;font-weight:700;cursor:help;flex-shrink:0}
+.help svg{width:11px;height:11px}
+.help:hover,.help:focus-visible{background:var(--primary-soft);color:var(--primary);border-color:var(--primary)}
+.help .tip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);
+  background:var(--text);color:#fff;font-size:13px;font-weight:500;line-height:1.45;padding:9px 12px;border-radius:var(--radius-sm);
+  width:236px;text-align:left;opacity:0;visibility:hidden;transition:.16s ease;box-shadow:var(--shadow-lg);z-index:40;
+}
+.help .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--text)}
+.help:hover .tip,.help:focus-visible .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* ===== PUBLIC LINKS CARD ===== */
+.links-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;margin-top:26px}
+.links-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;background:var(--surface-soft)}
+.links-head .li{width:38px;height:38px;border-radius:var(--radius-sm);background:var(--primary-soft);color:var(--primary);display:grid;place-items:center}
+.links-head .li svg{width:20px;height:20px}
+.links-head h3{font-size:16px;font-weight:700}
+.links-head p{font-size:13px;color:var(--text-2);margin-top:1px;line-height:1.45}
+.links-body{padding:18px 22px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.link-item{border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;background:var(--surface-soft)}
+.link-top{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.link-top svg{width:17px;height:17px;color:var(--primary)}
+.link-top .lt-title{font-size:13.5px;font-weight:700}
+.link-top .badge{margin-left:auto}
+.link-url{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:8px 10px}
+.link-url input{flex:1;border:none;background:none;font-size:13px;color:var(--text-2);font-family:inherit;min-width:0;text-overflow:ellipsis}
+.link-url input:focus{outline:none}
+.copy-btn{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--primary);padding:6px 9px;border-radius:7px;flex-shrink:0;min-height:36px}
+.copy-btn:hover{background:var(--primary-tint)}
+.copy-btn svg{width:14px;height:14px}
+.link-actions{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+
+/* ===== FOOTER ACTIONS ===== */
+.foot-actions{display:flex;align-items:center;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line);flex-wrap:wrap}
+.foot-actions .spacer{flex:1}
+.foot-note{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.foot-note svg{width:15px;height:15px}
+
+/* ===== TOAST ===== */
+.toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}
+.toast{
+  display:flex;align-items:center;gap:11px;background:var(--text);color:#fff;border-radius:var(--radius);
+  padding:13px 18px;box-shadow:var(--shadow-lg);font-size:14px;font-weight:600;
+  opacity:0;transform:translateY(12px);transition:.25s ease;pointer-events:auto;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast .ti{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.toast-ok .ti{background:var(--ok);color:#fff}
+.toast-err{background:#3a1614}
+.toast-err .ti{background:var(--danger);color:#fff}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .layout{grid-template-columns:68px 1fr}
+  .sidebar{padding:18px 10px}
+  .brand-name,.brand-tag,.nav-head,.nav-item span,.nav-badge,.plan-card,.user-name,.user-role{display:none}
+  .brand{justify-content:center;padding:6px 0 18px}
+  .nav-item{justify-content:center;padding:11px 0}
+  .nav-item.active::before{left:-10px}
+  .user-mini{justify-content:center}
+  .sidebar-foot{align-items:center}
+  .search{display:none}
+  .chips-row{display:none}
+}
+@media(max-width:860px){
+  .content{padding:20px 18px 48px}
+  .hero-grid{grid-template-columns:1fr}
+  .ring-wrap{flex-direction:row;justify-content:flex-start;align-items:center}
+  .links-body{grid-template-columns:1fr}
+  .next-action{flex-wrap:wrap}
+  .na-cta{width:100%}
+  .na-cta .btn{width:100%}
+  .venue-sel span{display:none}
+}
+@media(max-width:560px){
+  .page-head h1{font-size:22px}
+  .hero{padding:20px}
+  .topbar{padding:0 14px;gap:10px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ===== SIDEBAR (CHROME) ===== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-tag">Clínicas</div>
+      </div>
+    </div>
+
+    <nav aria-label="Navegación principal">
+      <div class="nav-group">
+        <div class="nav-head">Inicio</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Panel</span></a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Agenda</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Citas</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M16 2l4 4-4 4"/></svg><span>Huecos de agenda</span><span class="nav-badge">7</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg><span>Solicitudes</span></a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Conversaciones</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-4-1L3 20l1-5.5a8.38 8.38 0 0 1-1-4A8.5 8.5 0 0 1 11.5 2a8.38 8.38 0 0 1 9.5 9.5z"/></svg><span>WhatsApp</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Llamadas</span></a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Pacientes</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Contactos</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg><span>Oportunidades</span></a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Crecimiento</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg><span>Campañas</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="7"/><rect x="13" y="6" width="3" height="11"/></svg><span>Informes</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg><span>Integraciones</span></a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Configuración</div>
+        <a class="nav-item active" href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg><span>Clínica</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Ajustes</span></a>
+      </div>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="plan-card">
+        <div class="plan-row">
+          <div class="plan-name"><span class="plan-dot"></span>Plan Growth</div>
+          <a class="plan-link" href="#">Gestionar</a>
+        </div>
+      </div>
+      <div class="user-mini">
+        <div class="avatar" aria-hidden="true">CR</div>
+        <div>
+          <div class="user-name">Carmen Ruiz</div>
+          <div class="user-role">Recepción</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+
+    <!-- TOPBAR (CHROME) -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <h2>Clínica</h2>
+        <div class="crumb">Configuración
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          Puesta en marcha
+        </div>
+      </div>
+
+      <div class="search">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" placeholder="Buscar pacientes, citas, conversaciones…" aria-label="Buscar">
+        <span class="kbd" aria-hidden="true">⌘K</span>
+      </div>
+
+      <div class="topbar-right">
+        <button class="venue-sel" type="button" aria-label="Seleccionar sede">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Madrid Centro</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="chips-row">
+          <span class="chip info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.6"/><path d="M21 3v6h-6"/></svg>Agenda sincronizada</span>
+          <span class="chip subtle" title="Las respuestas automáticas se proponen; tú decides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Sugerencias activas</span>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Notificaciones">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar" title="Carmen Ruiz" aria-hidden="true">CR</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <div class="page-head">
+        <h1>Termina de poner en marcha tu clínica</h1>
+        <p class="lede">Completa estos pasos para empezar a recibir y gestionar citas desde WhatsApp, la web y el teléfono. Cuanto antes lo dejes listo, antes llenas tu agenda.</p>
+      </div>
+
+      <!-- HERO PROGRESS: UNA sola métrica (barra) + anillo decorativo derivado -->
+      <section class="hero" aria-labelledby="progress-title">
+        <div class="hero-grid">
+          <div>
+            <span class="hero-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              Puesta en marcha
+            </span>
+            <h2 id="progress-title">Te faltan 2 pasos para empezar a captar citas</h2>
+            <p>Conecta WhatsApp y el widget de tu web: son los canales por los que tus pacientes te pedirán cita.</p>
+
+            <div class="hero-bar-wrap">
+              <div class="hero-bar-top">
+                <span class="hero-bar-label">Progreso del setup</span>
+                <span class="hero-pct" id="progress-pct">71%</span>
+              </div>
+              <div class="hero-bar" role="progressbar" aria-valuenow="71" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso de configuración" aria-describedby="progress-foot">
+                <div class="hero-bar-fill" id="progress-fill" style="width:71%"></div>
+              </div>
+              <p class="hero-bar-foot" id="progress-foot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+                <span><strong id="progress-frac">5 de 7</strong> pasos esenciales hechos · faltan 2 para empezar a recibir citas.</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Anillo DECORATIVO: misma fuente de datos, accesible como imagen -->
+          <div class="ring-wrap">
+            <div class="ring" role="img" id="ring" aria-label="5 de 7 pasos esenciales completados, 71 por ciento">
+              <svg width="128" height="128" viewBox="0 0 128 128" aria-hidden="true">
+                <circle cx="64" cy="64" r="54" fill="none" stroke="rgba(0,0,0,.24)" stroke-width="12"/>
+                <circle id="ring-arc" cx="64" cy="64" r="54" fill="none" stroke="url(#g)" stroke-width="12" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="98.4"/>
+                <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5ee0c9"/><stop offset="1" stop-color="#a8f0e0"/></linearGradient></defs>
+              </svg>
+              <div class="ring-center" aria-hidden="true">
+                <div class="ring-num" id="ring-num">5<span>/7</span></div>
+                <div class="ring-sub">Pasos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT ACTION: ÚNICO CTA PRIMARIO de la pantalla -->
+      <section class="next-action" aria-labelledby="na-title">
+        <div class="na-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m0 18.15c-1.52 0-3.01-.41-4.31-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.01 4.54-3.69 8.51-8.23 8.51m4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg>
+        </div>
+        <div class="na-body">
+          <span class="na-kicker">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Tu siguiente paso
+          </span>
+          <h3 class="na-title" id="na-title">Conecta WhatsApp · el canal que más citas te va a dar</h3>
+          <p class="na-desc" id="na-desc">Es el canal por el que más pacientes te escriben. Conéctalo y tu equipo responderá y agendará desde un único buzón. Solo necesitas escanear un QR.</p>
+          <div class="na-proof">
+            <span class="na-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Las clínicas que lo conectan captan <b>+38 citas/mes</b></span>
+            <span class="na-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>~5 min · escanea un QR</span>
+          </div>
+        </div>
+        <div class="na-cta">
+          <button class="btn btn-primary lg" type="button" id="cta-main" onclick="connectWhatsApp(this)">
+            <span class="btn-spin" aria-hidden="true"></span>
+            <span class="btn-label-default">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              Conectar WhatsApp
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== GRUPO: CONECTAR CANALES (current + pending, sobre el pliegue) ===== -->
+      <section class="group" aria-labelledby="grp-canales">
+        <div class="group-head">
+          <span class="group-title" id="grp-canales">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+            Conectar canales
+          </span>
+          <span class="group-count" id="count-canales">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            <span id="count-canales-txt">0 de 2 hechos</span>
+          </span>
+        </div>
+        <div class="group-body">
+
+          <!-- WhatsApp (current) — CTA degradado a secundario; mismo label; ancla al banner -->
+          <article class="step current" id="step-whatsapp">
+            <div class="step-top">
+              <div class="step-marker current" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </div>
+              <div class="step-main">
+                <div class="step-titlerow">
+                  <span class="step-title">Conectar WhatsApp</span>
+                  <span class="badge current"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>Siguiente paso</span>
+                  <span class="help" tabindex="0" role="button" aria-label="Qué es conectar WhatsApp" aria-describedby="tip-wa">?
+                    <span class="tip" id="tip-wa" role="tooltip">Vincula tu número de WhatsApp para recibir y responder los mensajes de pacientes desde un buzón compartido. Las respuestas automáticas son opcionales y siempre las revisas tú.</span>
+                  </span>
+                </div>
+                <p class="step-why">Es el canal por el que más pacientes piden cita. Tu equipo atiende todo desde un buzón compartido, con respuestas sugeridas listas para enviar cuando te interese.</p>
+                <div class="step-meta">
+                  <span class="step-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>~5 min</span>
+                  <span class="step-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3z"/></svg>Escanea un QR desde tu móvil</span>
+                </div>
+
+                <div class="step-detail">
+                  <div class="qr-row">
+                    <div class="qr-box" id="qr-box" aria-label="Vista previa del código QR de WhatsApp">
+                      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--line-strong)" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM21 14v3M17 21h4"/></svg>
+                    </div>
+                    <div class="qr-hint">
+                      <h4>Cómo conectarlo</h4>
+                      <ol>
+                        <li>Pulsa <strong>«Conectar WhatsApp»</strong> para generar el código QR.</li>
+                        <li>Abre WhatsApp &gt; Ajustes &gt; Dispositivos vinculados.</li>
+                        <li>Escanea el código. Listo: ya puedes recibir y responder mensajes.</li>
+                      </ol>
+                    </div>
+                  </div>
+                  <div class="step-actions">
+                    <!-- SECUNDARIO; mismo label exacto; lleva al CTA primario -->
+                    <button class="btn btn-secondary" type="button" onclick="focusPrimaryCTA()">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                      Conectar WhatsApp
+                    </button>
+                    <a class="btn btn-ghost btn-sm" href="#">Ver guía en vídeo</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Widget web (pending) -->
+          <article class="step" id="step-widget">
+            <div class="step-top">
+              <div class="step-marker pending" aria-hidden="true">7</div>
+              <div class="step-main">
+                <div class="step-titlerow">
+                  <span class="step-title">Instalar el widget en tu web</span>
+                  <span class="badge pending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>Pendiente</span>
+                  <span class="help" tabindex="0" role="button" aria-label="Qué es el widget web" aria-describedby="tip-widget">?
+                    <span class="tip" id="tip-widget" role="tooltip">Un botón flotante en tu web para que los visitantes pidan cita sin llamar. La solicitud llega directa a tu agenda.</span>
+                  </span>
+                </div>
+                <p class="step-why">Convierte las visitas de tu web en citas: el botón recoge la solicitud justo cuando el paciente está interesado.</p>
+                <div class="step-meta">
+                  <span class="step-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>~3 min</span>
+                  <span class="step-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Copiar y pegar · sin conocimientos técnicos</span>
+                </div>
+
+                <div class="snippet-wrap">
+                  <div class="snippet-label">
+                    <label for="widget-snippet">Pega esto antes de <code>&lt;/body&gt;</code> en tu web</label>
+                    <button class="btn btn-secondary btn-sm" type="button" onclick="copySnippet(this)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      Copiar código
+                    </button>
+                  </div>
+                  <textarea class="snippet-code" id="widget-snippet" readonly rows="4" spellcheck="false" aria-label="Fragmento de código del widget">&lt;script src="https://cdn.waiable.com/widget.js"
+  data-clinic="cl_madrid_9f3a2"
+  data-locale="es-ES" async&gt;&lt;/script&gt;</textarea>
+                </div>
+                <div class="step-actions">
+                  <button class="btn btn-secondary" type="button" onclick="genericLoading(this,'Comprobando la instalación…','Widget detectado en tu web')">
+                    <span class="btn-spin" aria-hidden="true"></span>
+                    <span class="btn-label-default">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.22-8.56"/><path d="m21 3-9 9-3-3"/></svg>
+                      Comprobar instalación
+                    </span>
+                  </button>
+                  <a class="btn btn-ghost btn-sm" href="#">Enviar código a mi desarrollador</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ===== GRUPO: DATOS ESENCIALES (4/4) — colapsado, filas compactas ===== -->
+      <section class="group" data-collapsed="true" aria-labelledby="grp-esenciales">
+        <button class="group-head toggle" type="button" aria-expanded="false" aria-controls="body-esenciales" onclick="toggleGroup(this)">
+          <span class="group-title" id="grp-esenciales">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            Datos esenciales
+          </span>
+          <span class="group-count complete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>
+            4 de 4 hechos
+          </span>
+          <span class="group-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="group-body" id="body-esenciales">
+
+          <div class="done-row">
+            <span class="done-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+            <span class="done-title">Servicios y tratamientos <span class="sr-only">— hecho</span></span>
+            <span class="done-meta">6 servicios activos</span>
+            <a href="#" class="done-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar</a>
+          </div>
+
+          <div class="done-row">
+            <span class="done-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+            <span class="done-title">Sedes <span class="sr-only">— hecho</span></span>
+            <span class="done-meta">Madrid Centro · Madrid Norte</span>
+            <a href="#" class="done-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar</a>
+          </div>
+
+          <div class="done-row">
+            <span class="done-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+            <span class="done-title">Profesionales del equipo <span class="sr-only">— hecho</span></span>
+            <span class="done-meta">4 profesionales</span>
+            <a href="#" class="done-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar</a>
+          </div>
+
+          <div class="done-row">
+            <span class="done-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+            <span class="done-title">Horarios de disponibilidad <span class="sr-only">— hecho</span></span>
+            <span class="done-meta">L–V 9:00–20:00 · S 9:00–14:00</span>
+            <a href="#" class="done-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar</a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===== GRUPO: SINCRONIZACIÓN DE AGENDA (1/1) — colapsado ===== -->
+      <section class="group" data-collapsed="true" aria-labelledby="grp-sync">
+        <button class="group-head toggle" type="button" aria-expanded="false" aria-controls="body-sync" onclick="toggleGroup(this)">
+          <span class="group-title" id="grp-sync">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+            Sincronización de agenda
+          </span>
+          <span class="group-count complete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>
+            1 de 1 hecho
+          </span>
+          <span class="group-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="group-body" id="body-sync">
+          <div class="done-row">
+            <span class="done-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+            <span class="done-title">Google Calendar conectado <span class="sr-only">— hecho</span></span>
+            <span class="done-meta">recepcion@clinicamadrid.es · sinc. hace 3 min</span>
+            <a href="#" class="done-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Gestionar</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== GRUPO: MEJORAS OPCIONALES (bonus, no bloquean el 100%) ===== -->
+      <section class="group" data-collapsed="true" aria-labelledby="grp-opcionales">
+        <button class="group-head toggle" type="button" aria-expanded="false" aria-controls="body-opcionales" onclick="toggleGroup(this)">
+          <span class="group-title" id="grp-opcionales">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--info)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 .6-5.3 4.6L18.3 21 12 17l-6.3 4 1.6-6.8L2 9.6 9 9z"/></svg>
+            Mejoras opcionales
+          </span>
+          <span class="group-count">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 .6-5.3 4.6L18.3 21 12 17l-6.3 4 1.6-6.8L2 9.6 9 9z"/></svg>
+            Bonus · no bloquean el 100%
+          </span>
+          <span class="group-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="group-body" id="body-opcionales">
+          <article class="step">
+            <div class="step-top">
+              <div class="step-marker pending" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="step-main">
+                <div class="step-titlerow">
+                  <span class="step-title">Configurar seguros y mutuas</span>
+                  <span class="badge optional"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 .6-5.3 4.6L18.3 21 12 17l-6.3 4 1.6-6.8L2 9.6 9 9z"/></svg>Opcional</span>
+                  <span class="help" tabindex="0" role="button" aria-label="Qué hacen los seguros" aria-describedby="tip-seguros">?
+                    <span class="tip" id="tip-seguros" role="tooltip">Si trabajas con mutuas, se tiene en cuenta la cobertura del paciente al agendar. Puedes añadirlo más tarde.</span>
+                  </span>
+                </div>
+                <p class="step-why">Indica con qué aseguradoras trabajas y se comprobará la cobertura antes de dar la cita. No es imprescindible para empezar.</p>
+                <div class="step-meta">
+                  <span class="step-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Adeslas · Sanitas · DKV · Asisa…</span>
+                </div>
+                <div class="step-actions">
+                  <button class="btn btn-secondary" type="button" onclick="genericLoading(this,'Cargando seguros…','Sección de seguros lista')">
+                    <span class="btn-spin" aria-hidden="true"></span>
+                    <span class="btn-label-default">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      Configurar seguros
+                    </span>
+                  </button>
+                  <button class="btn btn-ghost btn-sm" type="button" onclick="toast('ok','Lo retomarás cuando quieras desde Ajustes')">Omitir por ahora</button>
+                </div>
+                <p class="step-why" style="margin-top:10px;color:var(--muted)">Puedes añadir seguros más tarde desde <strong>Ajustes &gt; Seguros</strong>. No afecta a tu progreso.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== PUBLIC LINKS CARD ===== -->
+      <section class="links-card" aria-labelledby="links-title">
+        <div class="links-head">
+          <div class="li" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>
+          </div>
+          <div>
+            <h3 id="links-title">Tus enlaces públicos</h3>
+            <p>Comparte tu página de reserva o instala el widget para que los pacientes pidan cita solos.</p>
+          </div>
+        </div>
+        <div class="links-body">
+
+          <!-- Página de reserva -->
+          <div class="link-item">
+            <div class="link-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg>
+              <span class="lt-title">Página de reserva</span>
+              <span class="badge done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Activa</span>
+            </div>
+            <div class="link-url">
+              <input type="text" value="reserva.waiable.com/clinica-madrid" readonly aria-label="URL de la página de reserva" id="url-reserva">
+              <button class="copy-btn" type="button" onclick="copyField('url-reserva','Enlace de reserva copiado')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copiar
+              </button>
+            </div>
+            <div class="link-actions">
+              <a class="btn btn-secondary btn-sm" href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>
+                Abrir
+              </a>
+              <a class="btn btn-ghost btn-sm" href="#">Compartir por WhatsApp</a>
+            </div>
+          </div>
+
+          <!-- Widget -->
+          <div class="link-item">
+            <div class="link-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>
+              <span class="lt-title">Widget para tu web</span>
+              <span class="badge pending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>Sin instalar</span>
+            </div>
+            <div class="link-url">
+              <input type="text" value="&lt;script src=&quot;…/widget.js&quot; data-clinic=&quot;cl_madrid_9f3a2&quot;&gt;…&lt;/script&gt;" readonly aria-label="Código del widget" id="url-widget">
+              <button class="copy-btn" type="button" onclick="copySnippet(this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copiar
+              </button>
+            </div>
+            <div class="link-actions">
+              <a class="btn btn-secondary btn-sm" href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                Vista previa
+              </a>
+              <a class="btn btn-ghost btn-sm" href="#">Guía de instalación</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- FOOTER ACTIONS -->
+      <div class="foot-actions">
+        <span class="foot-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Guardamos tu avance automáticamente. Puedes salir y continuar luego.
+        </span>
+        <span class="spacer"></span>
+        <a class="btn btn-ghost" href="#">Salir del setup</a>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- TOAST (accesible: role=status + aria-live en el contenedor) -->
+<div class="toast-wrap" role="status" aria-live="polite" aria-atomic="true">
+  <div class="toast" id="toast" hidden>
+    <span class="ti" id="toast-ico" aria-hidden="true"></span>
+    <span id="toast-msg"></span>
+  </div>
+</div>
+
+<script>
+/* ===== TOAST (accesible) ===== */
+var toastTimer;
+function toast(type, msg){
+  var el = document.getElementById('toast');
+  var ico = document.getElementById('toast-ico');
+  var txt = document.getElementById('toast-msg');
+  el.classList.remove('toast-ok','toast-err');
+  el.classList.add(type === 'err' ? 'toast-err' : 'toast-ok');
+  ico.innerHTML = type === 'err'
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>';
+  txt.textContent = msg;
+  el.hidden = false;
+  requestAnimationFrame(function(){ el.classList.add('show'); });
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){
+    el.classList.remove('show');
+    setTimeout(function(){ el.hidden = true; }, 280);
+  }, 2800);
+}
+
+/* ===== ACORDEÓN DE GRUPOS ===== */
+function toggleGroup(btn){
+  var group = btn.closest('.group');
+  var collapsed = group.getAttribute('data-collapsed') === 'true';
+  group.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+  btn.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
+}
+
+/* ===== CTA PRINCIPAL: el paso #6 lleva al banner ===== */
+function focusPrimaryCTA(){
+  var cta = document.getElementById('cta-main');
+  cta.scrollIntoView({behavior:'smooth', block:'center'});
+  setTimeout(function(){ cta.focus(); }, 350);
+}
+
+/* ===== CONEXIÓN WHATSAPP: loading -> éxito -> avance de barra ===== */
+function connectWhatsApp(btn){
+  if(btn.classList.contains('is-loading')) return;
+  btn.classList.add('is-loading');
+  btn.setAttribute('aria-busy','true');
+  toast('ok','Generando el código QR de WhatsApp…');
+  setTimeout(function(){
+    btn.classList.remove('is-loading');
+    btn.removeAttribute('aria-busy');
+    markWhatsAppConnected();
+  }, 1600);
+}
+
+/* ===== FEEDBACK DE ÉXITO + CIERRE DEL BUCLE (empuja al widget) ===== */
+function markWhatsAppConnected(){
+  /* 5 -> 6 de 7 esenciales -> 86% */
+  updateProgress(6, 7);
+  /* Convertir el paso current en fila "hecha" compacta */
+  var step = document.getElementById('step-whatsapp');
+  if(step){
+    step.outerHTML =
+      '<div class="done-row">'+
+      '<span class="done-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>'+
+      '<span class="done-title">WhatsApp conectado <span class="sr-only">— hecho</span></span>'+
+      '<span class="done-meta">+34 600 12 34 56 · listo para recibir mensajes</span>'+
+      '<a href="#" class="done-edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Gestionar</a>'+
+      '</div>';
+  }
+  /* El contador del grupo Canales pasa a 1 de 2 */
+  var c = document.getElementById('count-canales-txt');
+  if(c){ c.textContent = '1 de 2 hechos'; }
+  /* El banner pasa a apuntar al widget (mantiene un único CTA primario) */
+  var title = document.getElementById('na-title');
+  var desc = document.getElementById('na-desc');
+  var cta = document.getElementById('cta-main');
+  if(title) title.textContent = 'Instala el widget en tu web · último paso esencial';
+  if(desc) desc.textContent = 'WhatsApp ya está conectado. Añade el widget para captar también desde tu web.';
+  if(cta){
+    cta.setAttribute('onclick', "document.getElementById('step-widget').scrollIntoView({behavior:'smooth',block:'center'})");
+    cta.querySelector('.btn-label-default').innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Instalar el widget';
+  }
+  toast('ok','WhatsApp conectado · ya puedes recibir y responder mensajes');
+}
+
+/* ===== PROGRESO: una sola fuente; barra + anillo + texto derivan del mismo cálculo ===== */
+function updateProgress(done, total){
+  var pct = Math.round((done/total)*100);
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-frac').textContent = done + ' de ' + total;
+  var bar = document.querySelector('[role="progressbar"]');
+  bar.setAttribute('aria-valuenow', pct);
+  var circ = 2 * Math.PI * 54; /* 339.29 */
+  document.getElementById('ring-arc').setAttribute('stroke-dashoffset', (circ * (1 - done/total)).toFixed(2));
+  document.getElementById('ring-num').innerHTML = done + '<span>/' + total + '</span>';
+  document.getElementById('ring').setAttribute('aria-label', done + ' de ' + total + ' pasos esenciales completados, ' + pct + ' por ciento');
+  var title = document.getElementById('progress-title');
+  var left = total - done;
+  if(title){
+    title.textContent = left > 0
+      ? 'Te ' + (left===1 ? 'falta 1 paso' : 'faltan ' + left + ' pasos') + ' para empezar a captar citas'
+      : '¡Todo listo! Tu clínica ya puede recibir y gestionar citas';
+  }
+}
+
+/* ===== COPIAR SNIPPET DEL WIDGET (éxito solo en then; error en catch) ===== */
+function copySnippet(btn){
+  var code = document.getElementById('widget-snippet').value;
+  copyText(code, 'Código del widget copiado');
+}
+/* ===== COPIAR UN CAMPO (input) ===== */
+function copyField(id, okMsg){
+  var el = document.getElementById(id);
+  copyText(el.value, okMsg);
+}
+function copyText(text, okMsg){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      toast('ok', okMsg);
+    }).catch(function(){
+      toast('err','No se pudo copiar. Selecciona el texto y cópialo a mano.');
+    });
+  } else {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if(ok){ toast('ok', okMsg); }
+      else { toast('err','No se pudo copiar. Selecciona el texto y cópialo a mano.'); }
+    } catch(e){
+      toast('err','No se pudo copiar. Selecciona el texto y cópialo a mano.');
+    }
+  }
+}
+
+/* ===== CTA ASÍNCRONOS GENÉRICOS (loading + éxito) ===== */
+function genericLoading(btn, loadingMsg, doneMsg){
+  if(btn.classList.contains('is-loading')) return;
+  btn.classList.add('is-loading');
+  btn.setAttribute('aria-busy','true');
+  if(loadingMsg) toast('ok', loadingMsg);
+  setTimeout(function(){
+    btn.classList.remove('is-loading');
+    btn.removeAttribute('aria-busy');
+    if(doneMsg) toast('ok', doneMsg);
+  }, 1400);
+}
+</script>
+</body>
+</html>

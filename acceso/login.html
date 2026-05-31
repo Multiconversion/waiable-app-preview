@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Acceso · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#eef1f4; --surface:#fff; --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771;
+    --line:#e3e8e6; --line-strong:#cfd8d4;
+    --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1;
+    --accent:#11a391; --ok:#157348; --warning:#b7791f; --danger:#b42318; --info:#2662a6;
+    --radius:14px; --radius-sm:10px;
+    --shadow-sm:0 1px 2px rgba(15,26,23,.06);
+    --shadow:0 12px 32px -12px rgba(15,26,23,.18), 0 2px 6px rgba(15,26,23,.05);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--text);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    font-size:15px;
+    line-height:1.5;
+  }
+  a{color:var(--primary-dark);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* ---------- Layout: two columns, full screen ---------- */
+  .auth{
+    min-height:100%;
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+  }
+
+  /* ---------- Left: brand / value panel ---------- */
+  .brand-panel{
+    position:relative;
+    overflow:hidden;
+    color:#eafaf6;
+    background:
+      radial-gradient(1100px 620px at 12% -8%, rgba(17,163,145,.42), transparent 60%),
+      radial-gradient(900px 560px at 108% 112%, rgba(15,148,134,.34), transparent 58%),
+      linear-gradient(155deg, var(--primary-dark) 0%, var(--primary) 52%, #0c6a62 100%);
+    padding:48px 56px;
+    display:flex;
+    flex-direction:column;
+  }
+  .brand-panel::after{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:34px 34px;
+    -webkit-mask-image:radial-gradient(680px 480px at 30% 24%, #000, transparent 75%);
+            mask-image:radial-gradient(680px 480px at 30% 24%, #000, transparent 75%);
+    pointer-events:none;
+  }
+  .brand-top{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
+  .logo-mark{
+    width:42px;height:42px;border-radius:11px;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.22);
+    display:flex;align-items:center;justify-content:center;
+    backdrop-filter:blur(4px);
+  }
+  .logo-mark svg{width:22px;height:22px;}
+  .brand-name{font-size:18px;font-weight:700;letter-spacing:-.01em;color:#fff;}
+  .brand-name span{font-weight:500;color:rgba(234,250,246,.8);}
+
+  .brand-body{position:relative;z-index:1;margin-top:auto;margin-bottom:auto;max-width:480px;}
+  .brand-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;
+    color:#bff0e5;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.16);
+    padding:6px 12px;border-radius:999px;
+    margin-bottom:22px;
+  }
+  .brand-eyebrow svg{width:14px;height:14px;}
+  .brand-h1{
+    font-size:34px;line-height:1.18;font-weight:700;letter-spacing:-.02em;color:#fff;margin:0 0 16px;
+  }
+  .brand-lead{font-size:16px;line-height:1.6;color:rgba(234,250,246,.86);margin:0 0 30px;}
+
+  .value-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;}
+  .value-item{display:flex;align-items:flex-start;gap:13px;}
+  .value-icon{
+    flex:none;width:34px;height:34px;border-radius:9px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.18);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .value-icon svg{width:18px;height:18px;}
+  .value-text strong{display:block;font-size:14.5px;font-weight:600;color:#fff;margin-bottom:2px;}
+  .value-text span{font-size:13.5px;color:rgba(234,250,246,.78);line-height:1.45;}
+
+  .brand-foot{
+    position:relative;z-index:1;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    font-size:12.5px;color:rgba(234,250,246,.72);
+    border-top:1px solid rgba(255,255,255,.14);
+    padding-top:20px;
+  }
+  .brand-foot .dot{display:inline-flex;align-items:center;gap:7px;}
+  .brand-foot .dot svg{width:14px;height:14px;}
+
+  /* ---------- Right: form panel ---------- */
+  .form-panel{
+    display:flex;align-items:center;justify-content:center;
+    padding:40px 32px;
+    background:var(--bg);
+  }
+  .card{
+    width:100%;max-width:412px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:34px 36px 30px;
+  }
+
+  /* mobile-only logo above form */
+  .card-logo{display:none;align-items:center;gap:10px;margin-bottom:24px;}
+  .card-logo .logo-mark{width:38px;height:38px;background:var(--primary-soft);border-color:var(--line);}
+  .card-logo .logo-mark svg{width:20px;height:20px;color:var(--primary);}
+  .card-logo .brand-name{color:var(--text);font-size:17px;}
+  .card-logo .brand-name span{color:var(--muted);}
+
+  .card-head{margin-bottom:22px;}
+  .card-h1{font-size:23px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px;color:var(--text);}
+  .card-sub{font-size:14px;color:var(--muted);margin:0;line-height:1.5;}
+
+  /* Status banner (error / success) */
+  .banner{
+    display:none;align-items:flex-start;gap:10px;
+    font-size:13px;line-height:1.45;
+    border-radius:var(--radius-sm);
+    padding:11px 13px;margin-bottom:18px;
+  }
+  .banner svg{width:16px;height:16px;flex:none;margin-top:1px;}
+  .banner.show{display:flex;}
+  .banner.error{background:#fdecea;border:1px solid #f4cfca;color:var(--danger);}
+  .banner.success{background:#e8f5ee;border:1px solid #c4e6d1;color:var(--ok);}
+
+  form{display:flex;flex-direction:column;gap:16px;}
+  .field{display:flex;flex-direction:column;gap:7px;}
+  .field-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  label{font-size:13px;font-weight:600;color:var(--text-2);}
+  .link-sm{font-size:12.5px;font-weight:500;}
+
+  .input-wrap{position:relative;display:flex;align-items:center;}
+  .input-wrap > svg.lead{
+    position:absolute;left:13px;width:17px;height:17px;color:var(--muted);pointer-events:none;
+  }
+  input[type="email"],
+  input[type="password"],
+  input[type="text"]{
+    width:100%;
+    font-family:inherit;font-size:14.5px;color:var(--text);
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius-sm);
+    padding:11px 13px 11px 40px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input::placeholder{color:#9aa6a1;}
+  input:hover{border-color:#b9c4bf;}
+  input:focus{
+    outline:none;border-color:var(--primary);
+    box-shadow:0 0 0 3px var(--primary-soft);
+  }
+  .input-wrap .toggle-pass{
+    position:absolute;right:8px;
+    display:flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border:0;background:transparent;border-radius:8px;
+    color:var(--muted);cursor:pointer;
+  }
+  .input-wrap .toggle-pass:hover{background:var(--bg);color:var(--text-2);}
+  .input-wrap .toggle-pass svg{width:17px;height:17px;}
+  .input-wrap.has-toggle input{padding-right:42px;}
+
+  .field-error{display:none;font-size:12px;color:var(--danger);}
+  .field.invalid input{border-color:var(--danger);}
+  .field.invalid input:focus{box-shadow:0 0 0 3px #fdecea;}
+  .field.invalid .field-error{display:block;}
+
+  .checkbox{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;font-size:13px;color:var(--text-2);}
+  .checkbox input{position:absolute;opacity:0;width:0;height:0;}
+  .checkbox .box{
+    width:18px;height:18px;border-radius:6px;border:1px solid var(--line-strong);
+    background:var(--surface);display:flex;align-items:center;justify-content:center;
+    transition:all .15s ease;flex:none;
+  }
+  .checkbox .box svg{width:13px;height:13px;color:#fff;opacity:0;transform:scale(.6);transition:all .15s ease;}
+  .checkbox input:checked + .box{background:var(--primary);border-color:var(--primary);}
+  .checkbox input:checked + .box svg{opacity:1;transform:scale(1);}
+  .checkbox input:focus-visible + .box{box-shadow:0 0 0 3px var(--primary-soft);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:inherit;font-size:14.5px;font-weight:600;
+    border-radius:var(--radius-sm);padding:12px 16px;cursor:pointer;
+    border:1px solid transparent;transition:all .15s ease;
+  }
+  .btn svg{width:17px;height:17px;}
+  .btn-primary{
+    width:100%;color:#fff;
+    background:var(--primary);border-color:var(--primary-dark);
+    box-shadow:0 1px 2px rgba(10,93,87,.25);
+  }
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-primary:active{transform:translateY(1px);}
+  .btn-primary:disabled{opacity:.7;cursor:default;}
+  .btn-primary .spinner{display:none;width:16px;height:16px;animation:spin .7s linear infinite;}
+  .btn-primary.loading .spinner{display:block;}
+  .btn-primary.loading .btn-label,
+  .btn-primary.loading svg.arrow{display:none;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .divider{display:flex;align-items:center;gap:12px;margin:4px 0;color:var(--muted);font-size:12px;}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .btn-ghost{
+    width:100%;color:var(--text-2);
+    background:var(--surface);border:1px solid var(--line-strong);
+  }
+  .btn-ghost:hover{background:var(--bg);border-color:#b9c4bf;}
+  .btn-ghost svg{width:18px;height:18px;}
+
+  .card-foot{
+    margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--muted);text-align:center;
+  }
+  .card-foot a{font-weight:600;}
+
+  .legal{
+    margin-top:22px;text-align:center;font-size:12px;color:var(--muted);line-height:1.5;
+  }
+
+  /* Toast */
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    display:flex;align-items:center;gap:10px;
+    background:var(--text);color:#eafaf6;
+    font-size:13.5px;font-weight:500;
+    padding:12px 16px;border-radius:11px;
+    box-shadow:0 14px 32px -10px rgba(15,26,23,.45);
+    opacity:0;pointer-events:none;transition:all .25s ease;z-index:50;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+  .toast svg{width:17px;height:17px;color:#5fe0c4;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:880px){
+    .auth{grid-template-columns:1fr;}
+    .brand-panel{display:none;}
+    .card-logo{display:flex;}
+    .form-panel{min-height:100vh;padding:28px 20px;}
+  }
+  @media (max-width:420px){
+    .card{padding:26px 22px 24px;border-radius:12px;}
+    .card-h1{font-size:21px;}
+  }
+</style>
+</head>
+<body>
+  <main class="auth">
+    <!-- LEFT: brand + value (the product = appointments & patient acquisition) -->
+    <section class="brand-panel">
+      <div class="brand-top">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 12h6l2-4 2 8 2-4h2"/>
+          </svg>
+        </div>
+        <div class="brand-name">Waiable <span>Clínicas</span></div>
+      </div>
+
+      <div class="brand-body">
+        <span class="brand-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Gestión de citas y captación de pacientes
+        </span>
+        <h1 class="brand-h1">Tu agenda llena, con menos trabajo de recepción.</h1>
+        <p class="brand-lead">Centraliza las citas y los pacientes que llegan por tu web, WhatsApp y teléfono. Todo en un mismo lugar, fácil de usar para todo el equipo.</p>
+
+        <ul class="value-list">
+          <li class="value-item">
+            <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#eafaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+            <div class="value-text"><strong>Agenda sin huecos</strong><span>Reservas, confirmaciones y recordatorios en una sola pantalla.</span></div>
+          </li>
+          <li class="value-item">
+            <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#eafaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+            <div class="value-text"><strong>Pacientes desde cada canal</strong><span>Web, WhatsApp y llamadas convertidos en citas reales.</span></div>
+          </li>
+          <li class="value-item">
+            <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#eafaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></span>
+            <div class="value-text"><strong>Automatización que ayuda</strong><span>Las tareas repetitivas se resuelven solas, sin complicarte.</span></div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="brand-foot">
+        <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Datos cifrados y conformes con el RGPD</span>
+        <span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> clinicas.waiable.com</span>
+      </div>
+    </section>
+
+    <!-- RIGHT: login form -->
+    <section class="form-panel">
+      <div class="card">
+        <div class="card-logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 12h6l2-4 2 8 2-4h2"/></svg>
+          </div>
+          <div class="brand-name">Waiable <span>Clínicas</span></div>
+        </div>
+
+        <div class="card-head">
+          <h1 class="card-h1">Inicia sesión</h1>
+          <p class="card-sub">Accede al panel de tu clínica para gestionar la agenda y los pacientes.</p>
+        </div>
+
+        <div class="banner error" id="banner" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span id="banner-text">Revisa el correo o la contraseña e inténtalo de nuevo.</span>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="field" id="field-email">
+            <label for="email">Correo electrónico</label>
+            <div class="input-wrap">
+              <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+              <input type="email" id="email" name="email" placeholder="tu@clinica.com" autocomplete="email" required />
+            </div>
+            <span class="field-error" id="err-email">Introduce un correo válido.</span>
+          </div>
+
+          <div class="field" id="field-pass">
+            <div class="field-row">
+              <label for="password">Contraseña</label>
+              <a href="#recuperar" class="link-sm" id="forgot-link">¿Olvidaste la contraseña?</a>
+            </div>
+            <div class="input-wrap has-toggle">
+              <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="password" name="password" placeholder="Tu contraseña" autocomplete="current-password" required />
+              <button type="button" class="toggle-pass" id="toggle-pass" aria-label="Mostrar contraseña" title="Mostrar contraseña">
+                <svg id="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg id="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c6.5 0 10 7 10 7a13.2 13.2 0 0 1-2.16 2.93M6.6 6.6A13.2 13.2 0 0 0 2 12s3.5 7 10 7a9.1 9.1 0 0 0 3.04-.52M9.9 9.9a3 3 0 1 0 4.2 4.2"/><path d="m2 2 20 20"/></svg>
+              </button>
+            </div>
+            <span class="field-error" id="err-pass">Introduce tu contraseña.</span>
+          </div>
+
+          <label class="checkbox" for="remember">
+            <input type="checkbox" id="remember" name="remember" checked />
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+            Mantener la sesión iniciada
+          </label>
+
+          <button type="submit" class="btn btn-primary" id="submit-btn">
+            <svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.22-8.56" opacity=".9"/></svg>
+            <span class="btn-label">Entrar al panel</span>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+
+          <div class="divider">o</div>
+
+          <button type="button" class="btn btn-ghost" id="google-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.27c0-.79-.07-1.54-.2-2.27H12v4.51h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.56c2.08-1.92 3.22-4.74 3.22-8.32Z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.76c-.99.66-2.25 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.18a11 11 0 0 0 0 9.9l3.66-2.84Z"/><path fill="#EA4335" d="M12 4.75c1.62 0 3.06.56 4.21 1.65l3.15-3.15C17.45 1.46 14.97.5 12 .5A11 11 0 0 0 2.18 7.05l3.66 2.84C6.71 6.68 9.14 4.75 12 4.75Z"/></svg>
+            Continuar con Google
+          </button>
+        </form>
+
+        <div class="card-foot">
+          ¿Tu clínica aún no usa Waiable? <a href="#registro">Solicita una demo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <p class="legal" style="display:none"></p>
+
+  <div class="toast" id="toast" role="status">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+    <span id="toast-text">Sesión iniciada. Cargando tu panel…</span>
+  </div>
+
+<script>
+(function(){
+  var form = document.getElementById('login-form');
+  var email = document.getElementById('email');
+  var pass = document.getElementById('password');
+  var fEmail = document.getElementById('field-email');
+  var fPass = document.getElementById('field-pass');
+  var banner = document.getElementById('banner');
+  var bannerText = document.getElementById('banner-text');
+  var submitBtn = document.getElementById('submit-btn');
+  var toast = document.getElementById('toast');
+  var toastText = document.getElementById('toast-text');
+
+  // Show / hide password
+  var toggle = document.getElementById('toggle-pass');
+  var eyeOpen = document.getElementById('eye-open');
+  var eyeOff = document.getElementById('eye-off');
+  toggle.addEventListener('click', function(){
+    var show = pass.type === 'password';
+    pass.type = show ? 'text' : 'password';
+    eyeOpen.style.display = show ? 'none' : '';
+    eyeOff.style.display = show ? '' : 'none';
+    toggle.setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+    toggle.setAttribute('title', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+    pass.focus();
+  });
+
+  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+  function clearError(field){ field.classList.remove('invalid'); }
+  function setError(field){ field.classList.add('invalid'); }
+  function hideBanner(){ banner.classList.remove('show'); }
+  function showBanner(msg){ bannerText.textContent = msg; banner.classList.add('show'); }
+
+  email.addEventListener('input', function(){ clearError(fEmail); hideBanner(); });
+  pass.addEventListener('input', function(){ clearError(fPass); hideBanner(); });
+
+  function showToast(msg){
+    toastText.textContent = msg;
+    toast.classList.add('show');
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    hideBanner();
+    var ok = true;
+    if(!validEmail(email.value)){ setError(fEmail); ok = false; } else { clearError(fEmail); }
+    if(!pass.value.trim()){ setError(fPass); ok = false; } else { clearError(fPass); }
+    if(!ok){
+      (fEmail.classList.contains('invalid') ? email : pass).focus();
+      return;
+    }
+    // Simulate auth request
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+    setTimeout(function(){
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+      // Demo: any well-formed input "succeeds". Replace with real auth.
+      showToast('Sesión iniciada. Cargando tu panel…');
+    }, 900);
+  });
+
+  document.getElementById('google-btn').addEventListener('click', function(){
+    showToast('Conectando con Google…');
+  });
+  document.getElementById('forgot-link').addEventListener('click', function(e){
+    e.preventDefault();
+    showToast('Te enviaremos un enlace para restablecer la contraseña.');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empresas y aseguradoras · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  font-size:14px;line-height:1.5;min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:6px}
+svg{display:block;flex-shrink:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);border:0}
+
+/* ===== LAYOUT ===== */
+.app{display:flex;min-height:100vh}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:232px;flex-shrink:0;position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%),
+    linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+  color:#e8f1ef;padding:18px 14px;overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:99px}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 6px 4px}
+.brand-mark{
+  width:34px;height:34px;border-radius:var(--radius-sm);background:var(--accent);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;
+  box-shadow:0 6px 16px rgba(17,163,145,.35);
+}
+.brand-name{font-weight:600;font-size:16px;color:#fff;line-height:1.1}
+.brand-tag{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.12em;margin-top:2px;font-weight:600}
+.nav{margin-top:18px;display:flex;flex-direction:column;gap:3px;flex:1}
+.nav-group{margin-top:14px}
+.nav-group:first-child{margin-top:0}
+.nav-head{
+  font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;
+  color:rgba(255,255,255,.55);padding:0 10px 7px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:var(--radius-sm);
+  color:rgba(232,241,239,.82);font-size:14px;font-weight:500;position:relative;
+  min-height:40px;transition:background .14s ease,color .14s ease;
+}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--primary-bright);color:#fff;box-shadow:0 6px 16px rgba(15,148,134,.35)}
+.nav-item.active::before{
+  content:"";position:absolute;left:-14px;top:8px;bottom:8px;width:3px;
+  background:var(--cyan);border-radius:0 3px 3px 0;
+}
+.nav-item svg{width:19px;height:19px;opacity:.92}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;font-size:12px;font-weight:600;padding:1px 7px;border-radius:var(--radius-pill)}
+.nav-item.active .nav-badge{background:rgba(255,255,255,.25)}
+
+.side-foot{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.plan-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);padding:12px;
+}
+.plan-row{display:flex;align-items:center;gap:8px}
+.plan-dot{width:8px;height:8px;border-radius:99px;background:var(--cyan);box-shadow:0 0 0 4px rgba(94,224,201,.16)}
+.plan-name{font-size:13px;font-weight:600;color:#fff}
+.plan-link{font-size:12px;color:var(--cyan);margin-top:6px;display:inline-block;font-weight:500}
+.profile{display:flex;align-items:center;gap:10px;padding:6px 4px}
+.avatar{
+  width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--primary-dark));
+  display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px;flex-shrink:0;
+}
+.profile-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.profile-role{font-size:12px;color:rgba(232,241,239,.7)}
+
+/* ===== MAIN ===== */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+
+/* ===== TOPBAR ===== */
+.topbar{
+  height:60px;background:var(--surface);box-shadow:var(--shadow-xs);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:18px;padding:0 22px;
+  position:sticky;top:0;z-index:30;
+}
+.tb-title h2{font-size:18px;font-weight:600;line-height:1.2}
+.tb-crumb{font-size:12px;color:var(--muted);margin-top:1px;display:flex;align-items:center;gap:5px}
+.tb-crumb svg{width:13px;height:13px}
+.tb-crumb .here{color:var(--text-2);font-weight:600}
+.tb-search{
+  flex:1;max-width:440px;margin:0 auto;position:relative;display:flex;align-items:center;
+}
+.tb-search svg{position:absolute;left:13px;width:17px;height:17px;color:var(--muted)}
+.tb-search input{
+  width:100%;height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);
+  background:var(--surface-soft);padding:0 44px 0 38px;font-size:14px;color:var(--text);
+}
+.tb-search input::placeholder{color:var(--muted)}
+.tb-search input:focus{background:#fff;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);outline:none}
+.tb-kbd{position:absolute;right:10px;font-size:12px;color:var(--muted);border:1px solid var(--line-strong);border-radius:6px;padding:2px 6px;background:#fff;font-weight:500}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.sede-sel{
+  display:flex;align-items:center;gap:7px;height:38px;padding:0 12px;border:1px solid var(--line-strong);
+  border-radius:var(--radius-sm);background:var(--surface);font-size:13px;font-weight:500;color:var(--text-2);
+}
+.sede-sel svg{width:16px;height:16px;color:var(--muted)}
+.tb-chips{display:flex;gap:7px}
+.tb-chip{display:flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;background:var(--ok-soft);color:var(--ok)}
+.tb-chip svg{width:14px;height:14px}
+.tb-chip.info{background:var(--info-soft);color:var(--info)}
+.tb-chip.warn{background:var(--warning-soft);color:var(--warning)}
+.tb-chip.teal{background:var(--primary-soft);color:var(--primary)}
+.tb-chip.muted{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.tb-chip.muted svg{color:var(--muted)}
+.tb-chip.btn-chip{cursor:pointer;border:1px solid transparent;transition:filter .14s ease}
+.tb-chip.btn-chip:hover{filter:brightness(.97)}
+.icon-btn{width:38px;height:38px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--text-2);border:1px solid transparent;position:relative}
+.icon-btn:hover{background:var(--surface-soft);border-color:var(--line)}
+.icon-btn svg{width:19px;height:19px}
+.icon-btn .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:99px;background:var(--danger);border:2px solid #fff}
+.tb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--primary-dark));display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px}
+
+/* ===== CONTENT ===== */
+.content{padding:26px 28px 48px;max-width:1280px;width:100%;margin:0 auto}
+
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.page-head h1{font-size:26px;font-weight:700;letter-spacing:-.01em}
+.page-sub{font-size:14px;color:var(--text-2);margin-top:6px;max-width:580px;line-height:1.55}
+.head-actions{display:flex;gap:10px;align-items:center}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--radius-sm);
+  font-size:14px;font-weight:600;transition:transform .16s ease,box-shadow .16s ease,background .16s ease;white-space:nowrap;
+}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.22)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-secondary{background:var(--surface);color:var(--text-2);border:1px solid var(--line-strong)}
+.btn-secondary:hover{background:var(--surface-soft);border-color:var(--muted);transform:translateY(-1px)}
+.btn-soft{background:var(--primary-soft);color:var(--primary-dark)}
+.btn-soft:hover{background:#d6ece7}
+.btn-danger{background:var(--danger);color:#fff;box-shadow:0 6px 16px rgba(180,35,24,.22)}
+.btn-danger:hover{background:#9a1c14;transform:translateY(-1px)}
+.btn-sm{height:34px;padding:0 12px;font-size:13px;border-radius:9px}
+.btn-ghost{background:transparent;color:var(--text-2);height:36px;padding:0 12px}
+.btn-ghost:hover{background:var(--surface-soft)}
+
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.kpi{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;
+  box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+  display:flex;flex-direction:column;min-height:130px;position:relative;
+}
+.kpi:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.kpi.linkable{cursor:pointer}
+.kpi.linkable:hover{border-color:var(--primary-bright)}
+.kpi.linkable:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.kpi.attn{background:linear-gradient(180deg,#fffaf0,var(--surface))}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kpi-label{font-size:13px;color:var(--text-2);font-weight:600;display:flex;align-items:center}
+.kpi-ic{width:34px;height:34px;border-radius:var(--radius-sm);display:grid;place-items:center;flex-shrink:0}
+.kpi-ic svg{width:18px;height:18px}
+.kpi-ic.teal{background:var(--primary-soft);color:var(--primary)}
+.kpi-ic.info{background:var(--info-soft);color:var(--info)}
+.kpi-ic.ok{background:var(--ok-soft);color:var(--ok)}
+.kpi-ic.warn{background:var(--warning-soft);color:var(--warning)}
+.kpi-val{font-size:32px;font-weight:700;letter-spacing:-.02em;margin-top:10px;font-variant-numeric:tabular-nums;line-height:1}
+.kpi-foot{font-size:13px;color:var(--text-2);margin-top:8px;display:flex;align-items:center;gap:5px;font-weight:500}
+.kpi-foot .up{color:var(--ok);font-weight:600;display:inline-flex;align-items:center;gap:3px}
+.kpi-foot .up svg{width:13px;height:13px}
+.kpi-cta{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--primary-dark);margin-top:auto;padding-top:10px}
+.kpi-cta svg{width:14px;height:14px;transition:transform .15s ease}
+.kpi.linkable:hover .kpi-cta svg{transform:translateX(3px)}
+.kpi-action{margin-top:auto;padding-top:10px}
+
+/* Toolbar */
+.toolbar{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);padding:14px 16px;margin-bottom:16px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.search-local{position:relative;flex:1;min-width:240px;max-width:380px;display:flex;align-items:center}
+.search-local svg{position:absolute;left:12px;width:17px;height:17px;color:var(--muted)}
+.search-local input{
+  width:100%;height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  background:var(--surface-soft);padding:0 14px 0 37px;font-size:14px;
+}
+.search-local input:focus{background:#fff;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);outline:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:var(--radius-pill);
+  border:1px solid var(--line-strong);background:var(--surface);font-size:13px;font-weight:500;color:var(--text-2);
+  transition:all .14s ease;
+}
+.chip svg{width:15px;height:15px}
+.chip:hover{border-color:var(--muted);background:var(--surface-soft)}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 12px rgba(15,118,110,.2)}
+.chip .count{font-size:12px;font-weight:700;background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:0 7px;line-height:18px;color:var(--text-2)}
+.chip.active .count{background:rgba(255,255,255,.22);border-color:transparent;color:#fff}
+.tb-spacer{flex:1}
+.view-toggle{display:flex;border:1px solid var(--line-strong);border-radius:var(--radius-sm);overflow:hidden}
+.view-toggle button{width:40px;height:40px;display:grid;place-items:center;color:var(--muted);background:#fff}
+.view-toggle button.active{background:var(--primary-soft);color:var(--primary)}
+.view-toggle button svg{width:18px;height:18px}
+
+/* Table card */
+.table-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:920px}
+thead th{
+  text-align:left;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;
+  padding:13px 18px;background:var(--surface-soft);border-bottom:1px solid var(--line);white-space:nowrap;
+}
+thead th.num{text-align:center}
+tbody td{padding:15px 18px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr.ent-row{transition:background .12s ease;cursor:pointer}
+tbody tr.ent-row:last-child td{border-bottom:none}
+tbody tr.ent-row:hover{background:var(--primary-tint)}
+tbody tr.ent-row:focus-visible{outline:2px solid var(--primary);outline-offset:-2px;background:var(--primary-tint)}
+.ent{display:flex;align-items:center;gap:12px}
+.ent-logo{
+  width:42px;height:42px;border-radius:var(--radius-sm);display:grid;place-items:center;
+  font-weight:700;font-size:15px;color:#fff;flex-shrink:0;letter-spacing:-.02em;
+}
+.ent-name{font-size:15px;font-weight:600;color:var(--text)}
+.ent-domain{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:5px;margin-top:2px;font-weight:500}
+.ent-domain svg{width:13px;height:13px;color:var(--muted)}
+.ent-domain.missing{color:var(--warning);font-weight:600}
+.ent-domain.missing svg{color:var(--warning)}
+
+.badge{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:var(--radius-pill);font-size:12px;font-weight:700;white-space:nowrap}
+.badge svg{width:14px;height:14px}
+.badge.aseg{background:var(--info-soft);color:var(--info)}
+.badge.empr{background:var(--primary-soft);color:var(--primary)}
+.sector{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--text-2);font-weight:500}
+.sector svg{width:15px;height:15px;color:var(--muted)}
+
+.pat-cell{display:flex;align-items:center;justify-content:center;gap:10px}
+.pat-count{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--text);text-align:center;line-height:1.1}
+.pat-count small{display:block;font-size:12px;font-weight:500;color:var(--text-2)}
+.stack{display:flex}
+.stack .a{width:28px;height:28px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;font-size:12px;font-weight:600;color:#fff;margin-left:-8px;box-shadow:var(--shadow-xs)}
+.stack .a:first-child{margin-left:0}
+.stack .more{background:var(--primary-dark);color:#fff;font-size:12px;font-weight:700}
+
+.conv{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;height:28px;padding:0 11px;border-radius:var(--radius-pill)}
+.conv svg{width:13px;height:13px}
+.conv.on{background:var(--ok-soft);color:var(--ok)}
+.conv.off{background:var(--surface-soft);color:var(--text-2);border:1px solid var(--line-strong)}
+.conv.pend{background:var(--warning-soft);color:var(--warning)}
+
+.row-actions{display:flex;gap:8px;justify-content:flex-end;align-items:center}
+.act{
+  display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 14px;border-radius:var(--radius-sm);
+  font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--accent),var(--primary-dark));
+  box-shadow:0 4px 12px rgba(17,163,145,.3);transition:filter .14s ease,box-shadow .14s ease;
+}
+.act:hover{filter:brightness(1.06);box-shadow:0 6px 16px rgba(17,163,145,.4)}
+.act svg{width:15px;height:15px}
+.act-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--text-2);border:1px solid var(--line-strong);background:var(--surface);position:relative}
+.act-icon:hover{background:var(--surface-soft);color:var(--primary-dark);border-color:var(--primary-bright)}
+.act-icon svg{width:16px;height:16px}
+
+/* kebab menu */
+.menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:6px;min-width:210px;z-index:50;display:none;text-align:left}
+.menu.open{display:block;animation:pop .12s ease}
+@keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.menu button{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:8px;font-size:14px;font-weight:500;color:var(--text-2);min-height:40px}
+.menu button svg{width:16px;height:16px;flex-shrink:0}
+.menu button:hover{background:var(--surface-soft);color:var(--text)}
+.menu button.danger{color:var(--danger)}
+.menu button.danger:hover{background:var(--danger-soft)}
+.menu .div{height:1px;background:var(--line);margin:5px 4px}
+
+.table-foot{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:var(--surface-soft);border-top:1px solid var(--line);font-size:13px;color:var(--text-2);flex-wrap:wrap;gap:10px}
+.table-foot strong{color:var(--text);font-weight:700}
+.pager{display:flex;gap:6px;align-items:center}
+.pager button{min-width:34px;height:34px;border-radius:8px;border:1px solid var(--line-strong);background:#fff;color:var(--text-2);display:grid;place-items:center;font-weight:600;font-size:13px;padding:0 8px}
+.pager button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.pager button:hover:not(.active):not(:disabled){background:var(--surface-soft)}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+.pager button svg{width:16px;height:16px}
+
+/* Help tooltip */
+.help{position:relative;display:inline-flex;align-items:center;vertical-align:middle;margin-left:5px}
+.help-trig{width:20px;height:20px;border-radius:50%;background:var(--surface-soft);border:1.5px solid var(--line-strong);color:var(--text-2);display:grid;place-items:center;font-size:12px;font-weight:700;cursor:help;line-height:1}
+.help-trig:hover,.help-trig:focus-visible{background:var(--primary-tint);border-color:var(--primary-bright);color:var(--primary-dark)}
+.help-pop{
+  position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);
+  width:236px;background:#0f1a17;color:#e8f1ef;font-size:13px;font-weight:400;line-height:1.5;
+  padding:10px 12px;border-radius:10px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;
+  transition:opacity .15s ease,transform .15s ease;z-index:60;text-transform:none;letter-spacing:normal;text-align:left;
+}
+.help-pop::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#0f1a17}
+.help:hover .help-pop,.help-trig:focus .help-pop,.help:focus-within .help-pop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(-2px)}
+
+/* ===== STATES (skeleton / error / empty / no-results) ===== */
+.state{display:none;flex-direction:column;align-items:center;text-align:center;padding:54px 24px}
+.state.show{display:flex}
+.state-ic{width:72px;height:72px;border-radius:var(--radius-lg);display:grid;place-items:center;margin-bottom:18px}
+.state-ic svg{width:24px;height:24px}
+.state-ic.neutral{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line)}
+.state-ic.error{background:var(--danger-soft);color:var(--danger)}
+.state-ic.empty{background:var(--primary-soft);color:var(--primary)}
+.state h3{font-size:19px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
+.state p{font-size:14px;color:var(--text-2);max-width:430px;line-height:1.6;margin-bottom:20px}
+.state-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+/* skeleton */
+.sk-row{display:flex;align-items:center;gap:16px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.sk{background:linear-gradient(90deg,#eef1f4 25%,#e3e8e6 50%,#eef1f4 75%);background-size:200% 100%;animation:shine 1.3s linear infinite;border-radius:8px}
+@keyframes shine{from{background-position:200% 0}to{background-position:-200% 0}}
+.sk-av{width:42px;height:42px;border-radius:var(--radius-sm);flex-shrink:0}
+.sk-line{height:12px}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+
+/* ===== TOAST (tipado) ===== */
+.toasts{position:fixed;right:24px;bottom:24px;z-index:100;display:flex;flex-direction:column;gap:10px;width:min(360px,calc(100vw - 48px))}
+.toast{display:flex;align-items:flex-start;gap:11px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--muted);border-radius:12px;box-shadow:var(--shadow-lg);padding:13px 14px;animation:slidein .22s ease}
+@keyframes slidein{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+.toast.success{border-left-color:var(--ok)}
+.toast.error{border-left-color:var(--danger)}
+.toast.info{border-left-color:var(--info)}
+.toast .t-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex-shrink:0}
+.toast .t-ic svg{width:17px;height:17px}
+.toast.success .t-ic{background:var(--ok-soft);color:var(--ok)}
+.toast.error .t-ic{background:var(--danger-soft);color:var(--danger)}
+.toast.info .t-ic{background:var(--info-soft);color:var(--info)}
+.toast .t-body{flex:1;min-width:0}
+.toast .t-title{font-size:14px;font-weight:700;letter-spacing:-.01em}
+.toast .t-msg{font-size:13px;color:var(--text-2);margin-top:1px;line-height:1.45}
+.toast .t-x{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:var(--muted);flex-shrink:0}
+.toast .t-x:hover{background:var(--surface-soft);color:var(--text)}
+.toast .t-x svg{width:15px;height:15px}
+
+/* ===== MODAL ===== */
+.scrim{position:fixed;inset:0;background:rgba(15,26,23,.42);backdrop-filter:blur(3px);z-index:90;display:none;align-items:center;justify-content:center;padding:24px}
+.scrim.open{display:flex;animation:fade .15s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:min(560px,100%);max-height:90vh;overflow:auto;animation:rise .18s ease}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{display:flex;align-items:flex-start;gap:14px;padding:22px 22px 6px}
+.modal-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
+.modal-ic svg{width:22px;height:22px}
+.modal-ic.teal{background:var(--primary-soft);color:var(--primary)}
+.modal-ic.danger{background:var(--danger-soft);color:var(--danger)}
+.modal-ic.warn{background:var(--warning-soft);color:var(--warning)}
+.modal-title{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.modal-sub{font-size:14px;color:var(--text-2);margin-top:3px;line-height:1.5}
+.modal-x{margin-left:auto;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--muted)}
+.modal-x svg{width:18px;height:18px}
+.modal-x:hover{background:var(--surface-soft);color:var(--text)}
+.modal-body{padding:14px 22px 4px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+.field input,.field select{width:100%;height:42px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:0 13px;font-size:14px;font-family:inherit;color:var(--text);background:var(--surface)}
+.field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);outline:none}
+.field .hint{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.45}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 22px 22px}
+
+/* Responsive */
+@media(max-width:1100px){
+  .sidebar{width:74px;padding:18px 10px}
+  .brand-name,.brand-tag,.nav-head,.nav-item span,.nav-badge,.side-foot{display:none}
+  .nav-item{justify-content:center;padding:11px 0}
+  .nav-item.active::before{display:none}
+  .tb-search{display:none}
+  .tb-chips,.tb-crumb{display:none}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:680px){
+  .content{padding:18px 14px 40px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .sede-sel span{display:none}
+  .head-actions{width:100%}
+  .head-actions .btn{flex:1}
+  .page-head h1{font-size:22px}
+  .grid-2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== SIDEBAR (CHROME — conservar) ===== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-tag">Clínicas</div>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav-group">
+        <div class="nav-head">Inicio</div>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span>Panel</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Agenda</div>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span>Citas</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span>Huecos de agenda</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+          <span>Solicitudes</span>
+          <span class="nav-badge">5</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Conversaciones</div>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>
+          <span>WhatsApp</span>
+          <span class="nav-badge">12</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>Llamadas</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Pacientes</div>
+        <a class="nav-item active" href="#" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Contactos</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span>Oportunidades</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Crecimiento</div>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+          <span>Campañas</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+          <span>Informes</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>
+          <span>Integraciones</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-head">Configuración</div>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg>
+          <span>Clínica</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Ajustes</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="side-foot">
+      <div class="plan-card">
+        <div class="plan-row">
+          <span class="plan-dot"></span>
+          <span class="plan-name">Plan Growth</span>
+        </div>
+        <a class="plan-link" href="#">Gestionar suscripción →</a>
+      </div>
+      <div class="profile">
+        <div class="avatar">CR</div>
+        <div>
+          <div class="profile-name">Carmen Ruiz</div>
+          <div class="profile-role">Recepción · Madrid Centro</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+
+    <!-- TOPBAR (CHROME) -->
+    <header class="topbar">
+      <div class="tb-title">
+        <h2>Empresas y aseguradoras</h2>
+        <div class="tb-crumb">
+          Contactos
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          <span class="here">Empresas y aseguradoras</span>
+        </div>
+      </div>
+
+      <form class="tb-search" role="search" onsubmit="return false">
+        <label for="globalSearch" class="sr-only">Buscar en toda la aplicación</label>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="globalSearch" type="search" placeholder="Buscar pacientes, citas, conversaciones…">
+        <span class="tb-kbd">⌘K</span>
+      </form>
+
+      <div class="tb-right">
+        <div class="sede-sel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Madrid Centro</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="tb-chips">
+          <span class="tb-chip muted" title="Las respuestas automáticas están en modo sugerencia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>Automatización: sugerir</span>
+          <button class="tb-chip warn btn-chip" onclick="openLinkDomains()" aria-label="3 entidades sin dominio, completar para vincular"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>3 sin dominio</button>
+        </div>
+        <button class="icon-btn" aria-label="Notificaciones">
+          <span class="dot"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        </button>
+        <div class="tb-avatar">CR</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- PAGE HEAD -->
+      <div class="page-head">
+        <div>
+          <h1>Empresas y aseguradoras</h1>
+          <p class="page-sub">Gestiona tus convenios y revisa los pacientes cubiertos por cada uno. Vincular pacientes a su empresa o mutua aplica la tarifa correcta en recepción y agiliza la facturación.</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-secondary" onclick="exportData()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+            Exportar
+          </button>
+          <button class="btn btn-primary" onclick="openNewEntity()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Nueva entidad
+          </button>
+        </div>
+      </div>
+
+      <!-- KPIS -->
+      <section class="kpis" aria-label="Resumen">
+
+        <!-- KPI de mayor valor: enlazable al listado de pacientes -->
+        <div class="kpi linkable" role="link" tabindex="0" onclick="goPatients('all')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goPatients('all')}" aria-label="Ver los 642 pacientes cubiertos">
+          <div class="kpi-top">
+            <span class="kpi-label">Pacientes cubiertos</span>
+            <span class="kpi-ic teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+          </div>
+          <div class="kpi-val">642</div>
+          <span class="kpi-cta">Ver listado completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-label">Entidades activas</span>
+            <span class="kpi-ic info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01"/></svg></span>
+          </div>
+          <div class="kpi-val">18</div>
+          <div class="kpi-foot"><span class="up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>+3</span> este trimestre</div>
+        </div>
+
+        <div class="kpi">
+          <div class="kpi-top">
+            <span class="kpi-label">Convenios activos</span>
+            <span class="kpi-ic ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          </div>
+          <div class="kpi-val">14</div>
+          <div class="kpi-foot">de 18 entidades</div>
+        </div>
+
+        <!-- KPI accionable: completar dominios -->
+        <div class="kpi attn">
+          <div class="kpi-top">
+            <span class="kpi-label">Sin dominio
+              <span class="help">
+                <button class="help-trig" type="button" aria-label="Qué significa sin dominio">?</button>
+                <span class="help-pop" role="tooltip">Sin el dominio de email no podemos vincular automáticamente a los pacientes con su empresa. Complétalo para aplicar tarifas y facturar a la mutua.</span>
+              </span>
+            </span>
+            <span class="kpi-ic warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+          </div>
+          <div class="kpi-val">3</div>
+          <button class="btn btn-soft btn-sm kpi-action" onclick="openLinkDomains()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>
+            Completar y vincular
+          </button>
+        </div>
+      </section>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="search-local">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <label for="rowSearch" class="sr-only">Filtrar entidades por nombre, dominio o sector</label>
+          <input id="rowSearch" type="search" placeholder="Buscar por nombre, dominio o sector…" oninput="filterRows(this.value)">
+        </div>
+        <div class="chips" role="tablist" aria-label="Filtrar por tipo">
+          <button role="tab" class="chip active" data-filter="all" aria-selected="true" onclick="setFilter(this,'all')">Todas <span class="count" data-cnt="all">18</span></button>
+          <button role="tab" class="chip" data-filter="aseg" aria-selected="false" onclick="setFilter(this,'aseg')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Aseguradoras <span class="count" data-cnt="aseg">7</span>
+          </button>
+          <button role="tab" class="chip" data-filter="empr" aria-selected="false" onclick="setFilter(this,'empr')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
+            Empresas <span class="count" data-cnt="empr">11</span>
+          </button>
+        </div>
+        <div class="tb-spacer"></div>
+        <div class="view-toggle" role="group" aria-label="Cambiar vista">
+          <button class="active" data-view="table" aria-label="Vista tabla" aria-pressed="true" onclick="setView(this,'table')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <button data-view="cards" aria-label="Vista tarjetas" aria-pressed="false" onclick="setView(this,'cards')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- TABLE CARD -->
+      <div class="table-card" id="tableCard">
+
+        <!-- SKELETON (carga) -->
+        <div id="skeleton" class="state" style="padding:0">
+          <div style="width:100%">
+            <div class="sk-row"><div class="sk sk-av"></div><div style="flex:1"><div class="sk sk-line" style="width:46%"></div><div class="sk sk-line" style="width:30%;margin-top:8px"></div></div><div class="sk sk-line" style="width:96px"></div><div class="sk sk-line" style="width:90px"></div><div class="sk sk-line" style="width:130px"></div></div>
+            <div class="sk-row"><div class="sk sk-av"></div><div style="flex:1"><div class="sk sk-line" style="width:38%"></div><div class="sk sk-line" style="width:24%;margin-top:8px"></div></div><div class="sk sk-line" style="width:96px"></div><div class="sk sk-line" style="width:90px"></div><div class="sk sk-line" style="width:130px"></div></div>
+            <div class="sk-row"><div class="sk sk-av"></div><div style="flex:1"><div class="sk sk-line" style="width:52%"></div><div class="sk sk-line" style="width:28%;margin-top:8px"></div></div><div class="sk sk-line" style="width:96px"></div><div class="sk sk-line" style="width:90px"></div><div class="sk sk-line" style="width:130px"></div></div>
+            <div class="sk-row"><div class="sk sk-av"></div><div style="flex:1"><div class="sk sk-line" style="width:42%"></div><div class="sk sk-line" style="width:22%;margin-top:8px"></div></div><div class="sk sk-line" style="width:96px"></div><div class="sk sk-line" style="width:90px"></div><div class="sk sk-line" style="width:130px"></div></div>
+          </div>
+        </div>
+
+        <!-- ERROR -->
+        <div id="errorState" class="state">
+          <div class="state-ic error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+          <h3>No hemos podido cargar las entidades</h3>
+          <p>Ha habido un problema de conexión. Comprueba tu red e inténtalo de nuevo.</p>
+          <div class="state-actions">
+            <button class="btn btn-primary" onclick="loadData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg>Reintentar</button>
+          </div>
+        </div>
+
+        <!-- EMPTY (sin entidades) -->
+        <div id="emptyState" class="state">
+          <div class="state-ic empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div>
+          <h3>Aún no tienes empresas ni aseguradoras</h3>
+          <p>Crea tu primer convenio o impórtalos desde un archivo. Así podrás vincular pacientes y aplicar sus tarifas en recepción.</p>
+          <div class="state-actions">
+            <button class="btn btn-primary" onclick="openNewEntity()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Nueva entidad</button>
+            <button class="btn btn-secondary" onclick="toast('info','Importar entidades','Selecciona un archivo CSV o Excel para importar tus convenios.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5-5 5 5M12 5v12"/></svg>Importar</button>
+          </div>
+        </div>
+
+        <!-- NO RESULTS -->
+        <div id="noResults" class="state">
+          <div class="state-ic neutral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+          <h3>Sin resultados para «<span id="noResultsTerm"></span>»</h3>
+          <p>No encontramos entidades que coincidan con tu búsqueda. Prueba con otro nombre o dominio.</p>
+          <div class="state-actions">
+            <button class="btn btn-secondary" onclick="clearSearch()">Limpiar búsqueda</button>
+            <button class="btn btn-primary" onclick="openNewEntity()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Crear entidad</button>
+          </div>
+        </div>
+
+        <div class="table-wrap" id="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Entidad</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Sector</th>
+                <th scope="col">Convenio</th>
+                <th scope="col" class="num">Pacientes cubiertos</th>
+                <th scope="col" style="text-align:right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+
+              <!-- Row: Adeslas -->
+              <tr class="ent-row" data-type="aseg" data-name="adeslas seguros salud aseguradora adeslas.es" tabindex="0" role="link" onclick="rowOpen(event,'Adeslas Seguros')" onkeydown="rowKey(event,'Adeslas Seguros')">
+                <td>
+                  <div class="ent">
+                    <div class="ent-logo" style="background:linear-gradient(135deg,#2662a6,#1c4d82)">AD</div>
+                    <div>
+                      <div class="ent-name">Adeslas Seguros</div>
+                      <div class="ent-domain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>@adeslas.es</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge aseg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Aseguradora</span></td>
+                <td><span class="sector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.6a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>Salud privada</span></td>
+                <td><span class="conv on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Activo</span></td>
+                <td>
+                  <div class="pat-cell">
+                    <div class="stack">
+                      <span class="a" style="background:#0f766e">CR</span>
+                      <span class="a" style="background:#2662a6">JT</span>
+                      <span class="a" style="background:#b7791f">MA</span>
+                      <span class="a more" aria-label="211 pacientes más">+211</span>
+                    </div>
+                    <span class="pat-count">214<small>pacientes</small></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <button class="act" onclick="stop(event);goPatients('Adeslas Seguros')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ver pacientes</button>
+                    <button class="act-icon" aria-label="Más opciones de Adeslas Seguros" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(event,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                      <div class="menu" role="menu">
+                        <button role="menuitem" onclick="stop(event);openEdit('Adeslas Seguros')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar datos</button>
+                        <button role="menuitem" onclick="stop(event);openDeactivate('Adeslas Seguros')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg>Desactivar convenio</button>
+                        <div class="div"></div>
+                        <button role="menuitem" class="danger" onclick="stop(event);openDelete('Adeslas Seguros')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+                      </div>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row: Sanitas -->
+              <tr class="ent-row" data-type="aseg" data-name="sanitas aseguradora seguros salud sanitas.es" tabindex="0" role="link" onclick="rowOpen(event,'Sanitas')" onkeydown="rowKey(event,'Sanitas')">
+                <td>
+                  <div class="ent">
+                    <div class="ent-logo" style="background:linear-gradient(135deg,#157348,#0f5a37)">SA</div>
+                    <div>
+                      <div class="ent-name">Sanitas</div>
+                      <div class="ent-domain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>@sanitas.es</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge aseg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Aseguradora</span></td>
+                <td><span class="sector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.6a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>Salud privada</span></td>
+                <td><span class="conv on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Activo</span></td>
+                <td>
+                  <div class="pat-cell">
+                    <div class="stack">
+                      <span class="a" style="background:#11a391">DA</span>
+                      <span class="a" style="background:#b42318">LF</span>
+                      <span class="a more" aria-label="154 pacientes más">+154</span>
+                    </div>
+                    <span class="pat-count">156<small>pacientes</small></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <button class="act" onclick="stop(event);goPatients('Sanitas')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ver pacientes</button>
+                    <button class="act-icon" aria-label="Más opciones de Sanitas" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(event,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                      <div class="menu" role="menu">
+                        <button role="menuitem" onclick="stop(event);openEdit('Sanitas')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar datos</button>
+                        <button role="menuitem" onclick="stop(event);openDeactivate('Sanitas')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg>Desactivar convenio</button>
+                        <div class="div"></div>
+                        <button role="menuitem" class="danger" onclick="stop(event);openDelete('Sanitas')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+                      </div>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row: Grupo Iberia -->
+              <tr class="ent-row" data-type="empr" data-name="grupo iberia empresa aviación convenio iberia.com" tabindex="0" role="link" onclick="rowOpen(event,'Grupo Iberia')" onkeydown="rowKey(event,'Grupo Iberia')">
+                <td>
+                  <div class="ent">
+                    <div class="ent-logo" style="background:linear-gradient(135deg,#0f766e,#0a5d57)">GI</div>
+                    <div>
+                      <div class="ent-name">Grupo Iberia</div>
+                      <div class="ent-domain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>@iberia.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge empr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>Empresa</span></td>
+                <td><span class="sector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a.5.5 0 0 0-.5.8l3.9 4.4-2.2 2.2-1.8-.5a.5.5 0 0 0-.5.8L6 18l2.1 2.7a.5.5 0 0 0 .8-.1l-.5-1.8 2.2-2.2 4.4 3.9a.5.5 0 0 0 .8-.5z"/></svg>Aviación</span></td>
+                <td><span class="conv on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Activo</span></td>
+                <td>
+                  <div class="pat-cell">
+                    <div class="stack">
+                      <span class="a" style="background:#2662a6">CR</span>
+                      <span class="a" style="background:#157348">PG</span>
+                      <span class="a more" aria-label="86 pacientes más">+86</span>
+                    </div>
+                    <span class="pat-count">88<small>pacientes</small></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <button class="act" onclick="stop(event);goPatients('Grupo Iberia')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ver pacientes</button>
+                    <button class="act-icon" aria-label="Más opciones de Grupo Iberia" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(event,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                      <div class="menu" role="menu">
+                        <button role="menuitem" onclick="stop(event);openEdit('Grupo Iberia')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar datos</button>
+                        <button role="menuitem" onclick="stop(event);openDeactivate('Grupo Iberia')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg>Desactivar convenio</button>
+                        <div class="div"></div>
+                        <button role="menuitem" class="danger" onclick="stop(event);openDelete('Grupo Iberia')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+                      </div>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row: Grupo Hostelero (pendiente, sin dominio) -->
+              <tr class="ent-row" data-type="empr" data-name="grupo hostelero mediterráneo empresa hostelería" data-domain="" tabindex="0" role="link" onclick="rowOpen(event,'Grupo Hostelero Mediterráneo')" onkeydown="rowKey(event,'Grupo Hostelero Mediterráneo')">
+                <td>
+                  <div class="ent">
+                    <div class="ent-logo" style="background:linear-gradient(135deg,#6b46c1,#4c2f8a)">GH</div>
+                    <div>
+                      <div class="ent-name">Grupo Hostelero Mediterráneo</div>
+                      <div class="ent-domain missing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Sin dominio · añade para vincular</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge empr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>Empresa</span></td>
+                <td><span class="sector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>Hostelería</span></td>
+                <td><span class="conv pend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Pendiente</span></td>
+                <td>
+                  <div class="pat-cell">
+                    <div class="stack">
+                      <span class="a" style="background:#6b46c1">VC</span>
+                      <span class="a" style="background:#157348">EM</span>
+                      <span class="a more" aria-label="40 pacientes más">+40</span>
+                    </div>
+                    <span class="pat-count">42<small>pacientes</small></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <button class="act" onclick="stop(event);goPatients('Grupo Hostelero Mediterráneo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ver pacientes</button>
+                    <button class="act-icon" aria-label="Más opciones de Grupo Hostelero Mediterráneo" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(event,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                      <div class="menu" role="menu">
+                        <button role="menuitem" onclick="stop(event);openEdit('Grupo Hostelero Mediterráneo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Completar datos</button>
+                        <button role="menuitem" onclick="stop(event);openDeactivate('Grupo Hostelero Mediterráneo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg>Archivar entidad</button>
+                        <div class="div"></div>
+                        <button role="menuitem" class="danger" onclick="stop(event);openDelete('Grupo Hostelero Mediterráneo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+                      </div>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row: DKV (inactivo) -->
+              <tr class="ent-row" data-type="aseg" data-name="dkv seguros aseguradora salud dkvseguros.com" tabindex="0" role="link" onclick="rowOpen(event,'DKV Seguros')" onkeydown="rowKey(event,'DKV Seguros')">
+                <td>
+                  <div class="ent">
+                    <div class="ent-logo" style="background:linear-gradient(135deg,#b7791f,#946017)">DK</div>
+                    <div>
+                      <div class="ent-name">DKV Seguros</div>
+                      <div class="ent-domain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>@dkvseguros.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge aseg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Aseguradora</span></td>
+                <td><span class="sector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.6a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>Salud privada</span></td>
+                <td><span class="conv off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg>Inactivo</span></td>
+                <td>
+                  <div class="pat-cell">
+                    <div class="stack">
+                      <span class="a" style="background:#0f766e">MR</span>
+                      <span class="a" style="background:#b42318">FT</span>
+                      <span class="a more" aria-label="60 pacientes más">+60</span>
+                    </div>
+                    <span class="pat-count">62<small>pacientes</small></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <button class="act" onclick="stop(event);goPatients('DKV Seguros')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ver pacientes</button>
+                    <button class="act-icon" aria-label="Más opciones de DKV Seguros" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(event,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                      <div class="menu" role="menu">
+                        <button role="menuitem" onclick="stop(event);openEdit('DKV Seguros')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Editar datos</button>
+                        <button role="menuitem" onclick="stop(event);toast('success','Convenio reactivado','Se ha reactivado el convenio con DKV Seguros.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reactivar convenio</button>
+                        <div class="div"></div>
+                        <button role="menuitem" class="danger" onclick="stop(event);openDelete('DKV Seguros')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+                      </div>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row: Construcciones (sin dominio, inactivo) -->
+              <tr class="ent-row" data-type="empr" data-name="construcciones mediterráneo empresa construcción obras" data-domain="" tabindex="0" role="link" onclick="rowOpen(event,'Construcciones Mediterráneo')" onkeydown="rowKey(event,'Construcciones Mediterráneo')">
+                <td>
+                  <div class="ent">
+                    <div class="ent-logo" style="background:linear-gradient(135deg,#3c4a45,#23302b)">CM</div>
+                    <div>
+                      <div class="ent-name">Construcciones Mediterráneo</div>
+                      <div class="ent-domain missing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Sin dominio · añade para vincular</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge empr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>Empresa</span></td>
+                <td><span class="sector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M5 20V8l5-4 5 4v12M9 20v-5h2v5"/></svg>Construcción</span></td>
+                <td><span class="conv off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg>Inactivo</span></td>
+                <td>
+                  <div class="pat-cell">
+                    <div class="stack">
+                      <span class="a" style="background:#b7791f">JM</span>
+                      <span class="a more" aria-label="37 pacientes más">+37</span>
+                    </div>
+                    <span class="pat-count">38<small>pacientes</small></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <button class="act" onclick="stop(event);goPatients('Construcciones Mediterráneo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ver pacientes</button>
+                    <button class="act-icon" aria-label="Más opciones de Construcciones Mediterráneo" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(event,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+                      <div class="menu" role="menu">
+                        <button role="menuitem" onclick="stop(event);openEdit('Construcciones Mediterráneo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Completar datos</button>
+                        <button role="menuitem" onclick="stop(event);toast('success','Convenio reactivado','Se ha reactivado el convenio con Construcciones Mediterráneo.')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reactivar convenio</button>
+                        <div class="div"></div>
+                        <button role="menuitem" class="danger" onclick="stop(event);openDelete('Construcciones Mediterráneo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+                      </div>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- TABLE FOOT -->
+        <div class="table-foot" id="tableFoot">
+          <span>Mostrando <strong id="shownCount">6</strong> de <strong id="totalCount">18</strong> entidades</span>
+          <div class="pager">
+            <button disabled aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="active" aria-current="page">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ===== TOASTS (tipados) ===== -->
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<!-- ===== MODAL: NUEVA / EDITAR ===== -->
+<div class="scrim" id="entityModal" onclick="if(event.target===this)closeModal('entityModal')">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="entityModalTitle">
+    <form onsubmit="saveEntity(event)">
+      <div class="modal-head">
+        <div class="modal-ic teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div>
+        <div>
+          <div class="modal-title" id="entityModalTitle">Nueva entidad</div>
+          <div class="modal-sub">Registra una empresa o aseguradora para vincular pacientes y aplicar su tarifa.</div>
+        </div>
+        <button type="button" class="modal-x" aria-label="Cerrar" onclick="closeModal('entityModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label for="fName">Nombre de la entidad</label>
+          <input id="fName" type="text" placeholder="Ej. Adeslas Seguros" required>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="fType">Tipo</label>
+            <select id="fType">
+              <option>Aseguradora</option>
+              <option>Empresa</option>
+              <option>Mutua</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fSector">Sector</label>
+            <select id="fSector">
+              <option>Salud privada</option>
+              <option>Construcción</option>
+              <option>Hostelería</option>
+              <option>Aviación</option>
+              <option>Transporte</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fDomain">Dominio de email</label>
+          <input id="fDomain" type="text" placeholder="empresa.com">
+          <span class="hint">Vincula automáticamente a los pacientes con email de este dominio.</span>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('entityModal')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar entidad</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== MODAL: CONFIRMAR DESTRUCTIVA ===== -->
+<div class="scrim" id="confirmModal" onclick="if(event.target===this)closeModal('confirmModal')">
+  <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" style="width:min(460px,100%)">
+    <div class="modal-head">
+      <div class="modal-ic danger" id="confirmIc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></div>
+      <div>
+        <div class="modal-title" id="confirmTitle">Eliminar entidad</div>
+        <div class="modal-sub" id="confirmSub">Esta acción no se puede deshacer.</div>
+      </div>
+      <button type="button" class="modal-x" aria-label="Cerrar" onclick="closeModal('confirmModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('confirmModal')">Cancelar</button>
+      <button type="button" class="btn btn-danger" id="confirmBtn">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- TOASTS tipados ---------- */
+var TICONS={
+  success:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>'
+};
+function toast(type,title,msg){
+  var wrap=document.getElementById('toasts');
+  var el=document.createElement('div');
+  el.className='toast '+type;
+  el.setAttribute('role', type==='error'?'alert':'status');
+  el.innerHTML='<div class="t-ic">'+TICONS[type]+'</div>'+
+    '<div class="t-body"><div class="t-title">'+title+'</div>'+(msg?'<div class="t-msg">'+msg+'</div>':'')+'</div>'+
+    '<button class="t-x" aria-label="Cerrar aviso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>';
+  el.querySelector('.t-x').onclick=function(){el.remove();};
+  wrap.appendChild(el);
+  setTimeout(function(){el.style.opacity='0';el.style.transform='translateX(16px)';el.style.transition='.25s';setTimeout(function(){el.remove();},260);},4200);
+}
+
+/* ---------- Helper ---------- */
+function stop(e){e.stopPropagation();}
+
+/* ---------- Fila navegable (acción de valor) ---------- */
+function rowOpen(e,name){
+  if(e.target.closest('.act-icon')||e.target.closest('.menu')||e.target.closest('.act'))return;
+  goPatients(name);
+}
+function rowKey(e,name){
+  if(e.key==='Enter'){e.preventDefault();goPatients(name);}
+}
+function goPatients(name){
+  var txt = name==='all' ? 'todos los pacientes cubiertos (642)' : 'los pacientes de '+name;
+  toast('info','Abriendo pacientes','Mostrando '+txt+' con su tarifa de convenio.');
+}
+
+/* ---------- Filtros y búsqueda coherentes ---------- */
+var currentFilter='all', currentTerm='';
+var COUNTS={all:18,aseg:7,empr:11};
+function setFilter(btn,f){
+  document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');c.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  currentFilter=f; applyFilters();
+}
+function filterRows(term){currentTerm=(term||'').toLowerCase().trim();applyFilters();}
+function clearSearch(){var i=document.getElementById('rowSearch');i.value='';currentTerm='';applyFilters();}
+
+function applyFilters(){
+  var rows=Array.prototype.slice.call(document.querySelectorAll('#tbody tr.ent-row'));
+  var shown=0;
+  rows.forEach(function(r){
+    var matchType=currentFilter==='all'||r.getAttribute('data-type')===currentFilter;
+    var hay=(r.getAttribute('data-name')||'');
+    var matchTerm=!currentTerm||hay.indexOf(currentTerm)>-1;
+    var ok=matchType&&matchTerm;
+    r.style.display=ok?'':'none';
+    if(ok)shown++;
+  });
+  var nr=document.getElementById('noResults');
+  var tableWrap=document.getElementById('tableWrap');
+  var foot=document.getElementById('tableFoot');
+  if(shown===0){
+    document.getElementById('noResultsTerm').textContent=currentTerm||'este filtro';
+    nr.classList.add('show');tableWrap.style.display='none';foot.style.display='none';
+  }else{
+    nr.classList.remove('show');tableWrap.style.display='';foot.style.display='';
+  }
+  /* Contadores de pie y chips coherentes con el filtro/búsqueda */
+  document.getElementById('shownCount').textContent=shown;
+  document.getElementById('totalCount').textContent=COUNTS[currentFilter];
+}
+
+/* ---------- Vista tabla / tarjetas ---------- */
+function setView(btn,v){
+  if(v==='cards'){
+    toast('info','Vista en tarjetas','Estará disponible en breve. Seguimos mostrando la tabla.');
+    return;
+  }
+  document.querySelectorAll('.view-toggle button').forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false');});
+  btn.classList.add('active');btn.setAttribute('aria-pressed','true');
+}
+
+/* ---------- Menú kebab ---------- */
+function toggleMenu(e,btn){
+  e.stopPropagation();
+  var menu=btn.querySelector('.menu');
+  var open=menu.classList.contains('open');
+  closeAllMenus();
+  if(!open){menu.classList.add('open');btn.setAttribute('aria-expanded','true');}
+}
+function closeAllMenus(){
+  document.querySelectorAll('.menu.open').forEach(function(m){
+    m.classList.remove('open');
+    var k=m.closest('.act-icon'); if(k)k.setAttribute('aria-expanded','false');
+  });
+}
+document.addEventListener('click',closeAllMenus);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAllMenus();closeModal('entityModal');closeModal('confirmModal');}});
+
+/* ---------- Modales ---------- */
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){var m=document.getElementById(id);if(m)m.classList.remove('open');}
+function openNewEntity(){
+  document.getElementById('entityModalTitle').textContent='Nueva entidad';
+  document.querySelector('#entityModal form').reset();
+  openModal('entityModal');
+  setTimeout(function(){document.getElementById('fName').focus();},60);
+}
+function openEdit(name){
+  document.getElementById('entityModalTitle').textContent='Editar '+name;
+  document.getElementById('fName').value=name;
+  openModal('entityModal');
+  setTimeout(function(){document.getElementById('fName').focus();},60);
+}
+function saveEntity(e){
+  e.preventDefault();
+  var name=document.getElementById('fName').value.trim();
+  var editing=document.getElementById('entityModalTitle').textContent.indexOf('Editar')===0;
+  closeModal('entityModal');
+  if(editing){toast('success','Cambios guardados','Se ha actualizado «'+name+'».');}
+  else{toast('success','Entidad creada','«'+name+'» se ha añadido. Ya puedes vincular pacientes.');}
+}
+
+var pendingAction=null,pendingName='';
+function openDeactivate(name){
+  pendingName=name;pendingAction='deactivate';
+  document.getElementById('confirmTitle').textContent='Desactivar convenio';
+  document.getElementById('confirmSub').textContent='Los pacientes de «'+name+'» dejarán de tener su tarifa aplicada en recepción. Podrás reactivarlo cuando quieras.';
+  document.getElementById('confirmIc').className='modal-ic warn';
+  document.getElementById('confirmIc').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg>';
+  var b=document.getElementById('confirmBtn');b.textContent='Desactivar';b.className='btn btn-danger';
+  openModal('confirmModal');
+  setTimeout(function(){b.focus();},60);
+}
+function openDelete(name){
+  pendingName=name;pendingAction='delete';
+  document.getElementById('confirmTitle').textContent='Eliminar «'+name+'»';
+  document.getElementById('confirmSub').textContent='Esta acción no se puede deshacer. Se eliminará la entidad y sus vínculos con pacientes.';
+  document.getElementById('confirmIc').className='modal-ic danger';
+  document.getElementById('confirmIc').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>';
+  var b=document.getElementById('confirmBtn');b.textContent='Eliminar';b.className='btn btn-danger';
+  openModal('confirmModal');
+  setTimeout(function(){b.focus();},60);
+}
+document.getElementById('confirmBtn').onclick=function(){
+  closeModal('confirmModal');
+  if(pendingAction==='delete'){toast('success','Entidad eliminada','«'+pendingName+'» se ha eliminado correctamente.');}
+  else if(pendingAction==='deactivate'){toast('success','Convenio desactivado','El convenio con «'+pendingName+'» queda inactivo.');}
+  pendingAction=null;
+};
+
+/* ---------- Vincular dominios (CTA del KPI / chip) ---------- */
+function openLinkDomains(){
+  toast('info','Completa los dominios','Tienes 3 entidades sin dominio. Añádelo para vincular pacientes automáticamente.');
+  setFilter(document.querySelector('.chip[data-filter="empr"]'),'empr');
+}
+
+/* ---------- Exportar ---------- */
+function exportData(){toast('success','Exportación lista','Hemos generado el listado de entidades en CSV.');}
+
+/* ---------- Carga / error (demo) ---------- */
+function showState(id){
+  ['skeleton','errorState','emptyState','noResults','tableWrap','tableFoot'].forEach(function(x){
+    var el=document.getElementById(x);if(!el)return;
+    if(x===id){el.classList.add('show');el.style.display='';}
+    else{el.classList.remove('show');if(x==='tableWrap'||x==='tableFoot')el.style.display='none';}
+  });
+}
+function loadData(){
+  showState('skeleton');
+  setTimeout(function(){
+    document.getElementById('skeleton').classList.remove('show');
+    document.getElementById('tableWrap').style.display='';
+    document.getElementById('tableFoot').style.display='';
+    applyFilters();
+  },650);
+}
+
+/* ---------- Atajo ⌘K ---------- */
+document.addEventListener('keydown',function(e){
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();document.getElementById('globalSearch').focus();}
+});
+
+/* init */
+loadData();
+</script>
+</body>
+</html>

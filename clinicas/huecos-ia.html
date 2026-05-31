@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Huecos de agenda · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#eef1f4; --surface:#fff; --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771;
+    --line:#e3e8e6; --line-strong:#cfd8d4;
+    --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1;
+    --accent:#11a391; --ok:#157348; --warning:#b7791f; --danger:#b42318; --info:#2662a6;
+    --radius:14px; --radius-sm:10px;
+    --shadow-sm:0 1px 2px rgba(15,26,23,.06);
+    --shadow:0 1px 3px rgba(15,26,23,.08),0 6px 18px rgba(15,26,23,.06);
+    --sidebar:#0f1714; --sidebar-2:#16211d; --sidebar-line:#22302b; --sidebar-text:#c5d2cd; --sidebar-muted:#7e8e88;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--bg); color:var(--text);
+    font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+  svg{display:block}
+
+  /* ---------- LAYOUT ---------- */
+  .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    background:var(--sidebar); color:var(--sidebar-text);
+    display:flex;flex-direction:column;
+    border-right:1px solid var(--sidebar-line);
+    position:sticky;top:0;height:100vh;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    padding:18px 20px 16px; border-bottom:1px solid var(--sidebar-line);
+  }
+  .brand-mark{
+    width:30px;height:30px;border-radius:8px;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));
+    display:grid;place-items:center;color:#fff;
+  }
+  .brand-name{font-weight:700;font-size:15px;color:#fff;letter-spacing:.2px}
+  .brand-sub{font-size:12px;color:var(--sidebar-muted);margin-top:1px}
+  .nav{flex:1;overflow-y:auto;padding:12px 12px 16px}
+  .nav-group{margin-top:14px}
+  .nav-group:first-child{margin-top:4px}
+  .nav-label{
+    font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;
+    color:var(--sidebar-muted);padding:0 10px 6px;
+  }
+  .nav-item{
+    display:flex;align-items:center;gap:11px;
+    padding:9px 10px;border-radius:9px;color:var(--sidebar-text);
+    font-size:13.5px;font-weight:500;margin-bottom:2px;transition:background .12s,color .12s;
+  }
+  .nav-item svg{flex:0 0 auto;color:var(--sidebar-muted)}
+  .nav-item:hover{background:var(--sidebar-2);color:#fff}
+  .nav-item:hover svg{color:var(--sidebar-text)}
+  .nav-item.active{background:var(--primary);color:#fff}
+  .nav-item.active svg{color:#fff}
+  .nav-item .count{
+    margin-left:auto;font-size:12px;font-weight:600;
+    background:rgba(255,255,255,.12);color:#fff;border-radius:20px;padding:1px 8px;
+  }
+  .nav-item.active .count{background:rgba(255,255,255,.22)}
+  .sidebar-foot{
+    border-top:1px solid var(--sidebar-line);padding:12px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .avatar{
+    width:32px;height:32px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,#2a9d8f,#0a5d57);
+    display:grid;place-items:center;color:#fff;font-weight:600;font-size:13px;
+  }
+  .sf-name{font-size:13px;font-weight:600;color:#fff}
+  .sf-role{font-size:12px;color:var(--sidebar-muted)}
+
+  /* ---------- MAIN ---------- */
+  .main{display:flex;flex-direction:column;min-width:0}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(8px);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:16px;
+    padding:11px 28px;
+  }
+  .search{
+    flex:1;max-width:440px;position:relative;display:flex;align-items:center;
+  }
+  .search svg{position:absolute;left:12px;color:var(--muted)}
+  .search input{
+    width:100%;border:1px solid var(--line-strong);border-radius:10px;
+    background:#fff;padding:9px 12px 9px 36px;font-size:13.5px;color:var(--text);
+  }
+  .search input::placeholder{color:var(--muted)}
+  .search input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+  .top-status{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .status-chip{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-weight:500;color:var(--text-2);
+    background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 11px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .dot.ok{background:var(--ok)} .dot.info{background:var(--info)} .dot.muted{background:var(--muted)}
+  /* discreet automation chip — secondary, doesn't compete */
+  .chip-auto{
+    font-size:12px;color:var(--muted);background:transparent;
+    border:1px solid var(--line);border-radius:20px;padding:5px 10px;
+    display:inline-flex;align-items:center;gap:6px;font-weight:500;
+  }
+  .chip-auto svg{color:var(--muted)}
+  .icon-btn{
+    width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;display:grid;place-items:center;color:var(--text-2);position:relative;
+  }
+  .icon-btn:hover{background:var(--bg);border-color:var(--line-strong)}
+  .icon-btn .badge-n{
+    position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;
+    background:var(--danger);color:#fff;font-size:12px;font-weight:700;
+    border-radius:9px;display:grid;place-items:center;border:2px solid #fff;line-height:1;
+  }
+
+  /* ---------- CONTENT ---------- */
+  .content{padding:24px 28px 48px;max-width:1240px;width:100%;margin:0 auto}
+
+  .page-head{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+  .ph-left{min-width:0}
+  .breadcrumb{font-size:12.5px;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .breadcrumb svg{color:var(--line-strong)}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.3px;line-height:1.25}
+  .subtitle{font-size:14px;color:var(--text-2);margin-top:6px;max-width:640px}
+  .ph-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
+
+  /* buttons */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--line-strong);background:#fff;color:var(--text);
+    font-size:13.5px;font-weight:600;border-radius:10px;padding:9px 14px;
+    transition:background .12s,border-color .12s,box-shadow .12s;
+  }
+  .btn svg{color:var(--text-2)}
+  .btn:hover{background:var(--bg);border-color:var(--muted)}
+  .btn-primary{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:var(--shadow-sm)}
+  .btn-primary svg{color:#fff}
+  .btn-primary:hover{background:var(--primary-dark);border-color:var(--primary-dark)}
+  .btn-ghost{background:transparent;border-color:transparent;color:var(--text-2)}
+  .btn-ghost:hover{background:var(--bg);border-color:var(--line)}
+  .btn-sm{padding:7px 11px;font-size:13px}
+
+  /* ---------- KPI STRIP ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .kpi{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 16px 14px;box-shadow:var(--shadow-sm);
+  }
+  .kpi-top{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12.5px;font-weight:600}
+  .kpi-ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:0 0 auto}
+  .kpi-ic.teal{background:var(--primary-soft);color:var(--primary)}
+  .kpi-ic.warn{background:#fbf3e3;color:var(--warning)}
+  .kpi-ic.ok{background:#e7f3ec;color:var(--ok)}
+  .kpi-ic.info{background:#e9f0f8;color:var(--info)}
+  .kpi-val{font-size:26px;font-weight:700;letter-spacing:-.5px;margin-top:10px}
+  .kpi-val small{font-size:14px;font-weight:600;color:var(--muted)}
+  .kpi-foot{font-size:12.5px;color:var(--text-2);margin-top:4px;display:flex;align-items:center;gap:5px}
+  .trend-up{color:var(--ok);font-weight:600}
+  .trend-down{color:var(--danger);font-weight:600}
+
+  /* ---------- CALLOUT (what to do now) ---------- */
+  .callout{
+    background:linear-gradient(180deg,#fff,#fbfdfc);
+    border:1px solid var(--line);border-left:3px solid var(--primary);
+    border-radius:var(--radius);padding:16px 18px;margin-bottom:22px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:var(--shadow-sm);
+  }
+  .callout-ic{
+    width:38px;height:38px;border-radius:11px;flex:0 0 auto;
+    background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;
+  }
+  .callout-body{min-width:200px;flex:1}
+  .callout-title{font-size:14.5px;font-weight:700}
+  .callout-text{font-size:13.5px;color:var(--text-2);margin-top:2px}
+  .callout-actions{display:flex;gap:10px;align-items:center}
+
+  /* ---------- SECTION ---------- */
+  .section{margin-bottom:22px}
+  .section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .section-head h2{font-size:16px;font-weight:700}
+  .section-head .hint{font-size:12.5px;color:var(--muted)}
+  .section-head .right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+  /* filter tabs */
+  .tabs{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+  .tab{
+    border:none;background:transparent;color:var(--text-2);font-size:13px;font-weight:600;
+    padding:6px 12px;border-radius:7px;transition:background .12s,color .12s;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{background:var(--primary-soft);color:var(--primary-dark)}
+
+  .select{
+    border:1px solid var(--line-strong);background:#fff;border-radius:10px;
+    padding:8px 30px 8px 12px;font-size:13px;font-weight:500;color:var(--text);
+    appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7771' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 9px center;cursor:pointer;
+  }
+  .select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+
+  /* ---------- GAP CARDS ---------- */
+  .gap-list{display:flex;flex-direction:column;gap:12px}
+  .gap-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow .15s,border-color .15s;
+  }
+  .gap-card:hover{box-shadow:var(--shadow);border-color:var(--line-strong)}
+  .gap-card.checked{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary) inset,var(--shadow-sm)}
+  .gap-row{display:flex;align-items:stretch;gap:0}
+  .gap-check{display:flex;align-items:center;padding:0 4px 0 16px;flex:0 0 auto}
+  .gap-check input{width:18px;height:18px;accent-color:var(--primary);cursor:pointer}
+
+  .gap-when{
+    flex:0 0 134px;padding:16px 16px 16px 12px;border-right:1px solid var(--line);
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .gap-day{font-size:12.5px;color:var(--muted);font-weight:600;text-transform:capitalize}
+  .gap-time{font-size:17px;font-weight:700;letter-spacing:-.3px;margin-top:2px}
+  .gap-dur{font-size:12.5px;color:var(--text-2);margin-top:3px;display:flex;align-items:center;gap:5px}
+  .gap-dur svg{color:var(--muted)}
+
+  .gap-main{flex:1;padding:14px 16px;min-width:0}
+  .gap-main-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .gap-prof{font-size:14.5px;font-weight:700}
+  .gap-svc{font-size:13px;color:var(--text-2)}
+  .gap-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px}
+  .gap-metric{display:flex;flex-direction:column;gap:1px}
+  .gm-label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+  .gm-val{font-size:13.5px;font-weight:600;color:var(--text)}
+  .gm-val.value{color:var(--ok)}
+
+  .gap-side{
+    flex:0 0 262px;border-left:1px solid var(--line);background:#fbfdfc;
+    padding:14px 16px;display:flex;flex-direction:column;gap:10px;justify-content:center;
+  }
+  .reach{font-size:12.5px;color:var(--text-2)}
+  .reach-line{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .reach-line:last-child{margin-bottom:0}
+  .reach-line svg{color:var(--muted);flex:0 0 auto}
+  .reach-line b{color:var(--text);font-weight:600}
+  .gap-side-actions{display:flex;gap:8px;margin-top:2px}
+  .gap-side-actions .btn{flex:1;justify-content:center}
+
+  /* badges */
+  .badge{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:12px;font-weight:600;border-radius:20px;padding:3px 9px;line-height:1.4;
+  }
+  .badge svg{width:13px;height:13px}
+  .badge-warn{background:#fbf3e3;color:#8a5d12}
+  .badge-hot{background:#fdecec;color:#9a2820}
+  .badge-soft{background:var(--bg);color:var(--text-2);border:1px solid var(--line)}
+  .badge-ok{background:#e7f3ec;color:var(--ok)}
+  /* discreet automation tag — neutral, small, secondary */
+  .tag-auto{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:12px;font-weight:500;color:var(--muted);
+    background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:2px 8px;
+  }
+  .tag-auto svg{width:13px;height:13px;color:var(--muted)}
+
+  /* ---------- BULK BAR ---------- */
+  .bulkbar{
+    position:sticky;bottom:18px;z-index:15;margin-top:4px;
+    background:var(--text);color:#fff;border-radius:14px;
+    box-shadow:0 10px 30px rgba(15,26,23,.28);
+    display:none;align-items:center;gap:16px;padding:12px 16px;
+  }
+  .bulkbar.show{display:flex}
+  .bulk-count{font-size:13.5px;font-weight:600}
+  .bulk-count b{color:#fff}
+  .bulk-sum{font-size:12.5px;color:#b7c5bf}
+  .bulkbar .spacer{flex:1}
+  .btn-on-dark{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18);color:#fff}
+  .btn-on-dark svg{color:#fff}
+  .btn-on-dark:hover{background:rgba(255,255,255,.2)}
+  .btn-bright{background:var(--primary-bright);border-color:var(--primary-bright);color:#fff}
+  .btn-bright svg{color:#fff}
+  .btn-bright:hover{background:var(--accent);border-color:var(--accent)}
+
+  /* ---------- EMPTY STATE (for filtered) ---------- */
+  .empty{
+    background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--radius);
+    padding:40px 24px;text-align:center;color:var(--muted);display:none;
+  }
+  .empty .ic{width:46px;height:46px;border-radius:50%;background:var(--primary-soft);color:var(--primary);
+    display:grid;place-items:center;margin:0 auto 12px}
+  .empty h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+  .empty p{font-size:13.5px;max-width:380px;margin:0 auto}
+
+  /* ---------- MODAL ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(15,26,23,.42);backdrop-filter:blur(2px);
+    display:none;align-items:center;justify-content:center;z-index:50;padding:24px;
+  }
+  .overlay.show{display:flex}
+  .modal{
+    background:var(--surface);border-radius:16px;box-shadow:0 24px 60px rgba(15,26,23,.3);
+    width:100%;max-width:560px;max-height:90vh;overflow:auto;
+  }
+  .modal-head{padding:20px 22px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:14px}
+  .modal-head .mh-ic{width:38px;height:38px;border-radius:11px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex:0 0 auto}
+  .modal-head h3{font-size:17px;font-weight:700}
+  .modal-head p{font-size:13.5px;color:var(--text-2);margin-top:3px}
+  .modal-close{margin-left:auto;border:none;background:transparent;color:var(--muted);width:30px;height:30px;border-radius:8px;display:grid;place-items:center}
+  .modal-close:hover{background:var(--bg);color:var(--text)}
+  .modal-body{padding:18px 22px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
+  .field .help{font-size:12.5px;color:var(--muted);font-weight:400;margin-top:5px}
+  .input,.textarea{
+    width:100%;border:1px solid var(--line-strong);border-radius:10px;
+    padding:10px 12px;font-size:13.5px;font-family:inherit;color:var(--text);background:#fff;
+  }
+  .textarea{resize:vertical;min-height:84px;line-height:1.55}
+  .input:focus,.textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+  .summary-box{
+    background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px;
+  }
+  .summary-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0}
+  .summary-row span{color:var(--text-2)} .summary-row b{font-weight:600}
+  .summary-row.total{border-top:1px solid var(--line);margin-top:6px;padding-top:10px;font-size:14px}
+  .summary-row.total b{color:var(--primary-dark)}
+  .modal-foot{padding:16px 22px 20px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
+  .modal-foot .note{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .modal-foot .spacer{flex:1}
+
+  /* ---------- TOAST ---------- */
+  .toast-wrap{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:10px;align-items:center}
+  .toast{
+    background:var(--text);color:#fff;border-radius:12px;padding:12px 16px;
+    box-shadow:0 12px 30px rgba(15,26,23,.3);display:flex;align-items:center;gap:11px;
+    font-size:13.5px;font-weight:500;min-width:300px;
+    animation:toastIn .25s ease;
+  }
+  .toast .tic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}
+  .toast.ok .tic{background:rgba(21,115,72,.95)}
+  .toast.info .tic{background:rgba(38,98,166,.95)}
+  @keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+  .gap-card[hidden]{display:none}
+
+  @media(max-width:1080px){
+    .gap-side{flex-basis:222px}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:900px){
+    .app{grid-template-columns:1fr}
+    .sidebar{display:none}
+    .gap-row{flex-wrap:wrap}
+    .gap-when{flex-basis:auto;width:100%;border-right:none;border-bottom:1px solid var(--line)}
+    .gap-side{flex-basis:auto;width:100%;border-left:none;border-top:1px solid var(--line)}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR (chrome — preserved) ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-sub">Clínica Dental Sonríe</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-label">Clínica</div>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          Panel
+        </a>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Agenda
+        </a>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Pacientes
+        </a>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          WhatsApp
+          <span class="count">5</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Llamadas
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Captación</div>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Web y formularios
+        </a>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+          Campañas
+        </a>
+      </div>
+
+      <!-- Renamed group: "IA & Automatización" -> "Automatización" -->
+      <div class="nav-group">
+        <div class="nav-label">Automatización</div>
+        <a class="nav-item active" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/></svg>
+          Huecos de agenda
+          <span class="count">8</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Automatización
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="avatar">MR</div>
+      <div style="min-width:0">
+        <div class="sf-name">María Ruiz</div>
+        <div class="sf-role">Recepción</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <!-- TOPBAR (chrome — preserved) -->
+    <header class="topbar">
+      <div class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Buscar pacientes, citas, teléfonos…" />
+      </div>
+      <div class="top-status">
+        <span class="status-chip"><span class="dot ok"></span> WhatsApp conectado</span>
+        <span class="status-chip"><span class="dot info"></span> Agenda sincronizada</span>
+        <!-- discreet, secondary automation state -->
+        <span class="chip-auto">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+          Sugerencias activas
+        </span>
+        <button class="icon-btn" aria-label="Notificaciones">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="badge-n">3</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- PAGE HEAD -->
+      <div class="page-head">
+        <div class="ph-left">
+          <div class="breadcrumb">
+            Automatización
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            Huecos de agenda
+          </div>
+          <h1>Huecos de agenda</h1>
+          <p class="subtitle">Huecos libres de esta semana que conviene llenar. Aprueba un aviso y avisamos a los pacientes adecuados por WhatsApp para cerrar más citas sin trabajo de recepción.</p>
+        </div>
+        <div class="ph-actions">
+          <button class="btn btn-sm" onclick="toast('Agenda actualizada','info')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg>
+            Actualizar
+          </button>
+          <button class="btn btn-sm" onclick="toast('Ajustes de automatización','info')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Ajustes
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI STRIP -->
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpi-top"><span class="kpi-ic warn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Huecos esta semana</div>
+          <div class="kpi-val">8</div>
+          <div class="kpi-foot"><span class="trend-down">−3</span> respecto a la semana pasada</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top"><span class="kpi-ic teal"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Facturación en riesgo</div>
+          <div class="kpi-val">680<small> €</small></div>
+          <div class="kpi-foot">Valor de los huecos sin llenar</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top"><span class="kpi-ic ok"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span> Llenados este mes</div>
+          <div class="kpi-val">23</div>
+          <div class="kpi-foot"><span class="trend-up">+1.840 €</span> recuperados</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top"><span class="kpi-ic info"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span> Ocupación semanal</div>
+          <div class="kpi-val">86<small> %</small></div>
+          <div class="kpi-foot"><span class="trend-up">+4 pts</span> con huecos llenados</div>
+        </div>
+      </div>
+
+      <!-- CALLOUT: qué hacer ahora -->
+      <div class="callout">
+        <div class="callout-ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="callout-body">
+          <div class="callout-title">2 huecos urgentes para mañana</div>
+          <div class="callout-text">Mañana hay 2 huecos sin cubrir por 250 €. Aprueba el aviso y avisamos a pacientes en lista de espera y a quienes pidieron adelantar su cita.</div>
+        </div>
+        <div class="callout-actions">
+          <button class="btn btn-sm" onclick="filterTab('urgent', document.querySelectorAll('#tabs .tab')[1])">Ver huecos urgentes</button>
+          <button class="btn btn-primary btn-sm" onclick="openApprove({count:2, value:250, label:'2 huecos de mañana'})">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Aprobar aviso
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION: lista de huecos -->
+      <div class="section">
+        <div class="section-head">
+          <h2>Huecos por llenar</h2>
+          <span class="hint">Detectados automáticamente · Ordenados por valor</span>
+          <div class="right">
+            <div class="tabs" id="tabs">
+              <button class="tab active" onclick="filterTab('all', this)">Todos</button>
+              <button class="tab" onclick="filterTab('urgent', this)">Urgentes</button>
+              <button class="tab" onclick="filterTab('week', this)">Esta semana</button>
+            </div>
+            <select class="select" id="profFilter" onchange="applyFilters()">
+              <option value="all">Todos los profesionales</option>
+              <option value="garcia">Dra. García</option>
+              <option value="lopez">Dr. López</option>
+              <option value="soto">Hig. Soto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="gap-list" id="gapList">
+
+          <!-- CARD 1 -->
+          <article class="gap-card" data-tab="urgent" data-prof="garcia" data-value="150">
+            <div class="gap-row">
+              <label class="gap-check"><input type="checkbox" class="gap-cb" data-value="150" data-label="Mañana 10:00 · Dra. García" aria-label="Seleccionar hueco mañana 10:00 Dra. García" /></label>
+              <div class="gap-when">
+                <div class="gap-day">Mañana, jue 30</div>
+                <div class="gap-time">10:00</div>
+                <div class="gap-dur"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 45 min</div>
+              </div>
+              <div class="gap-main">
+                <div class="gap-main-top">
+                  <span class="gap-prof">Dra. García</span>
+                  <span class="gap-svc">· Limpieza + revisión</span>
+                  <span class="badge badge-hot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Urgente</span>
+                </div>
+                <div class="gap-meta">
+                  <div class="gap-metric"><span class="gm-label">Valor del hueco</span><span class="gm-val value">150 €</span></div>
+                  <div class="gap-metric"><span class="gm-label">Origen</span><span class="gm-val">Cancelación</span></div>
+                  <div class="gap-metric"><span class="gm-label">Detectado</span><span class="gm-val">hace 1 h</span></div>
+                </div>
+              </div>
+              <div class="gap-side">
+                <div class="reach">
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> <b>9 pacientes</b> a quienes avisar</div>
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Lista de espera y revisiones pendientes</div>
+                </div>
+                <div class="gap-side-actions">
+                  <button class="btn btn-sm" onclick="toast('Mostrando pacientes candidatos','info')">Ver lista</button>
+                  <button class="btn btn-primary btn-sm" onclick="openApprove({count:1, value:150, label:'Mañana 10:00 · Dra. García'})">Aprobar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 2 -->
+          <article class="gap-card" data-tab="urgent" data-prof="lopez" data-value="100">
+            <div class="gap-row">
+              <label class="gap-check"><input type="checkbox" class="gap-cb" data-value="100" data-label="Mañana 17:30 · Dr. López" aria-label="Seleccionar hueco mañana 17:30 Dr. López" /></label>
+              <div class="gap-when">
+                <div class="gap-day">Mañana, jue 30</div>
+                <div class="gap-time">17:30</div>
+                <div class="gap-dur"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 30 min</div>
+              </div>
+              <div class="gap-main">
+                <div class="gap-main-top">
+                  <span class="gap-prof">Dr. López</span>
+                  <span class="gap-svc">· Revisión</span>
+                  <span class="badge badge-hot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Urgente</span>
+                </div>
+                <div class="gap-meta">
+                  <div class="gap-metric"><span class="gm-label">Valor del hueco</span><span class="gm-val value">100 €</span></div>
+                  <div class="gap-metric"><span class="gm-label">Origen</span><span class="gm-val">Hueco fijo libre</span></div>
+                  <div class="gap-metric"><span class="gm-label">Detectado</span><span class="gm-val">hace 3 h</span></div>
+                </div>
+              </div>
+              <div class="gap-side">
+                <div class="reach">
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> <b>6 pacientes</b> a quienes avisar</div>
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Pidieron cita más cercana</div>
+                </div>
+                <div class="gap-side-actions">
+                  <button class="btn btn-sm" onclick="toast('Mostrando pacientes candidatos','info')">Ver lista</button>
+                  <button class="btn btn-primary btn-sm" onclick="openApprove({count:1, value:100, label:'Mañana 17:30 · Dr. López'})">Aprobar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3 -->
+          <article class="gap-card" data-tab="week" data-prof="garcia" data-value="120">
+            <div class="gap-row">
+              <label class="gap-check"><input type="checkbox" class="gap-cb" data-value="120" data-label="Vie 31 · 12:15 · Dra. García" aria-label="Seleccionar hueco viernes 31 12:15 Dra. García" /></label>
+              <div class="gap-when">
+                <div class="gap-day">Vie 31, may</div>
+                <div class="gap-time">12:15</div>
+                <div class="gap-dur"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 40 min</div>
+              </div>
+              <div class="gap-main">
+                <div class="gap-main-top">
+                  <span class="gap-prof">Dra. García</span>
+                  <span class="gap-svc">· Empaste</span>
+                  <span class="badge badge-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Conviene llenar</span>
+                </div>
+                <div class="gap-meta">
+                  <div class="gap-metric"><span class="gm-label">Valor del hueco</span><span class="gm-val value">120 €</span></div>
+                  <div class="gap-metric"><span class="gm-label">Origen</span><span class="gm-val">Reprogramación</span></div>
+                  <div class="gap-metric"><span class="gm-label">Detectado</span><span class="gm-val">ayer</span></div>
+                </div>
+              </div>
+              <div class="gap-side">
+                <div class="reach">
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> <b>12 pacientes</b> a quienes avisar</div>
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Tratamientos pendientes</div>
+                </div>
+                <div class="gap-side-actions">
+                  <button class="btn btn-sm" onclick="toast('Mostrando pacientes candidatos','info')">Ver lista</button>
+                  <button class="btn btn-primary btn-sm" onclick="openApprove({count:1, value:120, label:'Vie 31 · 12:15 · Dra. García'})">Aprobar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 4 -->
+          <article class="gap-card" data-tab="week" data-prof="soto" data-value="70">
+            <div class="gap-row">
+              <label class="gap-check"><input type="checkbox" class="gap-cb" data-value="70" data-label="Vie 31 · 16:00 · Hig. Soto" aria-label="Seleccionar hueco viernes 31 16:00 Hig. Soto" /></label>
+              <div class="gap-when">
+                <div class="gap-day">Vie 31, may</div>
+                <div class="gap-time">16:00</div>
+                <div class="gap-dur"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 30 min</div>
+              </div>
+              <div class="gap-main">
+                <div class="gap-main-top">
+                  <span class="gap-prof">Hig. Soto</span>
+                  <span class="gap-svc">· Higiene dental</span>
+                  <span class="badge badge-soft">Opcional</span>
+                </div>
+                <div class="gap-meta">
+                  <div class="gap-metric"><span class="gm-label">Valor del hueco</span><span class="gm-val value">70 €</span></div>
+                  <div class="gap-metric"><span class="gm-label">Origen</span><span class="gm-val">Hueco fijo libre</span></div>
+                  <div class="gap-metric"><span class="gm-label">Detectado</span><span class="gm-val">ayer</span></div>
+                </div>
+              </div>
+              <div class="gap-side">
+                <div class="reach">
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> <b>18 pacientes</b> a quienes avisar</div>
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Higiene anual pendiente</div>
+                </div>
+                <div class="gap-side-actions">
+                  <button class="btn btn-sm" onclick="toast('Mostrando pacientes candidatos','info')">Ver lista</button>
+                  <button class="btn btn-primary btn-sm" onclick="openApprove({count:1, value:70, label:'Vie 31 · 16:00 · Hig. Soto'})">Aprobar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 5 -->
+          <article class="gap-card" data-tab="week" data-prof="lopez" data-value="90">
+            <div class="gap-row">
+              <label class="gap-check"><input type="checkbox" class="gap-cb" data-value="90" data-label="Lun 3 · 09:30 · Dr. López" aria-label="Seleccionar hueco lunes 3 09:30 Dr. López" /></label>
+              <div class="gap-when">
+                <div class="gap-day">Lun 3, jun</div>
+                <div class="gap-time">09:30</div>
+                <div class="gap-dur"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 30 min</div>
+              </div>
+              <div class="gap-main">
+                <div class="gap-main-top">
+                  <span class="gap-prof">Dr. López</span>
+                  <span class="gap-svc">· Revisión</span>
+                  <span class="badge badge-soft">Opcional</span>
+                </div>
+                <div class="gap-meta">
+                  <div class="gap-metric"><span class="gm-label">Valor del hueco</span><span class="gm-val value">90 €</span></div>
+                  <div class="gap-metric"><span class="gm-label">Origen</span><span class="gm-val">Hueco fijo libre</span></div>
+                  <div class="gap-metric"><span class="gm-label">Detectado</span><span class="gm-val">hoy</span></div>
+                </div>
+              </div>
+              <div class="gap-side">
+                <div class="reach">
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> <b>14 pacientes</b> a quienes avisar</div>
+                  <div class="reach-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Revisión semestral pendiente</div>
+                </div>
+                <div class="gap-side-actions">
+                  <button class="btn btn-sm" onclick="toast('Mostrando pacientes candidatos','info')">Ver lista</button>
+                  <button class="btn btn-primary btn-sm" onclick="openApprove({count:1, value:90, label:'Lun 3 · 09:30 · Dr. López'})">Aprobar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- EMPTY (filtered) -->
+          <div class="empty" id="emptyState">
+            <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <h3>Sin huecos con este filtro</h3>
+            <p>No hay huecos que coincidan. Prueba con otro profesional o vuelve a "Todos".</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BULK BAR -->
+      <div class="bulkbar" id="bulkbar">
+        <span class="bulk-count"><b id="bulkN">0</b> huecos seleccionados</span>
+        <span class="bulk-sum" id="bulkSum">· 0 € por recuperar</span>
+        <div class="spacer"></div>
+        <button class="btn btn-on-dark btn-sm" onclick="clearSelection()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Quitar selección
+        </button>
+        <button class="btn btn-bright btn-sm" onclick="approveSelection()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Aprobar avisos
+        </button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ MODAL: APROBAR AVISO ============ -->
+<div class="overlay" id="approveOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="apTitle">
+    <div class="modal-head">
+      <div class="mh-ic">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div>
+        <h3 id="apTitle">Aprobar aviso para llenar huecos</h3>
+        <p id="apSub">Avisaremos por WhatsApp a los pacientes adecuados. Tú apruebas; nada sale sin tu visto bueno.</p>
+      </div>
+      <button class="modal-close" onclick="closeApprove()" aria-label="Cerrar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="summary-box">
+        <div class="summary-row"><span>Huecos a llenar</span><b id="apCount">1 hueco</b></div>
+        <div class="summary-row"><span>Pacientes que recibirán el aviso</span><b id="apReach">9 pacientes</b></div>
+        <div class="summary-row"><span>Canal</span><b>WhatsApp</b></div>
+        <div class="summary-row total"><span>Valor por recuperar</span><b id="apValue">150 €</b></div>
+      </div>
+
+      <div class="field">
+        <label for="apMsg">Mensaje a los pacientes</label>
+        <textarea class="textarea" id="apMsg">Hola {nombre}, nos ha quedado un hueco {fecha} a las {hora} con {profesional}. Si te viene bien adelantar tu cita, responde "SÍ" y te lo reservamos. Un saludo, Clínica Dental Sonríe.</textarea>
+        <div class="help">Puedes editarlo. Las etiquetas {nombre}, {fecha}, {hora} y {profesional} se rellenan solas. <span class="tag-auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M18 12h4"/><path d="M12 18v4"/><path d="M2 12h4"/></svg> Texto propuesto</span></div>
+      </div>
+
+      <div class="field">
+        <label for="apLimit">Cuántos pacientes avisar a la vez</label>
+        <select class="select" id="apLimit" style="width:100%">
+          <option>Solo los 5 más adecuados (recomendado)</option>
+          <option>Hasta 10 pacientes</option>
+          <option>Todos los candidatos</option>
+        </select>
+        <div class="help">Avisamos por tandas y paramos en cuanto el hueco se llena, para no saturar.</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <span class="note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Las respuestas llegan a tu Inbox
+      </span>
+      <div class="spacer"></div>
+      <button class="btn" onclick="closeApprove()">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmApprove()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Aprobar y avisar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+  // ---- Filtering ----
+  let currentTab = 'all';
+  function filterTab(tab, el){
+    currentTab = tab;
+    document.querySelectorAll('#tabs .tab').forEach(t=>t.classList.remove('active'));
+    if(el) el.classList.add('active');
+    applyFilters();
+  }
+  function applyFilters(){
+    const prof = document.getElementById('profFilter').value;
+    let shown = 0;
+    document.querySelectorAll('.gap-card').forEach(card=>{
+      const tabMatch = currentTab==='all' ? true
+        : currentTab==='urgent' ? card.dataset.tab==='urgent'
+        : true; // 'week' = all upcoming
+      const profMatch = prof==='all' || card.dataset.prof===prof;
+      const show = tabMatch && profMatch;
+      card.hidden = !show;
+      if(show) shown++;
+    });
+    document.getElementById('emptyState').style.display = shown===0 ? 'block' : 'none';
+  }
+
+  // ---- Selection / bulk bar ----
+  function refreshBulk(){
+    const checked = [...document.querySelectorAll('.gap-cb:checked')];
+    const n = checked.length;
+    const sum = checked.reduce((a,c)=>a+Number(c.dataset.value||0),0);
+    document.getElementById('bulkN').textContent = n;
+    document.getElementById('bulkSum').textContent = '· ' + sum.toLocaleString('es-ES') + ' € por recuperar';
+    document.getElementById('bulkbar').classList.toggle('show', n>0);
+    document.querySelectorAll('.gap-cb').forEach(c=>c.closest('.gap-card').classList.toggle('checked', c.checked));
+  }
+  document.querySelectorAll('.gap-cb').forEach(cb=>cb.addEventListener('change', refreshBulk));
+  function clearSelection(){
+    document.querySelectorAll('.gap-cb:checked').forEach(c=>c.checked=false);
+    refreshBulk();
+  }
+  function approveSelection(){
+    const checked = [...document.querySelectorAll('.gap-cb:checked')];
+    const n = checked.length;
+    const sum = checked.reduce((a,c)=>a+Number(c.dataset.value||0),0);
+    openApprove({count:n, value:sum, label:n+' huecos seleccionados'});
+  }
+
+  // ---- Approve modal ----
+  function openApprove(opts){
+    const reachMap = {1:9, 2:15};
+    const count = opts.count || 1;
+    document.getElementById('apCount').textContent = count + (count===1?' hueco':' huecos');
+    document.getElementById('apValue').textContent = (opts.value||0).toLocaleString('es-ES') + ' €';
+    document.getElementById('apReach').textContent = (reachMap[count] || count*7) + ' pacientes';
+    document.getElementById('apSub').textContent = 'Aviso para: ' + (opts.label||'huecos seleccionados') + '. Tú apruebas; nada sale sin tu visto bueno.';
+    document.getElementById('approveOverlay').classList.add('show');
+  }
+  function closeApprove(){ document.getElementById('approveOverlay').classList.remove('show'); }
+  function confirmApprove(){
+    closeApprove();
+    clearSelection();
+    toast('Aviso aprobado. Avisando a los pacientes por WhatsApp.','ok');
+  }
+  document.getElementById('approveOverlay').addEventListener('click', e=>{
+    if(e.target.id==='approveOverlay') closeApprove();
+  });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeApprove(); });
+
+  // ---- Toasts ----
+  function toast(msg, type){
+    type = type||'ok';
+    const wrap = document.getElementById('toastWrap');
+    const t = document.createElement('div');
+    t.className = 'toast '+type;
+    const icon = type==='ok'
+      ? '<polyline points="20 6 9 17 4 12"/>'
+      : '<line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/><circle cx="12" cy="12" r="10"/>';
+    t.innerHTML = '<span class="tic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">'+icon+'</svg></span>'+msg;
+    wrap.appendChild(t);
+    setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(8px)'; t.style.transition='all .25s'; }, 3200);
+    setTimeout(()=>t.remove(), 3500);
+  }
+</script>
+</body>
+</html>

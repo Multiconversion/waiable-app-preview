@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ajustes · Suscripción y facturación · Waiable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  /* superficies en capas para dar profundidad */
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#5a6660; --line:#e3e8e6; --line-strong:#cfd8d4;
+  /* marca teal */
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  /* semánticos con soft */
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#9a6510; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  /* profundidad en capas (premium) */
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+svg{display:block;flex:none;width:18px;height:18px}
+.hero-eyebrow svg{width:15px;height:15px}
+:focus-visible{outline:3px solid var(--primary-bright);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===================== LAYOUT ===================== */
+.app{display:flex;min-height:100vh}
+
+/* ===================== SIDEBAR ===================== */
+.sidebar{
+  width:232px;flex:none;position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%),
+    linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+  color:#e8f1ef;
+  padding:18px 14px 14px;
+  z-index:30;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 6px 4px}
+.brand-mark{
+  width:34px;height:34px;border-radius:var(--radius-sm);background:var(--accent);
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px;
+  box-shadow:0 6px 16px rgba(17,163,145,.34);
+}
+.brand-name{font-weight:700;font-size:16px;color:#fff;line-height:1.1}
+.brand-sub{font-size:12px;letter-spacing:.14em;color:var(--cyan);text-transform:uppercase;font-weight:700}
+
+.nav{margin-top:16px;flex:1;overflow-y:auto;padding-right:2px}
+.nav::-webkit-scrollbar{width:6px}
+.nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:99px}
+.nav-group{margin-bottom:14px}
+.nav-group-title{
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  color:rgba(255,255,255,.55);padding:0 10px 6px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:var(--radius-sm);
+  color:rgba(232,241,239,.86);font-size:14px;font-weight:500;position:relative;
+  transition:background .16s ease,color .16s ease;min-height:40px;
+}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--primary-bright);color:#fff;font-weight:600;box-shadow:var(--shadow-sm)}
+.nav-item.active::before{
+  content:"";position:absolute;left:-14px;top:50%;transform:translateY(-50%);
+  width:4px;height:22px;border-radius:0 4px 4px 0;background:var(--cyan);
+}
+.nav-item svg{width:18px;height:18px;opacity:.9}
+
+.side-foot{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+.plan-card{
+  background:linear-gradient(135deg,rgba(17,163,145,.22),rgba(17,163,145,.06));
+  border:1px solid rgba(94,224,201,.22);border-radius:var(--radius);padding:11px 12px;
+}
+.plan-card .pc-label{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);font-weight:700}
+.plan-card .pc-row{display:flex;align-items:center;justify-content:space-between;margin-top:3px}
+.plan-card .pc-name{font-size:13px;font-weight:600;color:#fff}
+.plan-card .pc-link{font-size:13px;color:rgba(232,241,239,.85);display:flex;align-items:center;gap:3px}
+.plan-card .pc-link:hover{color:#fff}
+.mini-profile{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:var(--radius-sm)}
+.mini-profile:hover{background:rgba(255,255,255,.05)}
+.mp-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#11a391,#0a5d57);display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex:none}
+.mp-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.mp-role{font-size:12px;color:rgba(232,241,239,.7)}
+
+/* ===================== MAIN ===================== */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* TOPBAR */
+.topbar{
+  height:60px;flex:none;background:var(--surface);box-shadow:var(--shadow-xs);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:18px;padding:0 22px;position:sticky;top:0;z-index:20;
+}
+.tb-titles{min-width:160px}
+.tb-title{font-size:18px;font-weight:700;line-height:1.2}
+.tb-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.tb-crumb svg{width:13px;height:13px}
+.tb-search{
+  flex:1;max-width:440px;margin:0 auto;display:flex;align-items:center;gap:9px;
+  background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);
+  padding:8px 14px;color:var(--muted);transition:border .16s,box-shadow .16s;
+}
+.tb-search:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.tb-search input{flex:1;border:none;background:none;font-size:14px;color:var(--text);outline:none}
+.tb-search input::placeholder{color:var(--muted)}
+.tb-search kbd{
+  font-family:inherit;font-size:12px;color:var(--text-2);background:var(--surface);
+  border:1px solid var(--line-strong);border-radius:6px;padding:2px 6px;font-weight:600;
+}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.tb-venue{display:flex;align-items:center;gap:7px;background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:7px 12px;font-size:13px;font-weight:500;min-height:40px}
+.tb-venue svg{width:16px;height:16px;color:var(--primary)}
+.tb-chips{display:flex;gap:7px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:var(--radius-pill);font-size:13px;font-weight:600;white-space:nowrap;min-height:34px}
+.chip svg{width:14px;height:14px}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.info{background:var(--info-soft);color:var(--info)}
+.chip.teal{background:var(--primary-soft);color:var(--primary)}
+.chip.warn{background:var(--warning-soft);color:var(--warning)}
+/* estado discreto y secundario (automatización): no compite con WhatsApp/agenda */
+.chip.neutral-soft{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line);font-weight:500}
+.chip.neutral-soft svg{opacity:.7}
+.icon-btn{width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--text-2);position:relative;transition:background .16s}
+.icon-btn:hover{background:var(--surface-soft)}
+.icon-btn svg{width:20px;height:20px}
+.icon-btn .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid var(--surface)}
+.tb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#11a391,#0a5d57);display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px}
+
+/* ===================== CONTENT ===================== */
+.content{padding:26px 30px 48px;max-width:1240px;width:100%;margin:0 auto}
+
+/* page head */
+.page-head{margin-bottom:6px}
+.page-h1{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.page-lead{font-size:15px;color:var(--text-2);margin-top:4px;max-width:680px}
+
+/* settings tabs (ARIA) */
+.tabs{display:flex;gap:4px;margin:20px 0 24px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{
+  display:inline-flex;align-items:center;gap:8px;padding:11px 14px;font-size:14px;font-weight:600;
+  color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:color .16s,background .16s;min-height:44px;border-radius:8px 8px 0 0;
+}
+.tab svg{width:17px;height:17px}
+.tab:hover{color:var(--text-2);background:var(--surface-soft)}
+.tab[aria-selected="true"]{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
+
+/* grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.span-2{grid-column:1 / -1}
+
+/* card base */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:20px}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.card-h-left{display:flex;align-items:center;gap:10px}
+.card-ico{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--primary-tint);color:var(--primary);display:grid;place-items:center;flex:none}
+.card-ico svg{width:18px;height:18px}
+.card-title{font-size:16px;font-weight:700}
+.card-sub{font-size:13px;color:var(--muted);margin-top:1px}
+
+/* section eyebrow + heads */
+.section-eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--primary)}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:4px 0 12px}
+.section-head h2{font-size:18px;font-weight:700;letter-spacing:-.01em;margin-top:2px}
+.section-head p{font-size:13px;color:var(--muted);margin-top:2px;max-width:620px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);padding:11px 17px;min-height:44px;transition:transform .12s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease;white-space:nowrap}
+.btn svg{width:17px;height:17px}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.26)}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 10px 22px rgba(15,118,110,.30)}
+.btn-teal{background:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(17,163,145,.28)}
+.btn-teal:hover{background:var(--primary-bright)}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--line-strong)}
+.btn-secondary:hover{background:var(--surface-soft);border-color:var(--muted)}
+.btn-ghost{background:transparent;color:var(--primary-dark);padding:10px 12px}
+.btn-ghost:hover{background:var(--primary-soft)}
+.btn-sm{padding:8px 13px;font-size:13px;min-height:40px;border-radius:10px}
+.btn-block{width:100%}
+.btn-danger-ghost{background:transparent;color:var(--danger);border:1px solid transparent}
+.btn-danger-ghost:hover{background:var(--danger-soft);border-color:#f3c9c3}
+.btn[disabled]{opacity:.7;cursor:default}
+.btn .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.btn-secondary .spinner,.btn-light .spinner{border-color:rgba(15,118,110,.3);border-top-color:var(--primary)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:var(--radius-pill);font-size:12px;font-weight:700;line-height:1.3}
+.badge svg{width:13px;height:13px}
+.badge.ok{background:var(--ok-soft);color:var(--ok)}
+.badge.warning{background:var(--warning-soft);color:var(--warning)}
+.badge.danger{background:var(--danger-soft);color:var(--danger)}
+.badge.info{background:var(--info-soft);color:var(--info)}
+.badge.teal{background:var(--primary-soft);color:var(--primary)}
+.badge.neutral{background:var(--surface-soft);color:var(--text-2);border:1px solid var(--line)}
+
+/* ===================== HERO PLAN ===================== */
+.hero{
+  position:relative;overflow:hidden;border-radius:var(--radius-lg);padding:26px;color:#eafaf6;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(94,224,201,.28), transparent 46%),
+    radial-gradient(circle at 12% 96%, rgba(17,163,145,.30), transparent 44%),
+    linear-gradient(135deg,#0a5d57 0%,#0f766e 48%,#0d6960 100%);
+  box-shadow:var(--shadow-lg);
+}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,18,26,.10),transparent 60%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:center}
+.hero-main{min-width:280px}
+.hero-eyebrow{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#bff4e8}
+.hero-name{font-size:34px;font-weight:800;letter-spacing:-.02em;margin-top:8px;line-height:1.05}
+.hero-name small{font-size:16px;font-weight:600;color:#cdeee7;margin-left:6px}
+.hero-price{display:flex;align-items:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap}
+.hero-price .amt{font-size:40px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.hero-price .per{font-size:14px;color:#cdeee7;font-weight:600;padding-bottom:5px}
+.hero-price .tax{font-size:13px;color:#bce6dd;font-weight:500;padding-bottom:6px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:var(--radius-pill);padding:6px 12px;font-size:13px;font-weight:600;color:#eafaf6}
+.hero-pill svg{width:14px;height:14px}
+.hero-actions{display:flex;flex-direction:column;gap:11px}
+.hero .btn-primary{background:#fff;color:var(--primary-dark);box-shadow:0 10px 24px rgba(3,18,26,.30)}
+.hero .btn-primary:hover{background:#eafaf6;color:var(--primary-dark)}
+.hero .btn-ghost-light{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.42)}
+.hero .btn-ghost-light:hover{background:rgba(255,255,255,.2)}
+.hero-cta-note{font-size:13px;color:#eafaf6;font-weight:600;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;line-height:1.4}
+.hero-cta-note svg{color:var(--cyan)}
+.hero-renew{margin-top:2px;font-size:13px;color:#cdeee7;display:flex;align-items:center;gap:7px;justify-content:center}
+.hero-renew svg{color:var(--cyan)}
+
+/* ===================== QUÉ HACER AHORA ===================== */
+.action-banner{
+  display:flex;align-items:center;gap:16px;background:var(--warning-soft);
+  border:1px solid #f0dcae;border-radius:var(--radius);padding:14px 18px;margin:18px 0 22px;
+}
+.ab-ico{width:42px;height:42px;border-radius:12px;background:#fff;border:1px solid #f0dcae;display:grid;place-items:center;color:var(--warning);flex:none}
+.ab-ico svg{width:22px;height:22px}
+.ab-body{flex:1;min-width:0}
+.ab-title{font-size:15px;font-weight:700;color:#76500c}
+.ab-sub{font-size:13px;color:#7c560f;margin-top:1px}
+.action-banner .btn{flex:none}
+
+/* ===================== EXTRAS ===================== */
+.extras{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.extra-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);
+  padding:18px;display:flex;flex-direction:column;gap:0;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;position:relative;
+}
+.extra-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-strong)}
+.extra-card.featured{border-color:var(--primary-soft);box-shadow:0 0 0 1px var(--primary-soft),var(--shadow-md)}
+.extra-flag{position:absolute;top:-10px;right:14px;font-size:12px;font-weight:700;color:#fff;background:var(--accent);padding:3px 11px;border-radius:999px;box-shadow:var(--shadow-sm)}
+.extra-ico{width:42px;height:42px;border-radius:var(--radius-sm);display:grid;place-items:center;flex:none;background:var(--primary-tint);color:var(--primary);margin-bottom:12px}
+.extra-ico svg{width:21px;height:21px}
+.extra-name{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.extra-desc{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.5;flex:1}
+.extra-price{display:flex;align-items:baseline;gap:5px;margin:14px 0 2px}
+.extra-price .amt{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.extra-price .per{font-size:13px;font-weight:600;color:var(--muted)}
+.extra-tax{font-size:12px;color:var(--muted);margin-bottom:14px}
+
+/* ===================== LÍMITES / CONSUMO ===================== */
+.limits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.limit-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm)}
+.limit-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.limit-name{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700}
+.limit-name .li-ico{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--primary-tint);color:var(--primary);flex:none}
+.limit-name .li-ico svg{width:16px;height:16px}
+.limit-vals{text-align:right;flex:none;white-space:nowrap}
+.limit-vals .now{font-size:18px;font-weight:800;letter-spacing:-.01em}
+.limit-vals .max{font-size:13px;color:var(--muted);font-weight:500}
+.bar-wrap{display:flex;align-items:center;gap:10px}
+.bar{flex:1;height:10px;border-radius:99px;background:var(--surface-soft);overflow:hidden;border:1px solid var(--line)}
+.bar-fill{height:100%;border-radius:99px;transition:width .5s ease}
+.bar-fill.ok{background:linear-gradient(90deg,var(--ok),#1f9460)}
+.bar-fill.warning{background:linear-gradient(90deg,var(--warning),#c98a1e)}
+.bar-fill.danger{background:repeating-linear-gradient(45deg,var(--danger),var(--danger) 7px,#cf3a30 7px,#cf3a30 14px)}
+.bar-pct{font-size:13px;font-weight:800;min-width:42px;text-align:right}
+.bar-pct.ok{color:var(--ok)} .bar-pct.warning{color:var(--warning)} .bar-pct.danger{color:var(--danger)}
+.limit-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;flex-wrap:wrap}
+.limit-status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.limit-status svg{width:15px;height:15px}
+.limit-status.ok{color:var(--ok)} .limit-status.warning{color:var(--warning)} .limit-status.danger{color:var(--danger)}
+.limit-reset{font-size:13px;color:var(--muted)}
+
+/* tooltip */
+.tip{position:relative;display:inline-flex;align-items:center}
+.tip .tip-btn{width:18px;height:18px;border-radius:50%;background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);display:grid;place-items:center;font-size:12px;font-weight:700;line-height:1;padding:0}
+.tip .tip-btn:hover{border-color:var(--primary);color:var(--primary)}
+.tip .tip-box{
+  position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(4px);
+  background:var(--text);color:#fff;font-size:13px;font-weight:400;line-height:1.45;
+  padding:9px 12px;border-radius:8px;width:max-content;max-width:min(240px,78vw);box-shadow:var(--shadow-lg);
+  opacity:0;visibility:hidden;transition:opacity .16s,transform .16s;z-index:50;text-transform:none;letter-spacing:normal;
+}
+.tip .tip-box::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--text)}
+.tip .tip-btn:hover + .tip-box,.tip .tip-btn:focus-visible + .tip-box,.tip .tip-box.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* ===================== MÉTODO DE PAGO ===================== */
+.pay-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pay-brand{width:54px;height:38px;border-radius:8px;background:linear-gradient(135deg,#1a1f36,#2a3354);display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;flex:none;letter-spacing:.04em}
+.pay-info{flex:1;min-width:160px}
+.pay-num{font-size:15px;font-weight:700;letter-spacing:.04em}
+.pay-meta{font-size:13px;color:var(--muted);margin-top:2px}
+.next-bill{display:flex;align-items:center;gap:10px;background:var(--surface-soft);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.next-bill .nb-label{font-size:13px;color:var(--muted)}
+.next-bill .nb-amt{font-size:16px;font-weight:800}
+
+/* ===================== FACTURAS ===================== */
+.table-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.inv-table{width:100%;border-collapse:collapse}
+.inv-table th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);font-weight:700;padding:12px 16px;background:var(--surface-soft);border-bottom:1px solid var(--line)}
+.inv-table th.r,.inv-table td.r{text-align:right}
+.inv-table td{padding:13px 16px;font-size:14px;border-bottom:1px solid var(--line);vertical-align:middle}
+.inv-table tbody tr{transition:background .14s}
+.inv-table tbody tr:hover{background:var(--surface-soft)}
+.inv-table tbody tr:last-child td{border-bottom:none}
+.inv-amt{font-weight:600}
+.inv-amt-wrap{display:inline-flex;align-items:center;gap:6px;justify-content:flex-end}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--primary-dark);padding:7px 11px;border-radius:8px;transition:background .14s;min-height:40px}
+.dl-btn:hover{background:var(--primary-tint)}
+.dl-btn svg{width:15px;height:15px}
+
+/* skeleton + empty + error */
+.skeleton{background:linear-gradient(90deg,#eef1f3 25%,#e2e7e9 37%,#eef1f3 63%);background-size:400% 100%;animation:shim 1.3s ease infinite;border-radius:6px}
+@keyframes shim{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.sk-line{height:12px;margin:6px 0}
+.empty-state{padding:34px 20px;text-align:center}
+.empty-state .es-ico{width:54px;height:54px;border-radius:14px;background:var(--surface-soft);border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);margin:0 auto 12px}
+.empty-state h4{font-size:16px;font-weight:700}
+.empty-state p{font-size:13px;color:var(--muted);margin-top:4px;max-width:340px;margin-left:auto;margin-right:auto}
+.error-state{padding:18px;display:flex;align-items:center;gap:14px;background:var(--danger-soft);border:1px solid #f3c9c3;border-radius:var(--radius)}
+.error-state .er-ico{color:var(--danger);flex:none}
+.error-state h4{font-size:14px;font-weight:700;color:var(--danger)}
+.error-state p{font-size:13px;color:#8a3a32;margin-top:2px}
+.error-state .er-body{flex:1}
+
+/* danger zone */
+.danger-zone{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow-sm)}
+.dz-body{flex:1;min-width:220px}
+.dz-title{font-size:15px;font-weight:700}
+.dz-sub{font-size:13px;color:var(--muted);margin-top:2px;max-width:560px}
+
+/* toast */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.toast{
+  display:flex;align-items:center;gap:11px;
+  background:var(--text);color:#fff;padding:13px 16px;border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  font-size:14px;font-weight:600;min-width:260px;max-width:380px;transform:translateY(14px);opacity:0;transition:transform .25s,opacity .25s;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast .t-ico{flex:none}
+.toast.ok .t-ico{color:var(--cyan)}
+.toast.err{background:#5a1410}
+.toast.err .t-ico{color:#ffb4ab}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(7,36,43,.5);backdrop-filter:blur(3px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.show{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);max-width:460px;width:100%;padding:26px;animation:pop .18s ease}
+@keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-ico{width:48px;height:48px;border-radius:var(--radius-sm);background:var(--danger-soft);color:var(--danger);display:grid;place-items:center;margin-bottom:14px}
+.modal-ico svg{width:24px;height:24px}
+.modal h3{font-size:20px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em}
+.modal p{font-size:14px;color:var(--text-2);line-height:1.55}
+.modal-list{margin:14px 0;background:var(--surface-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;list-style:none}
+.modal-list li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text-2);padding:4px 0}
+.modal-list svg{width:16px;height:16px;color:var(--danger);flex:none;margin-top:2px}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.modal-actions .btn{flex:1}
+
+/* ===================== RESPONSIVE ===================== */
+@media(max-width:1100px){
+  .sidebar{width:74px;padding:18px 10px 14px}
+  .brand-text,.nav-group-title,.side-foot{display:none}
+  .brand{justify-content:center;padding:6px 0}
+  .nav-item{justify-content:center;gap:0;padding:11px 0}
+  .nav-item .sb-full{display:none}
+  .nav-item.active::before{left:-10px}
+  .nav-item::after{
+    content:attr(data-tip);position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);
+    background:var(--text);color:#fff;font-size:12px;font-weight:600;padding:5px 9px;border-radius:7px;white-space:nowrap;
+    opacity:0;visibility:hidden;transition:opacity .14s;z-index:60;pointer-events:none;
+  }
+  .nav-item:hover::after{opacity:1;visibility:visible}
+  .tb-search{max-width:none}
+  .tb-venue,.tb-chips{display:none}
+  .extras{grid-template-columns:1fr 1fr}
+}
+@media(max-width:880px){
+  .content{padding:20px 16px 40px}
+  .grid{grid-template-columns:1fr}
+  .extras,.limits-grid{grid-template-columns:1fr}
+  .hero-grid{grid-template-columns:1fr}
+  .tb-search{display:none}
+  .tb-titles{flex:1}
+  .hero-name{font-size:28px}
+  .hero-price .amt{font-size:34px}
+}
+@media(max-width:560px){
+  .inv-table thead{display:none}
+  .inv-table,.inv-table tbody,.inv-table tr,.inv-table td{display:block;width:100%}
+  .inv-table tr{border:1px solid var(--line);border-radius:var(--radius-sm);margin:10px;padding:8px 12px}
+  .inv-table td{border:none;padding:6px 0;text-align:left}
+  .inv-table td.r{text-align:left}
+  .inv-table td::before{content:attr(data-l);font-size:12px;color:var(--muted);display:block;font-weight:700}
+  .table-wrap{border:none;box-shadow:none;background:transparent}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" aria-label="Navegación principal">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">W</div>
+      <div class="brand-text">
+        <div class="brand-name">Waiable</div>
+        <div class="brand-sub">Clínicas</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-group-title">Inicio</div>
+        <a href="#" class="nav-item" data-tip="Panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span class="sb-full">Panel</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Agenda</div>
+        <a href="#" class="nav-item" data-tip="Citas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span class="sb-full">Citas</span>
+        </a>
+        <a href="#" class="nav-item" data-tip="Huecos de agenda">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16h6"/></svg>
+          <span class="sb-full">Huecos de agenda</span>
+        </a>
+        <a href="#" class="nav-item" data-tip="Solicitudes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>
+          <span class="sb-full">Solicitudes</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Conversaciones</div>
+        <a href="#" class="nav-item" data-tip="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>
+          <span class="sb-full">WhatsApp</span>
+        </a>
+        <a href="#" class="nav-item" data-tip="Llamadas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+          <span class="sb-full">Llamadas</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Pacientes</div>
+        <a href="#" class="nav-item" data-tip="Contactos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+          <span class="sb-full">Contactos</span>
+        </a>
+        <a href="#" class="nav-item" data-tip="Oportunidades">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+          <span class="sb-full">Oportunidades</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Crecimiento</div>
+        <a href="#" class="nav-item" data-tip="Campañas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+          <span class="sb-full">Campañas</span>
+        </a>
+        <a href="#" class="nav-item" data-tip="Informes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="13" y="7" width="3" height="10"/></svg>
+          <span class="sb-full">Informes</span>
+        </a>
+        <a href="#" class="nav-item" data-tip="Integraciones">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>
+          <span class="sb-full">Integraciones</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Configuración</div>
+        <a href="#" class="nav-item" data-tip="Clínica">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01M10 21v-4h4v4"/></svg>
+          <span class="sb-full">Clínica</span>
+        </a>
+        <a href="#" class="nav-item active" data-tip="Ajustes" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="sb-full">Ajustes</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="side-foot">
+      <div class="plan-card">
+        <div class="pc-label">Tu plan</div>
+        <div class="pc-row">
+          <span class="pc-name">Plan Growth</span>
+          <a href="#" class="pc-link">gestionar
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+      <a href="#" class="mini-profile">
+        <div class="mp-avatar" aria-hidden="true">CR</div>
+        <div>
+          <div class="mp-name">Carmen Ruiz</div>
+          <div class="mp-role">Administradora</div>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="tb-titles">
+        <div class="tb-title">Ajustes</div>
+        <nav class="tb-crumb" aria-label="Migas de pan">
+          Configuración
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          Suscripción y facturación
+        </nav>
+      </div>
+
+      <form class="tb-search" role="search" onsubmit="return false">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="globalSearch" type="search" placeholder="Buscar pacientes, citas, conversaciones…" aria-label="Buscar en Waiable" />
+        <kbd>⌘K</kbd>
+      </form>
+
+      <div class="tb-right">
+        <button class="tb-venue" type="button" aria-label="Seleccionar sede: Madrid Centro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Madrid Centro
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="tb-chips">
+          <span class="chip ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>WhatsApp conectado</span>
+          <span class="chip warn" title="Has consumido el 84% de tu paquete de mensajes este mes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H5.2L4 17.2z"/></svg>Mensajes 84%</span>
+          <span class="chip neutral-soft" title="La automatización está sugiriendo respuestas; tú confirmas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.5 3.5L17 8l-3.5 1.5L12 13l-1.5-3.5L7 8l3.5-1.5z"/></svg>Automatización</span>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Notificaciones, hay novedades">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9z"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span class="dot" aria-hidden="true"></span>
+        </button>
+        <div class="tb-avatar" aria-hidden="true">CR</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <div class="page-head">
+        <h1 class="page-h1">Suscripción y facturación</h1>
+        <p class="page-lead">Tu plan, consumo y extras en un vistazo. Amplía cuando lo necesites para no perder ninguna cita ni mensaje de tus pacientes.</p>
+      </div>
+
+      <!-- TABS DE AJUSTES (ARIA) -->
+      <div class="tabs" role="tablist" aria-label="Secciones de ajustes">
+        <button class="tab" role="tab" id="tab-general" aria-controls="panel-suscripcion" aria-selected="false" tabindex="-1" onclick="goTo('General')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>General
+        </button>
+        <button class="tab" role="tab" id="tab-equipo" aria-controls="panel-suscripcion" aria-selected="false" tabindex="-1" onclick="goTo('Equipo y usuarios')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Equipo y usuarios
+        </button>
+        <button class="tab" role="tab" id="tab-notif" aria-controls="panel-suscripcion" aria-selected="false" tabindex="-1" onclick="goTo('Notificaciones')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9z"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Notificaciones
+        </button>
+        <button class="tab" role="tab" id="tab-suscripcion" aria-controls="panel-suscripcion" aria-selected="true" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Suscripción y facturación
+        </button>
+        <button class="tab" role="tab" id="tab-integraciones" aria-controls="panel-suscripcion" aria-selected="false" tabindex="-1" onclick="goTo('Integraciones')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>Integraciones
+        </button>
+      </div>
+
+      <div id="panel-suscripcion" role="tabpanel" aria-labelledby="tab-suscripcion" tabindex="0">
+
+        <!-- HERO PLAN -->
+        <section class="hero" aria-label="Tu plan actual">
+          <div class="hero-grid">
+            <div class="hero-main">
+              <div class="hero-eyebrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6 5.7 21l2.3-7.2-6-4.4h7.6z"/></svg>
+                Plan actual
+              </div>
+              <div class="hero-name">Growth <small>· Clínicas</small></div>
+              <div class="hero-price">
+                <span class="amt">149,00 €</span>
+                <span class="per">/ mes</span>
+                <span class="tax">IVA no incluido</span>
+              </div>
+              <div class="hero-meta">
+                <span class="hero-pill">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  1 sede
+                </span>
+                <span class="hero-pill">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>
+                  2 cuentas WhatsApp
+                </span>
+                <span class="hero-pill">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  Renueva el 1 jun 2026
+                </span>
+              </div>
+            </div>
+            <div class="hero-actions">
+              <!-- PRIMARIA: upsell (genera negocio) -->
+              <button class="btn btn-primary btn-block" type="button" onclick="goTo('Comparar planes')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                Mejorar mi plan
+              </button>
+              <p class="hero-cta-note">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>
+                Desbloquea multisede, API y +WhatsApp
+              </p>
+              <!-- SECUNDARIA: administrativa -->
+              <button class="btn btn-ghost-light btn-block" type="button" id="managePayBtn" onclick="openPortal(this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                Gestionar pago
+              </button>
+              <div class="hero-renew">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 4v4h-4"/></svg>
+                Activo desde feb 2025
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- QUÉ HACER AHORA -->
+        <div class="action-banner" role="region" aria-label="Acción recomendada">
+          <div class="ab-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          </div>
+          <div class="ab-body">
+            <div class="ab-title">Estás cerca de tus límites de mensajes y WhatsApp</div>
+            <div class="ab-sub">Has alcanzado el tope de cuentas de WhatsApp y vas por el 84% de mensajes. Amplía ahora para no dejar de responder a tus pacientes.</div>
+          </div>
+          <button class="btn btn-primary" type="button" onclick="goTo('Comparar planes')">Ver opciones de ampliación</button>
+        </div>
+
+        <!-- LÍMITES / CONSUMO -->
+        <section aria-label="Consumo de tu plan" style="margin-bottom:26px">
+          <div class="section-head">
+            <div>
+              <div class="section-eyebrow">Tu consumo este mes</div>
+              <h2>Límites del plan</h2>
+              <p>Los mensajes se reinician el día 1 de cada mes. Usuarios y cuentas de WhatsApp son límites fijos del plan; contactos es un límite acumulado.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" type="button" id="reloadLimitsBtn" onclick="reloadLimits(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 4v4h-4"/></svg>
+              Actualizar
+            </button>
+          </div>
+
+          <div class="limits-grid" id="limitsGrid">
+            <!-- WhatsApp: límite alcanzado (danger) -->
+            <div class="limit-card">
+              <div class="limit-top">
+                <div class="limit-name">
+                  <span class="li-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg></span>
+                  Cuentas de WhatsApp
+                  <span class="tip">
+                    <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Cuentas de WhatsApp">?</button>
+                    <span class="tip-box" role="tooltip">Líneas de WhatsApp conectadas a tu clínica. Es un límite fijo del plan; no se reinicia cada mes.</span>
+                  </span>
+                </div>
+                <div class="limit-vals"><span class="now">2</span><span class="max"> / 2</span></div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar" role="progressbar" aria-label="Cuentas de WhatsApp usadas" aria-valuenow="2" aria-valuemin="0" aria-valuemax="2" aria-valuetext="2 de 2 cuentas, límite alcanzado">
+                  <div class="bar-fill danger" style="width:100%"></div>
+                </div>
+                <span class="bar-pct danger">100%</span>
+              </div>
+              <div class="limit-foot">
+                <span class="limit-status danger">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                  Límite alcanzado
+                </span>
+                <button class="btn btn-teal btn-sm" type="button" onclick="goTo('Añadir cuenta de WhatsApp')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                  Añadir cuenta de WhatsApp
+                </button>
+              </div>
+            </div>
+
+            <!-- Mensajes: 84% (warning) -->
+            <div class="limit-card">
+              <div class="limit-top">
+                <div class="limit-name">
+                  <span class="li-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 17.2z"/></svg></span>
+                  Mensajes mensuales
+                  <span class="tip">
+                    <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Mensajes mensuales">?</button>
+                    <span class="tip-box" role="tooltip">Mensajes enviados y recibidos por WhatsApp este mes (incluye los que envía la automatización). Se reinicia el día 1.</span>
+                  </span>
+                </div>
+                <div class="limit-vals"><span class="now">4.183</span><span class="max"> / 5.000</span></div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar" role="progressbar" aria-label="Mensajes mensuales usados" aria-valuenow="4183" aria-valuemin="0" aria-valuemax="5000" aria-valuetext="4.183 de 5.000 mensajes, 84%">
+                  <div class="bar-fill warning" style="width:84%"></div>
+                </div>
+                <span class="bar-pct warning">84%</span>
+              </div>
+              <div class="limit-foot">
+                <span class="limit-status warning">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                  Quedan 817 mensajes
+                </span>
+                <button class="btn btn-teal btn-sm" type="button" onclick="goTo('Ampliar paquete de mensajes')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                  Ampliar paquete de mensajes
+                </button>
+              </div>
+            </div>
+
+            <!-- Usuarios: 80% (warning) -->
+            <div class="limit-card">
+              <div class="limit-top">
+                <div class="limit-name">
+                  <span class="li-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span>
+                  Usuarios del equipo
+                  <span class="tip">
+                    <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Usuarios del equipo">?</button>
+                    <span class="tip-box" role="tooltip">Personas con acceso a tu cuenta Waiable. Es un límite fijo del plan; no se reinicia cada mes.</span>
+                  </span>
+                </div>
+                <div class="limit-vals"><span class="now">4</span><span class="max"> / 5</span></div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar" role="progressbar" aria-label="Usuarios del equipo usados" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" aria-valuetext="4 de 5 usuarios, 80%">
+                  <div class="bar-fill warning" style="width:80%"></div>
+                </div>
+                <span class="bar-pct warning">80%</span>
+              </div>
+              <div class="limit-foot">
+                <span class="limit-status warning">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                  Queda 1 plaza libre
+                </span>
+                <button class="btn btn-teal btn-sm" type="button" onclick="goTo('Contratar usuario extra')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                  Contratar usuario extra
+                </button>
+              </div>
+            </div>
+
+            <!-- Contactos: ok -->
+            <div class="limit-card">
+              <div class="limit-top">
+                <div class="limit-name">
+                  <span class="li-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="10" r="2"/><path d="M9 16a3 3 0 0 1 6 0"/></svg></span>
+                  Contactos en CRM
+                  <span class="tip">
+                    <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Contactos en CRM">?</button>
+                    <span class="tip-box" role="tooltip">Pacientes y leads guardados en tu CRM. Es un límite acumulado del plan; no se reinicia.</span>
+                  </span>
+                </div>
+                <div class="limit-vals"><span class="now">3.240</span><span class="max"> / 5.000</span></div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar" role="progressbar" aria-label="Contactos en CRM usados" aria-valuenow="3240" aria-valuemin="0" aria-valuemax="5000" aria-valuetext="3.240 de 5.000 contactos, 65%">
+                  <div class="bar-fill ok" style="width:65%"></div>
+                </div>
+                <span class="bar-pct ok">65%</span>
+              </div>
+              <div class="limit-foot">
+                <span class="limit-status ok">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Espacio de sobra
+                </span>
+                <span class="limit-reset">Sin reinicio</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EXTRAS CONTRATABLES -->
+        <section aria-label="Extras contratables" style="margin-bottom:26px">
+          <div class="section-head">
+            <div>
+              <div class="section-eyebrow">Amplía sin cambiar de plan</div>
+              <h2>Extras contratables</h2>
+              <p>Súmalos a tu plan actual. Verás el impacto exacto en tu próxima factura antes de confirmar.</p>
+            </div>
+          </div>
+
+          <div class="extras">
+            <!-- Paquete de mensajes (recomendado / punto de dolor) -->
+            <div class="extra-card featured">
+              <span class="extra-flag">Recomendado para ti</span>
+              <div class="extra-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 17.2z"/></svg></div>
+              <div class="extra-name">+2.000 mensajes</div>
+              <p class="extra-desc">Amplía tu cupo mensual de mensajes. Ideal porque ya vas por el 84%.</p>
+              <div class="extra-price"><span class="amt">15,00 €</span><span class="per">/ mes</span></div>
+              <div class="extra-tax">IVA no incluido</div>
+              <button class="btn btn-primary btn-block" type="button" onclick="openExtra('Paquete +2.000 mensajes','15,00 €','164,00 €')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                Contratar extra
+              </button>
+            </div>
+
+            <!-- Cuenta de WhatsApp extra -->
+            <div class="extra-card">
+              <div class="extra-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg></div>
+              <div class="extra-name">Cuenta de WhatsApp extra</div>
+              <p class="extra-desc">Conecta una línea adicional. Útil si gestionas más de un número.</p>
+              <div class="extra-price"><span class="amt">19,00 €</span><span class="per">/ mes</span></div>
+              <div class="extra-tax">IVA no incluido</div>
+              <button class="btn btn-primary btn-block" type="button" onclick="openExtra('Cuenta de WhatsApp extra','19,00 €','168,00 €')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                Contratar extra
+              </button>
+            </div>
+
+            <!-- Usuario extra -->
+            <div class="extra-card">
+              <div class="extra-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div>
+              <div class="extra-name">Usuario extra</div>
+              <p class="extra-desc">Suma una persona más a tu equipo con su propio acceso.</p>
+              <div class="extra-price"><span class="amt">9,00 €</span><span class="per">/ usuario / mes</span></div>
+              <div class="extra-tax">IVA no incluido</div>
+              <button class="btn btn-primary btn-block" type="button" onclick="openExtra('Usuario extra','9,00 €','158,00 €')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                Contratar extra
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- MÉTODO DE PAGO + PRÓXIMA FACTURA -->
+        <section aria-label="Método de pago" style="margin-bottom:26px">
+          <div class="section-head">
+            <div>
+              <div class="section-eyebrow">Pago</div>
+              <h2>Método de pago</h2>
+            </div>
+          </div>
+          <div class="pay-card" id="payCard">
+            <div class="pay-brand" aria-hidden="true">VISA</div>
+            <div class="pay-info">
+              <div class="pay-num">•••• •••• •••• 4242</div>
+              <div class="pay-meta">Caduca 09/2027 · Carmen Ruiz</div>
+            </div>
+            <div class="next-bill">
+              <div>
+                <div class="nb-label">Próxima factura · 1 jun 2026</div>
+                <div style="display:flex;align-items:center;gap:7px">
+                  <span class="nb-amt">149,00 €</span>
+                  <span class="tip">
+                    <button class="tip-btn" type="button" aria-label="Desglose de la próxima factura">?</button>
+                    <span class="tip-box" role="tooltip">149,00 € plan Growth. Sin extras activos. El IVA (21%) se aplica en la factura final.</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-secondary" type="button" id="updateCardBtn" onclick="openPortal(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+              Actualizar tarjeta
+            </button>
+          </div>
+        </section>
+
+        <!-- FACTURAS -->
+        <section aria-label="Historial de facturas" style="margin-bottom:26px">
+          <div class="section-head">
+            <div>
+              <div class="section-eyebrow">Historial</div>
+              <h2>Facturas</h2>
+            </div>
+            <button class="btn btn-secondary btn-sm" type="button" id="dlAllBtn" onclick="downloadAll(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Descargar todas
+            </button>
+          </div>
+
+          <div class="table-wrap" id="invoicesWrap">
+            <table class="inv-table">
+              <caption class="sr-only">Historial de facturas de tu suscripción</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Concepto</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col" class="r">Importe</th>
+                  <th scope="col" class="r">Factura</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-l="Fecha">1 may 2026</td>
+                  <td data-l="Concepto">Plan Growth</td>
+                  <td data-l="Estado"><span class="badge warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Procesando</span></td>
+                  <td data-l="Importe" class="r inv-amt">149,00 €</td>
+                  <td data-l="Factura" class="r"><button class="dl-btn" type="button" onclick="dl(this,'PDF mayo 2026')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>PDF</button></td>
+                </tr>
+                <tr>
+                  <td data-l="Fecha">1 abr 2026</td>
+                  <td data-l="Concepto">Plan Growth</td>
+                  <td data-l="Estado"><span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pagada</span></td>
+                  <td data-l="Importe" class="r inv-amt">149,00 €</td>
+                  <td data-l="Factura" class="r"><button class="dl-btn" type="button" onclick="dl(this,'PDF abril 2026')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>PDF</button></td>
+                </tr>
+                <tr>
+                  <td data-l="Fecha">1 mar 2026</td>
+                  <td data-l="Concepto">Plan Growth + 1 cuenta WhatsApp extra</td>
+                  <td data-l="Estado"><span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pagada</span></td>
+                  <td data-l="Importe" class="r inv-amt">
+                    <span class="inv-amt-wrap">168,00 €
+                      <span class="tip">
+                        <button class="tip-btn" type="button" aria-label="Desglose de este importe">?</button>
+                        <span class="tip-box" role="tooltip">149,00 € plan + 19,00 € cuenta de WhatsApp extra (cancelada en abril). IVA aparte.</span>
+                      </span>
+                    </span>
+                  </td>
+                  <td data-l="Factura" class="r"><button class="dl-btn" type="button" onclick="dl(this,'PDF marzo 2026')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>PDF</button></td>
+                </tr>
+                <tr>
+                  <td data-l="Fecha">1 feb 2026</td>
+                  <td data-l="Concepto">Plan Growth</td>
+                  <td data-l="Estado"><span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pagada</span></td>
+                  <td data-l="Importe" class="r inv-amt">149,00 €</td>
+                  <td data-l="Factura" class="r"><button class="dl-btn" type="button" onclick="dl(this,'PDF febrero 2026')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>PDF</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- DANGER ZONE -->
+        <section aria-label="Cancelar suscripción">
+          <div class="danger-zone">
+            <div class="dz-body">
+              <div class="dz-title">¿Necesitas hacer una pausa?</div>
+              <div class="dz-sub">Antes de cancelar, recuerda que perderías tu agenda automática, las cuentas de WhatsApp conectadas y el historial de conversaciones. Estamos aquí para ayudarte a encontrar el plan que encaje.</div>
+            </div>
+            <button class="btn btn-secondary" type="button" onclick="goTo('Hablar con soporte')">Hablar con soporte</button>
+            <button class="btn btn-danger-ghost" type="button" id="cancelBtn" onclick="openCancel(this)">Cancelar suscripción</button>
+          </div>
+        </section>
+
+      </div><!-- /tabpanel -->
+    </main>
+  </div>
+</div>
+
+<!-- ===================== MODAL: cancelar ===================== -->
+<div class="overlay" id="cancelModal" role="dialog" aria-modal="true" aria-labelledby="cancelTitle" aria-describedby="cancelDesc">
+  <div class="modal">
+    <div class="modal-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+    </div>
+    <h3 id="cancelTitle">¿Seguro que quieres cancelar?</h3>
+    <p id="cancelDesc">Tu plan Growth seguirá activo hasta el <strong>1 de junio de 2026</strong>. A partir de esa fecha perderías:</p>
+    <ul class="modal-list">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>La agenda automática y el llenado de huecos</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Las 2 cuentas de WhatsApp conectadas</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>El historial de conversaciones con pacientes</li>
+    </ul>
+    <div class="modal-actions">
+      <button class="btn btn-primary" type="button" id="keepPlanBtn" onclick="closeCancel()">Mantener mi plan</button>
+      <button class="btn btn-secondary" type="button" onclick="confirmCancel()">Cancelar de todos modos</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TOASTS ===================== -->
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+/* ---------- NAV stub ---------- */
+function goTo(label){ toast('Abriendo: ' + label, 'ok'); }
+
+/* ---------- TABS (ARIA roving tabindex) ---------- */
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('keydown', function(e){
+      var idx = i;
+      if(e.key==='ArrowRight'){ idx=(i+1)%tabs.length; }
+      else if(e.key==='ArrowLeft'){ idx=(i-1+tabs.length)%tabs.length; }
+      else if(e.key==='Home'){ idx=0; }
+      else if(e.key==='End'){ idx=tabs.length-1; }
+      else { return; }
+      e.preventDefault();
+      tabs[idx].focus();
+    });
+  });
+})();
+
+/* ---------- TOAST ---------- */
+function toast(msg, kind){
+  var w = document.getElementById('toastWrap');
+  var t = document.createElement('div');
+  t.className = 'toast ' + (kind==='err'?'err':'ok');
+  t.setAttribute('role','status');
+  var ic = kind==='err' ? '<path d="M18 6 6 18M6 6l12 12"/>' : '<path d="M20 6 9 17l-5-5"/>';
+  t.innerHTML = '<span class="t-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'+ic+'</svg></span>'+msg;
+  w.appendChild(t);
+  requestAnimationFrame(function(){ t.classList.add('show'); });
+  setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 300); }, 3400);
+}
+
+/* ---------- ASYNC BUTTON HELPER (progreso real) ---------- */
+function withLoading(btn, label, done){
+  if(!btn){ return done(); }
+  var orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>' + label;
+  setTimeout(function(){
+    btn.disabled = false;
+    btn.innerHTML = orig;
+    done();
+  }, 1100);
+}
+
+/* ---------- PORTAL DE PAGO ---------- */
+function openPortal(btn){
+  withLoading(btn, 'Abriendo portal…', function(){
+    toast('Portal de pago abierto en una pestaña nueva', 'ok');
+  });
+}
+
+/* ---------- DESCARGAS ---------- */
+function dl(btn, name){
+  withLoading(btn, 'Generando…', function(){ toast('Descargando ' + name, 'ok'); });
+}
+function downloadAll(btn){
+  withLoading(btn, 'Preparando…', function(){ toast('Preparando ZIP con todas las facturas', 'ok'); });
+}
+
+/* ---------- EXTRAS (impacto en próxima factura) ---------- */
+function openExtra(name, price, newTotal){
+  toast(name + ' · +' + price + '/mes — próxima factura: ' + newTotal + ' (IVA aparte)', 'ok');
+}
+
+/* ---------- LÍMITES: recarga con skeleton ---------- */
+function reloadLimits(btn){
+  withLoading(btn, 'Actualizando…', function(){});
+  var grid = document.getElementById('limitsGrid');
+  var cards = Array.prototype.slice.call(grid.children);
+  var saved = cards.map(function(c){ return c.innerHTML; });
+  cards.forEach(function(c){
+    c.innerHTML = '<div class="skeleton sk-line" style="width:55%;height:16px"></div>'
+      + '<div class="skeleton sk-line" style="width:100%;height:10px;margin-top:18px"></div>'
+      + '<div class="skeleton sk-line" style="width:70%;margin-top:16px"></div>';
+  });
+  setTimeout(function(){
+    cards.forEach(function(c,i){ c.innerHTML = saved[i]; });
+    toast('Consumo actualizado', 'ok');
+  }, 950);
+}
+
+/* ---------- MODAL CANCELAR (gestión de foco) ---------- */
+var lastFocused = null;
+var modal = document.getElementById('cancelModal');
+function getFocusable(){
+  return Array.prototype.slice.call(modal.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])'));
+}
+function openCancel(trigger){
+  lastFocused = trigger || document.activeElement;
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  setTimeout(function(){ document.getElementById('keepPlanBtn').focus(); }, 30);
+}
+function closeCancel(){
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
+  if(lastFocused){ lastFocused.focus(); }
+}
+function confirmCancel(){
+  closeCancel();
+  toast('Hemos registrado tu solicitud. Tu plan sigue activo hasta el 1 jun 2026.', 'ok');
+}
+modal.addEventListener('click', function(e){ if(e.target===modal){ closeCancel(); } });
+document.addEventListener('keydown', function(e){
+  if(!modal.classList.contains('show')){ return; }
+  if(e.key==='Escape'){ closeCancel(); return; }
+  if(e.key==='Tab'){
+    var f = getFocusable();
+    if(!f.length){ return; }
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  }
+});
+
+/* ---------- TOOLTIP toggle táctil (móvil) ---------- */
+document.querySelectorAll('.tip-btn').forEach(function(b){
+  b.addEventListener('click', function(e){
+    e.preventDefault();
+    var box = b.nextElementSibling;
+    var open = box.classList.contains('show');
+    document.querySelectorAll('.tip-box.show').forEach(function(x){ x.classList.remove('show'); });
+    if(!open){ box.classList.add('show'); }
+  });
+});
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.tip')){
+    document.querySelectorAll('.tip-box.show').forEach(function(x){ x.classList.remove('show'); });
+  }
+});
+</script>
+</body>
+</html>

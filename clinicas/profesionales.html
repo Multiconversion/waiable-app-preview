@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profesionales · Waiable Clínicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#6b7771; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#b7791f; --warning-soft:#fff4dc; --danger:#b42318; --danger-soft:#fff0ed; --info:#2662a6; --info-soft:#eaf2fb;
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input{font-family:inherit}
+svg{display:block;flex-shrink:0}
+::selection{background:var(--primary-soft)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== GLOBAL FOCUS (WCAG 2.4.7) ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible,.check:focus-within,.color-swatch:focus-visible{
+  outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-sm)
+}
+.nav-item:focus-visible,.tb-icon:focus-visible,.card-menu:focus-visible,.view-toggle button:focus-visible,.t-ico-btn:focus-visible,.chip:focus-visible,.stat.clickable:focus-visible{
+  outline:2px solid var(--cyan);outline-offset:2px
+}
+
+/* ============ LAYOUT ============ */
+.layout{display:flex;min-height:100vh}
+
+/* ============ SIDEBAR ============ */
+.sidebar{
+  width:232px;flex-shrink:0;position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;
+  color:#e8f1ef;z-index:40;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%),
+    linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 18px 18px}
+.brand-mark{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 4px 12px rgba(17,163,145,.4)}
+.brand-name{font-size:16px;font-weight:600;color:#fff;line-height:1.1}
+.brand-tag{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin-top:2px}
+.nav{flex:1;overflow-y:auto;padding:6px 12px 12px}
+.nav::-webkit-scrollbar{width:6px}
+.nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+.nav-group{margin-top:16px}
+.nav-group:first-child{margin-top:4px}
+.nav-head{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.55);padding:0 10px 7px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:var(--radius-sm);color:rgba(232,241,239,.82);font-size:14px;font-weight:500;position:relative;transition:background .14s ease,color .14s ease;text-decoration:none;margin-bottom:1px}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:var(--primary-bright);color:#fff;box-shadow:0 4px 12px rgba(15,148,134,.35)}
+.nav-item.active::before{content:"";position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--cyan);border-radius:0 3px 3px 0}
+.nav-item svg{width:18px;height:18px}
+.nav-item .nav-soft{margin-left:auto;font-size:12px;font-weight:600;color:rgba(255,255,255,.42);background:rgba(255,255,255,.05);border-radius:var(--radius-pill);padding:1px 7px}
+.sidebar-foot{padding:12px;border-top:1px solid rgba(255,255,255,.07)}
+.plan-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:11px 12px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.plan-card .pl{font-size:13px;font-weight:600;color:#fff}
+.plan-card .ps{font-size:12px;color:var(--cyan);font-weight:600;display:flex;align-items:center;gap:5px}
+.plan-card .ps svg{width:13px;height:13px}
+.plan-manage{font-size:13px;color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:2px;display:inline-flex;align-items:center;gap:4px;padding:6px 4px;border-radius:7px;transition:color .14s,background .14s}
+.plan-manage:hover{color:var(--cyan);background:rgba(255,255,255,.08)}
+.plan-manage svg{width:14px;height:14px}
+.user-mini{display:flex;align-items:center;gap:10px;padding:4px 4px}
+.user-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px;flex-shrink:0}
+.user-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.user-role{font-size:12px;color:rgba(255,255,255,.6)}
+
+/* ============ MAIN ============ */
+.main{flex:1;margin-left:232px;display:flex;flex-direction:column;min-width:0}
+
+/* ============ TOPBAR ============ */
+.topbar{height:60px;background:var(--surface);box-shadow:var(--shadow-xs);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 24px;position:sticky;top:0;z-index:30}
+.tb-title h2{font-size:18px;font-weight:600;line-height:1.1}
+.tb-crumb{font-size:13px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:5px}
+.tb-crumb svg{width:13px;height:13px;opacity:.6}
+.tb-search{flex:1;max-width:440px;margin:0 auto;position:relative}
+.tb-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.tb-search input{width:100%;height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface-soft);padding:0 60px 0 38px;font-size:13.5px;color:var(--text);transition:border .14s,box-shadow .14s}
+.tb-search input::placeholder{color:var(--muted)}
+.tb-search input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);background:#fff}
+.tb-kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);border:1px solid var(--line-strong);border-radius:6px;padding:2px 7px;font-weight:600;background:#fff}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.tb-sede{display:flex;align-items:center;gap:7px;height:38px;padding:0 12px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:#fff;font-size:13px;font-weight:500;color:var(--text-2)}
+.tb-sede svg{width:16px;height:16px;color:var(--primary)}
+.tb-chips{display:flex;gap:7px}
+.tb-chip{display:flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:13px;font-weight:600;background:var(--ok-soft);color:var(--ok)}
+.tb-chip svg{width:14px;height:14px}
+/* secondary, discreet status chip (automatización) — no compite con WhatsApp/Agenda */
+.tb-chip.subtle{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line);font-weight:500}
+.tb-chip.subtle svg{color:var(--muted)}
+.tb-chip.subtle .dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.tb-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--text-2);border:1px solid var(--line);background:#fff;position:relative;transition:background .14s,border .14s}
+.tb-icon:hover{background:var(--surface-soft);border-color:var(--line-strong)}
+.tb-icon svg{width:19px;height:19px}
+.tb-dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+.tb-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary-bright),var(--primary-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px}
+
+/* ============ CONTENT ============ */
+.content{padding:28px 32px 48px;max-width:1320px;width:100%;margin:0 auto}
+
+/* page head */
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px}
+.page-head h1{font-size:26px;font-weight:700;letter-spacing:-.01em;line-height:1.15}
+.page-head .lead{font-size:14px;color:var(--muted);margin-top:6px;max-width:580px}
+.head-actions{display:flex;gap:10px;flex-shrink:0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border .16s ease;white-space:nowrap}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.22)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 10px 22px rgba(15,118,110,.28)}
+.btn-secondary{background:#fff;color:var(--text-2);border:1px solid var(--line-strong)}
+.btn-secondary:hover{background:var(--surface-soft);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.btn-ghost{background:transparent;color:var(--text-2);height:36px;padding:0 10px}
+.btn-ghost:hover{background:var(--surface-soft)}
+.btn-sm{height:34px;padding:0 12px;font-size:13px}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:14px;transition:transform .16s ease,box-shadow .16s ease;text-align:left;width:100%}
+.stat:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.stat.clickable{cursor:pointer}
+.stat.clickable:hover{border-color:var(--line-strong)}
+.stat.attention{border-color:rgba(183,121,31,.4);background:linear-gradient(180deg,#fffdf7,#fff)}
+.stat.attention:hover{border-color:var(--warning);box-shadow:0 8px 24px rgba(183,121,31,.16),0 2px 6px rgba(183,121,31,.1)}
+.stat .stat-go{margin-left:auto;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--warning)}
+.stat .stat-go svg{width:15px;height:15px}
+.stat.attention.is-active{box-shadow:0 0 0 2px var(--warning) inset, var(--shadow-md)}
+.stat-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-ico svg{width:22px;height:22px}
+.stat-ico.teal{background:var(--primary-soft);color:var(--primary)}
+.stat-ico.green{background:var(--ok-soft);color:var(--ok)}
+.stat-ico.amber{background:var(--warning-soft);color:var(--warning)}
+.stat-ico.blue{background:var(--info-soft);color:var(--info)}
+.stat-num{font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.stat-lbl{font-size:13px;color:var(--muted);margin-top:5px;font-weight:500}
+
+/* ===== CTA BANNER (qué hacer ahora) ===== */
+.cta-banner{display:flex;align-items:center;gap:16px;background:linear-gradient(180deg,#fffdf7,#fff);border:1px solid rgba(183,121,31,.32);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.cta-ico{width:46px;height:46px;border-radius:12px;background:var(--warning-soft);color:var(--warning);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cta-ico svg{width:24px;height:24px}
+.cta-txt{flex:1;min-width:0}
+.cta-h{font-size:15px;font-weight:700;color:var(--text)}
+.cta-txt p{font-size:13.5px;color:var(--text-2);margin-top:3px;line-height:1.5;max-width:640px}
+.cta-acts{display:flex;gap:9px;flex-shrink:0}
+.cta-dismiss{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}
+.cta-dismiss:hover{background:rgba(183,121,31,.1);color:var(--warning)}
+.cta-dismiss svg{width:16px;height:16px}
+@media(max-width:760px){.cta-banner{flex-wrap:wrap}.cta-acts{width:100%}.cta-acts .btn{flex:1;justify-content:center}}
+
+/* toolbar */
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.tool-search{position:relative;flex:1;min-width:240px;max-width:360px}
+.tool-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.tool-search input{width:100%;height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:#fff;padding:0 12px 0 37px;font-size:13.5px;transition:border .14s,box-shadow .14s}
+.tool-search input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.filter-chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:var(--radius-pill);font-size:13px;font-weight:600;background:#fff;border:1px solid var(--line-strong);color:var(--text-2);transition:all .14s ease}
+.chip:hover{border-color:var(--primary);color:var(--primary)}
+.chip.active{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(15,118,110,.2)}
+.chip .cnt{font-size:13px;font-weight:700;background:rgba(15,26,23,.07);border-radius:var(--radius-pill);padding:1px 8px;font-variant-numeric:tabular-nums}
+.chip.active .cnt{background:rgba(255,255,255,.22)}
+.view-toggle{display:flex;background:#fff;border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:3px;margin-left:auto;gap:2px}
+.view-toggle button{width:36px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .14s}
+.view-toggle button svg{width:18px;height:18px}
+.view-toggle button.active{background:var(--primary-soft);color:var(--primary)}
+
+/* section header */
+.sec-head{display:flex;align-items:center;gap:9px;margin:6px 0 14px}
+.sec-head h3{font-size:15px;font-weight:600}
+.sec-head .pill{font-size:12px;font-weight:600;color:var(--muted);background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:2px 10px}
+
+/* ============ CARD GRID ============ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease;position:relative}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.card.off{opacity:.78}
+.card-accent{height:4px;width:100%}
+.card-body{padding:18px}
+.card-top{display:flex;gap:13px;align-items:flex-start}
+.av{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0;box-shadow:var(--shadow-sm)}
+.card-id{flex:1;min-width:0}
+.card-name{font-size:16px;font-weight:600;line-height:1.2;display:flex;align-items:center;gap:7px}
+.card-spec{font-size:13px;color:var(--primary);font-weight:600;margin-top:3px}
+.card-menu{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .14s}
+.card-menu:hover{background:var(--surface-soft);color:var(--text)}
+.card-menu svg{width:18px;height:18px}
+
+.meta{margin-top:15px;display:flex;flex-direction:column;gap:9px}
+.meta-row{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2);min-width:0}
+.meta-row svg{width:16px;height:16px;color:var(--muted);flex-shrink:0}
+.meta-row .v{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sedes{display:flex;gap:6px;flex-wrap:wrap}
+.sede-tag{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--text-2);background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-pill);padding:3px 10px}
+.sede-tag .d{width:7px;height:7px;border-radius:50%}
+
+/* status badges */
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;padding-top:15px;border-top:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:var(--radius-pill);font-size:13px;font-weight:600}
+.badge svg{width:14px;height:14px}
+.badge.ok{background:var(--ok-soft);color:var(--ok)}
+.badge.warn{background:var(--warning-soft);color:var(--warning)}
+.badge.muted{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line)}
+.badge.info{background:var(--info-soft);color:var(--info)}
+/* sutil: badge de automatización — neutro, secundario, no protagonista */
+.badge.soft{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line);font-weight:500;height:28px;padding:0 10px;font-size:12.5px}
+.badge.soft svg{color:var(--muted)}
+.badge.soft .dot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+/* warn badge that is a real button/trigger */
+button.badge{cursor:pointer;border:1px solid transparent;transition:background .14s,box-shadow .14s,transform .14s}
+button.badge.warn{border-color:rgba(183,121,31,.28)}
+button.badge.warn:hover{background:#fceabf;box-shadow:0 2px 8px rgba(183,121,31,.18);transform:translateY(-1px)}
+button.badge.warn .chev{width:13px;height:13px;margin-left:-1px}
+
+/* card footer actions */
+.card-foot{display:flex;gap:8px;padding:14px 18px;background:var(--surface-soft);border-top:1px solid var(--line)}
+.card-foot .btn-secondary{flex:1;justify-content:center;height:40px}
+.card-foot .btn-primary{flex:1;justify-content:center;height:40px}
+.btn .spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.btn[disabled]{opacity:.85;cursor:default;transform:none!important}
+
+/* ===== KEBAB MENU ===== */
+.menu-wrap{position:relative}
+.card-menu[aria-expanded="true"]{background:var(--primary-soft);color:var(--primary)}
+.dropdown{position:absolute;top:40px;right:0;min-width:188px;background:#fff;border:1px solid var(--line-strong);border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);padding:6px;z-index:60;display:none}
+.dropdown.open{display:block;animation:pop .14s ease}
+.dropdown button{display:flex;align-items:center;gap:10px;width:100%;height:38px;padding:0 11px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--text-2);text-align:left;transition:background .12s}
+.dropdown button:hover{background:var(--surface-soft);color:var(--text)}
+.dropdown button svg{width:16px;height:16px;color:var(--muted)}
+.dropdown .sep{height:1px;background:var(--line);margin:5px 0}
+.dropdown button.danger{color:var(--danger)}
+.dropdown button.danger:hover{background:var(--danger-soft)}
+.dropdown button.danger svg{color:var(--danger)}
+
+/* color in agenda swatch in name */
+.color-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1px var(--line-strong)}
+
+/* inactive ribbon */
+.off-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--muted);background:var(--surface-soft);border:1px solid var(--line-strong);border-radius:var(--radius-pill);padding:2px 9px;text-transform:uppercase;letter-spacing:.04em}
+
+/* ============ TABLE VIEW ============ */
+.table-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;display:none}
+.table-wrap.show{display:block}
+.t-grid{display:none}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+thead th{text-align:left;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--surface-soft)}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:var(--primary-tint)}
+.t-name{display:flex;align-items:center;gap:11px}
+.t-av{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0}
+.t-nm{font-weight:600;font-size:14px}
+.t-sub{font-size:13px;color:var(--muted)}
+.t-actions{display:flex;gap:6px;justify-content:flex-end}
+.t-ico-btn{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);border:1px solid var(--line);background:#fff;transition:all .14s}
+.t-ico-btn:hover{color:var(--primary);border-color:var(--primary);background:var(--primary-tint)}
+.t-ico-btn svg{width:17px;height:17px}
+.t-pill{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600}
+.t-pill.ok{background:var(--ok-soft);color:var(--ok)}
+.t-pill.warn{background:var(--warning-soft);color:var(--warning)}
+.t-pill.muted{background:var(--surface-soft);color:var(--muted);border:1px solid var(--line)}
+.t-pill svg{width:13px;height:13px}
+
+/* tooltip */
+.tip{position:relative;display:inline-flex}
+.tip .qm{width:18px;height:18px;border-radius:50%;background:var(--surface-soft);border:1px solid var(--line-strong);color:var(--muted);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:help}
+.tip .tip-box{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:12px;font-weight:500;line-height:1.4;padding:8px 11px;border-radius:8px;width:210px;text-align:left;opacity:0;visibility:hidden;transition:opacity .14s;z-index:50;box-shadow:var(--shadow-md);pointer-events:none}
+.tip .tip-box::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--text)}
+.tip:hover .tip-box{opacity:1;visibility:visible}
+
+/* empty state */
+.empty{display:none;flex-direction:column;align-items:center;text-align:center;padding:56px 24px;background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--radius)}
+.empty.show{display:flex}
+.empty-ico{width:72px;height:72px;border-radius:20px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.empty-ico svg{width:34px;height:34px}
+.empty h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.empty p{font-size:14px;color:var(--muted);max-width:380px;margin-bottom:20px;line-height:1.55}
+
+/* ===== ERROR STATE ===== */
+.errorbox{display:none;flex-direction:column;align-items:center;text-align:center;padding:56px 24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.errorbox.show{display:flex}
+.errorbox-ico{width:72px;height:72px;border-radius:20px;background:var(--danger-soft);color:var(--danger);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.errorbox-ico svg{width:34px;height:34px}
+.errorbox h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.errorbox p{font-size:14px;color:var(--muted);max-width:400px;margin-bottom:20px;line-height:1.55}
+
+/* ===== SKELETON LOADING ===== */
+.skeleton-grid{display:none;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
+.skeleton-grid.show{display:grid}
+.sk-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.sk-card .sk-accent{height:4px;background:var(--line)}
+.sk-body{padding:18px}
+.sk-top{display:flex;gap:13px;align-items:center}
+.sk-line{border-radius:6px;background:var(--line)}
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.sk{position:relative;overflow:hidden;background:#e8edeb;background-image:linear-gradient(90deg,#e8edeb 0px,#f3f6f5 200px,#e8edeb 400px);background-size:800px 100%;animation:shimmer 1.3s linear infinite}
+.sk-av{width:52px;height:52px;border-radius:14px}
+.sk-w70{width:70%;height:14px}
+.sk-w45{width:45%;height:12px}
+.sk-w90{width:90%;height:12px}
+.sk-w55{width:55%;height:12px}
+.sk-foot{display:flex;gap:8px;padding:14px 18px;background:var(--surface-soft);border-top:1px solid var(--line)}
+.sk-btn{flex:1;height:38px;border-radius:var(--radius-sm)}
+
+/* ============ MODAL ============ */
+.modal-overlay{position:fixed;inset:0;background:rgba(7,36,43,.45);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;padding:24px;animation:fade .18s ease}
+.modal-overlay.open{display:flex}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;animation:pop .2s ease}
+@keyframes pop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;padding:22px 24px 0}
+.modal-head h2{font-size:19px;font-weight:700}
+.modal-head p{font-size:13px;color:var(--muted);margin-top:4px}
+.modal-close{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .14s}
+.modal-close:hover{background:var(--surface-soft);color:var(--text)}
+.modal-body{padding:20px 24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:7px}
+.field .hint{font-size:12.5px;font-weight:400;color:var(--muted);margin-top:6px;line-height:1.45}
+.field .req{color:var(--danger)}
+.field input,.field select{width:100%;height:42px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:0 13px;font-size:14px;background:#fff;transition:border .14s,box-shadow .14s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.color-picker{display:flex;gap:10px;flex-wrap:wrap}
+.color-swatch{width:34px;height:34px;border-radius:9px;cursor:pointer;border:3px solid transparent;transition:transform .12s}
+.color-swatch:hover{transform:scale(1.08)}
+.color-swatch.sel{border-color:var(--text);box-shadow:0 0 0 2px #fff inset}
+.checks{display:flex;flex-direction:column;gap:9px}
+.check{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);cursor:pointer;transition:border .14s,background .14s}
+.check:hover{border-color:var(--primary);background:var(--primary-tint)}
+.check input{width:18px;height:18px;accent-color:var(--primary);cursor:pointer}
+.check .cl{font-size:13.5px;font-weight:500}
+.check .cd{display:inline-flex;width:9px;height:9px;border-radius:50%;margin-left:auto}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:18px 24px;border-top:1px solid var(--line);background:var(--surface-soft);position:sticky;bottom:0}
+
+/* confirm modal */
+.confirm{max-width:420px}
+.confirm .modal-body{text-align:center;padding-top:8px}
+.confirm-ico{width:60px;height:60px;border-radius:16px;background:var(--danger-soft);color:var(--danger);display:flex;align-items:center;justify-content:center;margin:6px auto 16px}
+.confirm-ico svg{width:28px;height:28px}
+.confirm h2{font-size:18px;font-weight:700;margin-bottom:8px}
+.confirm p{font-size:14px;color:var(--muted);line-height:1.55;max-width:330px;margin:0 auto}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#9a1d12}
+
+/* toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:13px 18px;border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:11px;font-size:14px;font-weight:500;z-index:200;transform:translateY(120px);opacity:0;transition:transform .3s ease,opacity .3s ease}
+.toast.show{transform:none;opacity:1}
+.toast svg{width:20px;height:20px;color:var(--cyan)}
+.toast.err svg{color:#ff8c7a}
+.toast .toast-act{margin-left:6px;font-size:13px;font-weight:700;color:var(--cyan);text-decoration:underline;text-underline-offset:2px;background:none;padding:4px 2px}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1100px){
+  .sidebar{width:68px}
+  .brand-name,.brand-tag,.nav-head,.nav-item span,.nav-item .nav-soft,.plan-card,.user-name,.user-role{display:none}
+  .brand{justify-content:center;padding:18px 0}
+  .nav-item{justify-content:center;padding:11px}
+  .nav-item.active::before{display:none}
+  .user-mini{justify-content:center}
+  .sidebar-foot{padding:12px 8px}
+  .main{margin-left:68px}
+  .tb-search{display:none}
+  .tb-chips{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .content{padding:20px 16px 40px}
+  .page-head{flex-direction:column}
+  .head-actions{width:100%}
+  .head-actions .btn{flex:1;justify-content:center}
+  .stats{grid-template-columns:1fr 1fr;gap:10px}
+  .tb-sede{display:none}
+  .grid{grid-template-columns:1fr}
+  .view-toggle{display:none}
+  .field-row{grid-template-columns:1fr}
+  .table-wrap{overflow-x:auto}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-tag">Clínicas</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-head">Inicio</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Panel</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Agenda</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Citas</span></a>
+        <a class="nav-item" href="huecos-ia.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h3M8 17h6"/></svg><span>Huecos de agenda</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Solicitudes</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Conversaciones</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>WhatsApp</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Llamadas</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Pacientes</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Contactos</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Oportunidades</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Crecimiento</div>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Campañas</span></a>
+        <a class="nav-item" href="informes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-4 3 3 5-6"/></svg><span>Informes</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg><span>Integraciones</span></a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-head">Configuración</div>
+        <a class="nav-item active" href="profesionales.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg><span>Clínica</span></a>
+        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Automatización</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="plan-card">
+        <div>
+          <div class="pl">Plan Growth</div>
+          <div class="ps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</div>
+        </div>
+        <a class="plan-manage" href="#" onclick="event.preventDefault();showToast('Abriendo gestión del plan…')">Gestionar plan</a>
+      </div>
+      <div class="user-mini">
+        <div class="user-av">CR</div>
+        <div>
+          <div class="user-name">Carmen Ruiz</div>
+          <div class="user-role">Recepción</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="tb-title">
+        <h2>Profesionales</h2>
+        <div class="tb-crumb">Clínica
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          Profesionales
+        </div>
+      </div>
+      <div class="tb-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Búsqueda global: pacientes, citas, conversaciones…" aria-label="Búsqueda global en toda la app" title="Búsqueda global en toda la app (⌘K)">
+        <span class="tb-kbd">⌘K</span>
+      </div>
+      <div class="tb-right">
+        <div class="tb-sede">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Todas las sedes
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;color:var(--muted)"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tb-chips">
+          <span class="tb-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp conectado</span>
+          <span class="tb-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Agenda sincronizada</span>
+          <span class="tb-chip subtle" title="La automatización trabaja en segundo plano sugiriendo respuestas y huecos. Configúrala en Automatización."><span class="dot"></span>Automatización activa</span>
+        </div>
+        <button class="tb-icon" aria-label="Notificaciones">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="tb-dot"></span>
+        </button>
+        <div class="tb-avatar">CR</div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- PAGE HEAD -->
+      <div class="page-head">
+        <div>
+          <h1>Profesionales</h1>
+          <p class="lead">Gestiona tu equipo clínico y asigna sedes, color en agenda y calendario. Cada profesional con su calendario conectado puede recibir citas online, por WhatsApp y por teléfono sin huecos perdidos.</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-secondary" onclick="showToast('Exportando lista de profesionales…')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+            Exportar
+          </button>
+          <button class="btn btn-primary" onclick="openModal('modalAdd')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Añadir profesional
+          </button>
+        </div>
+      </div>
+
+      <!-- STAT STRIP -->
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-ico teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div><div class="stat-num">8</div><div class="stat-lbl">Profesionales</div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <div><div class="stat-num">7</div><div class="stat-lbl">Activos</div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-ico blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></div>
+          <div><div class="stat-num">6</div><div class="stat-lbl">Con calendario</div></div>
+        </div>
+        <button type="button" class="stat clickable attention" id="statAttention" aria-pressed="false" title="Filtrar a los profesionales sin calendario conectado" onclick="toggleAttention()">
+          <div class="stat-ico amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+          <div><div class="stat-num">2</div><div class="stat-lbl">Requieren atención</div></div>
+          <span class="stat-go"><span id="attLabel">Ver</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </button>
+      </div>
+
+      <!-- QUÉ HACER AHORA -->
+      <div class="cta-banner" id="ctaBanner">
+        <div class="cta-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></div>
+        <div class="cta-txt">
+          <div class="cta-h">2 profesionales aún no reciben citas</div>
+          <p>Su agenda no está conectada a Google Calendar, así que no aparecen huecos disponibles para reservar online ni por WhatsApp. Conéctala para dejarlos operativos y empezar a llenar su agenda.</p>
+        </div>
+        <div class="cta-acts">
+          <button class="btn btn-secondary btn-sm" onclick="toggleAttention(true)">Ver los 2</button>
+          <button class="btn btn-primary btn-sm" onclick="connectFromBanner()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg>
+            Conectar calendarios
+          </button>
+        </div>
+        <button class="cta-dismiss" aria-label="Ocultar aviso" onclick="document.getElementById('ctaBanner').style.display='none'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="tool-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <label for="profSearch" class="sr-only">Buscar en esta lista de profesionales</label>
+          <input id="profSearch" type="text" placeholder="Filtrar por nombre, especialidad o email…" aria-label="Filtrar en esta lista de profesionales" oninput="applyFilters()">
+        </div>
+        <div class="filter-chips" role="group" aria-label="Filtrar por sede">
+          <button class="chip active" aria-pressed="true" data-filter="all" onclick="setSede('all',this)">Todas <span class="cnt">8</span></button>
+          <button class="chip" aria-pressed="false" data-filter="centro" onclick="setSede('centro',this)"><span style="width:8px;height:8px;border-radius:50%;background:#0f766e;display:inline-block"></span>Madrid Centro <span class="cnt">6</span></button>
+          <button class="chip" aria-pressed="false" data-filter="norte" onclick="setSede('norte',this)"><span style="width:8px;height:8px;border-radius:50%;background:#2662a6;display:inline-block"></span>Madrid Norte <span class="cnt">4</span></button>
+        </div>
+        <div class="view-toggle" role="group" aria-label="Cambiar vista">
+          <button class="active" id="vCards" onclick="setView('cards')" aria-label="Vista de tarjetas" aria-pressed="true" title="Tarjetas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </button>
+          <button id="vTable" onclick="setView('table')" aria-label="Vista de tabla" aria-pressed="false" title="Tabla">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SKELETON (carga) -->
+      <div class="skeleton-grid" id="skeleton">
+        <div class="sk-card"><div class="sk-accent"></div><div class="sk-body"><div class="sk-top"><div class="sk sk-av"></div><div style="flex:1"><div class="sk sk-line sk-w70" style="margin-bottom:8px"></div><div class="sk sk-line sk-w45"></div></div></div><div style="margin-top:18px"><div class="sk sk-line sk-w90" style="margin-bottom:9px"></div><div class="sk sk-line sk-w55"></div></div></div><div class="sk-foot"><div class="sk sk-btn"></div><div class="sk sk-btn"></div></div></div>
+        <div class="sk-card"><div class="sk-accent"></div><div class="sk-body"><div class="sk-top"><div class="sk sk-av"></div><div style="flex:1"><div class="sk sk-line sk-w70" style="margin-bottom:8px"></div><div class="sk sk-line sk-w45"></div></div></div><div style="margin-top:18px"><div class="sk sk-line sk-w90" style="margin-bottom:9px"></div><div class="sk sk-line sk-w55"></div></div></div><div class="sk-foot"><div class="sk sk-btn"></div><div class="sk sk-btn"></div></div></div>
+        <div class="sk-card"><div class="sk-accent"></div><div class="sk-body"><div class="sk-top"><div class="sk sk-av"></div><div style="flex:1"><div class="sk sk-line sk-w70" style="margin-bottom:8px"></div><div class="sk sk-line sk-w45"></div></div></div><div style="margin-top:18px"><div class="sk sk-line sk-w90" style="margin-bottom:9px"></div><div class="sk sk-line sk-w55"></div></div></div><div class="sk-foot"><div class="sk sk-btn"></div><div class="sk sk-btn"></div></div></div>
+      </div>
+
+      <!-- ============ CARD GRID ============ -->
+      <div class="grid" id="cardGrid">
+
+        <!-- 1 · Dr. Álvaro Martín — OK -->
+        <div class="card" data-name="álvaro martín" data-spec="odontología general" data-email="a.martin@clinica.com" data-sede="centro" data-cal="yes">
+          <div class="card-accent" style="background:#0f766e"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#0f9486,#0a5d57)">AM</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#0f766e"></span>Dr. Álvaro Martín</div>
+                <div class="card-spec">Odontología general</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dr. Álvaro Martín" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Abriendo agenda de Álvaro Martín…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Ajustando horarios de atención…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Horarios de atención</button>
+                  <div class="sep"></div>
+                  <button role="menuitem" class="danger" onclick="closeMenus();askDeactivate('Dr. Álvaro Martín')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Desactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">a.martin@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="v">+34 612 345 678</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</span>
+              <span class="badge info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendario sincronizado</span>
+              <span class="badge soft" title="Las respuestas y los huecos se sugieren automáticamente para este profesional"><span class="dot"></span>Reservas automáticas</span>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="showToast('Abriendo agenda de Álvaro Martín…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+          </div>
+        </div>
+
+        <!-- 2 · Dra. Lucía Fernández — sin calendario (atención) -->
+        <div class="card" data-name="lucía fernández" data-spec="ortodoncia" data-email="l.fernandez@clinica.com" data-sede="centro" data-cal="no">
+          <div class="card-accent" style="background:#b7791f"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#d99a36,#b7791f)">LF</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#b7791f"></span>Dra. Lucía Fernández</div>
+                <div class="card-spec">Ortodoncia</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dra. Lucía Fernández" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();connectCalendar('Dra. Lucía Fernández',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg>Conectar calendario</button>
+                  <div class="sep"></div>
+                  <button role="menuitem" class="danger" onclick="closeMenus();askDeactivate('Dra. Lucía Fernández')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Desactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">l.fernandez@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="v">+34 698 112 233</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</span>
+              <button class="badge warn" onclick="connectCalendar('Dra. Lucía Fernández',this)" title="Conectar Google Calendar para que reciba citas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Sin calendario · conectar
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="connectCalendar('Dra. Lucía Fernández',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg>Conectar calendario</button>
+          </div>
+        </div>
+
+        <!-- 3 · Dr. Javier Soler — OK -->
+        <div class="card" data-name="javier soler" data-spec="implantología" data-email="j.soler@clinica.com" data-sede="norte" data-cal="yes">
+          <div class="card-accent" style="background:#2662a6"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#3a7fc4,#2662a6)">JS</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#2662a6"></span>Dr. Javier Soler</div>
+                <div class="card-spec">Implantología</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dr. Javier Soler" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Abriendo agenda de Javier Soler…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Ajustando horarios de atención…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Horarios de atención</button>
+                  <div class="sep"></div>
+                  <button role="menuitem" class="danger" onclick="closeMenus();askDeactivate('Dr. Javier Soler')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Desactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">j.soler@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="v">+34 655 887 100</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Madrid Norte</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</span>
+              <span class="badge info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendario sincronizado</span>
+              <span class="badge soft" title="Las respuestas y los huecos se sugieren automáticamente para este profesional"><span class="dot"></span>Reservas automáticas</span>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="showToast('Abriendo agenda de Javier Soler…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+          </div>
+        </div>
+
+        <!-- 4 · Dra. Marta Gil — OK, dos sedes -->
+        <div class="card" data-name="marta gil" data-spec="periodoncia" data-email="m.gil@clinica.com" data-sede="centro norte" data-cal="yes">
+          <div class="card-accent" style="background:#11a391"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#2bc4ad,#0f766e)">MG</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#11a391"></span>Dra. Marta Gil</div>
+                <div class="card-spec">Periodoncia</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dra. Marta Gil" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Abriendo agenda de Marta Gil…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Ajustando horarios de atención…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Horarios de atención</button>
+                  <div class="sep"></div>
+                  <button role="menuitem" class="danger" onclick="closeMenus();askDeactivate('Dra. Marta Gil')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Desactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">m.gil@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="v">+34 677 234 991</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Madrid Norte</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</span>
+              <span class="badge info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendario sincronizado</span>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="showToast('Abriendo agenda de Marta Gil…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+          </div>
+        </div>
+
+        <!-- 5 · Dr. Pablo Reyes — sin calendario (atención) -->
+        <div class="card" data-name="pablo reyes" data-spec="endodoncia" data-email="p.reyes@clinica.com" data-sede="norte" data-cal="no">
+          <div class="card-accent" style="background:#b7791f"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#d99a36,#b7791f)">PR</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#7c3aed"></span>Dr. Pablo Reyes</div>
+                <div class="card-spec">Endodoncia</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dr. Pablo Reyes" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();connectCalendar('Dr. Pablo Reyes',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg>Conectar calendario</button>
+                  <div class="sep"></div>
+                  <button role="menuitem" class="danger" onclick="closeMenus();askDeactivate('Dr. Pablo Reyes')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Desactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">p.reyes@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="v">+34 644 320 087</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Madrid Norte</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</span>
+              <button class="badge warn" onclick="connectCalendar('Dr. Pablo Reyes',this)" title="Conectar Google Calendar para que reciba citas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Sin calendario · conectar
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="connectCalendar('Dr. Pablo Reyes',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg>Conectar calendario</button>
+          </div>
+        </div>
+
+        <!-- 6 · Dra. Sara Núñez — inactiva -->
+        <div class="card off" data-name="sara núñez" data-spec="higiene dental" data-email="s.nunez@clinica.com" data-sede="centro" data-cal="yes" data-status="off">
+          <div class="card-accent" style="background:#cfd8d4"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#9aa6a1,#6b7771)">SN</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#e0457b"></span>Dra. Sara Núñez <span class="off-tag">Inactiva</span></div>
+                <div class="card-spec">Higiene dental</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dra. Sara Núñez" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();reactivate('Dra. Sara Núñez',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Reactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">s.nunez@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge muted"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>Inactiva</span>
+              <span class="badge muted">No recibe citas nuevas</span>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="reactivate('Dra. Sara Núñez',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Reactivar</button>
+          </div>
+        </div>
+
+        <!-- 7 · Dr. Hugo Vega — OK -->
+        <div class="card" data-name="hugo vega" data-spec="cirugía maxilofacial" data-email="h.vega@clinica.com" data-sede="centro" data-cal="yes">
+          <div class="card-accent" style="background:#7c3aed"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#9d6bf0,#7c3aed)">HV</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#7c3aed"></span>Dr. Hugo Vega</div>
+                <div class="card-spec">Cirugía maxilofacial</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dr. Hugo Vega" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Abriendo agenda de Hugo Vega…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Ajustando horarios de atención…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Horarios de atención</button>
+                  <div class="sep"></div>
+                  <button role="menuitem" class="danger" onclick="closeMenus();askDeactivate('Dr. Hugo Vega')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Desactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">h.vega@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="v">+34 699 401 552</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</span>
+              <span class="badge info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendario sincronizado</span>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="showToast('Abriendo agenda de Hugo Vega…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+          </div>
+        </div>
+
+        <!-- 8 · Dra. Elena Cano — OK -->
+        <div class="card" data-name="elena cano" data-spec="odontopediatría" data-email="e.cano@clinica.com" data-sede="norte" data-cal="yes">
+          <div class="card-accent" style="background:#e0457b"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="av" style="background:linear-gradient(135deg,#ec6f99,#e0457b)">EC</div>
+              <div class="card-id">
+                <div class="card-name"><span class="color-dot" style="background:#e0457b"></span>Dra. Elena Cano</div>
+                <div class="card-spec">Odontopediatría</div>
+              </div>
+              <div class="menu-wrap">
+                <button class="card-menu" aria-label="Más acciones para Dra. Elena Cano" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="dropdown" role="menu">
+                  <button role="menuitem" onclick="closeMenus();openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar ficha</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Abriendo agenda de Elena Cano…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+                  <button role="menuitem" onclick="closeMenus();showToast('Ajustando horarios de atención…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Horarios de atención</button>
+                  <div class="sep"></div>
+                  <button role="menuitem" class="danger" onclick="closeMenus();askDeactivate('Dra. Elena Cano')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Desactivar</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg><span class="v">e.cano@clinica.com</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="v">+34 633 778 220</span></div>
+              <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="sedes"><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Madrid Norte</span></div>
+              </div>
+            </div>
+            <div class="badges">
+              <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Activo</span>
+              <span class="badge info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendario sincronizado</span>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn btn-secondary" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar</button>
+            <button class="btn btn-primary" onclick="showToast('Abriendo agenda de Elena Cano…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ver agenda</button>
+          </div>
+        </div>
+
+      </div><!-- /grid -->
+
+      <!-- ============ TABLE VIEW ============ -->
+      <div class="table-wrap" id="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Profesional</th>
+              <th>Especialidad</th>
+              <th>Sede</th>
+              <th>Calendario</th>
+              <th>Estado</th>
+              <th style="text-align:right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr data-name="álvaro martín">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#0f9486,#0a5d57)">AM</div><div><div class="t-nm">Dr. Álvaro Martín</div><div class="t-sub">a.martin@clinica.com</div></div></div></td>
+              <td>Odontología general</td>
+              <td><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></td>
+              <td><span class="t-pill ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sincronizado</span></td>
+              <td><span class="t-pill ok">Activo</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Editar Dr. Álvaro Martín" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="t-ico-btn" aria-label="Ver agenda de Dr. Álvaro Martín" onclick="showToast('Abriendo agenda de Álvaro Martín…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button></div></td>
+            </tr>
+            <tr data-name="lucía fernández">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#d99a36,#b7791f)">LF</div><div><div class="t-nm">Dra. Lucía Fernández</div><div class="t-sub">l.fernandez@clinica.com</div></div></div></td>
+              <td>Ortodoncia</td>
+              <td><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></td>
+              <td><span class="t-pill warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Sin conectar</span></td>
+              <td><span class="t-pill ok">Activo</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Conectar calendario de Dra. Lucía Fernández" onclick="connectCalendar('Dra. Lucía Fernández',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg></button><button class="t-ico-btn" aria-label="Editar Dra. Lucía Fernández" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div></td>
+            </tr>
+            <tr data-name="javier soler">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#3a7fc4,#2662a6)">JS</div><div><div class="t-nm">Dr. Javier Soler</div><div class="t-sub">j.soler@clinica.com</div></div></div></td>
+              <td>Implantología</td>
+              <td><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Madrid Norte</span></td>
+              <td><span class="t-pill ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sincronizado</span></td>
+              <td><span class="t-pill ok">Activo</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Editar Dr. Javier Soler" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="t-ico-btn" aria-label="Ver agenda de Dr. Javier Soler" onclick="showToast('Abriendo agenda de Javier Soler…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button></div></td>
+            </tr>
+            <tr data-name="marta gil">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#2bc4ad,#0f766e)">MG</div><div><div class="t-nm">Dra. Marta Gil</div><div class="t-sub">m.gil@clinica.com</div></div></div></td>
+              <td>Periodoncia</td>
+              <td><div class="sedes"><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Centro</span><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Norte</span></div></td>
+              <td><span class="t-pill ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sincronizado</span></td>
+              <td><span class="t-pill ok">Activo</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Editar Dra. Marta Gil" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="t-ico-btn" aria-label="Ver agenda de Dra. Marta Gil" onclick="showToast('Abriendo agenda de Marta Gil…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button></div></td>
+            </tr>
+            <tr data-name="pablo reyes">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#d99a36,#b7791f)">PR</div><div><div class="t-nm">Dr. Pablo Reyes</div><div class="t-sub">p.reyes@clinica.com</div></div></div></td>
+              <td>Endodoncia</td>
+              <td><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Madrid Norte</span></td>
+              <td><span class="t-pill warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Sin conectar</span></td>
+              <td><span class="t-pill ok">Activo</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Conectar calendario de Dr. Pablo Reyes" onclick="connectCalendar('Dr. Pablo Reyes',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.59 13.41a2 2 0 0 0 2.83 0l4.24-4.24a2 2 0 0 0-2.83-2.83l-1 1"/><path d="M13.41 10.59a2 2 0 0 0-2.83 0l-4.24 4.24a2 2 0 0 0 2.83 2.83l1-1"/></svg></button><button class="t-ico-btn" aria-label="Editar Dr. Pablo Reyes" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div></td>
+            </tr>
+            <tr data-name="sara núñez">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#9aa6a1,#6b7771)">SN</div><div><div class="t-nm">Dra. Sara Núñez</div><div class="t-sub">s.nunez@clinica.com</div></div></div></td>
+              <td>Higiene dental</td>
+              <td><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></td>
+              <td><span class="t-pill muted">—</span></td>
+              <td><span class="t-pill muted">Inactiva</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Reactivar Dra. Sara Núñez" onclick="reactivate('Dra. Sara Núñez',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button><button class="t-ico-btn" aria-label="Editar Dra. Sara Núñez" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div></td>
+            </tr>
+            <tr data-name="hugo vega">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#9d6bf0,#7c3aed)">HV</div><div><div class="t-nm">Dr. Hugo Vega</div><div class="t-sub">h.vega@clinica.com</div></div></div></td>
+              <td>Cirugía maxilofacial</td>
+              <td><span class="sede-tag"><span class="d" style="background:#0f766e"></span>Madrid Centro</span></td>
+              <td><span class="t-pill ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sincronizado</span></td>
+              <td><span class="t-pill ok">Activo</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Editar Dr. Hugo Vega" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="t-ico-btn" aria-label="Ver agenda de Dr. Hugo Vega" onclick="showToast('Abriendo agenda de Hugo Vega…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button></div></td>
+            </tr>
+            <tr data-name="elena cano">
+              <td><div class="t-name"><div class="t-av" style="background:linear-gradient(135deg,#ec6f99,#e0457b)">EC</div><div><div class="t-nm">Dra. Elena Cano</div><div class="t-sub">e.cano@clinica.com</div></div></div></td>
+              <td>Odontopediatría</td>
+              <td><span class="sede-tag"><span class="d" style="background:#2662a6"></span>Madrid Norte</span></td>
+              <td><span class="t-pill ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sincronizado</span></td>
+              <td><span class="t-pill ok">Activo</span></td>
+              <td><div class="t-actions"><button class="t-ico-btn" aria-label="Editar Dra. Elena Cano" onclick="openModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="t-ico-btn" aria-label="Ver agenda de Dra. Elena Cano" onclick="showToast('Abriendo agenda de Elena Cano…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EMPTY STATE (sin resultados) -->
+      <div class="empty" id="emptyState">
+        <div class="empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+        <h3>Sin resultados</h3>
+        <p>No hay profesionales que coincidan con tu búsqueda o filtro. Prueba con otro término o limpia los filtros.</p>
+        <button class="btn btn-secondary" onclick="clearFilters()">Limpiar filtros</button>
+      </div>
+
+      <!-- ERROR STATE -->
+      <div class="errorbox" id="errorState">
+        <div class="errorbox-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+        <h3>No se pudo cargar el equipo</h3>
+        <p>Ha ocurrido un problema al cargar la lista de profesionales. Comprueba tu conexión e inténtalo de nuevo.</p>
+        <button class="btn btn-primary" onclick="retryLoad()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Reintentar</button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ MODAL: AÑADIR / EDITAR PROFESIONAL ============ -->
+<div class="modal-overlay" id="modalAdd" role="dialog" aria-modal="true" aria-labelledby="modalAddTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="modalAddTitle">Añadir profesional</h2>
+        <p>Define sus datos, sedes y color en agenda. Conecta su calendario para que empiece a recibir citas.</p>
+      </div>
+      <button class="modal-close" aria-label="Cerrar" onclick="closeModal('modalAdd')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <form class="modal-body" id="profForm" onsubmit="saveProf(event)">
+      <div class="field-row">
+        <div class="field">
+          <label for="fNombre">Nombre y apellidos <span class="req">*</span></label>
+          <input id="fNombre" type="text" placeholder="Ej. Dra. Lucía Fernández" required>
+        </div>
+        <div class="field">
+          <label for="fEspecialidad">Especialidad <span class="req">*</span></label>
+          <select id="fEspecialidad" required>
+            <option value="">Selecciona…</option>
+            <option>Odontología general</option>
+            <option>Ortodoncia</option>
+            <option>Implantología</option>
+            <option>Periodoncia</option>
+            <option>Endodoncia</option>
+            <option>Odontopediatría</option>
+            <option>Cirugía maxilofacial</option>
+            <option>Higiene dental</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="fEmail">Email <span class="req">*</span></label>
+          <input id="fEmail" type="email" placeholder="nombre@clinica.com" required>
+        </div>
+        <div class="field">
+          <label for="fTel">Teléfono</label>
+          <input id="fTel" type="tel" placeholder="+34 600 000 000">
+        </div>
+      </div>
+      <div class="field">
+        <label>Sedes asignadas <span class="req">*</span></label>
+        <div class="checks">
+          <label class="check"><input type="checkbox" name="sede" value="centro" checked><span class="cl">Madrid Centro</span><span class="cd" style="background:#0f766e"></span></label>
+          <label class="check"><input type="checkbox" name="sede" value="norte"><span class="cl">Madrid Norte</span><span class="cd" style="background:#2662a6"></span></label>
+        </div>
+        <p class="hint">El profesional solo recibirá citas en las sedes que marques.</p>
+      </div>
+      <div class="field">
+        <label>Color en agenda</label>
+        <div class="color-picker" id="colorPicker" role="radiogroup" aria-label="Color en agenda">
+          <button type="button" class="color-swatch sel" role="radio" aria-checked="true" aria-label="Verde" style="background:#0f766e" onclick="pickColor(this)"></button>
+          <button type="button" class="color-swatch" role="radio" aria-checked="false" aria-label="Azul" style="background:#2662a6" onclick="pickColor(this)"></button>
+          <button type="button" class="color-swatch" role="radio" aria-checked="false" aria-label="Turquesa" style="background:#11a391" onclick="pickColor(this)"></button>
+          <button type="button" class="color-swatch" role="radio" aria-checked="false" aria-label="Morado" style="background:#7c3aed" onclick="pickColor(this)"></button>
+          <button type="button" class="color-swatch" role="radio" aria-checked="false" aria-label="Rosa" style="background:#e0457b" onclick="pickColor(this)"></button>
+          <button type="button" class="color-swatch" role="radio" aria-checked="false" aria-label="Ámbar" style="background:#b7791f" onclick="pickColor(this)"></button>
+        </div>
+        <p class="hint">Sirve para distinguir sus citas de un vistazo en el calendario.</p>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label class="check" style="cursor:pointer">
+          <input type="checkbox" id="fCal" checked>
+          <span class="cl">Conectar Google Calendar después de guardar</span>
+        </label>
+        <p class="hint">Sin calendario conectado, el profesional no mostrará huecos disponibles para reservar.</p>
+      </div>
+    </form>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" onclick="closeModal('modalAdd')">Cancelar</button>
+      <button class="btn btn-primary" id="saveBtn" onclick="saveProf(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Guardar profesional</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONFIRM MODAL: DESACTIVAR ============ -->
+<div class="modal-overlay" id="modalConfirm" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmText">
+  <div class="modal confirm">
+    <div class="modal-head" style="justify-content:flex-end;padding-bottom:0">
+      <button class="modal-close" aria-label="Cerrar" onclick="closeModal('modalConfirm')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="confirm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg></div>
+      <h2 id="confirmTitle">¿Desactivar profesional?</h2>
+      <p id="confirmText"><strong id="confirmName">Este profesional</strong> dejará de recibir citas nuevas. Sus citas ya programadas se mantienen. Podrás reactivarlo cuando quieras.</p>
+    </div>
+    <div class="modal-foot" style="justify-content:center">
+      <button class="btn btn-secondary" onclick="closeModal('modalConfirm')">Cancelar</button>
+      <button class="btn btn-danger" id="confirmBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><path d="M12 2v10"/></svg>Sí, desactivar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+  <span id="toastMsg">Hecho</span>
+</div>
+
+<script>
+/* ===== TOAST ===== */
+var toastTimer;
+function showToast(msg, isErr){
+  var t=document.getElementById('toast'), m=document.getElementById('toastMsg');
+  m.textContent=msg||'Hecho';
+  t.classList.toggle('err', !!isErr);
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show')},2800);
+}
+
+/* ===== VIEW TOGGLE (tarjetas / tabla) ===== */
+function setView(v){
+  var grid=document.getElementById('cardGrid'), table=document.getElementById('tableWrap');
+  var bc=document.getElementById('vCards'), bt=document.getElementById('vTable');
+  if(v==='table'){
+    grid.style.display='none'; table.classList.add('show');
+    bt.classList.add('active'); bt.setAttribute('aria-pressed','true');
+    bc.classList.remove('active'); bc.setAttribute('aria-pressed','false');
+  }else{
+    table.classList.remove('show'); grid.style.display='grid';
+    bc.classList.add('active'); bc.setAttribute('aria-pressed','true');
+    bt.classList.remove('active'); bt.setAttribute('aria-pressed','false');
+  }
+  applyFilters();
+}
+
+/* ===== FILTROS (búsqueda + sede + atención) ===== */
+var sedeFilter='all', attentionOnly=false;
+function setSede(s, el){
+  sedeFilter=s;
+  document.querySelectorAll('.filter-chips .chip').forEach(function(c){
+    var on=(c===el); c.classList.toggle('active',on); c.setAttribute('aria-pressed',on?'true':'false');
+  });
+  applyFilters();
+}
+function applyFilters(){
+  var q=(document.getElementById('profSearch').value||'').trim().toLowerCase();
+  var visible=0;
+  // tarjetas
+  document.querySelectorAll('#cardGrid .card').forEach(function(card){
+    var hay=(card.dataset.name+' '+card.dataset.spec+' '+card.dataset.email).toLowerCase();
+    var matchQ=!q||hay.indexOf(q)>-1;
+    var matchSede=sedeFilter==='all'||(card.dataset.sede||'').indexOf(sedeFilter)>-1;
+    var matchAtt=!attentionOnly||card.dataset.cal==='no';
+    var show=matchQ&&matchSede&&matchAtt;
+    card.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  // tabla
+  document.querySelectorAll('#tableBody tr').forEach(function(tr){
+    var nm=(tr.dataset.name||'').toLowerCase();
+    tr.style.display=(!q||nm.indexOf(q)>-1)?'':'none';
+  });
+  // empty state (solo en vista tarjetas)
+  var cardsVisible=document.getElementById('cardGrid').style.display!=='none';
+  document.getElementById('emptyState').classList.toggle('show', cardsVisible && visible===0);
+}
+function clearFilters(){
+  document.getElementById('profSearch').value='';
+  attentionOnly=false;
+  var stat=document.getElementById('statAttention');
+  stat.classList.remove('is-active'); stat.setAttribute('aria-pressed','false');
+  document.getElementById('attLabel').textContent='Ver';
+  setSede('all', document.querySelector('.filter-chips .chip'));
+}
+
+/* ===== "REQUIEREN ATENCIÓN" (sin calendario) ===== */
+function toggleAttention(force){
+  attentionOnly = (typeof force==='boolean') ? force : !attentionOnly;
+  var stat=document.getElementById('statAttention');
+  stat.classList.toggle('is-active', attentionOnly);
+  stat.setAttribute('aria-pressed', attentionOnly?'true':'false');
+  document.getElementById('attLabel').textContent = attentionOnly ? 'Quitar' : 'Ver';
+  if(attentionOnly){ setView('cards'); window.scrollTo({top:document.getElementById('cardGrid').offsetTop-90,behavior:'smooth'}); }
+  applyFilters();
+}
+
+/* ===== CONECTAR CALENDARIO ===== */
+function connectFromBanner(){
+  toggleAttention(true);
+  showToast('Conecta el calendario de cada profesional pendiente');
+}
+function connectCalendar(name, btn){
+  if(btn){
+    var orig=btn.innerHTML;
+    btn.disabled=true;
+    btn.innerHTML='<span class="spin"></span>Conectando…';
+    setTimeout(function(){ btn.disabled=false; btn.innerHTML=orig; showToast(name+': calendario conectado'); },1100);
+  }else{
+    showToast(name+': calendario conectado');
+  }
+}
+
+/* ===== KEBAB MENUS ===== */
+function toggleMenu(btn){
+  var open=btn.getAttribute('aria-expanded')==='true';
+  closeMenus();
+  if(!open){
+    btn.setAttribute('aria-expanded','true');
+    btn.parentElement.querySelector('.dropdown').classList.add('open');
+  }
+}
+function closeMenus(){
+  document.querySelectorAll('.dropdown.open').forEach(function(d){d.classList.remove('open')});
+  document.querySelectorAll('.card-menu[aria-expanded="true"]').forEach(function(b){b.setAttribute('aria-expanded','false')});
+}
+document.addEventListener('click', function(e){ if(!e.target.closest('.menu-wrap')) closeMenus(); });
+
+/* ===== MODALES ===== */
+var lastFocus=null;
+function openModal(id){
+  var titleEl=document.getElementById('modalAddTitle');
+  if(id==='modalAdd' && titleEl) titleEl.textContent='Añadir profesional';
+  lastFocus=document.activeElement;
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+  var f=document.querySelector('#'+id+' input, #'+id+' select, #'+id+' button');
+  if(f) setTimeout(function(){f.focus()},60);
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+  if(lastFocus) lastFocus.focus();
+}
+document.querySelectorAll('.modal-overlay').forEach(function(o){
+  o.addEventListener('click', function(e){ if(e.target===o) closeModal(o.id); });
+});
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-overlay.open').forEach(function(o){closeModal(o.id)});
+    closeMenus();
+  }
+});
+
+/* ===== COLOR PICKER ===== */
+function pickColor(el){
+  document.querySelectorAll('#colorPicker .color-swatch').forEach(function(s){
+    s.classList.remove('sel'); s.setAttribute('aria-checked','false');
+  });
+  el.classList.add('sel'); el.setAttribute('aria-checked','true');
+}
+
+/* ===== GUARDAR PROFESIONAL ===== */
+function saveProf(e){
+  if(e) e.preventDefault();
+  var form=document.getElementById('profForm');
+  if(!form.checkValidity()){ form.reportValidity(); return; }
+  var btn=document.getElementById('saveBtn');
+  var orig=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>Guardando…';
+  setTimeout(function(){
+    btn.disabled=false; btn.innerHTML=orig;
+    closeModal('modalAdd');
+    form.reset();
+    pickColor(document.querySelector('#colorPicker .color-swatch'));
+    showToast('Profesional guardado correctamente');
+  },1000);
+}
+
+/* ===== DESACTIVAR / REACTIVAR ===== */
+function askDeactivate(name){
+  document.getElementById('confirmName').textContent=name;
+  document.getElementById('confirmBtn').onclick=function(){
+    closeModal('modalConfirm');
+    showToast(name+' desactivado');
+  };
+  openModal('modalConfirm');
+}
+function reactivate(name, btn){
+  if(btn){
+    var orig=btn.innerHTML;
+    btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
+    setTimeout(function(){ btn.disabled=false; btn.innerHTML=orig; showToast(name+' reactivado'); },900);
+  }else{
+    showToast(name+' reactivado');
+  }
+}
+
+/* ===== RETRY (error state) ===== */
+function retryLoad(){
+  document.getElementById('errorState').classList.remove('show');
+  document.getElementById('skeleton').classList.add('show');
+  document.getElementById('cardGrid').style.display='none';
+  setTimeout(function(){
+    document.getElementById('skeleton').classList.remove('show');
+    document.getElementById('cardGrid').style.display='grid';
+    applyFilters();
+    showToast('Equipo cargado');
+  },900);
+}
+
+/* ===== ATAJO ⌘K (búsqueda global) ===== */
+document.addEventListener('keydown', function(e){
+  if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){
+    e.preventDefault();
+    var s=document.querySelector('.tb-search input'); if(s) s.focus();
+  }
+});
+
+/* init */
+applyFilters();
+</script>
+</body>
+</html>

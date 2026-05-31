@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rediseño UX · Waiable Clínicas · 41 pantallas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f4;--surface:#fff;--surface-soft:#f7f9fb;--text:#0f1a17;--text-2:#3c4a45;--muted:#6b7771;
+--line:#e3e8e6;--line-strong:#cfd8d4;--primary:#0f766e;--primary-dark:#0a5d57;--primary-bright:#0f9486;
+--primary-soft:#e6f4f1;--accent:#11a391;--cyan:#5ee0c9;--radius:14px;--radius-sm:10px;
+--shadow-sm:0 2px 6px rgba(15,26,23,.06),0 1px 2px rgba(15,26,23,.04);--shadow-md:0 8px 24px rgba(15,26,23,.08),0 2px 6px rgba(15,26,23,.05);--shadow-lg:0 24px 60px rgba(15,26,23,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;height:100vh;overflow:hidden}
+.app{display:grid;grid-template-columns:286px 1fr;height:100vh}
+/* sidebar */
+.side{background:radial-gradient(circle at 20% 0%,rgba(17,163,145,.20),transparent 40%),linear-gradient(180deg,#07242b,#05191f 60%,#03121a);color:#e8f1ef;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.brand{display:flex;align-items:center;gap:11px;padding:18px 18px 14px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--accent);display:grid;place-items:center;font-weight:800;color:#fff;font-size:19px}
+.brand .nm{font-weight:700;font-size:16px;color:#fff;line-height:1.1}
+.brand .tg{font-size:10px;letter-spacing:.14em;color:var(--cyan);text-transform:uppercase;font-weight:600}
+.subt{padding:0 18px 12px;font-size:12px;color:rgba(255,255,255,.55)}
+.navwrap{flex:1;overflow-y:auto;padding:4px 12px 18px}
+.navwrap::-webkit-scrollbar{width:8px}.navwrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px}
+.navgroup{margin-bottom:10px}
+.navhdr{display:flex;align-items:center;gap:8px;padding:9px 10px 5px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:600}
+.navhdr svg{width:14px;height:14px}.navhdr b{margin-left:auto;font-weight:600;background:rgba(255,255,255,.1);border-radius:999px;padding:1px 7px;font-size:10px;color:rgba(255,255,255,.7)}
+.navitem{display:block;padding:8px 11px;border-radius:9px;color:rgba(255,255,255,.82);text-decoration:none;font-size:13.5px;font-weight:500;transition:.13s;border:1px solid transparent}
+.navitem:hover{background:rgba(255,255,255,.06);color:#fff}
+.navitem.active{background:var(--primary-bright);color:#fff;font-weight:600;box-shadow:0 4px 12px rgba(15,148,134,.4)}
+/* main */
+.main{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.bar{display:flex;align-items:center;gap:14px;padding:0 22px;height:62px;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm);z-index:5}
+.bar h1{font-size:15px;font-weight:700}.bar .crumb{font-size:12px;color:var(--muted)}
+.bar .sp{flex:1}
+.seg{display:flex;background:var(--surface-soft);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:var(--muted);padding:6px 16px;border-radius:999px;cursor:pointer;transition:.13s}
+.seg button.on{background:var(--primary);color:#fff;box-shadow:0 4px 10px rgba(15,118,110,.25)}
+.openbtn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;background:var(--surface-soft);border:1px solid var(--line-strong);color:var(--text);font-weight:600;font-size:13px;padding:8px 14px;border-radius:10px;transition:.13s}
+.openbtn:hover{background:#fff;box-shadow:var(--shadow-sm)}
+.openbtn svg{width:16px;height:16px}
+.count{font-size:12px;color:var(--muted);font-weight:600;background:var(--primary-soft);color:var(--primary-dark);padding:5px 11px;border-radius:999px}
+.stage{flex:1;overflow:auto;position:relative;background:var(--bg)}
+/* live frame */
+#live{position:absolute;inset:0;display:flex;flex-direction:column}
+#live iframe{flex:1;width:100%;border:0;background:#fff}
+/* gallery */
+#gallery{display:none;padding:24px 26px 60px}
+#gallery.show{display:block}#live.hide{display:none}
+.galhdr{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700;margin:26px 0 14px;color:var(--text)}
+.galhdr:first-child{margin-top:4px}
+.galhdr svg{width:18px;height:18px;color:var(--primary)}
+.galhdr span{font-size:12px;font-weight:600;color:var(--primary-dark);background:var(--primary-soft);border-radius:999px;padding:2px 10px}
+.galgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;box-shadow:var(--shadow-sm);transition:.16s}
+.gcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--primary-bright)}
+.gthumb{height:194px;overflow:hidden;background:var(--surface-soft);border-bottom:1px solid var(--line)}
+.gthumb img{width:100%;display:block}
+.gcard figcaption{padding:11px 14px;font-weight:600;font-size:13.5px}
+.hint{padding:10px 26px;font-size:12.5px;color:var(--muted);background:var(--surface);border-bottom:1px solid var(--line)}
+@media(max-width:980px){.app{grid-template-columns:1fr}.side{display:none}}
+</style></head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="logo">W</div><div><div class="nm">Waiable</div><div class="tg">Clínicas · Rediseño</div></div></div>
+    <div class="subt">41 pantallas · evolución visual premium</div>
+    <nav class="navwrap"><div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg><span>Sistema visual</span><b>1</b></div>
+<a class="navitem" data-file="_sistema/sistema-visual.html" data-title="Sistema visual Waiable Premium" data-cap="_capturas-jpg/_sistema__sistema-visual.jpg" href="#" >Sistema visual Waiable Premium</a>
+</div>
+<div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Acceso</span><b>3</b></div>
+<a class="navitem" data-file="acceso/invitacion.html" data-title="Aceptar invitación" data-cap="_capturas-jpg/acceso__invitacion.jpg" href="#" >Aceptar invitación</a>
+<a class="navitem" data-file="acceso/login.html" data-title="Acceso (Login)" data-cap="_capturas-jpg/acceso__login.jpg" href="#" >Acceso (Login)</a>
+<a class="navitem" data-file="acceso/registro.html" data-title="Registro de organización" data-cap="_capturas-jpg/acceso__registro.jpg" href="#" >Registro de organización</a>
+</div>
+<div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg><span>WhatsApp</span><b>9</b></div>
+<a class="navitem" data-file="whatsapp/alertas.html" data-title="Alertas y SLA" data-cap="_capturas-jpg/whatsapp__alertas.jpg" href="#" >Alertas y SLA</a>
+<a class="navitem" data-file="whatsapp/analitica.html" data-title="Analítica de WhatsApp" data-cap="_capturas-jpg/whatsapp__analitica.jpg" href="#" >Analítica de WhatsApp</a>
+<a class="navitem" data-file="whatsapp/audiencias.html" data-title="Audiencias" data-cap="_capturas-jpg/whatsapp__audiencias.jpg" href="#" >Audiencias</a>
+<a class="navitem" data-file="whatsapp/campanas.html" data-title="Campañas" data-cap="_capturas-jpg/whatsapp__campanas.jpg" href="#" >Campañas</a>
+<a class="navitem" data-file="whatsapp/cuentas.html" data-title="Cuentas de WhatsApp" data-cap="_capturas-jpg/whatsapp__cuentas.jpg" href="#" >Cuentas de WhatsApp</a>
+<a class="navitem" data-file="whatsapp/flujos.html" data-title="Flujos (constructor visual)" data-cap="_capturas-jpg/whatsapp__flujos.jpg" href="#" >Flujos (constructor visual)</a>
+<a class="navitem" data-file="whatsapp/inbox.html" data-title="Bandeja de WhatsApp" data-cap="_capturas-jpg/whatsapp__inbox.jpg" href="#" >Bandeja de WhatsApp</a>
+<a class="navitem" data-file="whatsapp/plantillas.html" data-title="Plantillas de WhatsApp" data-cap="_capturas-jpg/whatsapp__plantillas.jpg" href="#" >Plantillas de WhatsApp</a>
+<a class="navitem" data-file="whatsapp/widget.html" data-title="Widget web embebible" data-cap="_capturas-jpg/whatsapp__widget.jpg" href="#" >Widget web embebible</a>
+</div>
+<div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg><span>Clínicas</span><b>9</b></div>
+<a class="navitem" data-file="clinicas/agenda.html" data-title="Agenda / Calendario" data-cap="_capturas-jpg/clinicas__agenda.jpg" href="#" >Agenda / Calendario</a>
+<a class="navitem" data-file="clinicas/configuracion.html" data-title="Configurar clínica" data-cap="_capturas-jpg/clinicas__configuracion.jpg" href="#" >Configurar clínica</a>
+<a class="navitem" data-file="clinicas/google-calendar.html" data-title="Google Calendar" data-cap="_capturas-jpg/clinicas__google-calendar.jpg" href="#" >Google Calendar</a>
+<a class="navitem" data-file="clinicas/huecos-ia.html" data-title="Huecos IA (Smart Gaps)" data-cap="_capturas-jpg/clinicas__huecos-ia.jpg" href="#" >Huecos IA (Smart Gaps)</a>
+<a class="navitem" data-file="clinicas/informes.html" data-title="Informes de clínica" data-cap="_capturas-jpg/clinicas__informes.jpg" href="#" >Informes de clínica</a>
+<a class="navitem" data-file="clinicas/profesionales.html" data-title="Profesionales" data-cap="_capturas-jpg/clinicas__profesionales.jpg" href="#" >Profesionales</a>
+<a class="navitem" data-file="clinicas/sedes.html" data-title="Sedes" data-cap="_capturas-jpg/clinicas__sedes.jpg" href="#" >Sedes</a>
+<a class="navitem" data-file="clinicas/servicios.html" data-title="Servicios" data-cap="_capturas-jpg/clinicas__servicios.jpg" href="#" >Servicios</a>
+<a class="navitem" data-file="clinicas/solicitudes.html" data-title="Solicitudes de cita" data-cap="_capturas-jpg/clinicas__solicitudes.jpg" href="#" >Solicitudes de cita</a>
+</div>
+<div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>CRM</span><b>8</b></div>
+<a class="navitem" data-file="crm/actividades-tareas.html" data-title="Actividades y tareas" data-cap="_capturas-jpg/crm__actividades-tareas.jpg" href="#" >Actividades y tareas</a>
+<a class="navitem" data-file="crm/atribucion.html" data-title="Atribución y fuentes" data-cap="_capturas-jpg/crm__atribucion.jpg" href="#" >Atribución y fuentes</a>
+<a class="navitem" data-file="crm/campos.html" data-title="Campos personalizados" data-cap="_capturas-jpg/crm__campos.jpg" href="#" >Campos personalizados</a>
+<a class="navitem" data-file="crm/contactos.html" data-title="Contactos (pacientes)" data-cap="_capturas-jpg/crm__contactos.jpg" href="#" >Contactos (pacientes)</a>
+<a class="navitem" data-file="crm/empresas.html" data-title="Empresas / Aseguradoras" data-cap="_capturas-jpg/crm__empresas.jpg" href="#" >Empresas / Aseguradoras</a>
+<a class="navitem" data-file="crm/ficha-contacto.html" data-title="Ficha 360 del paciente" data-cap="_capturas-jpg/crm__ficha-contacto.jpg" href="#" >Ficha 360 del paciente</a>
+<a class="navitem" data-file="crm/llamadas.html" data-title="Llamadas" data-cap="_capturas-jpg/crm__llamadas.jpg" href="#" >Llamadas</a>
+<a class="navitem" data-file="crm/oportunidades.html" data-title="Oportunidades (Kanban)" data-cap="_capturas-jpg/crm__oportunidades.jpg" href="#" >Oportunidades (Kanban)</a>
+</div>
+<div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Ajustes</span><b>6</b></div>
+<a class="navitem" data-file="ajustes/agenda-horarios.html" data-title="Ajustes · Agenda y horarios" data-cap="_capturas-jpg/ajustes__agenda-horarios.jpg" href="#" >Ajustes · Agenda y horarios</a>
+<a class="navitem" data-file="ajustes/contactos.html" data-title="Ajustes · Campos de contacto" data-cap="_capturas-jpg/ajustes__contactos.jpg" href="#" >Ajustes · Campos de contacto</a>
+<a class="navitem" data-file="ajustes/cuenta.html" data-title="Ajustes · Cuenta" data-cap="_capturas-jpg/ajustes__cuenta.jpg" href="#" >Ajustes · Cuenta</a>
+<a class="navitem" data-file="ajustes/ia.html" data-title="Ajustes · IA operativa" data-cap="_capturas-jpg/ajustes__ia.jpg" href="#" >Ajustes · IA operativa</a>
+<a class="navitem" data-file="ajustes/suscripcion.html" data-title="Ajustes · Suscripción" data-cap="_capturas-jpg/ajustes__suscripcion.jpg" href="#" >Ajustes · Suscripción</a>
+<a class="navitem" data-file="ajustes/usuarios.html" data-title="Ajustes · Usuarios" data-cap="_capturas-jpg/ajustes__usuarios.jpg" href="#" >Ajustes · Usuarios</a>
+</div>
+<div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Plataforma</span><b>3</b></div>
+<a class="navitem" data-file="plataforma/integraciones.html" data-title="Integraciones" data-cap="_capturas-jpg/plataforma__integraciones.jpg" href="#" >Integraciones</a>
+<a class="navitem" data-file="plataforma/ops.html" data-title="Operaciones del sistema" data-cap="_capturas-jpg/plataforma__ops.jpg" href="#" >Operaciones del sistema</a>
+<a class="navitem" data-file="plataforma/saas.html" data-title="Resumen SaaS" data-cap="_capturas-jpg/plataforma__saas.jpg" href="#" >Resumen SaaS</a>
+</div>
+<div class="navgroup"><div class="navhdr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg><span>Paciente (público)</span><b>2</b></div>
+<a class="navitem" data-file="publico/confirmacion.html" data-title="Confirmación de cita (paciente)" data-cap="_capturas-jpg/publico__confirmacion.jpg" href="#" >Confirmación de cita (paciente)</a>
+<a class="navitem" data-file="publico/widget-reserva.html" data-title="Widget de reserva (paciente)" data-cap="_capturas-jpg/publico__widget-reserva.jpg" href="#" >Widget de reserva (paciente)</a>
+</div></nav>
+  </aside>
+  <main class="main">
+    <header class="bar">
+      <div><h1 id="ttl">Bandeja de WhatsApp</h1><div class="crumb" id="crumb">Vista en vivo · interactúa con la pantalla</div></div>
+      <div class="sp"></div>
+      <span class="count">41 pantallas</span>
+      <div class="seg"><button id="bLive" class="on" onclick="setMode('live')">En vivo</button><button id="bGal" onclick="setMode('gallery')">Galería</button></div>
+      <a class="openbtn" id="open" href="_sistema/sistema-visual.html" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14L21 3"/></svg>Abrir aparte</a>
+    </header>
+    <div class="hint">💡 Clica una pantalla en el menú izquierdo para verla en vivo (puedes interactuar con tabs, tooltips, etc.). Usa <b>Galería</b> para ver todas de un vistazo, o <b>Abrir aparte</b> para pantalla completa.</div>
+    <section class="stage">
+      <div id="live"><iframe id="frame" src="_sistema/sistema-visual.html"></iframe></div>
+      <div id="gallery"><h2 class="galhdr" id="g-_sistema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg> Sistema visual <span>1</span></h2><div class="galgrid">
+<figure class="gcard" data-file="_sistema/sistema-visual.html" data-title="Sistema visual Waiable Premium" data-cap="_capturas-jpg/_sistema__sistema-visual.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/_sistema__sistema-visual.jpg" alt="Sistema visual Waiable Premium"></div><figcaption>Sistema visual Waiable Premium</figcaption></figure>
+</div>
+<h2 class="galhdr" id="g-acceso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acceso <span>3</span></h2><div class="galgrid">
+<figure class="gcard" data-file="acceso/invitacion.html" data-title="Aceptar invitación" data-cap="_capturas-jpg/acceso__invitacion.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/acceso__invitacion.jpg" alt="Aceptar invitación"></div><figcaption>Aceptar invitación</figcaption></figure>
+<figure class="gcard" data-file="acceso/login.html" data-title="Acceso (Login)" data-cap="_capturas-jpg/acceso__login.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/acceso__login.jpg" alt="Acceso (Login)"></div><figcaption>Acceso (Login)</figcaption></figure>
+<figure class="gcard" data-file="acceso/registro.html" data-title="Registro de organización" data-cap="_capturas-jpg/acceso__registro.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/acceso__registro.jpg" alt="Registro de organización"></div><figcaption>Registro de organización</figcaption></figure>
+</div>
+<h2 class="galhdr" id="g-whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg> WhatsApp <span>9</span></h2><div class="galgrid">
+<figure class="gcard" data-file="whatsapp/alertas.html" data-title="Alertas y SLA" data-cap="_capturas-jpg/whatsapp__alertas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__alertas.jpg" alt="Alertas y SLA"></div><figcaption>Alertas y SLA</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/analitica.html" data-title="Analítica de WhatsApp" data-cap="_capturas-jpg/whatsapp__analitica.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__analitica.jpg" alt="Analítica de WhatsApp"></div><figcaption>Analítica de WhatsApp</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/audiencias.html" data-title="Audiencias" data-cap="_capturas-jpg/whatsapp__audiencias.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__audiencias.jpg" alt="Audiencias"></div><figcaption>Audiencias</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/campanas.html" data-title="Campañas" data-cap="_capturas-jpg/whatsapp__campanas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__campanas.jpg" alt="Campañas"></div><figcaption>Campañas</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/cuentas.html" data-title="Cuentas de WhatsApp" data-cap="_capturas-jpg/whatsapp__cuentas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__cuentas.jpg" alt="Cuentas de WhatsApp"></div><figcaption>Cuentas de WhatsApp</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/flujos.html" data-title="Flujos (constructor visual)" data-cap="_capturas-jpg/whatsapp__flujos.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__flujos.jpg" alt="Flujos (constructor visual)"></div><figcaption>Flujos (constructor visual)</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/inbox.html" data-title="Bandeja de WhatsApp" data-cap="_capturas-jpg/whatsapp__inbox.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__inbox.jpg" alt="Bandeja de WhatsApp"></div><figcaption>Bandeja de WhatsApp</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/plantillas.html" data-title="Plantillas de WhatsApp" data-cap="_capturas-jpg/whatsapp__plantillas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__plantillas.jpg" alt="Plantillas de WhatsApp"></div><figcaption>Plantillas de WhatsApp</figcaption></figure>
+<figure class="gcard" data-file="whatsapp/widget.html" data-title="Widget web embebible" data-cap="_capturas-jpg/whatsapp__widget.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/whatsapp__widget.jpg" alt="Widget web embebible"></div><figcaption>Widget web embebible</figcaption></figure>
+</div>
+<h2 class="galhdr" id="g-clinicas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg> Clínicas <span>9</span></h2><div class="galgrid">
+<figure class="gcard" data-file="clinicas/agenda.html" data-title="Agenda / Calendario" data-cap="_capturas-jpg/clinicas__agenda.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__agenda.jpg" alt="Agenda / Calendario"></div><figcaption>Agenda / Calendario</figcaption></figure>
+<figure class="gcard" data-file="clinicas/configuracion.html" data-title="Configurar clínica" data-cap="_capturas-jpg/clinicas__configuracion.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__configuracion.jpg" alt="Configurar clínica"></div><figcaption>Configurar clínica</figcaption></figure>
+<figure class="gcard" data-file="clinicas/google-calendar.html" data-title="Google Calendar" data-cap="_capturas-jpg/clinicas__google-calendar.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__google-calendar.jpg" alt="Google Calendar"></div><figcaption>Google Calendar</figcaption></figure>
+<figure class="gcard" data-file="clinicas/huecos-ia.html" data-title="Huecos IA (Smart Gaps)" data-cap="_capturas-jpg/clinicas__huecos-ia.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__huecos-ia.jpg" alt="Huecos IA (Smart Gaps)"></div><figcaption>Huecos IA (Smart Gaps)</figcaption></figure>
+<figure class="gcard" data-file="clinicas/informes.html" data-title="Informes de clínica" data-cap="_capturas-jpg/clinicas__informes.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__informes.jpg" alt="Informes de clínica"></div><figcaption>Informes de clínica</figcaption></figure>
+<figure class="gcard" data-file="clinicas/profesionales.html" data-title="Profesionales" data-cap="_capturas-jpg/clinicas__profesionales.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__profesionales.jpg" alt="Profesionales"></div><figcaption>Profesionales</figcaption></figure>
+<figure class="gcard" data-file="clinicas/sedes.html" data-title="Sedes" data-cap="_capturas-jpg/clinicas__sedes.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__sedes.jpg" alt="Sedes"></div><figcaption>Sedes</figcaption></figure>
+<figure class="gcard" data-file="clinicas/servicios.html" data-title="Servicios" data-cap="_capturas-jpg/clinicas__servicios.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__servicios.jpg" alt="Servicios"></div><figcaption>Servicios</figcaption></figure>
+<figure class="gcard" data-file="clinicas/solicitudes.html" data-title="Solicitudes de cita" data-cap="_capturas-jpg/clinicas__solicitudes.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/clinicas__solicitudes.jpg" alt="Solicitudes de cita"></div><figcaption>Solicitudes de cita</figcaption></figure>
+</div>
+<h2 class="galhdr" id="g-crm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> CRM <span>8</span></h2><div class="galgrid">
+<figure class="gcard" data-file="crm/actividades-tareas.html" data-title="Actividades y tareas" data-cap="_capturas-jpg/crm__actividades-tareas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__actividades-tareas.jpg" alt="Actividades y tareas"></div><figcaption>Actividades y tareas</figcaption></figure>
+<figure class="gcard" data-file="crm/atribucion.html" data-title="Atribución y fuentes" data-cap="_capturas-jpg/crm__atribucion.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__atribucion.jpg" alt="Atribución y fuentes"></div><figcaption>Atribución y fuentes</figcaption></figure>
+<figure class="gcard" data-file="crm/campos.html" data-title="Campos personalizados" data-cap="_capturas-jpg/crm__campos.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__campos.jpg" alt="Campos personalizados"></div><figcaption>Campos personalizados</figcaption></figure>
+<figure class="gcard" data-file="crm/contactos.html" data-title="Contactos (pacientes)" data-cap="_capturas-jpg/crm__contactos.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__contactos.jpg" alt="Contactos (pacientes)"></div><figcaption>Contactos (pacientes)</figcaption></figure>
+<figure class="gcard" data-file="crm/empresas.html" data-title="Empresas / Aseguradoras" data-cap="_capturas-jpg/crm__empresas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__empresas.jpg" alt="Empresas / Aseguradoras"></div><figcaption>Empresas / Aseguradoras</figcaption></figure>
+<figure class="gcard" data-file="crm/ficha-contacto.html" data-title="Ficha 360 del paciente" data-cap="_capturas-jpg/crm__ficha-contacto.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__ficha-contacto.jpg" alt="Ficha 360 del paciente"></div><figcaption>Ficha 360 del paciente</figcaption></figure>
+<figure class="gcard" data-file="crm/llamadas.html" data-title="Llamadas" data-cap="_capturas-jpg/crm__llamadas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__llamadas.jpg" alt="Llamadas"></div><figcaption>Llamadas</figcaption></figure>
+<figure class="gcard" data-file="crm/oportunidades.html" data-title="Oportunidades (Kanban)" data-cap="_capturas-jpg/crm__oportunidades.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/crm__oportunidades.jpg" alt="Oportunidades (Kanban)"></div><figcaption>Oportunidades (Kanban)</figcaption></figure>
+</div>
+<h2 class="galhdr" id="g-ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Ajustes <span>6</span></h2><div class="galgrid">
+<figure class="gcard" data-file="ajustes/agenda-horarios.html" data-title="Ajustes · Agenda y horarios" data-cap="_capturas-jpg/ajustes__agenda-horarios.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/ajustes__agenda-horarios.jpg" alt="Ajustes · Agenda y horarios"></div><figcaption>Ajustes · Agenda y horarios</figcaption></figure>
+<figure class="gcard" data-file="ajustes/contactos.html" data-title="Ajustes · Campos de contacto" data-cap="_capturas-jpg/ajustes__contactos.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/ajustes__contactos.jpg" alt="Ajustes · Campos de contacto"></div><figcaption>Ajustes · Campos de contacto</figcaption></figure>
+<figure class="gcard" data-file="ajustes/cuenta.html" data-title="Ajustes · Cuenta" data-cap="_capturas-jpg/ajustes__cuenta.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/ajustes__cuenta.jpg" alt="Ajustes · Cuenta"></div><figcaption>Ajustes · Cuenta</figcaption></figure>
+<figure class="gcard" data-file="ajustes/ia.html" data-title="Ajustes · IA operativa" data-cap="_capturas-jpg/ajustes__ia.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/ajustes__ia.jpg" alt="Ajustes · IA operativa"></div><figcaption>Ajustes · IA operativa</figcaption></figure>
+<figure class="gcard" data-file="ajustes/suscripcion.html" data-title="Ajustes · Suscripción" data-cap="_capturas-jpg/ajustes__suscripcion.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/ajustes__suscripcion.jpg" alt="Ajustes · Suscripción"></div><figcaption>Ajustes · Suscripción</figcaption></figure>
+<figure class="gcard" data-file="ajustes/usuarios.html" data-title="Ajustes · Usuarios" data-cap="_capturas-jpg/ajustes__usuarios.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/ajustes__usuarios.jpg" alt="Ajustes · Usuarios"></div><figcaption>Ajustes · Usuarios</figcaption></figure>
+</div>
+<h2 class="galhdr" id="g-plataforma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Plataforma <span>3</span></h2><div class="galgrid">
+<figure class="gcard" data-file="plataforma/integraciones.html" data-title="Integraciones" data-cap="_capturas-jpg/plataforma__integraciones.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/plataforma__integraciones.jpg" alt="Integraciones"></div><figcaption>Integraciones</figcaption></figure>
+<figure class="gcard" data-file="plataforma/ops.html" data-title="Operaciones del sistema" data-cap="_capturas-jpg/plataforma__ops.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/plataforma__ops.jpg" alt="Operaciones del sistema"></div><figcaption>Operaciones del sistema</figcaption></figure>
+<figure class="gcard" data-file="plataforma/saas.html" data-title="Resumen SaaS" data-cap="_capturas-jpg/plataforma__saas.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/plataforma__saas.jpg" alt="Resumen SaaS"></div><figcaption>Resumen SaaS</figcaption></figure>
+</div>
+<h2 class="galhdr" id="g-publico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg> Paciente (público) <span>2</span></h2><div class="galgrid">
+<figure class="gcard" data-file="publico/confirmacion.html" data-title="Confirmación de cita (paciente)" data-cap="_capturas-jpg/publico__confirmacion.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/publico__confirmacion.jpg" alt="Confirmación de cita (paciente)"></div><figcaption>Confirmación de cita (paciente)</figcaption></figure>
+<figure class="gcard" data-file="publico/widget-reserva.html" data-title="Widget de reserva (paciente)" data-cap="_capturas-jpg/publico__widget-reserva.jpg"><div class="gthumb"><img loading="lazy" src="_capturas-jpg/publico__widget-reserva.jpg" alt="Widget de reserva (paciente)"></div><figcaption>Widget de reserva (paciente)</figcaption></figure>
+</div></div>
+    </section>
+  </main>
+</div>
+<script>
+var items=[].slice.call(document.querySelectorAll('.navitem'));
+var frame=document.getElementById('frame'),ttl=document.getElementById('ttl'),crumb=document.getElementById('crumb'),open=document.getElementById('open');
+function select(el){
+  items.forEach(function(i){i.classList.remove('active')});el.classList.add('active');
+  var f=el.dataset.file,t=el.dataset.title;
+  frame.src=f;open.href=f;ttl.textContent=t;crumb.textContent='Vista en vivo · '+f;
+  setMode('live');
+}
+items.forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();select(el)})});
+document.querySelectorAll('.gcard').forEach(function(c){
+  c.addEventListener('click',function(){
+    var match=items.filter(function(i){return i.dataset.file===c.dataset.file})[0];
+    if(match) select(match);
+  });
+});
+function setMode(m){
+  var live=document.getElementById('live'),gal=document.getElementById('gallery');
+  var bL=document.getElementById('bLive'),bG=document.getElementById('bGal');
+  if(m==='gallery'){live.classList.add('hide');gal.classList.add('show');bG.classList.add('on');bL.classList.remove('on');ttl.textContent='Galería de pantallas';crumb.textContent='41 pantallas · clica una para verla en vivo';}
+  else{live.classList.remove('hide');gal.classList.remove('show');bL.classList.add('on');bG.classList.remove('on');}
+}
+if(items[0])items[0].classList.add('active');
+</script>
+</body></html>
