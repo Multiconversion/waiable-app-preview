@@ -816,6 +816,17 @@ select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 0
         </div>
       </div>
 
+          <div class="cf-card" id="cfFranjas">
+        <h3>Franjas horarias</h3>
+        <div class="cf-sub">Define los tramos de mañana, mediodía y tarde. Se usan al buscar disponibilidad y al crear citas desde WhatsApp.</div>
+        <div class="cf-row"><span class="cf-name">Mañana</span><input type="time" id="cf-manana-ini" value="08:00"><input type="time" id="cf-manana-fin" value="12:00"></div>
+        <div class="cf-row"><span class="cf-name">Mediodía</span><input type="time" id="cf-mediodia-ini" value="12:00"><input type="time" id="cf-mediodia-fin" value="15:00"></div>
+        <div class="cf-row"><span class="cf-name">Tarde</span><input type="time" id="cf-tarde-ini" value="15:00"><input type="time" id="cf-tarde-fin" value="19:00"></div>
+        <div class="cf-foot">
+          <button class="cf-save" type="button" id="cfSave">Guardar franjas</button>
+          <span class="cf-ok" id="cfOk">Guardado ✓</span>
+        </div>
+      </div>
     </main>
   </div>
 </div>
