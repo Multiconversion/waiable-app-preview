@@ -479,6 +479,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .comp-tool.suggest{color:var(--primary); font-weight:600}
 .comp-tool.suggest:hover{background:var(--primary-soft); color:var(--primary-dark)}
 
+
+/* Campo de fecha bloqueado (modal) */
+.cm-locked{height:44px;border:1px solid var(--line);border-radius:10px;padding:0 13px;display:flex;align-items:center;gap:9px;background:var(--surface-soft);color:var(--text-2);font-size:14px;cursor:not-allowed}
+.cm-locked svg{color:var(--muted);flex-shrink:0}
+/* Filtros: crear lista + listas */
+.cf-newlist{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;color:var(--primary);background:var(--primary-soft);border:1px dashed var(--primary-bright);cursor:pointer}
+.cf-newlist:hover{background:var(--primary-tint)}
+.cf-newlist svg{width:13px;height:13px}
+.cf-pill.cf-list{background:var(--info-soft);color:var(--info);border-color:var(--info-soft)}
+.cf-pill.cf-list.active{background:var(--info);color:#fff;border-color:var(--info)}
+#cfLists{display:contents}
+/* Estrella/acción por conversación */
+.conv{padding-right:34px}
+.conv-action{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:26px;height:26px;border-radius:7px;border:none;background:transparent;color:var(--line-strong);display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .12s,color .12s;z-index:2}
+.conv:hover .conv-action{opacity:1}
+.conv-action.on{opacity:1;color:var(--warning)}
+.conv-action.on.in-list{color:var(--info)}
+.conv-action:hover{background:var(--surface-soft)}
+
 </style>
 </head>
 <body>
@@ -899,7 +918,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
           <div class="cm-field"><label>Paciente</label><input value="Carmen Ruiz"></div>
           <div class="cm-field"><label>Teléfono / WhatsApp</label><input value="+34 612 345 678"></div>
           <div class="cm-field"><label>Email</label><input placeholder="opcional"></div>
-          <div class="cm-field"><label>Fecha y hora</label><input type="datetime-local" value="2026-06-01T09:00"></div>
+          <div class="cm-field"><label>Fecha y hora</label><div class="cm-locked" title="La fecha se fija al elegir el hueco disponible"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>01/06/2026, 09:00</span></div></div>
         </div>
       </section>
 
@@ -1220,6 +1239,95 @@ window.togglePanel=function(){
     ta.focus();
     if(window.showToast) showToast('Respuesta sugerida lista. Revísala y envía cuando quieras.');
   });
+})();
+
+
+/* ===== Filtros de conversaciones: Todas / Sin leer / Favoritos + Listas ===== */
+(function(){
+  var box=document.getElementById('convFilters');
+  if(!box) return;
+  var STAR='<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"><path d="M12 3.5l2.6 5.7 6.2.6-4.7 4.1 1.4 6.1L12 17l-5.5 3.1 1.4-6.1L3.2 9.8l6.2-.6z"/></svg>';
+  var STAR_O='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l2.6 5.7 6.2.6-4.7 4.1 1.4 6.1L12 17l-5.5 3.1 1.4-6.1L3.2 9.8l6.2-.6z"/></svg>';
+  var PLUS='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+  var CHECK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var convs=[].slice.call(document.querySelectorAll('.conv-scroll .conv'));
+  var st={filter:'todas', activeList:null, fav:new Set(), lists:{}};
+
+  convs.forEach(function(c,i){
+    c.dataset.idx=i;
+    c.dataset.unread = c.querySelector('.unread-pill') ? '1':'0';
+    var btn=document.createElement('button');
+    btn.className='conv-action'; btn.type='button'; btn.setAttribute('aria-label','Marcar como favorita');
+    btn.innerHTML=STAR_O;
+    btn.addEventListener('click', function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      if(st.activeList){
+        var s=st.lists[st.activeList]; if(s.has(i)) s.delete(i); else s.add(i);
+      } else {
+        if(st.fav.has(i)) st.fav.delete(i); else st.fav.add(i);
+      }
+      refreshCounts(); apply();
+    });
+    c.appendChild(btn);
+  });
+
+  function refreshCounts(){
+    var fc=document.getElementById('favCount'); if(fc) fc.textContent=st.fav.size;
+    Object.keys(st.lists).forEach(function(name){
+      var el=document.querySelector('[data-list-count="'+name+'"]'); if(el) el.textContent=st.lists[name].size;
+    });
+  }
+  function apply(){
+    convs.forEach(function(c,i){
+      var show=true;
+      if(st.filter==='sin-leer') show=c.dataset.unread==='1';
+      else if(st.filter==='favoritos') show=st.fav.has(i);
+      else if(st.filter.indexOf('list:')===0){ var n=st.filter.slice(5); show = st.lists[n] && st.lists[n].has(i); }
+      c.style.display = show?'':'none';
+      var btn=c.querySelector('.conv-action');
+      if(btn){
+        if(st.activeList){ var inl=st.lists[st.activeList].has(i); btn.classList.toggle('on',inl); btn.classList.add('in-list'); btn.innerHTML=inl?CHECK:PLUS; btn.title=inl?('Quitar de '+st.activeList):('Añadir a '+st.activeList); }
+        else { btn.classList.remove('in-list'); var f=st.fav.has(i); btn.classList.toggle('on',f); btn.innerHTML=f?STAR:STAR_O; btn.title=f?'Quitar de favoritos':'Marcar como favorita'; }
+      }
+    });
+    // ocultar cabeceras de sección sin conversaciones visibles
+    document.querySelectorAll('.conv-scroll .conv-section').forEach(function(sec){
+      var any=false, n=sec.nextElementSibling;
+      while(n && !n.classList.contains('conv-section')){ if(n.classList && n.classList.contains('conv') && n.style.display!=='none'){any=true;break;} n=n.nextElementSibling; }
+      sec.style.display=any?'':'none';
+    });
+    // estado vacío
+    var visible=convs.filter(function(c){return c.style.display!=='none';}).length;
+    var emptyId='convEmpty'; var ex=document.getElementById(emptyId);
+    if(visible===0){
+      if(!ex){ ex=document.createElement('div'); ex.id=emptyId; ex.style.cssText='padding:30px 18px;text-align:center;color:var(--muted-strong);font-size:13.5px'; document.querySelector('.conv-scroll').appendChild(ex); }
+      ex.textContent = st.activeList ? ('Aún no hay conversaciones en «'+st.activeList+'». Pulsa el + de una conversación para añadirla.') : 'No hay conversaciones con este filtro.';
+      ex.style.display='';
+    } else if(ex){ ex.style.display='none'; }
+  }
+  box.addEventListener('click', function(e){
+    var pill=e.target.closest('.cf-pill'); if(!pill) return;
+    box.querySelectorAll('.cf-pill').forEach(function(p){p.classList.remove('active')});
+    pill.classList.add('active');
+    st.filter=pill.dataset.filter;
+    st.activeList = st.filter.indexOf('list:')===0 ? st.filter.slice(5) : null;
+    apply();
+  });
+  var nb=document.getElementById('cfNewList');
+  if(nb) nb.addEventListener('click', function(){
+    var name=prompt('Nombre de la lista (p. ej. Urgentes, Postoperatorio, Estética):');
+    if(!name) return; name=name.trim(); if(!name) return;
+    if(!st.lists[name]) st.lists[name]=new Set();
+    var pill=document.createElement('button');
+    pill.className='cf-pill cf-list'; pill.dataset.filter='list:'+name; pill.type='button';
+    pill.innerHTML=name+' <span data-list-count="'+name+'">0</span>';
+    document.getElementById('cfLists').appendChild(pill);
+    box.querySelectorAll('.cf-pill').forEach(function(p){p.classList.remove('active')});
+    pill.classList.add('active'); st.filter='list:'+name; st.activeList=name;
+    apply();
+    if(window.showToast) showToast('Lista «'+name+'» creada. Pulsa el + de una conversación para añadirla.');
+  });
+  apply();
 })();
 
 </script>
