@@ -352,6 +352,22 @@ select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 0
   .savebar .sv-actions{margin-left:0;width:100%}
   .savebar .sv-actions .btn{flex:1}
 }
+
+/* Franjas horarias configurables */
+.cf-card{border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:18px;background:var(--surface)}
+.cf-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.cf-card .cf-sub{font-size:13px;color:var(--muted,#6b7771);margin-bottom:14px}
+.cf-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:12px;align-items:center;margin-bottom:10px}
+.cf-row .cf-name{font-size:14px;font-weight:600;color:var(--text-2,#3c4a45)}
+.cf-row input[type=time]{height:42px;border:1px solid var(--line-strong);border-radius:10px;padding:0 12px;font-size:14px;font-family:inherit;color:var(--text);background:var(--surface)}
+.cf-row input[type=time]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.cf-foot{display:flex;align-items:center;gap:12px;margin-top:8px}
+.cf-save{height:42px;padding:0 18px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.cf-save:hover{background:var(--primary-dark)}
+.cf-ok{font-size:13px;font-weight:600;color:var(--ok,#157348);opacity:0;transition:opacity .2s}
+.cf-ok.show{opacity:1}
+@media(max-width:680px){.cf-row{grid-template-columns:1fr 1fr 1fr}}
+
 </style>
 </head>
 <body>
@@ -1142,6 +1158,25 @@ function showToast(type, title, body, undoFn){
 /* close modal on overlay click / Esc */
 document.getElementById('modal').addEventListener('click',e=>{ if(e.target.id==='modal') closeModal(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal(); if(document.getElementById('addSlot').style.display==='block') closeAdd(); } });
+</script>
+<script>
+(function(){
+  var ids=['manana','mediodia','tarde'];
+  function load(){
+    var f; try{ f=JSON.parse(localStorage.getItem('waiable_franjas')); }catch(e){}
+    if(!f) return;
+    ids.forEach(function(k){ if(f[k]){ var a=document.getElementById('cf-'+k+'-ini'), b=document.getElementById('cf-'+k+'-fin'); if(a)a.value=f[k][0]; if(b)b.value=f[k][1]; } });
+  }
+  var btn=document.getElementById('cfSave');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var f={}; ids.forEach(function(k){ f[k]=[document.getElementById('cf-'+k+'-ini').value, document.getElementById('cf-'+k+'-fin').value]; });
+      try{ localStorage.setItem('waiable_franjas', JSON.stringify(f)); }catch(e){}
+      var ok=document.getElementById('cfOk'); if(ok){ ok.classList.add('show'); setTimeout(function(){ok.classList.remove('show')},2200); }
+    });
+    load();
+  }
+})();
 </script>
 </body>
 </html>
