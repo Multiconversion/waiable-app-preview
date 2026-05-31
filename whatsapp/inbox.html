@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waiable · Bandeja de WhatsApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --bg-deep:#e7ebef; --surface:#ffffff; --surface-soft:#f7f9fb; --surface-raised:#ffffff;
+  --text:#0f1a17; --text-2:#3c4a45; --muted:#5b6660; --muted-strong:#566159; --line:#e3e8e6; --line-strong:#cfd8d4;
+  --primary:#0f766e; --primary-dark:#0a5d57; --primary-bright:#0f9486; --primary-soft:#e6f4f1; --primary-tint:#f0f9f7;
+  --accent:#11a391; --cyan:#5ee0c9;
+  --ok:#157348; --ok-soft:#e7f6ee; --warning:#9a6713; --warning-soft:#fff4dc; --danger:#a31d13; --danger-soft:#fff0ed; --info:#22588f; --info-soft:#eaf2fb;
+  --shadow-xs:0 1px 2px rgba(15,26,23,.06);
+  --shadow-sm:0 2px 6px rgba(15,26,23,.06), 0 1px 2px rgba(15,26,23,.04);
+  --shadow-md:0 8px 24px rgba(15,26,23,.08), 0 2px 6px rgba(15,26,23,.05);
+  --shadow-lg:0 24px 60px rgba(15,26,23,.12), 0 6px 16px rgba(15,26,23,.06);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --radius-pill:999px;
+  /* Escala tipográfica mínima (regla de oro: nada < 12px) */
+  --fs-micro:12px; --fs-sec:13px; --fs-body:14px; --fs-body-lg:15px; --fs-sub:16px;
+  --focus:0 0 0 3px var(--primary-soft), 0 0 0 1px var(--primary);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg); color:var(--text);
+  font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
+input,textarea{font-family:inherit}
+svg{display:block; flex-shrink:0}
+::selection{background:var(--primary-soft)}
+/* Foco visible global y accesible para TODOS los interactivos */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
+[tabindex]:focus-visible{outline:none; box-shadow:var(--focus); border-radius:var(--radius-sm)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== LAYOUT ===== */
+.app{display:flex; min-height:100vh}
+
+/* ===== SIDEBAR (CHROME — sin cambios de identidad) ===== */
+.sidebar{
+  width:232px; flex-shrink:0; position:sticky; top:0; height:100vh;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(17,163,145,.20), transparent 40%),
+    linear-gradient(180deg,#07242b 0%,#05191f 60%,#03121a 100%);
+  color:#e8f1ef; display:flex; flex-direction:column;
+  padding:18px 14px; gap:6px; z-index:30;
+}
+.brand{display:flex; align-items:center; gap:11px; padding:6px 8px 16px}
+.brand-mark{
+  width:34px; height:34px; border-radius:var(--radius-sm); background:var(--accent);
+  display:grid; place-items:center; color:#fff; font-weight:700; font-size:18px;
+  box-shadow:0 4px 12px rgba(17,163,145,.4);
+}
+.brand-name{font-weight:600; font-size:16px; color:#fff; line-height:1.1}
+.brand-tag{font-size:12px; color:var(--cyan); text-transform:uppercase; letter-spacing:.12em; font-weight:600; margin-top:2px}
+.nav{flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:2px; padding-right:2px}
+.nav::-webkit-scrollbar{width:5px} .nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12); border-radius:3px}
+.nav-group{font-size:12px; text-transform:uppercase; letter-spacing:.11em; color:rgba(255,255,255,.5); font-weight:600; padding:14px 10px 6px}
+.nav-item{
+  display:flex; align-items:center; gap:11px; padding:10px; border-radius:var(--radius-sm);
+  color:rgba(232,241,239,.85); font-size:14px; font-weight:500; position:relative; text-decoration:none;
+  transition:background .16s ease, color .16s ease;
+}
+.nav-item:hover{background:rgba(255,255,255,.06); color:#fff}
+.nav-item:focus-visible{outline:none; box-shadow:0 0 0 2px var(--cyan)}
+.nav-item.active{background:var(--primary-bright); color:#fff; font-weight:600}
+.nav-item.active::before{content:""; position:absolute; left:-14px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0; background:var(--cyan)}
+.nav-item .badge-count{margin-left:auto; background:rgba(255,255,255,.16); color:#fff; font-size:12px; font-weight:600; padding:1px 8px; border-radius:var(--radius-pill)}
+.nav-item.active .badge-count{background:rgba(255,255,255,.25)}
+.sidebar-foot{display:flex; flex-direction:column; gap:10px; padding-top:10px}
+.plan-card{
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); border-radius:var(--radius-sm);
+  padding:11px 12px; display:flex; align-items:center; gap:10px; text-decoration:none;
+}
+.plan-card:hover{background:rgba(255,255,255,.11)}
+.plan-card .pc-ico{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--primary-bright),var(--accent));display:grid;place-items:center;color:#fff}
+.plan-card .pc-txt{font-size:13px; line-height:1.3}
+.plan-card .pc-txt b{color:#fff; font-weight:600; display:block}
+.plan-card .pc-txt span{color:var(--cyan); font-size:12px}
+.profile{display:flex; align-items:center; gap:10px; padding:8px 6px; border-top:1px solid rgba(255,255,255,.08)}
+.profile .pf-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1b6f66,#0f9486);display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px}
+.profile .pf-txt b{display:block;color:#fff;font-weight:600;font-size:13px}
+.profile .pf-txt span{color:rgba(232,241,239,.7);font-size:12px}
+
+/* ===== MAIN ===== */
+.main{flex:1; min-width:0; display:flex; flex-direction:column; height:100vh}
+
+/* TOPBAR (CHROME) */
+.topbar{
+  height:60px; flex-shrink:0; background:var(--surface); box-shadow:var(--shadow-xs);
+  display:flex; align-items:center; gap:18px; padding:0 22px; position:sticky; top:0; z-index:20;
+  border-bottom:1px solid var(--line);
+}
+.tb-title{flex:0 1 auto; min-width:0; max-width:280px; overflow:hidden}
+.tb-title h1{font-size:18px; font-weight:600; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.tb-title .crumb{font-size:12px; color:var(--muted); display:flex; align-items:center; gap:5px; margin-top:1px}
+.tb-search{flex:1 1 0; min-width:280px; max-width:820px; margin:0 auto 0 12px; position:relative}
+.tb-search input{
+  width:100%; height:38px; border:1px solid var(--line-strong); border-radius:var(--radius-pill);
+  background:var(--surface-soft); padding:0 44px 0 40px; font-size:13.5px; color:var(--text);
+  transition:border .16s, box-shadow .16s;
+}
+.tb-search input:focus{outline:none; border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-soft); background:#fff}
+.tb-search .s-ico{position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--muted)}
+.tb-search .s-kbd{position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:12px; color:var(--muted); border:1px solid var(--line-strong); border-radius:6px; padding:1px 6px; background:#fff}
+.tb-right{display:flex; align-items:center; gap:10px; flex-shrink:0}
+.sede-sel{display:flex; align-items:center; gap:7px; height:40px; padding:0 12px; border:1px solid var(--line-strong); border-radius:var(--radius-sm); background:#fff; font-size:13px; font-weight:500; color:var(--text-2)}
+.sede-sel:hover{border-color:var(--primary); color:var(--primary)}
+.status-chips{display:flex; gap:7px}
+.chip-st{display:flex; align-items:center; gap:6px; height:30px; padding:0 11px; border-radius:var(--radius-pill); font-size:12px; font-weight:600; border:1px solid transparent; background:none}
+.chip-st.ok{background:var(--ok-soft); color:var(--ok)}
+.chip-st.info{background:var(--info-soft); color:var(--info)}
+.chip-st.warn{background:var(--danger-soft); color:var(--danger)}
+.chip-st.muted{background:transparent; color:var(--muted-strong); border:1px solid var(--line-strong)}
+.chip-st.muted .dot{background:var(--accent); box-shadow:none}
+.chip-st .dot{width:7px;height:7px;border-radius:50%;background:currentColor; box-shadow:0 0 0 3px rgba(21,115,72,.14)}
+.chip-st.info .dot{box-shadow:0 0 0 3px rgba(38,98,166,.14)}
+.chip-st.warn .dot{box-shadow:0 0 0 3px rgba(163,29,19,.14)}
+.icon-btn{width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; color:var(--text-2); position:relative; border:1px solid transparent}
+.icon-btn:hover{background:var(--surface-soft); border-color:var(--line)}
+.icon-btn .notif-dot{position:absolute; top:8px; right:9px; width:8px; height:8px; border-radius:50%; background:var(--danger); border:2px solid var(--surface); pointer-events:none}
+.tb-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1b6f66,#0f9486);display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px}
+
+/* ===== INBOX 3 COLUMNS ===== */
+.inbox{flex:1; min-height:0; display:grid; grid-template-columns:330px 1fr 340px; gap:0}
+
+/* ---- COL: CONVERSATIONS LIST ---- */
+.col-list{background:var(--surface); border-right:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
+.list-head{padding:16px 16px 12px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:12px}
+.list-head .lh-top{display:flex; align-items:center; justify-content:space-between}
+.list-head h2{font-size:16px; font-weight:600; display:flex; align-items:center; gap:8px}
+.list-head .lh-count{font-size:12px; color:var(--muted); font-weight:600}
+.list-head .lh-lead{font-size:12px; color:var(--muted-strong); line-height:1.45; margin-top:-4px}
+.search-mini{position:relative}
+.search-mini input{width:100%; height:38px; border:1px solid var(--line-strong); border-radius:var(--radius-sm); background:var(--surface-soft); padding:0 12px 0 36px; font-size:13px}
+.search-mini input:focus{outline:none; border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-soft); background:#fff}
+.search-mini .sm-ico{position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted)}
+.filters{display:flex; flex-wrap:wrap; gap:6px}
+.f-chip{display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 11px; border-radius:var(--radius-pill); font-size:13px; font-weight:500; border:1px solid var(--line-strong); color:var(--text-2); background:#fff; transition:all .14s}
+.f-chip:hover{border-color:var(--primary); color:var(--primary)}
+.f-chip[aria-pressed="true"]{background:var(--primary); border-color:var(--primary); color:#fff; font-weight:600}
+.f-chip .fc-num{font-size:12px; background:rgba(15,26,23,.07); padding:0 7px; border-radius:var(--radius-pill); font-weight:600; min-width:20px; text-align:center}
+.f-chip[aria-pressed="true"] .fc-num{background:rgba(255,255,255,.24); color:#fff}
+
+.conv-scroll{flex:1; overflow-y:auto; min-height:0}
+.conv-scroll::-webkit-scrollbar{width:7px} .conv-scroll::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:4px}
+/* Encabezado de sección dentro de la lista: prioriza lo que convierte */
+.conv-section{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); padding:12px 16px 6px; display:flex; align-items:center; gap:7px; background:var(--surface-soft); border-bottom:1px solid var(--line)}
+.conv-section.book{color:var(--primary-dark); background:var(--primary-tint)}
+.conv-section .cs-count{margin-left:auto; font-weight:700; color:var(--text-2)}
+.conv{display:flex; gap:11px; padding:13px 16px; border-bottom:1px solid var(--line); cursor:pointer; position:relative; transition:background .14s; text-decoration:none; color:inherit}
+.conv:hover{background:var(--surface-soft)}
+.conv:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--primary)}
+.conv.active{background:var(--primary-tint)}
+.conv.active::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--primary)}
+/* Realce de conversaciones con intención de RESERVA (las que convierten) */
+.conv.is-booking{background:linear-gradient(90deg,rgba(15,118,110,.05),transparent 60%)}
+.conv.is-booking::after{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); opacity:.55}
+.conv.is-booking.active::after{display:none}
+.conv .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;font-size:15px;flex-shrink:0;position:relative}
+.av.a1{background:linear-gradient(135deg,#b8732a,#d99a4e)} .av.a2{background:linear-gradient(135deg,#2662a6,#4d8fd6)}
+.av.a3{background:linear-gradient(135deg,#7a3aa8,#a560d4)} .av.a4{background:linear-gradient(135deg,#157348,#1f9c61)}
+.av.a5{background:linear-gradient(135deg,#0f766e,#0f9486)} .av.a6{background:linear-gradient(135deg,#b42318,#dd5c50)}
+.av .pres{position:absolute; bottom:-1px; right:-1px; width:12px; height:12px; border-radius:50%; border:2px solid #fff}
+.av .pres.on{background:var(--ok)}
+.conv-body{flex:1; min-width:0}
+.conv-row1{display:flex; align-items:center; gap:8px}
+.conv-name{font-size:14px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1; min-width:0}
+.conv-time{font-size:12px; color:var(--muted-strong); flex-shrink:0; font-weight:500}
+.conv-row2{display:flex; align-items:center; gap:6px; margin-top:3px}
+.conv-prev{font-size:13px; color:var(--text-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1; min-width:0}
+.conv-prev.unread{font-weight:600; color:var(--text)}
+.conv-prev .ai-mark{color:var(--muted-strong); font-weight:600}
+.unread-pill{background:var(--primary); color:#fff; font-size:12px; font-weight:700; min-width:20px; height:20px; padding:0 6px; border-radius:var(--radius-pill); display:grid; place-items:center; flex-shrink:0}
+/* Fila 3: MÁX. 2 marcadores -> intención + SLA. Servicio/sede a la 2ª línea atenuada */
+.conv-row3{display:flex; align-items:center; gap:6px; margin-top:7px; flex-wrap:wrap}
+.conv-sub{font-size:12px; color:var(--muted-strong); margin-top:5px; display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.conv-sub svg{color:var(--muted)}
+.tag{display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:600; padding:3px 9px; border-radius:var(--radius-pill); line-height:1.35}
+.tag svg{flex-shrink:0}
+.tag.t-primary{background:var(--primary-soft); color:var(--primary-dark)}
+.tag.t-info{background:var(--info-soft); color:var(--info)}
+.tag.t-warn{background:var(--warning-soft); color:var(--warning)}
+.tag.t-ok{background:var(--ok-soft); color:var(--ok)}
+.tag.t-muted{background:var(--bg-deep); color:var(--muted-strong)}
+.tag.t-danger{background:var(--danger-soft); color:var(--danger)}
+/* SLA con icono + texto explícito (no solo color) */
+.sla{display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:3px 9px; border-radius:var(--radius-pill); margin-left:auto}
+.sla.danger{background:var(--danger-soft); color:var(--danger)} .sla.warn{background:var(--warning-soft); color:var(--warning)} .sla.ok{background:var(--ok-soft); color:var(--ok)}
+
+/* ---- COL: CHAT ---- */
+.col-chat{min-width:0; display:flex; flex-direction:column; min-height:0; background:var(--bg-deep)}
+.chat-head{background:var(--surface); border-bottom:1px solid var(--line); padding:12px 18px; display:flex; align-items:center; gap:10px; flex-shrink:0; min-width:0}
+.chat-head .av{flex-shrink:0}
+.ch-actions .head-cta{flex-shrink:0}
+.chat-head .av{width:46px;height:46px; flex-shrink:0}
+.ch-info{flex:1 1 auto; min-width:0; overflow:hidden}
+.ch-name{font-size:16px; font-weight:600; display:flex; align-items:center; gap:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
+.ch-meta{font-size:12.5px; color:var(--muted-strong); display:flex; align-items:center; gap:8px; margin-top:2px; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.ch-meta .sep{width:3px;height:3px;border-radius:50%;background:var(--line-strong)}
+.assigned{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--text-2); background:var(--surface-soft); border:1px solid var(--line); padding:6px 11px; border-radius:var(--radius-pill)}
+.assigned .mini-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#157348,#1f9c61);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700}
+.ch-actions{display:flex; gap:6px; flex-shrink:0}
+.ch-actions .icon-btn{width:40px;height:40px}
+.head-cta{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 15px;border-radius:10px;background:var(--primary);color:#fff;font-size:13.5px;font-weight:600;border:none;cursor:pointer;box-shadow:0 6px 16px rgba(15,118,110,.22);transition:background .15s, transform .04s;white-space:nowrap}
+.head-cta:hover{background:var(--primary-dark)} .head-cta:active{transform:translateY(1px)} .head-cta svg{width:17px;height:17px}
+.appt-next{display:flex;gap:11px;align-items:flex-start;padding:12px 13px;border-radius:11px;background:var(--primary-soft);border:1px solid #cfe9e3;margin-bottom:12px}
+.appt-next .an-ico{width:34px;height:34px;border-radius:9px;background:var(--primary);color:#fff;display:grid;place-items:center;flex-shrink:0}
+.appt-next .an-k{font-size:12px;font-weight:600;color:var(--primary-dark);text-transform:uppercase;letter-spacing:.04em}
+.appt-next .an-v{font-size:13.5px;font-weight:700;color:var(--text);margin-top:2px}
+.appt-next .an-sub{font-size:12.5px;color:var(--muted-strong);margin-top:1px}
+.pnote{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+.pnote-head{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--text-2);margin-bottom:8px}
+.pnote-head svg{color:var(--warning)}
+.pnote-area{width:100%;min-height:74px;resize:vertical;border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:13px;line-height:1.5;color:var(--text);background:var(--warning-soft)}
+.pnote-area:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);background:#fff}
+
+/* Banner degradado (WhatsApp desconectado / error) */
+.chat-banner{display:none; align-items:center; gap:10px; padding:10px 16px; font-size:13px; font-weight:600; background:var(--danger-soft); color:var(--danger); border-bottom:1px solid #f3c9c4}
+.chat-banner.show{display:flex}
+.chat-banner button{margin-left:auto; font-size:12.5px; font-weight:700; color:var(--danger); text-decoration:underline; padding:4px 6px}
+
+.chat-body{flex:1; overflow-y:auto; padding:22px 20px 8px; min-height:0; display:flex; flex-direction:column; gap:4px}
+.chat-body::-webkit-scrollbar{width:8px} .chat-body::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:4px}
+.day-div{text-align:center; margin:14px 0 10px}
+.day-div span{font-size:12px; font-weight:600; color:var(--muted-strong); background:rgba(255,255,255,.8); padding:4px 12px; border-radius:var(--radius-pill); border:1px solid var(--line)}
+.msg{max-width:74%; margin-bottom:10px; display:flex; flex-direction:column}
+.msg.in{align-self:flex-start; align-items:flex-start}
+.msg.out{align-self:flex-end; align-items:flex-end}
+.bubble{padding:10px 14px; border-radius:16px; font-size:14px; line-height:1.5; box-shadow:var(--shadow-xs); position:relative}
+.msg.in .bubble{background:#fff; border:1px solid var(--line); border-bottom-left-radius:5px; color:var(--text)}
+.msg.out .bubble{background:linear-gradient(135deg,var(--primary),var(--primary-bright)); color:#fff; border-bottom-right-radius:5px}
+.msg.out.failed .bubble{background:#fff; border:1px solid #f3c9c4; color:var(--text)}
+.msg .meta{font-size:12px; color:var(--muted-strong); margin-top:4px; display:flex; align-items:center; gap:5px; padding:0 4px}
+.msg.out .meta{justify-content:flex-end}
+.ticks{display:inline-flex; align-items:center; color:var(--info)}
+.ticks.read{color:var(--info)}
+.send-state{display:inline-flex; align-items:center; gap:4px; font-weight:600}
+.send-state.sending{color:var(--muted-strong)}
+.send-state.err{color:var(--danger)}
+.send-state.err button{font-size:12px; font-weight:700; color:var(--danger); text-decoration:underline; margin-left:4px}
+/* internal note */
+.msg.note{align-self:center; max-width:80%}
+.note-card{background:var(--warning-soft); border:1px dashed var(--warning); border-radius:var(--radius-sm); padding:10px 14px; font-size:13px; color:#6f4d0f}
+.note-card .nc-head{display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--warning); margin-bottom:4px}
+
+/* booking card */
+.booking-card{align-self:flex-start; max-width:80%; background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:12px}
+.bc-head{background:linear-gradient(135deg,var(--primary-tint),var(--primary-soft)); padding:12px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--line)}
+.bc-head .bc-ico{width:34px;height:34px;border-radius:9px;background:var(--primary);display:grid;place-items:center;color:#fff}
+.bc-head b{font-size:14px; font-weight:600; color:var(--primary-dark); display:block}
+.bc-head span{font-size:12px; color:var(--muted-strong)}
+.bc-pend{margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; color:var(--warning); background:#fff; border:1px solid #ecd4a3; padding:4px 9px; border-radius:var(--radius-pill)}
+.bc-body{padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+.bc-row{display:flex; align-items:center; gap:10px; font-size:13.5px}
+.bc-row .bc-k{color:var(--muted-strong); width:96px; display:flex; align-items:center; gap:7px; flex-shrink:0; font-weight:500}
+.bc-row .bc-v{font-weight:600; color:var(--text)}
+/* Jerarquía: 1 CTA dominante a ancho completo + secundarios ghost en fila inferior */
+.bc-actions{display:flex; flex-direction:column; gap:8px; padding:0 16px 16px}
+.bc-cta{width:100%; height:46px; border-radius:var(--radius-sm); font-size:14.5px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:8px; background:var(--primary); color:#fff; box-shadow:0 8px 18px rgba(15,118,110,.28); transition:all .15s}
+.bc-cta:hover{background:var(--primary-dark); transform:translateY(-1px)}
+.bc-sec-row{display:flex; gap:8px}
+.bc-ghost{flex:1; height:38px; border-radius:var(--radius-sm); font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid var(--line-strong); color:var(--text-2); transition:all .15s}
+.bc-ghost:hover{border-color:var(--primary); color:var(--primary); background:var(--primary-tint)}
+.bc-ghost.danger{color:var(--danger)}
+.bc-ghost.danger:hover{border-color:var(--danger); color:var(--danger); background:var(--danger-soft)}
+
+/* composer */
+.composer{background:var(--surface); border-top:1px solid var(--line); padding:9px 16px 10px; flex-shrink:0}
+.comp-mode{display:flex; gap:4px; margin-bottom:8px; background:var(--surface-soft); border:1px solid var(--line); border-radius:var(--radius-pill); padding:3px; width:fit-content}
+.comp-mode button{display:flex; align-items:center; gap:6px; padding:6px 13px; border-radius:var(--radius-pill); font-size:13px; font-weight:600; color:var(--muted-strong); transition:all .14s}
+.comp-mode button[aria-selected="true"]{background:#fff; color:var(--primary); box-shadow:var(--shadow-xs)}
+.comp-mode button[aria-selected="true"].note-mode{color:var(--warning)}
+.quick-replies{display:flex; gap:7px; margin-bottom:8px; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none}
+.quick-replies::-webkit-scrollbar{display:none}
+.qr{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; padding:5px 11px; border-radius:var(--radius-pill); border:1px solid var(--line-strong); background:#fff; color:var(--text-2); transition:all .14s; white-space:nowrap; flex:none}
+.qr:hover{border-color:var(--primary); color:var(--primary); background:var(--primary-tint)}
+.comp-box{border:1px solid var(--line-strong); border-radius:var(--radius); background:#fff; transition:border .16s, box-shadow .16s}
+.comp-box:focus-within{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-soft)}
+.comp-box textarea{width:100%; border:none; resize:none; padding:12px 14px 4px; font-size:14px; line-height:1.5; background:transparent; min-height:96px; max-height:200px}
+.comp-box textarea:focus{outline:none}
+.comp-tools{display:flex; align-items:center; gap:2px; padding:4px 10px 6px}
+.comp-tool{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;color:var(--muted-strong);transition:all .14s}
+.comp-tool:hover{background:var(--surface-soft); color:var(--primary)}
+.comp-tool.label{width:auto; padding:0 10px; gap:6px; font-size:13px; font-weight:600; display:flex; align-items:center}
+.send-btn{margin-left:auto; height:40px; padding:0 18px; border-radius:var(--radius-sm); background:var(--primary); color:#fff; font-size:14px; font-weight:600; display:flex; align-items:center; gap:7px; box-shadow:0 6px 16px rgba(15,118,110,.22); transition:all .15s}
+.send-btn:hover{background:var(--primary-dark); transform:translateY(-1px)}
+
+/* ---- COL: PATIENT PANEL ---- */
+.col-panel{min-width:0; background:var(--surface); border-left:1px solid var(--line); display:flex; flex-direction:column; min-height:0; overflow-y:auto}
+.col-panel::-webkit-scrollbar{width:7px} .col-panel::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:4px}
+.panel-id{padding:20px 18px 16px; text-align:center; border-bottom:1px solid var(--line)}
+.panel-id .av{width:64px;height:64px;margin:0 auto 10px; font-size:22px}
+.panel-id h3{font-size:17px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.panel-id .pid-sub{font-size:13px; color:var(--muted-strong); margin-top:2px}
+.panel-id .pid-tags{display:flex; gap:6px; justify-content:center; margin-top:10px; flex-wrap:wrap}
+.panel-actions-label{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted-strong); padding:14px 18px 0}
+.panel-quick{display:flex; gap:8px; padding:8px 18px 14px; border-bottom:1px solid var(--line)}
+.pq-btn{flex:1; height:40px; border-radius:var(--radius-sm); border:1px solid var(--line-strong); background:#fff; display:flex; align-items:center; justify-content:center; gap:6px; font-size:13px; font-weight:600; color:var(--text-2); transition:all .15s; text-decoration:none}
+.pq-btn:hover{border-color:var(--primary); color:var(--primary); background:var(--primary-tint)}
+.pq-btn.prim{background:var(--primary); border-color:var(--primary); color:#fff; box-shadow:0 6px 16px rgba(15,118,110,.22)}
+.pq-btn.prim:hover{background:var(--primary-dark)}
+
+/* RESPUESTA SUGERIDA — bloque SECUNDARIO, compacto y atenuado (la IA solo asiste de fondo) */
+.ai-block{margin:14px 14px 16px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface-soft); overflow:hidden}
+.ai-head{display:flex; align-items:center; gap:9px; padding:11px 14px 9px}
+.ai-head .ai-ico{width:26px;height:26px;border-radius:8px;background:var(--bg-deep);display:grid;place-items:center;color:var(--muted-strong)}
+.ai-head .ai-t{font-size:13px; font-weight:600; color:var(--text-2)}
+.ai-head .ai-mode{margin-left:auto; display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:var(--ok); background:var(--ok-soft); padding:3px 9px; border-radius:var(--radius-pill); position:relative; cursor:help}
+.ai-head .ai-mode .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.ai-section{padding:0 14px 11px}
+.ai-label{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--muted-strong); display:flex; align-items:center; gap:5px; margin-bottom:6px}
+.help{width:17px;height:17px;border-radius:50%;background:var(--line-strong);color:#fff;display:inline-grid;place-items:center;font-size:12px;font-weight:700;cursor:help; position:relative; border:none}
+.help:hover .tip, .help:focus-visible .tip{opacity:1; visibility:visible; transform:translate(-50%,0)}
+.help:focus-visible{box-shadow:0 0 0 3px var(--primary-soft)}
+.tip{position:absolute; bottom:135%; left:50%; transform:translate(-50%,4px); background:#0f1a17; color:#fff; font-size:12px; font-weight:500; line-height:1.45; padding:8px 11px; border-radius:8px; width:200px; text-align:left; text-transform:none; letter-spacing:0; opacity:0; visibility:hidden; transition:all .16s; box-shadow:var(--shadow-md); z-index:50}
+.tip::after{content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#0f1a17}
+.ai-reply{background:#fff; border:1px solid var(--line); border-radius:var(--radius-sm); padding:11px 13px; font-size:13.5px; line-height:1.55; color:var(--text-2)}
+.ai-reply .var{color:var(--primary-dark); font-weight:600}
+/* etiqueta pequeña de fiabilidad (sustituye al medidor de confianza aparatoso) */
+.ai-trust{display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:var(--ok); margin-top:8px}
+.ai-trust svg{flex-shrink:0}
+/* Acciones de la sugerencia: enviar discreto + secundarios pequeños */
+.ai-actions{display:flex; flex-direction:column; gap:8px; padding:2px 14px 14px}
+.ai-cta{width:100%; height:40px; border-radius:var(--radius-sm); font-size:13.5px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:7px; background:var(--primary-soft); color:var(--primary-dark); border:1px solid var(--primary-soft); transition:all .15s}
+.ai-cta:hover{background:#d7ece8; border-color:#bfe3dc}
+.ai-sec-row{display:flex; gap:8px}
+.ai-ghost{flex:1; height:36px; border-radius:var(--radius-sm); font-size:12.5px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:6px; background:transparent; border:1px solid var(--line-strong); color:var(--text-2); transition:all .15s}
+.ai-ghost:hover{border-color:var(--primary); color:var(--primary); background:var(--primary-tint)}
+.ai-ghost.esc:hover{border-color:var(--info); color:var(--info); background:var(--info-soft)}
+
+/* Tabs */
+.panel-tabs{display:flex; gap:2px; padding:4px 14px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; z-index:5}
+.p-tab{padding:11px 12px; font-size:13px; font-weight:600; color:var(--muted-strong); border-bottom:2px solid transparent; transition:all .14s; white-space:nowrap; background:none}
+.p-tab:hover{color:var(--text-2)}
+.p-tab[aria-selected="true"]{color:var(--primary); border-bottom-color:var(--primary)}
+.tab-pane{display:none; padding:16px 18px}
+.tab-pane.active{display:block}
+.info-row{display:flex; align-items:flex-start; gap:11px; padding:10px 0; border-bottom:1px solid var(--line)}
+.info-row:last-child{border-bottom:none}
+.info-row .ir-ico{width:34px;height:34px;border-radius:9px;background:var(--surface-soft);display:grid;place-items:center;color:var(--primary);flex-shrink:0}
+.info-row .ir-k{font-size:12px; color:var(--muted-strong); font-weight:500}
+.info-row .ir-v{font-size:13.5px; font-weight:600; color:var(--text); margin-top:1px}
+.section-title{font-size:12px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--muted-strong); margin:18px 0 8px}
+.crm-stat{display:flex; align-items:center; justify-content:space-between; padding:11px 12px; background:var(--surface-soft); border:1px solid var(--line); border-radius:var(--radius-sm); margin-bottom:8px}
+.crm-stat .cs-k{font-size:13px; color:var(--text-2); display:flex; align-items:center; gap:8px; font-weight:500}
+.crm-stat .cs-v{font-size:14px; font-weight:700; color:var(--text)}
+.timeline-item{display:flex; gap:11px; padding-bottom:16px; position:relative}
+.timeline-item:not(:last-child)::before{content:""; position:absolute; left:13px; top:28px; bottom:0; width:2px; background:var(--line)}
+.tl-dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;z-index:1}
+.tl-dot.ok{background:var(--ok-soft);color:var(--ok)} .tl-dot.info{background:var(--info-soft);color:var(--info)} .tl-dot.primary{background:var(--primary-soft);color:var(--primary)}
+.tl-body .tl-t{font-size:13px; font-weight:600}
+.tl-body .tl-d{font-size:12px; color:var(--muted-strong); margin-top:1px}
+
+/* ===== TOAST ===== */
+.toast-wrap{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); z-index:200; display:flex; flex-direction:column; gap:8px; align-items:center}
+.toast{display:flex; align-items:center; gap:10px; background:#0f1a17; color:#fff; font-size:13.5px; font-weight:600; padding:12px 16px; border-radius:var(--radius-sm); box-shadow:var(--shadow-lg); opacity:0; transform:translateY(12px); transition:all .25s; pointer-events:none}
+.toast.show{opacity:1; transform:translateY(0)}
+.toast .t-ico{width:22px;height:22px;border-radius:50%;background:var(--ok);display:grid;place-items:center;color:#fff;flex-shrink:0}
+
+/* Responsive */
+@media (max-width:1280px){ .inbox{grid-template-columns:300px 1fr 320px} }
+@media (max-width:1100px){
+  .sidebar{width:68px; padding:18px 8px}
+  .brand-name,.brand-tag,.nav-group,.nav-item span,.badge-count,.plan-card .pc-txt,.profile .pf-txt{display:none}
+  .nav-item{justify-content:center; padding:11px} .nav-item.active::before{left:-8px}
+  .brand{justify-content:center} .plan-card,.profile{justify-content:center; padding:8px}
+  .inbox{grid-template-columns:280px 1fr; }
+  .col-panel{display:none}
+  .status-chips .chip-st span{display:none} .sede-sel span{display:none}
+}
+@media (max-width:820px){
+  .inbox{grid-template-columns:1fr}
+  .col-list{display:none}
+  .tb-search{display:none}
+}
+
+/* ===== MODAL Crear cita ===== */
+.cm-overlay{position:fixed;inset:0;background:rgba(7,36,43,.46);backdrop-filter:blur(3px);z-index:200;display:none;align-items:flex-start;justify-content:center;padding:34px 18px;overflow:auto}
+.cm-overlay.show{display:flex}
+.cm{width:100%;max-width:1080px;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;animation:cmIn .18s ease}
+@keyframes cmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.cm-head{display:flex;align-items:flex-start;gap:16px;padding:22px 26px 18px;background:linear-gradient(180deg,var(--primary-tint),#fff);border-bottom:1px solid var(--line)}
+.cm-tag{display:inline-block;font-size:12px;font-weight:700;color:var(--primary-dark);background:var(--primary-soft);padding:3px 10px;border-radius:var(--radius-pill)}
+.cm-title{font-size:21px;font-weight:700;color:var(--text);margin:8px 0 4px}
+.cm-sub{font-size:13.5px;color:var(--muted-strong);line-height:1.5;max-width:62ch}
+.cm-head-actions{margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.cm-btn{display:inline-flex;align-items:center;gap:7px;height:42px;padding:0 18px;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid transparent}
+.cm-btn svg{width:17px;height:17px}
+.cm-btn.ghost{background:var(--surface);border-color:var(--line-strong);color:var(--text-2)}
+.cm-btn.ghost:hover{background:var(--surface-soft)}
+.cm-btn.prim{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.24)}
+.cm-btn.prim:hover{background:var(--primary-dark)}
+.cm-x{width:42px;height:42px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--muted-strong);display:grid;place-items:center;cursor:pointer}
+.cm-x:hover{background:var(--surface-soft)}
+.cm-body{padding:22px 26px 26px;display:flex;flex-direction:column;gap:18px;max-height:calc(100vh - 200px);overflow:auto}
+.cm-card{border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.cm-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px}
+.cm-grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.cm-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.cm-field label{font-size:13px;font-weight:600;color:var(--text-2)}
+.cm-field input,.cm-field select,.cm-field textarea{height:44px;border:1px solid var(--line-strong);border-radius:10px;padding:0 13px;font-size:14px;font-family:inherit;color:var(--text);background:var(--surface)}
+.cm-field select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%236b7771' stroke-width='2'><path d='m4 7 5 5 5-5'/></svg>");background-repeat:no-repeat;background-position:right 12px center}
+.cm-field input:focus,.cm-field select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+/* fila Sede + Calendario */
+.cm-sede-row{align-items:start}
+.cm-search{margin-top:16px;width:100%;height:46px;justify-content:center;background:var(--primary);color:#fff;border:none;border-radius:11px;font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 8px 18px rgba(15,118,110,.24)}
+.cm-search:hover{background:var(--primary-dark)}
+.cm-search svg{width:17px;height:17px}
+/* Calendario */
+.cm-cal{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:var(--surface-soft)}
+.cm-cal-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.cm-cal-title{font-size:14px;font-weight:700;color:var(--text);text-transform:capitalize;margin-right:auto}
+.cm-cal-nav{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--text-2)}
+.cm-cal-nav:hover{background:var(--surface-soft)}
+.cm-cal-nav svg{width:15px;height:15px}
+.cm-cal-dows,.cm-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cm-cal-dows span{text-align:center;font-size:11.5px;font-weight:700;color:var(--muted);padding:4px 0}
+.cm-cal-day{aspect-ratio:1;display:grid;place-items:center;font-size:13px;font-weight:500;color:var(--text);border-radius:8px;cursor:pointer;border:1px solid transparent}
+.cm-cal-day:hover{background:var(--primary-soft)}
+.cm-cal-day.other{color:var(--line-strong)}
+.cm-cal-day.today{font-weight:700;color:var(--primary-dark)}
+.cm-cal-day.sel{background:var(--primary);color:#fff;font-weight:700}
+.cm-cal-day.range{background:var(--primary-soft);color:var(--primary-dark);border-radius:0}
+.cm-cal-day.range.r-start{border-top-left-radius:8px;border-bottom-left-radius:8px}
+.cm-cal-day.range.r-end{border-top-right-radius:8px;border-bottom-right-radius:8px}
+.cm-cal-foot{display:flex;justify-content:space-between;margin-top:10px}
+.cm-cal-link{background:none;border:none;color:var(--primary);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;padding:4px}
+.cm-cal-link:hover{text-decoration:underline}
+.cm-cal-periods{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
+.cm-cal-periods button{height:34px;border:1px solid var(--line-strong);background:var(--surface);border-radius:9px;font-size:12.5px;font-weight:600;color:var(--text-2);cursor:pointer;font-family:inherit;transition:all .12s}
+.cm-cal-periods button:hover{border-color:var(--primary);color:var(--primary)}
+.cm-cal-periods button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* resumen de periodo (cuando el calendario se "cierra") */
+.cm-cal-summary{display:none;align-items:center;gap:10px;border:1px solid var(--primary-soft);background:var(--primary-tint);border-radius:12px;padding:13px 14px}
+.cm-cal-summary.show{display:flex}
+.cm-cal-summary .cs-ic{width:34px;height:34px;border-radius:9px;background:var(--primary);color:#fff;display:grid;place-items:center;flex-shrink:0}
+.cm-cal-summary .cs-k{font-size:12px;font-weight:600;color:var(--primary-dark);text-transform:uppercase;letter-spacing:.04em}
+.cm-cal-summary .cs-v{font-size:14px;font-weight:700;color:var(--text);margin-top:1px}
+.cm-cal-summary .cs-edit{margin-left:auto;background:none;border:none;color:var(--primary);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+/* Disponibilidad */
+.cm-avail{display:none}
+.cm-avail.show{display:block}
+.cm-avail-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.cm-avail-head h3{font-size:15px;font-weight:700;color:var(--text)}
+.cm-franjas{display:flex;gap:7px;margin-left:auto}
+.cm-franja{display:inline-flex;flex-direction:column;align-items:flex-start;gap:1px;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);border-radius:10px;cursor:pointer;font-family:inherit;transition:all .12s}
+.cm-franja b{font-size:13px;font-weight:600;color:var(--text-2)}
+.cm-franja span{font-size:11.5px;color:var(--muted)}
+.cm-franja:hover{border-color:var(--primary)}
+.cm-franja.active{background:var(--primary);border-color:var(--primary)}
+.cm-franja.active b,.cm-franja.active span{color:#fff}
+.cm-slots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cm-slot{border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;transition:all .12s;background:var(--surface)}
+.cm-slot:hover{border-color:var(--primary);box-shadow:var(--shadow-sm)}
+.cm-slot.pick{border-color:var(--primary);background:var(--primary-tint)}
+.cm-slot .sl-t{font-size:14px;font-weight:700;color:var(--text)}
+.cm-slot .sl-m{font-size:12.5px;color:var(--muted-strong);margin-top:3px}
+.cm-empty{grid-column:1/-1;text-align:center;color:var(--muted-strong);font-size:13.5px;padding:24px}
+@media(max-width:760px){.cm-grid2,.cm-slots{grid-template-columns:1fr}.cm-cal-periods{grid-template-columns:1fr 1fr}}
+
+
+/* Ficha del paciente plegable (plegada por defecto) */
+.inbox.panel-collapsed{grid-template-columns:300px 1fr 0}
+.inbox.panel-collapsed .col-panel{display:none}
+#panelToggle.on{background:var(--primary-soft);color:var(--primary);border-color:var(--primary-soft)}
+
+
+/* Botón Sugerir respuesta (composer) */
+.comp-tool.suggest{color:var(--primary); font-weight:600}
+.comp-tool.suggest:hover{background:var(--primary-soft); color:var(--primary-dark)}
+
+
+/* Campo de fecha bloqueado (modal) */
+.cm-locked{height:44px;border:1px solid var(--line);border-radius:10px;padding:0 13px;display:flex;align-items:center;gap:9px;background:var(--surface-soft);color:var(--text-2);font-size:14px;cursor:not-allowed}
+.cm-locked svg{color:var(--muted);flex-shrink:0}
+/* Filtros: crear lista + listas */
+.cf-newlist{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;color:var(--primary);background:var(--primary-soft);border:1px dashed var(--primary-bright);cursor:pointer}
+.cf-newlist:hover{background:var(--primary-tint)}
+.cf-newlist svg{width:13px;height:13px}
+.cf-pill.cf-list{background:var(--info-soft);color:var(--info);border-color:var(--info-soft)}
+.cf-pill.cf-list.active{background:var(--info);color:#fff;border-color:var(--info)}
+#cfLists{display:contents}
+/* Estrella/acción por conversación */
+.conv{padding-right:34px}
+.conv-action{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:26px;height:26px;border-radius:7px;border:none;background:transparent;color:var(--line-strong);display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .12s,color .12s;z-index:2}
+.conv:hover .conv-action{opacity:1}
+.conv-action.on{opacity:1;color:var(--warning)}
+.conv-action.on.in-list{color:var(--info)}
+.conv-action:hover{background:var(--surface-soft)}
+
+
+/* Filtros de conversaciones */
+.conv-filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.cf-pill{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;color:var(--text-2);background:var(--surface-soft);border:1px solid var(--line);cursor:pointer;font-family:inherit;transition:all .12s}
+.cf-pill span{font-weight:700;color:var(--muted)}
+.cf-pill:hover{border-color:var(--line-strong)}
+.cf-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.cf-pill.active span{color:#fff}
+.cf-newlist{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 11px;border-radius:var(--radius-pill);font-size:12.5px;font-weight:600;color:var(--primary);background:var(--primary-soft);border:1px dashed var(--primary-bright);cursor:pointer;font-family:inherit}
+.cf-newlist:hover{background:var(--primary-tint)}
+.cf-newlist svg{width:13px;height:13px}
+.cf-pill.cf-list{background:var(--info-soft);color:var(--info);border-color:var(--info-soft)}
+.cf-pill.cf-list.active{background:var(--info);color:#fff;border-color:var(--info)}
+#cfLists{display:contents}
+.conv{padding-right:34px}
+.conv-action{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:26px;height:26px;border-radius:7px;border:none;background:transparent;color:var(--line-strong);display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .12s,color .12s;z-index:2}
+.conv:hover .conv-action{opacity:1}
+.conv-action.on{opacity:1;color:var(--warning)}
+.conv-action.on.in-list{color:var(--info)}
+.conv-action:hover{background:var(--surface-soft)}
+
+
+/* ===== ajustes inbox: avatar redondeado, sidebar colapsable, ticks lista, último evento ===== */
+.chat-head .av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;font-size:16px;position:relative}
+.ch-when{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--muted-strong);flex-shrink:0;white-space:nowrap}
+.ch-when svg{opacity:.85}
+.side-toggle{display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0 12px 8px auto;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#cfe7e1;cursor:pointer;flex-shrink:0}
+.side-toggle:hover{background:rgba(255,255,255,.12)}
+.side-toggle svg{width:16px;height:16px;transition:transform .2s}
+.sidebar.collapsed{width:68px}
+.sidebar.collapsed .brand>div,.sidebar.collapsed .brand-name,.sidebar.collapsed .brand-tag,.sidebar.collapsed .nav-group,.sidebar.collapsed .nav-item span,.sidebar.collapsed .badge-count,.sidebar.collapsed .plan-card .pc-txt,.sidebar.collapsed .profile .pf-txt{display:none}
+.sidebar.collapsed .brand{justify-content:center}
+.sidebar.collapsed .nav-item{justify-content:center;padding:11px}
+.sidebar.collapsed .nav-item.active::before{left:-8px}
+.sidebar.collapsed .plan-card,.sidebar.collapsed .profile{justify-content:center}
+.sidebar.collapsed .side-toggle{margin:0 auto 8px}
+.sidebar.collapsed .side-toggle svg{transform:rotate(180deg)}
+.conv-row1 .conv-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.conv-row1 .ticks{color:var(--muted-strong);flex-shrink:0}
+.conv-row1 .ticks.read{color:var(--info)}
+#panelToggle.on{background:var(--primary-soft);color:var(--primary);border-color:var(--primary-soft)}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== SIDEBAR (CHROME) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">Waiable</div>
+        <div class="brand-tag">Clínicas</div>
+      </div>
+    </div>
+    <button class="side-toggle" id="sideToggle" type="button" aria-label="Contraer o expandir el menú" title="Contraer menú" onclick="toggleSidebar()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav-group">Inicio</div>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Panel</span></a>
+      <div class="nav-group">Agenda</div>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Citas</span></a>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h2M8 18h2"/></svg><span>Huecos de agenda</span></a>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg><span>Solicitudes</span><span class="badge-count">5</span></a>
+      <div class="nav-group">Conversaciones</div>
+      <a class="nav-item active" href="#" aria-current="page"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg><span>WhatsApp</span><span class="badge-count">12</span></a>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Llamadas</span></a>
+      <div class="nav-group">Pacientes</div>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Contactos</span></a>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><span>Oportunidades</span></a>
+      <div class="nav-group">Crecimiento</div>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Campañas</span></a>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="7"/><rect x="12" y="6" width="3" height="11"/><rect x="17" y="13" width="3" height="4"/></svg><span>Informes</span></a>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>Integraciones</span></a>
+      <div class="nav-group">Configuración</div>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg><span>Clínica</span></a>
+      <a class="nav-item" href="#"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Ajustes</span></a>
+    </nav>
+    <div class="sidebar-foot">
+      <a class="plan-card" href="#">
+        <div class="pc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="pc-txt"><b>Plan Growth</b><span>gestionar →</span></div>
+      </a>
+      <div class="profile">
+        <div class="pf-av">LG</div>
+        <div class="pf-txt"><b>Lucía García</b><span>Recepción</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+
+    <!-- TOPBAR (CHROME) -->
+    <header class="topbar">
+      <div class="tb-title">
+        <h1>WhatsApp</h1>
+        <div class="crumb">Conversaciones <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg> Bandeja de entrada</div>
+      </div>
+      <div class="tb-search">
+        <svg class="s-ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <label for="globalSearch" class="sr-only">Buscador global</label>
+        <input id="globalSearch" type="text" placeholder="Buscar pacientes, citas, conversaciones…">
+        <span class="s-kbd">⌘K</span>
+      </div>
+      <div class="tb-right">
+        <button class="sede-sel" aria-label="Cambiar de sede. Sede actual: Madrid Centro">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Madrid Centro</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- INBOX (3 columnas) -->
+    <div class="inbox panel-collapsed" id="inboxGrid">
+
+      <!-- COL 1: lista de conversaciones -->
+      <section class="col-list">
+        <div class="list-head">
+          <div class="lh-top"><h2>Conversaciones</h2><span class="lh-count">28</span></div>
+          <div class="search-mini">
+            <svg class="sm-ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" placeholder="Buscar conversación o teléfono…">
+          </div>
+          <div class="conv-filters" id="convFilters">
+            <button class="cf-pill active" data-filter="todas">Todas <span>28</span></button>
+            <button class="cf-pill" data-filter="sin-leer">Sin leer <span>12</span></button>
+            <button class="cf-pill" data-filter="favoritos">Favoritos <span id="favCount">0</span></button>
+            <span id="cfLists"></span>
+            <button class="cf-newlist" id="cfNewList" type="button"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Crear lista</button>
+          </div>
+        </div>
+        <div class="conv-scroll">
+
+          <!-- SECCIÓN PRIORITARIA: lo que convierte (intención de reserva) -->
+          <div class="conv-section book">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            Quieren reservar
+            <span class="cs-count">3</span>
+          </div>
+
+          <!-- Active conversation: intención de RESERVA -->
+          <a class="conv active is-booking" href="#" aria-current="true">
+            <div class="av a1">CR<span class="pres on"></span></div>
+            <div class="conv-body">
+              <div class="conv-row1"><span class="conv-name">Carmen Ruiz</span><span class="conv-time">11:42</span></div>
+              <div class="conv-row2"><span class="conv-prev unread">¿Podría confirmar mi cita del jueves para…</span><span class="unread-pill" aria-label="2 mensajes sin leer">2</span></div>
+              <div class="conv-row3">
+                <span class="tag t-primary"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Reserva</span>
+                <span class="sla warn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Responder en 4 min</span>
+              </div>
+              <div class="conv-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Limpieza dental · Madrid Centro</div>
+            </div>
+          </a>
+
+          <a class="conv is-booking" href="#">
+            <div class="av a2">JT</div>
+            <div class="conv-body">
+              <div class="conv-row1"><span class="conv-name">Javier Torres</span><span class="conv-time">11:30</span></div>
+              <div class="conv-row2"><span class="conv-prev unread">¿Tienen hueco para fisioterapia esta semana?</span><span class="unread-pill" aria-label="3 mensajes sin leer">3</span></div>
+              <div class="conv-row3">
+                <span class="tag t-primary"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Reserva</span>
+                <span class="sla danger"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>Vencido</span>
+              </div>
+              <div class="conv-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Fisioterapia · Sin asignar</div>
+            </div>
+          </a>
+
+          <a class="conv is-booking" href="#">
+            <div class="av a6">PN</div>
+            <div class="conv-body">
+              <div class="conv-row1"><span class="conv-name">Paula Navarro</span><span class="conv-time">Ayer</span></div>
+              <div class="conv-row2"><span class="conv-prev">¿Cuánto cuesta la sesión de fisioterapia?</span></div>
+              <div class="conv-row3">
+                <span class="tag t-primary"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Reserva</span>
+                <span class="sla ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>A tiempo</span>
+              </div>
+              <div class="conv-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Fisioterapia · Madrid Norte</div>
+            </div>
+          </a>
+
+          <!-- SECCIÓN: resto de la bandeja -->
+          <div class="conv-section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>
+            Resto de conversaciones
+          </div>
+
+          <a class="conv" href="#">
+            <div class="av a3">MA<span class="pres on"></span></div>
+            <div class="conv-body">
+              <div class="conv-row1"><span class="conv-name">Marta Alonso</span><span class="ticks read" title="Leído" aria-label="Leído"><svg width="17" height="12" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8l4 4 8-9"/><path d="M9 12l2 2 8-9"/></svg></span><span class="conv-time">10:58</span></div>
+              <div class="conv-row2"><span class="conv-prev unread"><span class="ai-mark">Respuesta automática ·</span> Gracias, nos vemos el martes 😊</span><span class="unread-pill" aria-label="1 mensaje sin leer">1</span></div>
+              <div class="conv-row3">
+                <span class="tag t-muted"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Resuelta sola</span>
+                <span class="sla ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>A tiempo</span>
+              </div>
+              <div class="conv-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Botox · Madrid Centro</div>
+            </div>
+          </a>
+
+          <a class="conv" href="#">
+            <div class="av a4">LV</div>
+            <div class="conv-body">
+              <div class="conv-row1"><span class="conv-name">Laura Vega</span><span class="ticks" title="Entregado" aria-label="Entregado"><svg width="17" height="12" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8l4 4 8-9"/><path d="M9 12l2 2 8-9"/></svg></span><span class="conv-time">10:21</span></div>
+              <div class="conv-row2"><span class="conv-prev">Perfecto, muchas gracias por la atención</span></div>
+              <div class="conv-row3">
+                <span class="tag t-info">Revisión</span>
+                <span class="sla ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>A tiempo</span>
+              </div>
+              <div class="conv-sub"><span class="mini-av" style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#157348,#1f9c61);display:inline-grid;place-items:center;color:#fff;font-size:12px;font-weight:700">MR</span>Asignada a Dra. Ruiz</div>
+            </div>
+          </a>
+
+          <a class="conv" href="#">
+            <div class="av a5">DS</div>
+            <div class="conv-body">
+              <div class="conv-row1"><span class="conv-name">Diego Serrano</span><span class="conv-time">9:47</span></div>
+              <div class="conv-row2"><span class="conv-prev unread">Quería cancelar la sesión de punción seca</span><span class="unread-pill" aria-label="1 mensaje sin leer">1</span></div>
+              <div class="conv-row3">
+                <span class="tag t-warn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Cancelación</span>
+                <span class="sla warn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Responder en 6 min</span>
+              </div>
+              <div class="conv-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Punción seca · Madrid Centro</div>
+            </div>
+          </a>
+
+          <a class="conv" href="#">
+            <div class="av a2">RG</div>
+            <div class="conv-body">
+              <div class="conv-row1"><span class="conv-name">Roberto Gil</span><span class="ticks" title="Enviado" aria-label="Enviado"><svg width="12" height="12" viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8l5 5 7-9"/></svg></span><span class="conv-time">Ayer</span></div>
+              <div class="conv-row2"><span class="conv-prev">Gracias, ya está confirmada la revisión</span></div>
+              <div class="conv-row3">
+                <span class="tag t-ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Cerrada</span>
+              </div>
+              <div class="conv-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Revisión · Madrid Centro</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ========== COLUMN 2: CHAT ========== -->
+      <section class="col-chat" aria-label="Conversación con Carmen Ruiz">
+        <div class="chat-head">
+          <div class="av a1">CR<span class="pres on"></span></div>
+          <div class="ch-info">
+            <div class="ch-name">Carmen Ruiz
+              <span class="tag t-ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Paciente</span>
+              <span class="ch-when"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Recibido · hoy 11:42</span>
+            </div>
+            <div class="ch-meta">
+              <a href="#" style="color:inherit;text-decoration:none">+34 612 345 678</a><span class="sep"></span>
+              <span>WhatsApp · Madrid Centro</span><span class="sep"></span>
+              <span style="color:var(--ok);font-weight:600;display:inline-flex;align-items:center;gap:4px"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>En línea</span>
+            </div>
+          </div>
+          <div class="assigned">Asignado a <span class="mini-av">LG</span> Lucía G.</div>
+          <div class="ch-actions">
+            <button class="head-cta" onclick="openCreateAppt()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg>Crear cita</button>
+            <button class="icon-btn" aria-label="Asignar conversación a un agente" data-toast="Conversación asignada a un agente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></button>
+            <button class="icon-btn" aria-label="Etiquetas de la conversación" data-toast="Gestiona las etiquetas de la conversación"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/></svg></button>
+            <button class="icon-btn" id="panelToggle" aria-label="Mostrar u ocultar los datos del paciente" aria-pressed="false" onclick="togglePanel()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></svg></button>
+            <button class="icon-btn" aria-label="Más opciones de la conversación"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg></button>
+          </div>
+        </div>
+
+        <!-- Banner de estado degradado (oculto por defecto; aparece si WhatsApp se desconecta) -->
+        <div class="chat-banner" id="waBanner" role="alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          WhatsApp desconectado: tus mensajes no se entregarán hasta reconectar.
+          <button type="button" onclick="document.getElementById('waBanner').classList.remove('show')">Reconectar</button>
+        </div>
+
+        <div class="chat-body">
+          <div class="day-div"><span>Hoy · 30 de mayo</span></div>
+
+          <div class="msg in">
+            <div class="bubble">Hola, buenos días. Tengo una cita esta semana pero no recuerdo el día exacto. ¿Me lo podrían confirmar?</div>
+            <div class="meta">11:18</div>
+          </div>
+
+          <div class="msg out">
+            <div class="bubble">¡Hola Carmen! Claro que sí. Tienes una cita de Limpieza dental con la Dra. Marta Ruiz. Te dejo los detalles 👇</div>
+            <div class="meta">11:20 <span class="ticks read" aria-label="Mensaje leído"><svg width="16" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 9l4 4 8-9"/><path d="M9 13l2 2 8-9"/></svg></span></div>
+          </div>
+
+          <!-- BOOKING CARD: 1 CTA dominante + secundarios ghost -->
+          <div class="booking-card">
+            <div class="bc-head">
+              <div class="bc-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+              <div><b>Cita propuesta</b><span>Falta confirmar en agenda</span></div>
+              <span class="bc-pend"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Pendiente</span>
+            </div>
+            <div class="bc-body">
+              <div class="bc-row"><span class="bc-k"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Servicio</span><span class="bc-v">Limpieza dental</span></div>
+              <div class="bc-row"><span class="bc-k"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profesional</span><span class="bc-v">Dra. Marta Ruiz</span></div>
+              <div class="bc-row"><span class="bc-k"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Fecha</span><span class="bc-v">Jueves 5 de junio · 16:30</span></div>
+              <div class="bc-row"><span class="bc-k"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Sede</span><span class="bc-v">Madrid Centro</span></div>
+            </div>
+            <div class="bc-actions">
+              <button class="bc-cta" data-toast="Cita creada en la agenda. Avisamos a Carmen por WhatsApp.">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                Confirmar cita y avisar al paciente
+              </button>
+              <div class="bc-sec-row">
+                <button class="bc-ghost"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>Reprogramar</button>
+                <button class="bc-ghost danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>Cancelar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg in">
+            <div class="bubble">¿Podría confirmar mi cita del jueves para la limpieza? Y otra cosa, ¿cuánto cuesta?</div>
+            <div class="meta">11:42</div>
+          </div>
+
+          <!-- Burbuja saliente con estado de envío fallido + reintento (ejemplo de estado de error) -->
+          <div class="msg out failed">
+            <div class="bubble">Enseguida te confirmo, Carmen.</div>
+            <div class="meta"><span class="send-state err"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>No enviado<button type="button" data-toast="Reintentando envío…">Reintentar</button></span></div>
+          </div>
+
+          <!-- INTERNAL NOTE -->
+          <div class="msg note">
+            <div class="note-card">
+              <div class="nc-head"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Nota interna · Lucía G.</div>
+              Paciente de Sanitas. Confirmar cobertura de la limpieza antes de cerrar la cita.
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPOSER -->
+        <div class="composer">
+          <div class="comp-mode" role="tablist" aria-label="Modo de redacción">
+            <button role="tab" aria-selected="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.9-5.7a8.38 8.38 0 1 1 3.8 3.8z"/></svg>Responder al paciente</button>
+            <button class="note-mode" role="tab" aria-selected="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Nota interna</button>
+          </div>
+          <div class="quick-replies">
+              <button class="qr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Enviar ubicación</button>
+            </div>
+          <div class="comp-box">
+            <label for="msgInput" class="sr-only">Escribe tu respuesta para Carmen</label>
+            <textarea id="msgInput" placeholder="Escribe tu respuesta…"></textarea>
+            <div class="comp-tools">
+              <button class="comp-tool" aria-label="Adjuntar archivo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.4 11.05 12.25 20.2a5 5 0 0 1-7.07-7.07l9.2-9.2a3 3 0 0 1 4.24 4.24l-9.2 9.2a1 1 0 0 1-1.41-1.41l8.49-8.49"/></svg></button>
+              <button class="comp-tool" aria-label="Insertar emoji"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></button>
+              <button class="comp-tool label suggest" id="suggestBtn" aria-label="Sugerir una respuesta para este paciente"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/></svg>Sugerir respuesta</button>
+              <button class="send-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>Enviar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== COLUMN 3: FICHA DEL PACIENTE + ACCIONES (primario) ========== -->
+      <aside class="col-panel" aria-label="Ficha del paciente y acciones de recepción">
+
+        <div class="panel-id">
+          <div class="av a1" aria-hidden="true">CR</div>
+          <h3>Carmen Ruiz</h3>
+          <div class="pid-sub">Paciente desde feb. 2024 · 14 citas</div>
+        </div>
+
+        <div class="panel-actions-label">Acciones de recepción</div>
+        <div class="panel-quick">
+          <a class="pq-btn prim" href="#"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg>Nueva cita</a>
+          <a class="pq-btn" href="#" aria-label="Llamar al paciente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+          <a class="pq-btn" href="#" data-toast="Nota añadida a la ficha de Carmen." aria-label="Añadir nota a la ficha"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Nota</a>
+        </div>
+
+        <!-- PANEL TABS -->
+        <div class="panel-tabs" role="tablist" aria-label="Detalles del paciente">
+          <button class="p-tab" role="tab" aria-selected="true" data-tab="contacto">Contacto</button>
+          <button class="p-tab" role="tab" aria-selected="false" data-tab="crm">Citas</button>
+          <button class="p-tab" role="tab" aria-selected="false" data-tab="atribucion">Origen</button>
+          <button class="p-tab" role="tab" aria-selected="false" data-tab="historico">Histórico</button>
+        </div>
+
+        <!-- TAB: CONTACTO -->
+        <div class="tab-pane active" id="tab-contacto" role="tabpanel">
+          <div class="info-row">
+            <div class="ir-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><div class="ir-k">Teléfono</div><div class="ir-v">+34 612 345 678</div></div>
+          </div>
+          <div class="info-row">
+            <div class="ir-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
+            <div><div class="ir-k">Email</div><div class="ir-v">carmen.ruiz@email.es</div></div>
+          </div>
+          <div class="info-row">
+            <div class="ir-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="ir-k">Sede preferida</div><div class="ir-v">Madrid Centro</div></div>
+          </div>
+          <div class="pnote">
+            <div class="pnote-head"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>Nota interna</div>
+            <textarea class="pnote-area" placeholder="Anota algo sobre esta paciente (solo lo ve tu equipo)…">Paciente puntual. Prefiere cita por la tarde. Pendiente valorar ortodoncia.</textarea>
+          </div>
+        </div>
+
+        <!-- TAB: CRM -->
+        <div class="tab-pane" id="tab-crm" role="tabpanel">
+          <div class="appt-next">
+            <span class="an-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></span>
+            <div class="an-tx"><div class="an-k">Próxima cita</div><div class="an-v">Jue 5 jun · 16:30 · Limpieza dental</div><div class="an-sub">Dra. Marta Ruiz · Madrid Centro</div></div>
+          </div>
+          <div class="crm-stat"><span class="cs-k"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Estado</span><span class="cs-v">Paciente activo</span></div>
+          <div class="crm-stat"><span class="cs-k"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Valor del paciente</span><span class="cs-v">1.840 €</span></div>
+          <div class="crm-stat"><span class="cs-k"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Citas totales</span><span class="cs-v">14 · última 12 abr 2026</span></div>
+        </div>
+
+        <!-- TAB: ATRIBUCION -->
+        <div class="tab-pane" id="tab-atribucion" role="tabpanel">
+          <div class="info-row">
+            <div class="ir-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+            <div><div class="ir-k">Primer contacto</div><div class="ir-v">Google · Búsqueda orgánica</div></div>
+          </div>
+          <div class="info-row">
+            <div class="ir-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
+            <div><div class="ir-k">Campaña</div><div class="ir-v">Limpieza dental · Mayo 2026</div></div>
+          </div>
+          <div class="info-row">
+            <div class="ir-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+            <div><div class="ir-k">Origen del lead</div><div class="ir-v">Landing · clinica-madrid.es</div></div>
+          </div>
+          <div class="info-row">
+            <div class="ir-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/></svg></div>
+            <div><div class="ir-k">Canal de entrada</div><div class="ir-v">WhatsApp Business</div></div>
+          </div>
+        </div>
+
+        <!-- TAB: HISTORICO -->
+        <div class="tab-pane" id="tab-historico" role="tabpanel">
+          <div style="padding-top:4px">
+            <div class="timeline-item">
+              <div class="tl-dot ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+              <div class="tl-body"><div class="tl-t">Limpieza dental completada</div><div class="tl-d">12 abr 2026 · Dra. Marta Ruiz</div></div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot info"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+              <div class="tl-body"><div class="tl-t">Conversación por WhatsApp</div><div class="tl-d">10 abr 2026 · Recordatorio enviado</div></div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div class="tl-body"><div class="tl-t">Llamada de seguimiento</div><div class="tl-d">28 mar 2026 · 4 min · Lucía G.</div></div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+              <div class="tl-body"><div class="tl-t">Revisión completada</div><div class="tl-d">15 feb 2026 · Dr. David Alonso</div></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST de feedback -->
+
+<!-- ===== MODAL: Crear cita desde WhatsApp ===== -->
+<div class="cm-overlay" id="cmOverlay" aria-hidden="true">
+  <div class="cm" role="dialog" aria-modal="true" aria-label="Crear cita desde WhatsApp">
+    <div class="cm-head">
+      <div>
+        <span class="cm-tag">Clínicas</span>
+        <h2 class="cm-title">Crear cita desde WhatsApp</h2>
+        <p class="cm-sub">Agenda manualmente cuando el paciente confirma por conversación, llamada o recepción. WhatsApp queda solo para logística.</p>
+      </div>
+      <div class="cm-head-actions">
+        <button class="cm-btn ghost" type="button" onclick="closeCreateAppt()">Cancelar</button>
+        <button class="cm-btn prim" type="button" data-toast="Cita creada para Carmen Ruiz." onclick="closeCreateAppt()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg>Crear cita</button>
+        <button class="cm-x" type="button" aria-label="Cerrar" onclick="closeCreateAppt()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <div class="cm-body">
+      <section class="cm-card">
+        <h3>Paciente</h3>
+        <div class="cm-grid2">
+          <div class="cm-field"><label>Paciente</label><input value="Carmen Ruiz"></div>
+          <div class="cm-field"><label>Teléfono / WhatsApp</label><input value="+34 612 345 678"></div>
+          <div class="cm-field"><label>Email</label><input placeholder="opcional"></div>
+          <div class="cm-field"><label>Fecha y hora</label><div class="cm-locked" title="La fecha se fija al elegir el hueco disponible"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>01/06/2026, 09:00</span></div></div>
+        </div>
+      </section>
+
+      <section class="cm-card">
+        <h3>Agenda clínica</h3>
+        <div class="cm-grid2">
+          <div class="cm-field"><label>Servicio</label><select><option>Limpieza dental</option><option>Revisión</option><option>Ortodoncia</option><option>Urgencia</option></select></div>
+          <div class="cm-field"><label>Profesional</label><select><option>Sin preferencia</option><option>Dr. Miguel Roig</option><option>Ana Beltrán</option><option>Dra. Marta Ruiz</option></select></div>
+        </div>
+        <div class="cm-grid2 cm-sede-row" style="margin-top:14px">
+          <div class="cm-field"><label>Sede</label><select id="cmSede"><option>Sede principal</option><option>Madrid Norte</option></select></div>
+          <div>
+            <label class="cm-field" style="margin-bottom:7px"><span style="font-size:13px;font-weight:600;color:var(--text-2)">Periodo a consultar</span></label>
+            <div class="cm-cal" id="cmCal">
+              <div class="cm-cal-top">
+                <span class="cm-cal-title" id="cmCalTitle">mayo de 2026</span>
+                <button class="cm-cal-nav" type="button" id="cmPrev" aria-label="Mes anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <button class="cm-cal-nav" type="button" id="cmNext" aria-label="Mes siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+              </div>
+              <div class="cm-cal-dows"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+              <div class="cm-cal-grid" id="cmCalGrid"></div>
+              <div class="cm-cal-foot">
+                <button class="cm-cal-link" type="button" id="cmClear">Borrar</button>
+                <button class="cm-cal-link" type="button" id="cmToday">Hoy</button>
+              </div>
+              <div class="cm-cal-hint" id="cmCalHint" style="display:none;font-size:12px;color:var(--primary-dark);margin-top:8px">Modo personalizado: elige la fecha inicial y luego la final.</div>
+              <div class="cm-cal-periods" id="cmPeriods">
+                <button type="button" data-period="este-mes">Este mes</button>
+                <button type="button" data-period="prox-mes">Próximo mes</button>
+                <button type="button" data-period="esta-semana">Esta semana</button>
+                <button type="button" data-period="prox-semana">Próxima semana</button>
+                <button type="button" data-period="hoy">Hoy</button>
+                <button type="button" data-period="manana">Mañana</button>
+                <button type="button" data-period="custom">Personalizado</button>
+              </div>
+            </div>
+            <div class="cm-cal-summary" id="cmCalSummary">
+              <span class="cs-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+              <div><div class="cs-k">Periodo seleccionado</div><div class="cs-v" id="cmCalSummaryText">—</div></div>
+              <button class="cs-edit" type="button" id="cmCalEdit">Cambiar periodo</button>
+            </div>
+          </div>
+        </div>
+        <button class="cm-search" type="button" onclick="cmSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Buscar disponibilidad</button>
+      </section>
+
+      <section class="cm-avail" id="cmAvail">
+        <div class="cm-avail-head">
+          <h3>Huecos disponibles</h3>
+          <div class="cm-franjas" id="cmFranjas"></div>
+        </div>
+        <div class="cm-slots" id="cmSlots"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" aria-live="polite">
+  <div class="toast" id="toast">
+    <span class="t-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>
+    <span id="toastMsg">Hecho</span>
+  </div>
+</div>
+
+<script>
+// ---- Tabs panel paciente (con aria-selected) ----
+document.querySelectorAll('.p-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.p-tab').forEach(function(t){t.setAttribute('aria-selected','false')});
+    document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+    tab.setAttribute('aria-selected','true');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+// ---- Modo composer (responder / nota) con aria-selected ----
+document.querySelectorAll('.comp-mode button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.comp-mode button').forEach(function(b){b.setAttribute('aria-selected','false')});
+    btn.setAttribute('aria-selected','true');
+  });
+});
+// ---- Filtros lista (toggle aria-pressed) ----
+document.querySelectorAll('.f-chip').forEach(function(chip){
+  chip.addEventListener('click', function(){
+    document.querySelectorAll('.f-chip').forEach(function(c){c.setAttribute('aria-pressed','false')});
+    chip.setAttribute('aria-pressed','true');
+  });
+});
+// ---- Autoexpandir textarea ----
+var ta = document.getElementById('msgInput');
+if(ta){ ta.addEventListener('input', function(){ ta.style.height='auto'; ta.style.height=Math.min(ta.scrollHeight,140)+'px'; }); }
+// ---- Toast de feedback en acciones de negocio ----
+var toast = document.getElementById('toast');
+var toastMsg = document.getElementById('toastMsg');
+var toastTimer = null;
+function showToast(msg){
+  toastMsg.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 3200);
+}
+document.querySelectorAll('[data-toast]').forEach(function(el){
+  el.addEventListener('click', function(){ showToast(el.getAttribute('data-toast')); });
+});
+
+/* ===== Modal Crear cita ===== */
+(function(){
+  var TODAY = new Date(2026,4,31); // 31 may 2026 (demo determinista)
+  var MES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var PROS = ['Dr. Miguel Roig','Ana Beltrán'];
+  var view = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+  var range = null;       // {start:Date, end:Date}
+  var franja = 'manana';  // mañana | mediodia | tarde
+  var autoT = null;
+  var customMode=false; var customStart=null;
+
+  // franjas configurables (leídas de localStorage, escritas por Ajustes>Agenda)
+  function franjas(){
+    var def = {manana:['08:00','12:00'], mediodia:['12:00','15:00'], tarde:['15:00','19:00']};
+    try{ var s = JSON.parse(localStorage.getItem('waiable_franjas')); if(s&&s.manana) return s; }catch(e){}
+    return def;
+  }
+  function fmt(d){ return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear(); }
+  function sameDay(a,b){ return a.getFullYear()==b.getFullYear()&&a.getMonth()==b.getMonth()&&a.getDate()==b.getDate(); }
+  function addD(d,n){ var x=new Date(d); x.setDate(x.getDate()+n); return x; }
+  function mondayOf(d){ var x=new Date(d); var wd=(x.getDay()+6)%7; return addD(x,-wd); }
+
+  function renderCal(){
+    var grid=document.getElementById('cmCalGrid'); if(!grid) return;
+    document.getElementById('cmCalTitle').textContent = MES[view.getMonth()]+' de '+view.getFullYear();
+    var first=new Date(view.getFullYear(),view.getMonth(),1);
+    var start=mondayOf(first);
+    var html='';
+    for(var i=0;i<42;i++){
+      var d=addD(start,i);
+      var cls='cm-cal-day';
+      if(d.getMonth()!=view.getMonth()) cls+=' other';
+      if(sameDay(d,TODAY)) cls+=' today';
+      if(range && d>=range.start && d<=range.end){
+        cls += ' range';
+        if(sameDay(d,range.start)) cls+=' r-start';
+        if(sameDay(d,range.end)) cls+=' r-end';
+        if(sameDay(range.start,range.end)) cls=cls.replace(' range','')+' sel';
+      }
+      html+='<div class="'+cls+'" data-d="'+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()+'">'+d.getDate()+'</div>';
+    }
+    grid.innerHTML=html;
+    grid.querySelectorAll('.cm-cal-day').forEach(function(el){
+      el.addEventListener('click',function(){
+        var p=el.dataset.d.split('-'); var d=new Date(+p[0],+p[1],+p[2]);
+        if(customMode){
+          if(!customStart){ customStart=d; setRange(d,d,'Personalizado'); }
+          else { var s=customStart<d?customStart:d, e=customStart<d?d:customStart; customStart=null; customMode=false;
+                 setRange(s,e,'Personalizado'); document.getElementById('cmCalHint') && (document.getElementById('cmCalHint').style.display='none');
+                 if(autoT) clearTimeout(autoT); autoT=setTimeout(function(){ document.getElementById('cmCal').style.display='none'; document.getElementById('cmCalSummary').classList.add('show'); cmSearch(); },1200); }
+          return;
+        }
+        setRange(d,d,fmt(d));
+      });
+    });
+  }
+
+  function rangeLabel(p){
+    return {'este-mes':'Este mes','prox-mes':'Próximo mes','esta-semana':'Esta semana','prox-semana':'Próxima semana','hoy':'Hoy','manana':'Mañana'}[p]||'';
+  }
+  function periodRange(p){
+    var s,e;
+    if(p=='hoy'){ s=e=new Date(TODAY); }
+    else if(p=='manana'){ s=e=addD(TODAY,1); }
+    else if(p=='esta-semana'){ s=mondayOf(TODAY); e=addD(s,6); }
+    else if(p=='prox-semana'){ s=addD(mondayOf(TODAY),7); e=addD(s,6); }
+    else if(p=='este-mes'){ s=new Date(TODAY.getFullYear(),TODAY.getMonth(),1); e=new Date(TODAY.getFullYear(),TODAY.getMonth()+1,0); }
+    else if(p=='prox-mes'){ s=new Date(TODAY.getFullYear(),TODAY.getMonth()+1,1); e=new Date(TODAY.getFullYear(),TODAY.getMonth()+2,0); }
+    return {start:s,end:e};
+  }
+  function setRange(s,e,label){
+    range={start:s,end:e};
+    view=new Date(s.getFullYear(),s.getMonth(),1);
+    renderCal();
+    document.getElementById('cmCalSummaryText').textContent = label + (sameDay(s,e)?(' · '+fmt(s)):(' · '+fmt(s)+' – '+fmt(e)));
+  }
+
+  // botones de periodo: resaltar -> a los 2s aplicar y "cerrar" (colapsar calendario)
+  function bindPeriods(){
+    document.querySelectorAll('#cmPeriods button').forEach(function(b){
+      b.addEventListener('click',function(){
+        document.querySelectorAll('#cmPeriods button').forEach(function(x){x.classList.remove('active')});
+        b.classList.add('active');
+        var p=b.dataset.period;
+        if(p==='custom'){ customMode=true; customStart=null; range=null; renderCal();
+          var hint=document.getElementById('cmCalHint'); if(hint){hint.style.display='block';}
+          document.getElementById('cmCalSummaryText').textContent='Elige fecha inicial y final en el calendario';
+          if(autoT) clearTimeout(autoT); return; }
+        customMode=false;
+        var r=periodRange(p);
+        setRange(r.start,r.end,rangeLabel(p));     // resalta el periodo
+        if(autoT) clearTimeout(autoT);
+        autoT=setTimeout(function(){                // a los 2s: aplica y cierra
+          document.getElementById('cmCal').style.display='none';
+          document.getElementById('cmCalSummary').classList.add('show');
+          cmSearch();
+        },2000);
+      });
+    });
+    document.getElementById('cmCalEdit').addEventListener('click',function(){
+      document.getElementById('cmCal').style.display='';
+      document.getElementById('cmCalSummary').classList.remove('show');
+    });
+    document.getElementById('cmPrev').addEventListener('click',function(){view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCal();});
+    document.getElementById('cmNext').addEventListener('click',function(){view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCal();});
+    document.getElementById('cmToday').addEventListener('click',function(){setRange(new Date(TODAY),new Date(TODAY),'Hoy');});
+    document.getElementById('cmClear').addEventListener('click',function(){range=null;renderCal();document.getElementById('cmCalSummaryText').textContent='—';});
+  }
+
+  function renderFranjas(){
+    var f=franjas(); var wrap=document.getElementById('cmFranjas'); if(!wrap) return;
+    var defs=[['todos','Todos'],['manana','Mañana'],['mediodia','Mediodía'],['tarde','Tarde']];
+    wrap.innerHTML = defs.map(function(d){
+      var on=(d[0]==franja)?' active':'';
+      var sub = d[0]=='todos' ? (f.manana[0]+'–'+f.tarde[1]) : (f[d[0]][0]+'–'+f[d[0]][1]);
+      return '<button type="button" class="cm-franja'+on+'" data-fr="'+d[0]+'"><b>'+d[1]+'</b><span>'+sub+'</span></button>';
+    }).join('');
+    wrap.querySelectorAll('.cm-franja').forEach(function(b){
+      b.addEventListener('click',function(){ franja=b.dataset.fr; renderFranjas(); cmSearch(); });
+    });
+  }
+
+  function timeAdd(hhmm,mins){ var p=hhmm.split(':'); var t=(+p[0])*60+(+p[1])+mins; return ('0'+Math.floor(t/60)).slice(-2)+':'+('0'+(t%60)).slice(-2); }
+  window.cmSearch = function(){
+    var avail=document.getElementById('cmAvail'); avail.classList.add('show');
+    renderFranjas();
+    var FR=franjas();
+    var tramos = (franja==='todos') ? [FR.manana,FR.mediodia,FR.tarde] : [FR[franja]];
+    var sede=(document.getElementById('cmSede')||{}).value||'Sede principal';
+    var slots=document.getElementById('cmSlots');
+    if(!range){ slots.innerHTML='<div class="cm-empty">Elige un periodo en el calendario y pulsa “Buscar disponibilidad”.</div>'; return; }
+    // generar días del rango (máx 4 para no saturar)
+    var days=[]; for(var d=new Date(range.start); d<=range.end && days.length<4; d=addD(d,1)){ if(d.getDay()!=0) days.push(new Date(d)); }
+    var html='';
+    days.forEach(function(day){
+      tramos.forEach(function(tr){ var t=tr[0], fin=tr[1];
+      while(t < fin){
+        var end=timeAdd(t,45);
+        PROS.forEach(function(pro){
+          html+='<div class="cm-slot" data-toast="Hueco reservado: '+fmt(day)+' '+t+' · '+pro+'"><div class="sl-t">'+fmt(day)+' · '+t+' – '+end+'</div><div class="sl-m">'+pro+' · '+sede+'</div></div>';
+        });
+        t=timeAdd(t,45);
+      }
+      }); // tramos
+    });
+    slots.innerHTML = html || '<div class="cm-empty">No hay huecos en esa franja para el periodo elegido.</div>';
+    slots.querySelectorAll('.cm-slot').forEach(function(s){
+      s.addEventListener('click',function(){
+        slots.querySelectorAll('.cm-slot').forEach(function(x){x.classList.remove('pick')});
+        s.classList.add('pick');
+        if(window.showToast) showToast(s.getAttribute('data-toast'));
+      });
+    });
+  };
+
+  window.openCreateAppt=function(){
+    var ov=document.getElementById('cmOverlay'); ov.classList.add('show'); ov.setAttribute('aria-hidden','false');
+    range=null; franja='manana'; view=new Date(TODAY.getFullYear(),TODAY.getMonth(),1);
+    document.getElementById('cmCal').style.display=''; document.getElementById('cmCalSummary').classList.remove('show');
+    document.getElementById('cmCalSummaryText').textContent='—';
+    document.querySelectorAll('#cmPeriods button').forEach(function(x){x.classList.remove('active')});
+    document.getElementById('cmAvail').classList.remove('show');
+    renderCal();
+  };
+  window.closeCreateAppt=function(){
+    var ov=document.getElementById('cmOverlay'); ov.classList.remove('show'); ov.setAttribute('aria-hidden','true');
+    if(autoT) clearTimeout(autoT);
+  };
+  // init
+  bindPeriods(); renderCal(); renderFranjas();
+  var ov=document.getElementById('cmOverlay');
+  if(ov) ov.addEventListener('click',function(e){ if(e.target===ov) closeCreateAppt(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeCreateAppt(); });
+  // re-enganchar data-toast de los botones del modal
+  document.querySelectorAll('#cmOverlay [data-toast]').forEach(function(el){
+    el.addEventListener('click',function(){ if(window.showToast) showToast(el.getAttribute('data-toast')); });
+  });
+})();
+
+
+/* ===== Ficha del paciente: plegar/desplegar (plegada por defecto) ===== */
+window.togglePanel=function(){
+  var g=document.getElementById('inboxGrid'); var b=document.getElementById('panelToggle');
+  if(!g) return;
+  var collapsed=g.classList.toggle('panel-collapsed');
+  if(b){ b.classList.toggle('on', !collapsed); b.setAttribute('aria-pressed', (!collapsed).toString()); }
+};
+
+
+/* head-cta runtime normalizer */
+(function(){
+  function norm(){
+    var btns=document.querySelectorAll('.chat-head .head-cta');
+    if(!btns.length) return;
+    btns.forEach(function(b,i){
+      if(i>0){ b.parentNode && b.parentNode.removeChild(b); return; }
+      b.removeAttribute('onclick');
+      b.onclick=function(ev){ ev && ev.preventDefault(); if(window.openCreateAppt) window.openCreateAppt(); };
+    });
+  }
+  if(document.readyState!=='loading') norm(); else document.addEventListener('DOMContentLoaded',norm);
+})();
+
+
+/* ===== Sugerir respuesta en el composer ===== */
+(function(){
+  var btn=document.getElementById('suggestBtn');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    var ta=document.getElementById('msgInput'); if(!ta) return;
+    ta.value='¡Hola Carmen! Tu cita de Limpieza dental con la Dra. Marta Ruiz es el jueves 5 de junio a las 16:30 en Madrid Centro. ¿Te la confirmo? 😊';
+    ta.style.height='auto'; ta.style.height=Math.min(ta.scrollHeight,200)+'px';
+    ta.focus();
+    if(window.showToast) showToast('Respuesta sugerida lista. Revísala y envía cuando quieras.');
+  });
+})();
+
+
+/* ===== Filtros de conversaciones: Todas / Sin leer / Favoritos + Listas ===== */
+(function(){
+  var box=document.getElementById('convFilters');
+  if(!box) return;
+  var STAR='<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"><path d="M12 3.5l2.6 5.7 6.2.6-4.7 4.1 1.4 6.1L12 17l-5.5 3.1 1.4-6.1L3.2 9.8l6.2-.6z"/></svg>';
+  var STAR_O='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l2.6 5.7 6.2.6-4.7 4.1 1.4 6.1L12 17l-5.5 3.1 1.4-6.1L3.2 9.8l6.2-.6z"/></svg>';
+  var PLUS='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+  var CHECK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var convs=[].slice.call(document.querySelectorAll('.conv-scroll .conv'));
+  var st={filter:'todas', activeList:null, fav:new Set(), lists:{}};
+
+  convs.forEach(function(c,i){
+    c.dataset.idx=i;
+    c.dataset.unread = c.querySelector('.unread-pill') ? '1':'0';
+    var btn=document.createElement('button');
+    btn.className='conv-action'; btn.type='button'; btn.setAttribute('aria-label','Marcar como favorita');
+    btn.innerHTML=STAR_O;
+    btn.addEventListener('click', function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      if(st.activeList){
+        var s=st.lists[st.activeList]; if(s.has(i)) s.delete(i); else s.add(i);
+      } else {
+        if(st.fav.has(i)) st.fav.delete(i); else st.fav.add(i);
+      }
+      refreshCounts(); apply();
+    });
+    c.appendChild(btn);
+  });
+
+  function refreshCounts(){
+    var fc=document.getElementById('favCount'); if(fc) fc.textContent=st.fav.size;
+    Object.keys(st.lists).forEach(function(name){
+      var el=document.querySelector('[data-list-count="'+name+'"]'); if(el) el.textContent=st.lists[name].size;
+    });
+  }
+  function apply(){
+    convs.forEach(function(c,i){
+      var show=true;
+      if(st.filter==='sin-leer') show=c.dataset.unread==='1';
+      else if(st.filter==='favoritos') show=st.fav.has(i);
+      else if(st.filter.indexOf('list:')===0){ var n=st.filter.slice(5); show = st.lists[n] && st.lists[n].has(i); }
+      c.style.display = show?'':'none';
+      var btn=c.querySelector('.conv-action');
+      if(btn){
+        if(st.activeList){ var inl=st.lists[st.activeList].has(i); btn.classList.toggle('on',inl); btn.classList.add('in-list'); btn.innerHTML=inl?CHECK:PLUS; btn.title=inl?('Quitar de '+st.activeList):('Añadir a '+st.activeList); }
+        else { btn.classList.remove('in-list'); var f=st.fav.has(i); btn.classList.toggle('on',f); btn.innerHTML=f?STAR:STAR_O; btn.title=f?'Quitar de favoritos':'Marcar como favorita'; }
+      }
+    });
+    // ocultar cabeceras de sección sin conversaciones visibles
+    document.querySelectorAll('.conv-scroll .conv-section').forEach(function(sec){
+      var any=false, n=sec.nextElementSibling;
+      while(n && !n.classList.contains('conv-section')){ if(n.classList && n.classList.contains('conv') && n.style.display!=='none'){any=true;break;} n=n.nextElementSibling; }
+      sec.style.display=any?'':'none';
+    });
+    // estado vacío
+    var visible=convs.filter(function(c){return c.style.display!=='none';}).length;
+    var emptyId='convEmpty'; var ex=document.getElementById(emptyId);
+    if(visible===0){
+      if(!ex){ ex=document.createElement('div'); ex.id=emptyId; ex.style.cssText='padding:30px 18px;text-align:center;color:var(--muted-strong);font-size:13.5px'; document.querySelector('.conv-scroll').appendChild(ex); }
+      ex.textContent = st.activeList ? ('Aún no hay conversaciones en «'+st.activeList+'». Pulsa el + de una conversación para añadirla.') : 'No hay conversaciones con este filtro.';
+      ex.style.display='';
+    } else if(ex){ ex.style.display='none'; }
+  }
+  box.addEventListener('click', function(e){
+    var pill=e.target.closest('.cf-pill'); if(!pill) return;
+    box.querySelectorAll('.cf-pill').forEach(function(p){p.classList.remove('active')});
+    pill.classList.add('active');
+    st.filter=pill.dataset.filter;
+    st.activeList = st.filter.indexOf('list:')===0 ? st.filter.slice(5) : null;
+    apply();
+  });
+  var nb=document.getElementById('cfNewList');
+  if(nb) nb.addEventListener('click', function(){
+    var name=prompt('Nombre de la lista (p. ej. Urgentes, Postoperatorio, Estética):');
+    if(!name) return; name=name.trim(); if(!name) return;
+    if(!st.lists[name]) st.lists[name]=new Set();
+    var pill=document.createElement('button');
+    pill.className='cf-pill cf-list'; pill.dataset.filter='list:'+name; pill.type='button';
+    pill.innerHTML=name+' <span data-list-count="'+name+'">0</span>';
+    document.getElementById('cfLists').appendChild(pill);
+    box.querySelectorAll('.cf-pill').forEach(function(p){p.classList.remove('active')});
+    pill.classList.add('active'); st.filter='list:'+name; st.activeList=name;
+    apply();
+    if(window.showToast) showToast('Lista «'+name+'» creada. Pulsa el + de una conversación para añadirla.');
+  });
+  apply();
+})();
+
+
+/* ===== controles: barra lateral colapsable + toasts de cabecera ===== */
+window.toggleSidebar=function(){var s=document.getElementById('sidebar');if(!s)return;var c=s.classList.toggle('collapsed');try{localStorage.setItem('waiable_sidebar_collapsed',c?'1':'0');}catch(e){}};
+(function(){try{if(localStorage.getItem('waiable_sidebar_collapsed')==='1'){var s=document.getElementById('sidebar');if(s)s.classList.add('collapsed');}}catch(e){}})();
+(function(){document.querySelectorAll('.ch-actions [data-toast]').forEach(function(el){el.addEventListener('click',function(ev){ev.preventDefault();if(window.showToast)showToast(el.getAttribute('data-toast'));});});})();
+
+</script>
+</body>
+</html>
