@@ -357,7 +357,7 @@ tbody tr:hover{background:var(--surface-soft)}
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--primary)" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
             Informes
           </h1>
-          <p class="page-sub">Citas, no-shows, ocupación y canales de <b>Madrid Centro</b> del 1 al 30 de abril, frente a marzo. Mira qué funciona, llena los huecos y comparte los resultados con tu equipo.</p>
+          <p class="page-sub">El rendimiento de <b>Madrid Centro</b> de un vistazo: citas, ausencias, ocupación y canales del 1 al 30 de abril frente a marzo. Datos al día, sin recopilar nada a mano, para decidir con cabeza y llenar los huecos.</p>
         </div>
         <div class="head-actions">
           <button class="btn btn-ghost btn-sm" type="button" onclick="toast('Vista de impresión preparada')">
@@ -372,18 +372,18 @@ tbody tr:hover{background:var(--surface-soft)}
               <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="export-menu" id="exportMenu" role="menu" aria-label="Opciones de exportación">
-              <div class="export-menu-h">Comparte estos resultados con tu equipo</div>
+              <div class="export-menu-h">Comparte estos resultados en un clic</div>
               <button class="export-item" role="menuitem" type="button" onclick="closeExport();toast('Informe PDF generado y listo para compartir')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-                <span><span class="ei-t">Descargar PDF</span><span class="ei-d">Informe con KPIs y gráficas, listo para enviar</span></span>
+                <span><span class="ei-t">Descargar PDF</span><span class="ei-d">Informe con cifras y gráficas, listo para enviar</span></span>
               </button>
               <button class="export-item" role="menuitem" type="button" onclick="closeExport();toast('Datos CSV exportados')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h2M8 17h2M14 13h2M14 17h2"/></svg>
-                <span><span class="ei-t">Exportar CSV</span><span class="ei-d">Datos en bruto para tu hoja de cálculo</span></span>
+                <span><span class="ei-t">Exportar CSV</span><span class="ei-d">Datos en bruto para tu hoja de cálculo o gestor</span></span>
               </button>
               <button class="export-item" role="menuitem" type="button" onclick="closeExport();toast('Informe enviado por correo')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
-                <span><span class="ei-t">Enviar por correo</span><span class="ei-d">Manda el informe a una dirección de tu equipo</span></span>
+                <span><span class="ei-t">Enviar por correo</span><span class="ei-d">Llega a tu equipo o a dirección sin descargar nada</span></span>
               </button>
             </div>
           </div>
@@ -432,8 +432,8 @@ tbody tr:hover{background:var(--surface-soft)}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
               Recomendación
             </div>
-            <p class="ai-text">Los <b>viernes por la tarde</b> tienes una ocupación del 54%, muy por debajo de tu media (76%). Si rellenas esos huecos, podrías sumar <b>unas 9 citas/semana</b>.</p>
-            <p class="ai-meta">Detectado sobre las últimas 4 semanas · Madrid Centro</p>
+            <p class="ai-text">Los <b>viernes por la tarde</b> tu agenda está al 54%, muy por debajo de tu media (76%). Llena esos huecos y podrías ganar <b>unas 9 citas a la semana</b>.</p>
+            <p class="ai-meta">A partir de tus últimas 4 semanas · Madrid Centro</p>
           </div>
           <div class="ai-actions">
             <button class="btn btn-insight btn-sm" type="button" onclick="toast('Abriendo huecos del viernes…')">
@@ -451,8 +451,8 @@ tbody tr:hover{background:var(--surface-soft)}
         <div class="kpi">
           <div class="kpi-label">
             <span class="kpi-icon" style="background:var(--primary-soft);color:var(--primary)" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
-            Citas agendadas
-            <span class="tip" tabindex="0" role="button" data-tip="Total de citas confirmadas en el periodo, en todos los canales.">?</span>
+            Citas reservadas
+            <span class="tip" tabindex="0" role="button" data-tip="Total de citas confirmadas en el periodo, sumando web, WhatsApp y teléfono en una sola agenda.">?</span>
           </div>
           <div class="kpi-val">1.142</div>
           <div class="kpi-foot">
@@ -460,31 +460,31 @@ tbody tr:hover{background:var(--surface-soft)}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg>
               +12,4%
             </span>
-            <span class="muted">vs. 1.016 en marzo</span>
+            <span class="muted">frente a 1.016 en marzo</span>
           </div>
         </div>
         <!-- 2: No-shows (bajada = mejora) -->
         <div class="kpi k-ok">
           <div class="kpi-label">
             <span class="kpi-icon" style="background:var(--ok-soft);color:var(--ok)" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
-            No-shows
-            <span class="tip" tabindex="0" role="button" data-tip="Porcentaje de pacientes que no acudieron a su cita confirmada. Cuanto más bajo, mejor.">?</span>
+            Citas a las que no acuden
+            <span class="tip" tabindex="0" role="button" data-tip="Pacientes que no acudieron a una cita confirmada. Con recordatorios y confirmaciones automáticas, cuanto más bajo, mejor.">?</span>
           </div>
           <div class="kpi-val">6,8%</div>
           <div class="kpi-foot">
-            <span class="delta delta-good" aria-label="No-shows: 6,8 por ciento. Baja 2,1 puntos respecto a marzo, mejora">
+            <span class="delta delta-good" aria-label="Citas a las que no acuden: 6,8 por ciento. Baja 2,1 puntos respecto a marzo, mejora">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M17 7L7 17M7 17h8M7 17V9"/></svg>
               −2,1 pp
             </span>
-            <span class="muted">vs. 8,9% en marzo</span>
+            <span class="muted">frente a 8,9% en marzo</span>
           </div>
         </div>
         <!-- 3 -->
         <div class="kpi k-info">
           <div class="kpi-label">
             <span class="kpi-icon" style="background:var(--info-soft);color:var(--info)" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7 4"/></svg></span>
-            Ocupación media
-            <span class="tip" tabindex="0" role="button" data-tip="Porcentaje de huecos de agenda que se llenaron sobre el total disponible.">?</span>
+            Agenda ocupada
+            <span class="tip" tabindex="0" role="button" data-tip="Parte de tu agenda que se llenó sobre el total de huecos disponibles. Cuanto más alto, menos tiempo perdido.">?</span>
           </div>
           <div class="kpi-val">76%</div>
           <div class="kpi-foot">
@@ -492,7 +492,7 @@ tbody tr:hover{background:var(--surface-soft)}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg>
               +4 pp
             </span>
-            <span class="muted">vs. 72% en marzo</span>
+            <span class="muted">frente a 72% en marzo</span>
           </div>
         </div>
         <!-- 4 -->
@@ -500,7 +500,7 @@ tbody tr:hover{background:var(--surface-soft)}
           <div class="kpi-label">
             <span class="kpi-icon" style="background:var(--warning-soft);color:var(--warning)" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
             Pacientes recuperados
-            <span class="tip" tabindex="0" role="button" data-tip="Pacientes inactivos que volvieron a reservar tras un mensaje de recordatorio.">?</span>
+            <span class="tip" tabindex="0" role="button" data-tip="Pacientes inactivos que volvieron a reservar tras un mensaje automático, sin que nadie tuviera que llamarles.">?</span>
           </div>
           <div class="kpi-val">38</div>
           <div class="kpi-foot">
@@ -508,7 +508,7 @@ tbody tr:hover{background:var(--surface-soft)}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg>
               +9
             </span>
-            <span class="muted">vs. 29 en marzo</span>
+            <span class="muted">frente a 29 en marzo</span>
           </div>
         </div>
       </div>
@@ -524,7 +524,7 @@ tbody tr:hover{background:var(--surface-soft)}
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--primary)" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/></svg>
                 Citas por semana
               </h2>
-              <div class="sec-hint">Evolución de las 5 últimas semanas</div>
+              <div class="sec-hint">Cómo evoluciona tu agenda en las 5 últimas semanas</div>
             </div>
             <button class="dtable-toggle" type="button" aria-expanded="false" aria-controls="barsTable" onclick="toggleTable(this,'barsTable')">
               Ver datos
@@ -566,7 +566,7 @@ tbody tr:hover{background:var(--surface-soft)}
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--primary)" stroke-width="2" aria-hidden="true"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
                   Citas por canal
                 </h2>
-                <div class="sec-hint">De dónde llegan tus reservas</div>
+                <div class="sec-hint">De dónde llegan tus citas, todas en una misma agenda</div>
               </div>
             </div>
             <div style="padding:20px">
@@ -610,16 +610,16 @@ tbody tr:hover{background:var(--surface-soft)}
               <div>
                 <h2 class="sec-title">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--primary)" stroke-width="2" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 12l5-3"/></svg>
-                  Ocupación de agenda
+                  Agenda ocupada
                 </h2>
-                <div class="sec-hint">Objetivo del mes: 80%</div>
+                <div class="sec-hint">Tu objetivo este mes: 80% de huecos llenos</div>
               </div>
             </div>
             <div class="gauge-card">
               <div class="gauge" role="img" aria-label="Ocupación de agenda: 76 por ciento, sobre un objetivo del 80 por ciento.">
                 <div class="gauge-bg" aria-hidden="true"></div>
                 <div class="gauge-fill" style="transform:rotate(-45deg) rotate(136.8deg)" aria-hidden="true"></div>
-                <div class="gauge-c"><div class="gv">76%</div><div class="gl">ocupación</div></div>
+                <div class="gauge-c"><div class="gv">76%</div><div class="gl">agenda ocupada</div></div>
               </div>
               <div class="gauge-foot">
                 <span class="delta delta-good" aria-label="a 4 puntos del objetivo">
@@ -642,7 +642,7 @@ tbody tr:hover{background:var(--surface-soft)}
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--primary)" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
               Pacientes para recuperar
             </h2>
-            <div class="sec-hint">Pacientes inactivos a los que conviene escribir. Recupéralos en un clic.</div>
+            <div class="sec-hint">Pacientes que llevan meses sin venir. Escríbeles en un clic, sin perseguir a nadie por teléfono.</div>
           </div>
           <div class="sec-tools">
             <button class="btn btn-ghost btn-sm" type="button" onclick="toast('Lista filtrada')">
@@ -673,7 +673,7 @@ tbody tr:hover{background:var(--surface-soft)}
                   <span class="pill ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg> Alta · 87%</span>
                 </td>
                 <td><span class="pill info"><span class="pill-dot"></span> Inactiva</span></td>
-                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje de recuperación enviado a Lucía')">Recuperar</button></td>
+                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje enviado a Lucía. Si responde, la cita entra sola en tu agenda')">Recuperar</button></td>
               </tr>
               <tr>
                 <td><div class="t-name">Andrés Gómez</div><div class="t-sub">+34 645 ·· ·· 08</div></td>
@@ -683,7 +683,7 @@ tbody tr:hover{background:var(--surface-soft)}
                   <span class="pill ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg> Alta · 81%</span>
                 </td>
                 <td><span class="pill info"><span class="pill-dot"></span> Inactivo</span></td>
-                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje de recuperación enviado a Andrés')">Recuperar</button></td>
+                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje enviado a Andrés. Si responde, la cita entra sola en tu agenda')">Recuperar</button></td>
               </tr>
               <tr>
                 <td><div class="t-name">Marta Sánchez</div><div class="t-sub">+34 678 ·· ·· 73</div></td>
@@ -693,7 +693,7 @@ tbody tr:hover{background:var(--surface-soft)}
                   <span class="pill warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 2v6M12 16v6"/><circle cx="12" cy="12" r="2"/></svg> Media · 58%</span>
                 </td>
                 <td><span class="pill info"><span class="pill-dot"></span> Inactiva</span></td>
-                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje de recuperación enviado a Marta')">Recuperar</button></td>
+                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje enviado a Marta. Si responde, la cita entra sola en tu agenda')">Recuperar</button></td>
               </tr>
               <tr>
                 <td><div class="t-name">Javier Ortega</div><div class="t-sub">+34 699 ·· ·· 22</div></td>
@@ -703,7 +703,7 @@ tbody tr:hover{background:var(--surface-soft)}
                   <span class="pill warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 2v6M12 16v6"/><circle cx="12" cy="12" r="2"/></svg> Media · 49%</span>
                 </td>
                 <td><span class="pill info"><span class="pill-dot"></span> Inactivo</span></td>
-                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje de recuperación enviado a Javier')">Recuperar</button></td>
+                <td><button class="btn btn-primary btn-sm" type="button" onclick="toast('Mensaje enviado a Javier. Si responde, la cita entra sola en tu agenda')">Recuperar</button></td>
               </tr>
             </tbody>
           </table>

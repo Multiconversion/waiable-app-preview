@@ -558,8 +558,8 @@ input{font-family:inherit}
         </button>
         <div class="tb-chips">
           <span class="chip-status ok" title="WhatsApp conectado"><span class="dot"></span>WhatsApp conectado</span>
-          <span class="chip-status info" title="Agenda sincronizada con Google Calendar"><span class="dot"></span>Agenda sincronizada</span>
-          <span class="chip-status auto" title="Las respuestas automáticas se preparan solas; tú decides cuándo enviarlas"><span class="dot"></span>Sugerencias activas</span>
+          <span class="chip-status info" title="Una sola agenda, sincronizada con Google Calendar, sin dobles reservas"><span class="dot"></span>Agenda al día</span>
+          <span class="chip-status auto" title="Las respuestas se preparan solas; tú decides cuándo enviarlas"><span class="dot"></span>Respuestas listas</span>
         </div>
         <button class="icon-btn" aria-label="Notificaciones"><span class="ping"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
         <div class="tb-avatar">BL</div>
@@ -576,7 +576,7 @@ input{font-family:inherit}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:23px;height:23px;color:var(--primary)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 10h.01M13 10h.01M17 10h.01"/></svg>
             Solicitudes de cita
           </h1>
-          <p class="ph-sub">Peticiones de cita de tu web, WhatsApp y teléfono. Responde rápido, ofrece un hueco y cierra la cita: cada minuto cuenta para no perder al paciente.</p>
+          <p class="ph-sub">Web, WhatsApp y teléfono, todo ordenado en una sola cola. Responde rápido, ofrece un hueco y cierra la cita en un clic. Nada se pierde y tu equipo dedica el tiempo a los pacientes, no al teléfono.</p>
         </div>
         <div class="ph-actions">
           <button class="btn btn-secondary" onclick="showToast('Filtros de la cola')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>Filtros</button>
@@ -622,7 +622,7 @@ input{font-family:inherit}
             <span class="tip"><span class="q">?</span><span class="tip-box">SLA: tiempo objetivo de primera respuesta. Tu meta es responder cada solicitud en menos de 2 minutos.</span></span>
           </div>
           <div class="kpi-val tnum">1m 48s</div>
-          <div class="kpi-label">Respuesta media (objetivo &lt; 2 min)</div>
+          <div class="kpi-label">Tiempo medio de respuesta (objetivo &lt; 2 min)</div>
           <button class="kpi-cta" type="button" onclick="showToast('Abriendo informe de rendimiento')">Ver rendimiento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
       </section>
@@ -657,7 +657,7 @@ input{font-family:inherit}
             <div class="eb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64M12 2v6"/></svg></div>
             <div class="eb-txt">
               <strong>No se pudieron cargar las solicitudes</strong>
-              <span>Revisa tu conexión con WhatsApp o Agenda y vuelve a intentarlo.</span>
+              <span>Revisa la conexión con WhatsApp o la agenda y vuelve a intentarlo.</span>
             </div>
             <button class="btn btn-sm" type="button" onclick="retryLoad()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 3v6h-6"/></svg>Reintentar</button>
           </div>
@@ -673,8 +673,8 @@ input{font-family:inherit}
           <!-- EMPTY: cola vacía -->
           <div class="empty" id="emptyDone">
             <div class="empty-ic ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div>
-            <h3>Cero solicitudes pendientes</h3>
-            <p>Buen trabajo. Has atendido toda la cola. Aquí aparecerán las nuevas peticiones de web y WhatsApp en cuanto lleguen.</p>
+            <h3>Cola al día, nada pendiente</h3>
+            <p>Buen trabajo: has atendido toda la cola. Aquí aparecerán las nuevas solicitudes de web, WhatsApp y teléfono en cuanto lleguen.</p>
             <button class="btn btn-secondary btn-sm" type="button" onclick="retryLoad()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 3v6h-6"/></svg>Volver a la cola</button>
           </div>
 
@@ -682,7 +682,7 @@ input{font-family:inherit}
           <div class="empty" id="emptyFilter">
             <div class="empty-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg></div>
             <h3>Sin solicitudes con estos filtros</h3>
-            <p>Prueba a quitar algún filtro para ver más peticiones de la cola.</p>
+            <p>Prueba a quitar algún filtro para ver más solicitudes de la cola.</p>
             <button class="btn btn-primary btn-sm" type="button" onclick="clearFilters()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Limpiar filtros</button>
           </div>
 
@@ -870,8 +870,8 @@ input{font-family:inherit}
             <div class="sla-banner urgent" role="status">
               <div class="sla-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
               <div class="sla-txt">
-                <strong>Responde en 0:38 para cumplir el SLA</strong>
-                <span>Llegó hace 1 minuto por WhatsApp. Si pasas de 2 min, pierdes prioridad y riesgo de fuga.</span>
+                <strong>Responde antes de 0:38 para no perder al paciente</strong>
+                <span>Llegó hace 1 minuto por WhatsApp. Cuanto antes contestes, más fácil cerrar la cita.</span>
               </div>
             </div>
 
@@ -879,16 +879,16 @@ input{font-family:inherit}
             <div class="ai-score">
               <div class="ai-score-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
               <div class="ai-score-txt">
-                <strong>Alta probabilidad de cita
+                <strong>Buena opción para cerrar cita
                   <span class="ai-tag" title="Estimación automática según historial, servicio y urgencia del mensaje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>sugerido</span>
                 </strong>
-                <p>Paciente recurrente, pide cita esta semana y ya conoce precios. Conviene responder cuanto antes.</p>
+                <p>Paciente recurrente, pide cita esta semana y ya conoce precios. Respóndele cuanto antes para cerrar la cita.</p>
               </div>
             </div>
 
             <!-- request info -->
             <div class="sect">
-              <div class="sect-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Detalles de la petición</div>
+              <div class="sect-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Detalles de la solicitud</div>
               <div class="infogrid">
                 <div class="info-cell">
                   <div class="ic-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/></svg>Servicio</div>
@@ -973,7 +973,7 @@ input{font-family:inherit}
 
           <!-- footer actions: UNA accion primaria (Confirmar cita) sticky y a ancho completo -->
           <div class="detail-foot">
-            <div class="foot-hint" id="footHint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Elige uno de los 3 huecos para confirmar</div>
+            <div class="foot-hint" id="footHint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Elige un hueco; al confirmar entra en la agenda y se avisa al paciente</div>
             <button class="btn-confirm" id="confirmBtn" type="button" disabled onclick="confirmAppointment()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
               <span id="confirmLabel">Confirmar cita</span>
@@ -991,7 +991,7 @@ input{font-family:inherit}
           <div class="empty show" style="padding:64px 28px">
             <div class="empty-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
             <h3>Selecciona una solicitud</h3>
-            <p>Elige una petición de la cola para ver la conversación, los huecos sugeridos y cerrar la cita.</p>
+            <p>Elige una solicitud de la cola para ver la conversación, los huecos disponibles y cerrar la cita.</p>
           </div>
         </aside>
 
@@ -1064,7 +1064,7 @@ input{font-family:inherit}
     const cb=document.getElementById('confirmBtn');
     if(cb){cb.disabled=true;document.getElementById('confirmLabel').textContent='Confirmar cita';}
     const fh=document.getElementById('footHint');
-    if(fh)fh.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Elige uno de los 3 huecos para confirmar';
+    if(fh)fh.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Elige un hueco; al confirmar entra en la agenda y se avisa al paciente';
   }
 
   /* ---- Confirmar: toast + avanzar a la siguiente nueva para sostener el ritmo <2 min ---- */

@@ -582,7 +582,7 @@ svg{display:block;flex:none;width:18px;height:18px}
 
       <div class="page-head">
         <h1 class="page-h1">Suscripción y facturación</h1>
-        <p class="page-lead">Tu plan, consumo y extras en un vistazo. Amplía cuando lo necesites para no perder ninguna cita ni mensaje de tus pacientes.</p>
+        <p class="page-lead">Tu plan, tu consumo y los extras, claros y en un vistazo. Amplía cuando lo necesites para seguir captando citas y atendiendo a tus pacientes sin interrupciones.</p>
       </div>
 
       <!-- TABS DE AJUSTES (ARIA) -->
@@ -618,7 +618,7 @@ svg{display:block;flex:none;width:18px;height:18px}
               <div class="hero-price">
                 <span class="amt">149,00 €</span>
                 <span class="per">/ mes</span>
-                <span class="tax">IVA no incluido</span>
+                <span class="tax">IVA no incluido · sin permanencia</span>
               </div>
               <div class="hero-meta">
                 <span class="hero-pill">
@@ -631,7 +631,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                 </span>
                 <span class="hero-pill">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                  Renueva el 1 jun 2026
+                  Se renueva el 1 jun 2026
                 </span>
               </div>
             </div>
@@ -643,7 +643,7 @@ svg{display:block;flex:none;width:18px;height:18px}
               </button>
               <p class="hero-cta-note">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>
-                Desbloquea multisede, API y +WhatsApp
+                Gestiona varias sedes, más líneas de WhatsApp y conéctalo todo por API
               </p>
               <!-- SECUNDARIA: administrativa -->
               <button class="btn btn-ghost-light btn-block" type="button" id="managePayBtn" onclick="openPortal(this)">
@@ -664,10 +664,10 @@ svg{display:block;flex:none;width:18px;height:18px}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
           </div>
           <div class="ab-body">
-            <div class="ab-title">Estás cerca de tus límites de mensajes y WhatsApp</div>
-            <div class="ab-sub">Has alcanzado el tope de cuentas de WhatsApp y vas por el 84% de mensajes. Amplía ahora para no dejar de responder a tus pacientes.</div>
+            <div class="ab-title">Tu clínica está al límite de WhatsApp y mensajes</div>
+            <div class="ab-sub">Tus cuentas de WhatsApp están al completo y vas por el 84% de los mensajes del mes. Amplía ahora y sigue respondiendo y agendando citas sin que se te escape ningún paciente.</div>
           </div>
-          <button class="btn btn-primary" type="button" onclick="goTo('Comparar planes')">Ver opciones de ampliación</button>
+          <button class="btn btn-primary" type="button" onclick="goTo('Comparar planes')">Ver cómo ampliar</button>
         </div>
 
         <!-- LÍMITES / CONSUMO -->
@@ -675,8 +675,8 @@ svg{display:block;flex:none;width:18px;height:18px}
           <div class="section-head">
             <div>
               <div class="section-eyebrow">Tu consumo este mes</div>
-              <h2>Límites del plan</h2>
-              <p>Los mensajes se reinician el día 1 de cada mes. Usuarios y cuentas de WhatsApp son límites fijos del plan; contactos es un límite acumulado.</p>
+              <h2>Qué incluye tu plan</h2>
+              <p>De un vistazo, lo que usas de cada cosa. Los mensajes se renuevan el día 1 de cada mes; las cuentas de WhatsApp y los usuarios son plazas fijas del plan, y los contactos del CRM se van acumulando.</p>
             </div>
             <button class="btn btn-secondary btn-sm" type="button" id="reloadLimitsBtn" onclick="reloadLimits(this)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 4v4h-4"/></svg>
@@ -693,7 +693,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                   Cuentas de WhatsApp
                   <span class="tip">
                     <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Cuentas de WhatsApp">?</button>
-                    <span class="tip-box" role="tooltip">Líneas de WhatsApp conectadas a tu clínica. Es un límite fijo del plan; no se reinicia cada mes.</span>
+                    <span class="tip-box" role="tooltip">Líneas de WhatsApp conectadas a tu clínica, todas en el mismo panel. Es una plaza fija del plan; no se renueva cada mes.</span>
                   </span>
                 </div>
                 <div class="limit-vals"><span class="now">2</span><span class="max"> / 2</span></div>
@@ -724,7 +724,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                   Mensajes mensuales
                   <span class="tip">
                     <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Mensajes mensuales">?</button>
-                    <span class="tip-box" role="tooltip">Mensajes enviados y recibidos por WhatsApp este mes (incluye los que envía la automatización). Se reinicia el día 1.</span>
+                    <span class="tip-box" role="tooltip">Mensajes de WhatsApp enviados y recibidos este mes, incluidos los recordatorios y confirmaciones automáticos. Se renueva el día 1.</span>
                   </span>
                 </div>
                 <div class="limit-vals"><span class="now">4.183</span><span class="max"> / 5.000</span></div>
@@ -755,7 +755,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                   Usuarios del equipo
                   <span class="tip">
                     <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Usuarios del equipo">?</button>
-                    <span class="tip-box" role="tooltip">Personas con acceso a tu cuenta Waiable. Es un límite fijo del plan; no se reinicia cada mes.</span>
+                    <span class="tip-box" role="tooltip">Personas de tu equipo con acceso a la agenda y las conversaciones. Es una plaza fija del plan; no se renueva cada mes.</span>
                   </span>
                 </div>
                 <div class="limit-vals"><span class="now">4</span><span class="max"> / 5</span></div>
@@ -786,7 +786,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                   Contactos en CRM
                   <span class="tip">
                     <button class="tip-btn" type="button" aria-label="Qué cuenta esta métrica: Contactos en CRM">?</button>
-                    <span class="tip-box" role="tooltip">Pacientes y leads guardados en tu CRM. Es un límite acumulado del plan; no se reinicia.</span>
+                    <span class="tip-box" role="tooltip">Pacientes y contactos guardados en tu ficha única, con su historial. Se van acumulando; no se reinician.</span>
                   </span>
                 </div>
                 <div class="limit-vals"><span class="now">3.240</span><span class="max"> / 5.000</span></div>
@@ -802,7 +802,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
                   Espacio de sobra
                 </span>
-                <span class="limit-reset">Sin reinicio</span>
+                <span class="limit-reset">No caduca</span>
               </div>
             </div>
           </div>
@@ -813,8 +813,8 @@ svg{display:block;flex:none;width:18px;height:18px}
           <div class="section-head">
             <div>
               <div class="section-eyebrow">Amplía sin cambiar de plan</div>
-              <h2>Extras contratables</h2>
-              <p>Súmalos a tu plan actual. Verás el impacto exacto en tu próxima factura antes de confirmar.</p>
+              <h2>Suma solo lo que necesitas</h2>
+              <p>Añádelos a tu plan actual cuando te haga falta. Antes de confirmar verás qué pagarás exactamente en tu próxima factura, sin sorpresas.</p>
             </div>
           </div>
 
@@ -823,8 +823,8 @@ svg{display:block;flex:none;width:18px;height:18px}
             <div class="extra-card featured">
               <span class="extra-flag">Recomendado para ti</span>
               <div class="extra-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 17.2z"/></svg></div>
-              <div class="extra-name">+2.000 mensajes</div>
-              <p class="extra-desc">Amplía tu cupo mensual de mensajes. Ideal porque ya vas por el 84%.</p>
+              <div class="extra-name">+2.000 mensajes al mes</div>
+              <p class="extra-desc">Más margen para recordatorios, confirmaciones y conversaciones con tus pacientes. Te conviene: ya vas por el 84%.</p>
               <div class="extra-price"><span class="amt">15,00 €</span><span class="per">/ mes</span></div>
               <div class="extra-tax">IVA no incluido</div>
               <button class="btn btn-primary btn-block" type="button" onclick="openExtra('Paquete +2.000 mensajes','15,00 €','164,00 €')">
@@ -837,7 +837,7 @@ svg{display:block;flex:none;width:18px;height:18px}
             <div class="extra-card">
               <div class="extra-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg></div>
               <div class="extra-name">Cuenta de WhatsApp extra</div>
-              <p class="extra-desc">Conecta una línea adicional. Útil si gestionas más de un número.</p>
+              <p class="extra-desc">Conecta otra línea y gestiona todos tus números desde el mismo panel, sin saltar de móvil en móvil.</p>
               <div class="extra-price"><span class="amt">19,00 €</span><span class="per">/ mes</span></div>
               <div class="extra-tax">IVA no incluido</div>
               <button class="btn btn-primary btn-block" type="button" onclick="openExtra('Cuenta de WhatsApp extra','19,00 €','168,00 €')">
@@ -850,7 +850,7 @@ svg{display:block;flex:none;width:18px;height:18px}
             <div class="extra-card">
               <div class="extra-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div>
               <div class="extra-name">Usuario extra</div>
-              <p class="extra-desc">Suma una persona más a tu equipo con su propio acceso.</p>
+              <p class="extra-desc">Da acceso a otra persona del equipo, con su propio usuario, para repartir el trabajo de recepción y agenda.</p>
               <div class="extra-price"><span class="amt">9,00 €</span><span class="per">/ usuario / mes</span></div>
               <div class="extra-tax">IVA no incluido</div>
               <button class="btn btn-primary btn-block" type="button" onclick="openExtra('Usuario extra','9,00 €','158,00 €')">
@@ -867,6 +867,7 @@ svg{display:block;flex:none;width:18px;height:18px}
             <div>
               <div class="section-eyebrow">Pago</div>
               <h2>Método de pago</h2>
+              <p>Tu tarjeta y tu próxima factura, siempre a la vista. Cámbiala cuando quieras, sin llamadas ni papeleo.</p>
             </div>
           </div>
           <div class="pay-card" id="payCard">
@@ -882,7 +883,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                   <span class="nb-amt">149,00 €</span>
                   <span class="tip">
                     <button class="tip-btn" type="button" aria-label="Desglose de la próxima factura">?</button>
-                    <span class="tip-box" role="tooltip">149,00 € plan Growth. Sin extras activos. El IVA (21%) se aplica en la factura final.</span>
+                    <span class="tip-box" role="tooltip">149,00 € del plan Growth, sin extras contratados. Se sumará el IVA (21%) en la factura final.</span>
                   </span>
                 </div>
               </div>
@@ -899,7 +900,8 @@ svg{display:block;flex:none;width:18px;height:18px}
           <div class="section-head">
             <div>
               <div class="section-eyebrow">Historial</div>
-              <h2>Facturas</h2>
+              <h2>Tus facturas</h2>
+              <p>Todas tus facturas ordenadas y descargables al instante, listas para tu gestoría.</p>
             </div>
             <button class="btn btn-secondary btn-sm" type="button" id="dlAllBtn" onclick="downloadAll(this)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
@@ -942,7 +944,7 @@ svg{display:block;flex:none;width:18px;height:18px}
                     <span class="inv-amt-wrap">168,00 €
                       <span class="tip">
                         <button class="tip-btn" type="button" aria-label="Desglose de este importe">?</button>
-                        <span class="tip-box" role="tooltip">149,00 € plan + 19,00 € cuenta de WhatsApp extra (cancelada en abril). IVA aparte.</span>
+                        <span class="tip-box" role="tooltip">149,00 € del plan + 19,00 € de la cuenta de WhatsApp extra (dada de baja en abril). IVA aparte.</span>
                       </span>
                     </span>
                   </td>
@@ -964,8 +966,8 @@ svg{display:block;flex:none;width:18px;height:18px}
         <section aria-label="Cancelar suscripción">
           <div class="danger-zone">
             <div class="dz-body">
-              <div class="dz-title">¿Necesitas hacer una pausa?</div>
-              <div class="dz-sub">Antes de cancelar, recuerda que perderías tu agenda automática, las cuentas de WhatsApp conectadas y el historial de conversaciones. Estamos aquí para ayudarte a encontrar el plan que encaje.</div>
+              <div class="dz-title">¿Necesitas un respiro?</div>
+              <div class="dz-sub">Antes de cancelar, ten en cuenta que dejarías de tener tu agenda sincronizada, las cuentas de WhatsApp conectadas, los recordatorios automáticos y el historial de tus pacientes. Cuéntanoslo y te ayudamos a ajustar el plan a tu clínica.</div>
             </div>
             <button class="btn btn-secondary" type="button" onclick="goTo('Hablar con soporte')">Hablar con soporte</button>
             <button class="btn btn-danger-ghost" type="button" id="cancelBtn" onclick="openCancel(this)">Cancelar suscripción</button>
@@ -984,11 +986,11 @@ svg{display:block;flex:none;width:18px;height:18px}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
     </div>
     <h3 id="cancelTitle">¿Seguro que quieres cancelar?</h3>
-    <p id="cancelDesc">Tu plan Growth seguirá activo hasta el <strong>1 de junio de 2026</strong>. A partir de esa fecha perderías:</p>
+    <p id="cancelDesc">Tu plan Growth seguirá activo hasta el <strong>1 de junio de 2026</strong>. A partir de esa fecha tu clínica dejaría de tener:</p>
     <ul class="modal-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>La agenda automática y el llenado de huecos</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Las 2 cuentas de WhatsApp conectadas</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>El historial de conversaciones con pacientes</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>La agenda sincronizada y el llenado automático de huecos</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Las 2 cuentas de WhatsApp conectadas y sus recordatorios</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>El historial de cada paciente y sus conversaciones</li>
     </ul>
     <div class="modal-actions">
       <button class="btn btn-primary" type="button" id="keepPlanBtn" onclick="closeCancel()">Mantener mi plan</button>
