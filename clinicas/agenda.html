@@ -609,17 +609,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     </div>
 
     <!-- qué hacer ahora -->
-    <div class="todo-strip">
-      <div class="todo-item"><span class="todo-pill warn">3</span> citas pendientes de confirmar</div>
-      <div class="todo-sep"></div>
-      <div class="todo-item"><span class="todo-pill info">2</span> pacientes por llegar</div>
-      <div class="todo-sep"></div>
-      <div class="todo-item"><span class="todo-pill gap">5</span> huecos libres hoy</div>
-      <a class="todo-link" onclick="scrollToGaps()">Llenar huecos
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-
     <div class="agenda-grid">
 
       <!-- ===== AGENDA MAIN ===== -->
@@ -720,12 +709,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
             <div class="sugg">
               <div class="sugg-head">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
-                Sugerencia
+                Ofrecer huecos libres
               </div>
-              <div class="sugg-text" id="suggText">Tienes 5 pacientes en lista de espera que encajan en los huecos libres de hoy. Ofréceles cita por WhatsApp y llena la agenda sin una sola llamada.</div>
+              <div class="sugg-text" id="suggText">Este día quedan 5 huecos libres. Ofréceles cita por WhatsApp y llena la agenda sin una sola llamada.</div>
               <div class="sugg-actions">
                 <button class="btn btn-sm btn-primary" onclick="toast('Mensaje enviado a los pacientes de la lista de espera')">Ofrecer por WhatsApp</button>
-                <button class="btn btn-sm btn-ghost" onclick="toast('Sugerencia descartada')">Ahora no</button>
               </div>
             </div>
 
@@ -1618,8 +1606,8 @@ function openNew(t){ if(window.openCreateAppt){ window.openCreateAppt(t); } else
     if(dia) dia.style.display = r==='dia'?'':'none';
     if(sem) sem.style.display = r==='semana'?'':'none';
     if(sg) sg.textContent = r==='dia'
-      ? 'Tienes 5 pacientes en lista de espera que encajan en los huecos libres de hoy. Ofréceles cita por WhatsApp y llena la agenda sin una sola llamada.'
-      : 'Esta semana quedan 14 huecos libres y tienes 9 pacientes en lista de espera que encajan. Ofréceles cita por WhatsApp y llena la agenda sin una sola llamada.';
+      ? 'Este día quedan 5 huecos libres. Ofréceles cita por WhatsApp y llena la agenda sin una sola llamada.'
+      : 'Esta semana quedan 14 huecos libres. Ofréceles cita por WhatsApp y llena la agenda sin una sola llamada.';
   });
 })();
 
