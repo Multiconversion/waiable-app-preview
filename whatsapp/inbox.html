@@ -1207,6 +1207,21 @@ window.togglePanel=function(){
   if(b){ b.classList.toggle('on', !collapsed); b.setAttribute('aria-pressed', (!collapsed).toString()); }
 };
 
+
+/* head-cta runtime normalizer */
+(function(){
+  function norm(){
+    var btns=document.querySelectorAll('.chat-head .head-cta');
+    if(!btns.length) return;
+    btns.forEach(function(b,i){
+      if(i>0){ b.parentNode && b.parentNode.removeChild(b); return; }
+      b.removeAttribute('onclick');
+      b.onclick=function(ev){ ev && ev.preventDefault(); if(window.openCreateAppt) window.openCreateAppt(); };
+    });
+  }
+  if(document.readyState!=='loading') norm(); else document.addEventListener('DOMContentLoaded',norm);
+})();
+
 </script>
 </body>
 </html>
