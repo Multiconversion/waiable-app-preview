@@ -425,32 +425,6 @@ select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 0
 
   <!-- ===== MAIN ===== -->
   <div class="main">
-    <!-- TOPBAR (CHROME) -->
-    <header class="topbar">
-      <div class="tb-title">
-        <h2>Ajustes</h2>
-        <div class="crumb">Configuración <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg> Agenda y horarios</div>
-      </div>
-      <div class="tb-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="text" placeholder="Buscar pacientes, citas, conversaciones…" aria-label="Buscar">
-        <span class="kbd">⌘K</span>
-      </div>
-      <div class="tb-right">
-        <button class="site-sel" aria-label="Seleccionar sede">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Madrid Centro</span>
-          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="tb-chips">
-          <span class="chip ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 17 0z"/></svg>WhatsApp conectado</span>
-          <span class="chip info" id="tbSyncChip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg>Agenda sincronizada</span>
-          <span class="chip muted-chip" title="La automatización está en modo sugerencia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Automatización: sugerencia</span>
-        </div>
-        <button class="icon-btn" aria-label="Notificaciones"><span class="dot"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
-        <div class="avatar" title="Recepción">RC</div>
-      </div>
-    </header>
 
     <!-- CONTENT -->
     <main class="content">
@@ -463,111 +437,15 @@ select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 0
         </div>
       </div>
 
-      <!-- TABS (keyboard-operable buttons, arrow navigation) -->
+      <!-- TABS: solo Clínica y Agenda + selector de sede -->
       <div class="tabs" role="tablist" aria-label="Secciones de ajustes">
         <button class="tab" role="tab" aria-selected="false" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/></svg>Clínica</button>
         <button class="tab" role="tab" aria-selected="true" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Agenda y horarios</button>
-        <button class="tab" role="tab" aria-selected="false" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Automatización</button>
-        <button class="tab" role="tab" aria-selected="false" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>Notificaciones</button>
-        <button class="tab" role="tab" aria-selected="false" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3 3-2-2"/></svg>Equipo</button>
-        <button class="tab" role="tab" aria-selected="false" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>Facturación</button>
-      </div>
-
-      <!-- ===== STEP 1: GOOGLE CALENDAR (elevated, primary CTA, all states) ===== -->
-      <div class="card">
-        <div class="card-head">
-          <div class="ch-left">
-            <div class="ch-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></div>
-            <div>
-              <h3><span class="step-n">1</span>Conexión con Google Calendar</h3>
-              <div class="ch-sub">Sincroniza tu calendario para que las reservas nunca choquen con citas existentes. Las nuevas citas se anotan solas en Google y los huecos ocupados dejan de ofrecerse.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <!-- gcal-card switches between data-state values -->
-          <div class="gcal-card" id="gcalCard" data-state="connected">
-            <div class="gcal-item">
-              <div class="gcal-logo">
-                <svg viewBox="0 0 24 24" width="24" height="24"><rect x="3" y="5" width="18" height="16" rx="2" fill="#fff" stroke="#dadce0"/><rect x="3" y="5" width="18" height="4.5" rx="2" fill="#1a73e8"/><text x="12" y="18" font-size="8.5" font-weight="800" text-anchor="middle" fill="#1a73e8" font-family="Inter">31</text></svg>
-              </div>
-              <div class="gcal-info">
-                <div class="gcal-title-row">
-                  <span class="gcal-title">Agenda Clínica · agenda@clinicamadrid.es</span>
-                  <span class="badge ok" id="gcalBadge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Conectada
-                  </span>
-                </div>
-                <div class="gcal-meta" id="gcalMeta">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.6"/><path d="M21 3v6h-6"/></svg>
-                  <span>Última sincronización hace 4 min · sin conflictos</span>
-                </div>
-              </div>
-              <div class="gcal-actions" id="gcalActions">
-                <button class="btn btn-secondary" type="button" onclick="syncNow()">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.6"/><path d="M21 3v6h-6"/></svg>Sincronizar ahora
-                </button>
-                <button class="btn btn-ghost" type="button" onclick="setGcalState('disconnected')">Desconectar</button>
-              </div>
-            </div>
-
-            <!-- error/reauth banner -->
-            <div class="sync-banner err" id="syncBanner">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-              <div class="sb-text">
-                <strong>No se ha podido sincronizar con Google.</strong>
-                El permiso ha caducado. Mientras tanto se usa el último horario guardado, así que podrían ofrecerse huecos desactualizados.
-              </div>
-              <div class="sb-actions">
-                <button class="btn btn-primary" type="button" onclick="reauthGoogle()">Reautorizar</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- privacy microcopy (>=13px, contrast-safe) -->
-          <div class="privacy" style="margin-top:14px">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <p>Solo accedemos a la <strong>disponibilidad</strong> (horas libres/ocupadas) para evitar dobles reservas. No leemos el contenido ni los asistentes de tus eventos y puedes revocar el acceso cuando quieras desde tu cuenta de Google. <a href="#">Más sobre privacidad</a>.</p>
-          </div>
-        </div>
-
-        <!-- sync options + privacy of events -->
-        <div class="card-body">
-          <div class="sync-row">
-            <div class="sr-txt">
-              <h4>Sincronización bidireccional
-                <span class="tip"><button type="button" class="tip-trigger" aria-label="Qué hace la sincronización bidireccional">?</button><span class="tip-pop" role="tooltip">Las citas reservadas se escriben en Google Calendar y los eventos que añadas en Google bloquean huecos en Waiable.</span></span>
-              </h4>
-              <p>Las citas se reflejan en ambos sentidos automáticamente al reservar o cancelar.</p>
-            </div>
-            <label class="tg tg-primary"><input type="checkbox" id="twoway" aria-label="Activar sincronización bidireccional con Google Calendar" checked onchange="markDirty()"><span class="track"></span><span class="knob"></span></label>
-          </div>
-          <div class="sync-row">
-            <div class="sr-txt">
-              <h4>Bloquear huecos ocupados
-                <span class="tip"><button type="button" class="tip-trigger" aria-label="Qué hace bloquear huecos ocupados">?</button><span class="tip-pop" role="tooltip">No se ofrece un hueco si ya existe un evento en ese tramo en Google Calendar.</span></span>
-              </h4>
-              <p>Evita dobles reservas leyendo los eventos existentes de tu calendario.</p>
-            </div>
-            <label class="tg tg-primary"><input type="checkbox" id="blockbusy" aria-label="Activar bloqueo de huecos ocupados" checked onchange="markDirty()"><span class="track"></span><span class="knob"></span></label>
-          </div>
-
-          <h4 style="font-size:14px;font-weight:600;margin:20px 0 2px;display:flex;align-items:center;gap:7px">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--primary)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Privacidad de los eventos en Google
-          </h4>
-          <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.5">Elige qué datos del paciente se muestran en el evento de Google.</p>
-          <div class="radio-list">
-            <label class="radio sel"><span class="rd"></span><span><span class="rl">Solo título genérico</span><span class="rs">«Cita reservada». No incluye nombre ni teléfono. Recomendado por RGPD.</span></span></label>
-            <label class="radio"><span class="rd"></span><span><span class="rl">Nombre del paciente</span><span class="rs">«Cita · Carmen Ruiz». Útil si el equipo gestiona desde Google.</span></span></label>
-            <label class="radio"><span class="rd"></span><span><span class="rl">Ficha completa</span><span class="rs">Nombre, servicio y teléfono en la descripción del evento.</span></span></label>
-          </div>
-          <div class="privacy" style="margin-top:14px">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <p><strong>RGPD:</strong> los datos de pacientes solo se comparten con Google si activas «Nombre» o «Ficha completa». Última sincronización: hoy, 09:42.</p>
-          </div>
-        </div>
+        <button class="site-sel" style="margin-left:auto;align-self:center" aria-label="Seleccionar sede">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Madrid Centro</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </div>
 
       <!-- ===== STEP 2: WEEK SCHEDULE ===== -->
@@ -576,7 +454,7 @@ select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 0
           <div class="ch-left">
             <div class="ch-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
             <div>
-              <h3><span class="step-n">2</span>Horario de atención semanal</h3>
+              <h3><span class="step-n">1</span>Horario de atención semanal</h3>
               <div class="ch-sub">Activa los días, define franjas y asígnalas a cada profesional. Son los huecos que se ofrecen a tus pacientes al reservar por WhatsApp, teléfono y web.</div>
             </div>
           </div>
@@ -813,6 +691,103 @@ select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 0
             <span id="addErrorMsg">La hora de fin debe ser posterior a la de inicio.</span>
           </div>
           <p class="add-help">Validamos que la franja sea correcta y no se solape con otra del mismo profesional ese día.</p>
+        </div>
+      </div>
+
+      <!-- ===== STEP 1: GOOGLE CALENDAR (elevated, primary CTA, all states) ===== -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-left">
+            <div class="ch-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></div>
+            <div>
+              <h3><span class="step-n">2</span>Conexión con Google Calendar</h3>
+              <div class="ch-sub">Sincroniza tu calendario para que las reservas nunca choquen con citas existentes. Las nuevas citas se anotan solas en Google y los huecos ocupados dejan de ofrecerse.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- gcal-card switches between data-state values -->
+          <div class="gcal-card" id="gcalCard" data-state="connected">
+            <div class="gcal-item">
+              <div class="gcal-logo">
+                <svg viewBox="0 0 24 24" width="24" height="24"><rect x="3" y="5" width="18" height="16" rx="2" fill="#fff" stroke="#dadce0"/><rect x="3" y="5" width="18" height="4.5" rx="2" fill="#1a73e8"/><text x="12" y="18" font-size="8.5" font-weight="800" text-anchor="middle" fill="#1a73e8" font-family="Inter">31</text></svg>
+              </div>
+              <div class="gcal-info">
+                <div class="gcal-title-row">
+                  <span class="gcal-title">Agenda Clínica · agenda@clinicamadrid.es</span>
+                  <span class="badge ok" id="gcalBadge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Conectada
+                  </span>
+                </div>
+                <div class="gcal-meta" id="gcalMeta">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.6"/><path d="M21 3v6h-6"/></svg>
+                  <span>Última sincronización hace 4 min · sin conflictos</span>
+                </div>
+              </div>
+              <div class="gcal-actions" id="gcalActions">
+                <button class="btn btn-secondary" type="button" onclick="syncNow()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.6"/><path d="M21 3v6h-6"/></svg>Sincronizar ahora
+                </button>
+                <button class="btn btn-ghost" type="button" onclick="setGcalState('disconnected')">Desconectar</button>
+              </div>
+            </div>
+
+            <!-- error/reauth banner -->
+            <div class="sync-banner err" id="syncBanner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+              <div class="sb-text">
+                <strong>No se ha podido sincronizar con Google.</strong>
+                El permiso ha caducado. Mientras tanto se usa el último horario guardado, así que podrían ofrecerse huecos desactualizados.
+              </div>
+              <div class="sb-actions">
+                <button class="btn btn-primary" type="button" onclick="reauthGoogle()">Reautorizar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- privacy microcopy (>=13px, contrast-safe) -->
+          <div class="privacy" style="margin-top:14px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <p>Solo accedemos a la <strong>disponibilidad</strong> (horas libres/ocupadas) para evitar dobles reservas. No leemos el contenido ni los asistentes de tus eventos y puedes revocar el acceso cuando quieras desde tu cuenta de Google. <a href="#">Más sobre privacidad</a>.</p>
+          </div>
+        </div>
+
+        <!-- sync options + privacy of events -->
+        <div class="card-body">
+          <div class="sync-row">
+            <div class="sr-txt">
+              <h4>Sincronización bidireccional
+                <span class="tip"><button type="button" class="tip-trigger" aria-label="Qué hace la sincronización bidireccional">?</button><span class="tip-pop" role="tooltip">Las citas reservadas se escriben en Google Calendar y los eventos que añadas en Google bloquean huecos en Waiable.</span></span>
+              </h4>
+              <p>Las citas se reflejan en ambos sentidos automáticamente al reservar o cancelar.</p>
+            </div>
+            <label class="tg tg-primary"><input type="checkbox" id="twoway" aria-label="Activar sincronización bidireccional con Google Calendar" checked onchange="markDirty()"><span class="track"></span><span class="knob"></span></label>
+          </div>
+          <div class="sync-row">
+            <div class="sr-txt">
+              <h4>Bloquear huecos ocupados
+                <span class="tip"><button type="button" class="tip-trigger" aria-label="Qué hace bloquear huecos ocupados">?</button><span class="tip-pop" role="tooltip">No se ofrece un hueco si ya existe un evento en ese tramo en Google Calendar.</span></span>
+              </h4>
+              <p>Evita dobles reservas leyendo los eventos existentes de tu calendario.</p>
+            </div>
+            <label class="tg tg-primary"><input type="checkbox" id="blockbusy" aria-label="Activar bloqueo de huecos ocupados" checked onchange="markDirty()"><span class="track"></span><span class="knob"></span></label>
+          </div>
+
+          <h4 style="font-size:14px;font-weight:600;margin:20px 0 2px;display:flex;align-items:center;gap:7px">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--primary)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Privacidad de los eventos en Google
+          </h4>
+          <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.5">Elige qué datos del paciente se muestran en el evento de Google.</p>
+          <div class="radio-list">
+            <label class="radio sel"><span class="rd"></span><span><span class="rl">Solo título genérico</span><span class="rs">«Cita reservada». No incluye nombre ni teléfono. Recomendado por RGPD.</span></span></label>
+            <label class="radio"><span class="rd"></span><span><span class="rl">Nombre del paciente</span><span class="rs">«Cita · Carmen Ruiz». Útil si el equipo gestiona desde Google.</span></span></label>
+            <label class="radio"><span class="rd"></span><span><span class="rl">Ficha completa</span><span class="rs">Nombre, servicio y teléfono en la descripción del evento.</span></span></label>
+          </div>
+          <div class="privacy" style="margin-top:14px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <p><strong>RGPD:</strong> los datos de pacientes solo se comparten con Google si activas «Nombre» o «Ficha completa». Última sincronización: hoy, 09:42.</p>
+          </div>
         </div>
       </div>
 
